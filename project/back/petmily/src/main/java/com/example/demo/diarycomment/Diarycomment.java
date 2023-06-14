@@ -5,6 +5,9 @@ import java.util.Date;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
 
+import com.example.demo.diaryboard.Diaryboard;
+import com.example.demo.member.Member;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -27,16 +30,21 @@ import lombok.ToString;
 @AllArgsConstructor
 public class Diarycomment {
 	@Id
-	@SequenceGenerator(name="seq_gen", sequenceName="seq_diaryboard", allocationSize=1)//시퀀스 생성. sequenceName:시퀀스 이름
-	@GeneratedValue(strategy=GenerationType.SEQUENCE, generator="seq_diaryboard")//값 자동생성설정
+	@SequenceGenerator(name="seq_gen", sequenceName="seq_diarycomment", allocationSize=1)//시퀀스 생성. sequenceName:시퀀스 이름
+	@GeneratedValue(strategy=GenerationType.SEQUENCE, generator="seq_diarycomment")//값 자동생성설정
 	private int num;
-	private String commnet;
-	private String id;
+	private String comment;
 	private Date date;
-	private int db_num;
+	
 	@ManyToOne
 	@JoinColumn(name="id", nullable=false)  //fk 설정
 	@OnDelete(action = OnDeleteAction.CASCADE)
+	private Member id;
+	
+	@ManyToOne
+	@JoinColumn(name="db_num", nullable=false)  //fk 설정
+	@OnDelete(action = OnDeleteAction.CASCADE)
+	private Diaryboard db_num;
 	
 	@PrePersist
 	   public void preprocess() {
