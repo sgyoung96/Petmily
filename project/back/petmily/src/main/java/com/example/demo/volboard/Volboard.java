@@ -5,6 +5,8 @@ import java.util.Date;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
 
+import com.example.demo.member.Member;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -34,7 +36,7 @@ public class Volboard {
 	@ManyToOne
 	@JoinColumn(name="writer", nullable=false)  //fk 설정
 	@OnDelete(action = OnDeleteAction.CASCADE)
-	private String writer;
+	private Member writer;
 	
 	private String title;
 	private String content;
