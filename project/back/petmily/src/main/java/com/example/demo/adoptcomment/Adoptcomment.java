@@ -5,7 +5,7 @@ import java.util.Date;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
 
-import com.example.demo.adapt.Adoptboard;
+import com.example.demo.adopt.Adoptboard;
 import com.example.demo.member.Member;
 
 import jakarta.persistence.Entity;

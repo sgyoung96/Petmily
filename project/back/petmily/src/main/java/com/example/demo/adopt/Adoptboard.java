@@ -1,4 +1,4 @@
-package com.example.demo.adapt;
+package com.example.demo.adopt;
 
 import java.util.Date;
 
