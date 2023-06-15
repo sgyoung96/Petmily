@@ -27,18 +27,21 @@ import lombok.ToString;
 @NoArgsConstructor
 @AllArgsConstructor
 public class Participants {
+	//식별번호
 	@Id
 	@SequenceGenerator(name="seq_part", sequenceName="seq_part", allocationSize=1)//시퀀스 생성. sequenceName:시퀀스 이름
 	@GeneratedValue(strategy=GenerationType.SEQUENCE, generator="seq_part")//값 자동생성설정
 	private int num;
 	
+	//봉사게시판 번호 참조
 	@ManyToOne
 	@JoinColumn(name="board_num", nullable=false)  //fk 설정
 	@OnDelete(action = OnDeleteAction.CASCADE)
-	Volboard board_num;
+	private Volboard board_num;
 	
+	//참여자 ID
 	@ManyToOne
 	@JoinColumn(name="id", nullable=false)  //fk 설정
 	@OnDelete(action = OnDeleteAction.CASCADE)
-	Member id;
+	private Member id;
 }
