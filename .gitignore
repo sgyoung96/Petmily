@@ -121,3 +121,6 @@ npm-debug.log
 yarn-error.log
 
 # End of https://www.toptal.com/developers/gitignore/api/eclipse,java,maven,vuejs
+
+# Spring Boot -> application.properties 추가
+application.properties
