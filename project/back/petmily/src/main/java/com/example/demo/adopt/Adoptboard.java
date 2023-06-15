@@ -35,9 +35,9 @@ public class Adoptboard {
 	private int num;		// 개인 분양 게시판 고유 번호 (PK)
 	
 	@ManyToOne
-	@JoinColumn(name="writer", nullable=false)
+	@JoinColumn(name="id", nullable=false)
 	@OnDelete(action=OnDeleteAction.CASCADE)
-	private Member writer;	// 작성자 (Member 의 id FK)
+	private Member id;	// 작성자 (Member 의 id FK)
 	
 	private String title;	// 제목
 	private String content;	// 내용
