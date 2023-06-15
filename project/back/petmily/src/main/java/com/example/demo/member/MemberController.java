@@ -1,6 +1,7 @@
 package com.example.demo.member;
 
 import java.util.HashMap;
+
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,7 +13,6 @@ import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.example.demo.auth.JwtTokenProvider;
 
 @RestController
 @CrossOrigin(origins = "*")
@@ -21,8 +21,8 @@ public class MemberController {
 	@Autowired
 	private MemberService service;
 	
-	@Autowired
-	private JwtTokenProvider tokenprovider;// 멤버변수로 토큰 브로바이더 추가
+//	@Autowired
+//	private JwtTokenProvider tokenprovider;// 멤버변수로 토큰 브로바이더 추가
 	
 
 	// 가입
