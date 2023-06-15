@@ -37,9 +37,9 @@ public class Diaryboard {
 	private String content;
 	private Date w_date;
 	@ManyToOne
-	@JoinColumn(name="writer", nullable=false)  //fk 설정
+	@JoinColumn(name="id", nullable=false)  //fk 설정
 	@OnDelete(action = OnDeleteAction.CASCADE)
-	private Member writer;
+	private Member id;
 	@Column(nullable=true)
 	private String pic1;
 	@Column(nullable=true)

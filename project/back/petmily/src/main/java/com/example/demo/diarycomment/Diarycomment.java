@@ -30,10 +30,10 @@ import lombok.ToString;
 @AllArgsConstructor
 public class Diarycomment {
 	@Id
-	@SequenceGenerator(name="seq_gen", sequenceName="seq_diarycomment", allocationSize=1)//시퀀스 생성. sequenceName:시퀀스 이름
+	@SequenceGenerator(name="seq_diarycomment", sequenceName="seq_diarycomment", allocationSize=1)//시퀀스 생성. sequenceName:시퀀스 이름
 	@GeneratedValue(strategy=GenerationType.SEQUENCE, generator="seq_diarycomment")//값 자동생성설정
-	private int num;
-	private String comment;
+	private int db_num;
+	private String content;
 	private Date w_date;
 	
 	@ManyToOne
@@ -42,9 +42,9 @@ public class Diarycomment {
 	private Member id;
 	
 	@ManyToOne
-	@JoinColumn(name="db_num", nullable=false)  //fk 설정
+	@JoinColumn(name="num", nullable=false)  //fk 설정
 	@OnDelete(action = OnDeleteAction.CASCADE)
-	private Diaryboard db_num;
+	private Diaryboard num;
 	
 	@PrePersist
 	   public void preprocess() {
