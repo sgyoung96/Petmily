@@ -43,6 +43,7 @@ public class Applyform {
 	private String another;
 	private String reason;
 	private String feeding;
+	private int Check;
 	
 	@PrePersist
 	public void preprocess() {
