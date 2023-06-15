@@ -30,7 +30,7 @@ import lombok.ToString;
 @AllArgsConstructor
 public class Diaryboard {
 	@Id
-	@SequenceGenerator(name="seq_gen", sequenceName="seq_diaryboard", allocationSize=1)//시퀀스 생성. sequenceName:시퀀스 이름
+	@SequenceGenerator(name="seq_diaryboard", sequenceName="seq_diaryboard", allocationSize=1)//시퀀스 생성. sequenceName:시퀀스 이름
 	@GeneratedValue(strategy=GenerationType.SEQUENCE, generator="seq_diaryboard")//값 자동생성설정
 	private int num;
 	private String title;
