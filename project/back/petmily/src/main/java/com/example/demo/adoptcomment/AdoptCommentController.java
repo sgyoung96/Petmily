@@ -32,7 +32,7 @@ public class AdoptCommentController {
 	 */
 	@GetMapping("/{num}")
 	public Map getAll(@PathVariable("num") int num) {
-		ArrayList<AdoptCommentDto> dtos = service.getAll(num);
+		ArrayList<Adoptcomment> dtos = service.getAll(num);
 		Map map = new HashMap();
 		map.put("dto", dtos);
 		return map;
