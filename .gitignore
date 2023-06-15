@@ -123,4 +123,5 @@ yarn-error.log
 # End of https://www.toptal.com/developers/gitignore/api/eclipse,java,maven,vuejs
 
 # Spring Boot -> application.properties 추가
-application.properties
+/application.properties
+/Users/gayeong/Desktop/0. web-workspace/[Team] Petmily/project/back/petmily/src/main/resources/application.properties
