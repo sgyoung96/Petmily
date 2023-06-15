@@ -8,10 +8,13 @@ import org.hibernate.annotations.OnDeleteAction;
 import com.example.demo.member.Member;
 
 import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.PrePersist;
+import jakarta.persistence.SequenceGenerator;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -27,6 +30,8 @@ import lombok.ToString;
 public class Adoptboard {
 	
 	@Id
+	@SequenceGenerator(name="seq_adaoptboard_num", sequenceName="seq_adaoptboard_num", allocationSize=1)//시퀀스 생성. sequenceName:시퀀스 이름
+	@GeneratedValue(strategy=GenerationType.SEQUENCE, generator="seq_adaoptboard_num")//값 자동생성설정
 	private int num;		// 개인 분양 게시판 고유 번호 (PK)
 	
 	@ManyToOne
