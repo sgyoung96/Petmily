@@ -14,12 +14,12 @@ public class AdoptCommentService {
 	 * @param num
 	 * @return
 	 */
-	public ArrayList<Adoptcomment> getAll(int num) {
+	public ArrayList<AdoptCommentDto> getAll(int num) {
 		ArrayList<Adoptcomment> list = dao.getAll(num);
-		ArrayList<Adoptcomment> list2 = new ArrayList<Adoptcomment>();
+		ArrayList<AdoptCommentDto> list2 = new ArrayList<AdoptCommentDto>();
 		
-		for (int i = 0; i < list.size(); i++) {
-			list2.add(new Adoptcomment(list.get(i).getAb_num(), list.get(i).getContent(), list.get(i).getId(), list.get(i).getW_date(), list.get(i).getNum()));
+		for (Adoptcomment adoptComment : list) {
+			list2.add(new AdoptCommentDto(adoptComment.getAb_num(), adoptComment.getContent(), adoptComment.getId(), adoptComment.getW_date(), adoptComment.getNum()));
 		}
 		return list2;
 	}
