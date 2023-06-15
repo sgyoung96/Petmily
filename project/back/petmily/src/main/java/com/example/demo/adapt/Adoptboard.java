@@ -41,13 +41,13 @@ public class Adoptboard {
 	
 	private String title;	// 제목
 	private String content;	// 내용
-	private Date date;	// 날짜
+	private Date w_date;	// 날짜
 	private String address;	// 주소
 	private String pic1;	// 첫번째 사진 파일 경로
 	private String pic2;	// 두번째 사진 파일 경로
 	
 	@PrePersist
 	public void preprocess() {
-		date = new Date();	// 현재 날짜 생성
+		w_date = new Date();	// 현재 날짜 생성
 	}
 }

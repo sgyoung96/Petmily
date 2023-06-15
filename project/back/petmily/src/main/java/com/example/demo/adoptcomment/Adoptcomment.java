@@ -40,11 +40,11 @@ public class Adoptcomment {
 	@OnDelete(action = OnDeleteAction.CASCADE)
 	private Member id;		// (FK)
 	
-	private Date date;		// 작성일
+	private Date w_date;		// 작성일
 	private int ab_num;		// 분양 게시글 고유 번호
 	
 	@PrePersist
 	public void preprocess() {
-		date = new Date(); //현재 날짜 생성
+		w_date = new Date(); //현재 날짜 생성
 	}
 }
