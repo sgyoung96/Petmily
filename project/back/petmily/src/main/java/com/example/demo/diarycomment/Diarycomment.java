@@ -34,7 +34,7 @@ public class Diarycomment {
 	@GeneratedValue(strategy=GenerationType.SEQUENCE, generator="seq_diarycomment")//값 자동생성설정
 	private int num;
 	private String comment;
-	private Date date;
+	private Date w_date;
 	
 	@ManyToOne
 	@JoinColumn(name="id", nullable=false)  //fk 설정
@@ -48,6 +48,6 @@ public class Diarycomment {
 	
 	@PrePersist
 	   public void preprocess() {
-	      date = new Date(); //현재 날짜 생성
+		w_date = new Date(); //현재 날짜 생성
 	   }
 }
