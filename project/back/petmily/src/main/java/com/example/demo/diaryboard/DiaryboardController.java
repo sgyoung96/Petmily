@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
@@ -35,8 +36,9 @@ public class DiaryboardController {
 		return map;
 	}
 	
+	//글추가
 	@PostMapping("")
-	public void addDiary(DiaryboardDto dto) {
+	public Map addDiary(DiaryboardDto dto) {
 		boolean flag = true;
 		try {
 			int num = service.save(dto);// 추가. 추가될때 번호 자동 생성. 그 번호를 반환
@@ -71,9 +73,13 @@ public class DiaryboardController {
 		} catch (Exception e) {
 			flag = false;
 		}
+		Map map = new HashMap();
+		map.put("flag", flag);
+		map.put("dto", dto);
+		return map;
 }
 	
-	@GetMapping("/id/{id}")
+	@GetMapping("/{id}")
 	public Map getById(@PathVariable("id")String id) {
 		ArrayList<DiaryboardDto>list = service.getById(id);
 		Map map = new HashMap();
@@ -81,11 +87,27 @@ public class DiaryboardController {
 		return map;
 	}
 	
-	@GetMapping("/title/{title}")
+	@GetMapping("/{title}")
 	public Map getByTitle(@PathVariable("title")String title) {
 		ArrayList<DiaryboardDto>list = service.getByTitle(title);
 		Map map = new HashMap();
 		map.put("list", list);
+		return map;
+	}
+	
+	@PutMapping("")
+	public Map edit(DiaryboardDto dto) {
+		Map map = new HashMap();
+		DiaryboardDto dto2 = null;
+		boolean flag = true;
+		try {
+			int num = service.save(dto);
+			dto2 = service.getByNum(num);
+		}catch(Exception e) {
+			flag = false;
+		}
+		map.put("flag", flag);
+		map.put("dto", dto2);
 		return map;
 	}
 }

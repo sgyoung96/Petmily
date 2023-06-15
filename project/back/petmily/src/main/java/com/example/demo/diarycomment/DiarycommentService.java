@@ -13,9 +13,9 @@ public class DiarycommentService {
 	private DiarycommentDao dao;
 	
 	//추가, 수정
-	public int save(DiarycommentDto dto) {
+	public DiarycommentDto save(DiarycommentDto dto) {
 		Diarycomment c = dao.save(new Diarycomment(dto.getDb_num(), dto.getContent(), dto.getW_date(), dto.getId(), dto.getNum()));
-		return c.getDb_num();
+		return new DiarycommentDto(c.getDb_num(), c.getContent(), c.getW_date(), c.getId(), c.getNum());
 	}
 	
 	//댓글리스트

@@ -28,6 +28,16 @@ public class DiaryboardService {
 		return list2;
 	}
 	
+	//번호로 검색
+	public DiaryboardDto getByNum(int num) {
+		Diaryboard d = dao.findById(num).orElse(null);
+		if(d==null) {
+			return null;
+		}
+		return new DiaryboardDto(d.getNum(), d.getTitle(), d.getContent(), d.getW_date(), d.getId(), d.getPic1(),
+					d.getPic2(), null);
+	}
+	
 	// id로 검색
 	public ArrayList<DiaryboardDto> getById(String id) {
 		ArrayList<Diaryboard> list = (ArrayList<Diaryboard>) dao.findAll();
