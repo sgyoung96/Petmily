@@ -15,6 +15,7 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.PrePersist;
 import jakarta.persistence.SequenceGenerator;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -53,4 +54,10 @@ public class Volboard {
 	private String pic2;
 	
 	private int count;
+	
+	@PrePersist
+	public void preprocess() {
+		w_date = new Date(); //현재 날짜 생성
+		vol_date = new Date();
+	}
 }
