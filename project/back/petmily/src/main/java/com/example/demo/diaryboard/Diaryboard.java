@@ -35,7 +35,7 @@ public class Diaryboard {
 	private int num;
 	private String title;
 	private String content;
-	private Date date;
+	private Date w_date;
 	@ManyToOne
 	@JoinColumn(name="writer", nullable=false)  //fk 설정
 	@OnDelete(action = OnDeleteAction.CASCADE)
@@ -47,6 +47,6 @@ public class Diaryboard {
 	
 	@PrePersist
 	   public void preprocess() {
-	      date = new Date(); //현재 날짜 생성
+		w_date = new Date(); //현재 날짜 생성
 	   }
 }
