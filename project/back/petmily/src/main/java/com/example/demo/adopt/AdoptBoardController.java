@@ -33,7 +33,7 @@ public class AdoptBoardController {
 	@Autowired
 	private AdoptBoardService service;
 	
-	@Value("${spring.servelt.multipart.location}")
+	@Value("${spring.servlet.multipart.location}")
 	private String path;
 	
 	/**
@@ -102,7 +102,10 @@ public class AdoptBoardController {
 			e.printStackTrace();
 		}
 		
-		return null;
+		Map map = new HashMap();
+		map.put("flag", flag);
+		map.put("dto", dto);
+		return map;
 	}
 	
 	/**

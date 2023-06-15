@@ -33,23 +33,24 @@ public class Adoptcomment {
 	@Id
 	@SequenceGenerator(name="seq_adopt_num", sequenceName="seq_adopt_num", allocationSize=1)//시퀀스 생성. sequenceName:시퀀스 이름
 	@GeneratedValue(strategy=GenerationType.SEQUENCE, generator="seq_adopt_num")//값 자동생성설정
-	private int ab_num;		// 고유번호
-	private String content;	// 내용
+	private int ab_num;						// 고유번호
+	
+	private String content;					// 내용
 	
 	@ManyToOne
 	@JoinColumn(name="id", nullable=false)  //fk 설정
 	@OnDelete(action = OnDeleteAction.CASCADE)
-	private Member id;		// (FK)
+	private Member id;						// (FK)
 	
-	private Date w_date;		// 작성일
+	private Date w_date;					// 작성일
 	
 	@ManyToOne
-	@JoinColumn(name="num", nullable=false)  //fk 설정
+	@JoinColumn(name="num", nullable=false) //fk 설정
 	@OnDelete(action = OnDeleteAction.CASCADE)
-	private Adoptboard num;		// 분양 게시글 고유 번호
+	private Adoptboard num;					// 분양 게시글 고유 번호
 	
 	@PrePersist
 	public void preprocess() {
-		w_date = new Date(); //현재 날짜 생성
+		w_date = new Date(); 				//현재 날짜 생성
 	}
 }
