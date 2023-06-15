@@ -2,23 +2,19 @@ package com.example.demo.member;
 
 import java.util.Date;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 
-@Entity
 @Setter
 @Getter
 @ToString
 @NoArgsConstructor
 @AllArgsConstructor
-public class Member {
+public class MemberDto {
 	
-	@Id
 	private String id;
 	private String token;
 	private String pwd;
@@ -28,7 +24,5 @@ public class Member {
 	private String gender;
 	private String phone;
 	private String address;
-	
-	
 
 }
