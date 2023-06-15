@@ -17,6 +17,15 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
+/**
+ * 1. 전체 목록 검색
+ * 2. 디테일 조회
+ * 3. 글 추가
+ * 4. 글 수정
+ * 5. 글 삭제
+ * @author gayeong
+ *
+ */
 @RestController
 @CrossOrigin(origins= "*")
 @RequestMapping("/adaopt")
