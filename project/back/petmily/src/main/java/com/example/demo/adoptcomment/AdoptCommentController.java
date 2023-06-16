@@ -10,9 +10,6 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-
-import com.example.demo.adopt.AdoptBoardDto;
 
 /**
  * 1. 해당 게시글 댓글 전체 검색
@@ -49,6 +46,13 @@ public class AdoptCommentController {
 		Adoptcomment adoptComment = service.add(dto);
 		Map map = new HashMap();
 		map.put("adoptComment", adoptComment);
+		return map;
+	}
+	
+	public Map getComment(AdoptCommentDto dto) {
+		AdoptCommentDto adoptComment = service.getComment(dto.getAb_num());
+		Map map = new HashMap();
+		map.put("adoptCommemt", adoptComment);
 		return map;
 	}
 	
