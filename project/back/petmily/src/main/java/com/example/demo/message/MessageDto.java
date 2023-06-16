@@ -30,5 +30,5 @@ private int num;
 	private Date send_dt;
 	private String title;
 	private String content;
-	private int m_check;
+	private int check;
 }

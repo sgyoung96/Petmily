@@ -15,7 +15,7 @@ import jakarta.transaction.Transactional;
 public interface MessageDao extends JpaRepository<Message, Integer> {
 	ArrayList<Message> findByReciever(Member loginId); // 받은 메세지함 목록
 	ArrayList<Message> findBySender(Member sender); // 보낸이로 검색
-//	ArrayList<Message> findByRecieverAndM_check(Member loginId, int check); // 읽은 메세지, 안읽은 메세지 검색
+	ArrayList<Message> findByRecieverAndCheck(Member loginId, int check); // 읽은 메세지, 안읽은 메세지 검색
 	
 	@Transactional
 	@Modifying

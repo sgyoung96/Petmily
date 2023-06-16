@@ -2,6 +2,7 @@ package com.example.demo.member;
 
 import java.util.Date;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import lombok.AllArgsConstructor;
@@ -20,6 +21,7 @@ public class Member {
 	
 	@Id
 	private String id;
+	@Column(nullable=true)
 	private String token;
 	private String pwd;
 	private String name;

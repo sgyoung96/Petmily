@@ -44,16 +44,16 @@ public class MessageController {
 //		map.put("list", list);
 //		return map;
 //	}
-	
-//	//읽은 메세지, 안읽은 메세지 목록
-//	@GetMapping("/{loginId}/{check}")
-//	public Map getByRecieverAndM_check(@PathVariable("loginId") String loginId, @PathVariable("check") int check) {
-//		ArrayList<MessageDto> list = service.getByRecieverAndM_check(loginId, check);
-//		Map map = new HashMap();
-//		map.put("list", list);
-//		return map;
-//	}
 //	
+	//읽은 메세지, 안읽은 메세지 목록
+	@GetMapping("/{loginId}/{check}")
+	public Map getByRecieverAndM_check(@PathVariable("loginId") String loginId, @PathVariable("check") int check) {
+		ArrayList<MessageDto> list = service.getByRecieverAndCheck(loginId, check);
+		Map map = new HashMap();
+		map.put("list", list);
+		return map;
+	}
+	
 	//sender로 검색
 	@GetMapping("/sender/{sender}")
 	public Map getBySender(@PathVariable("sender") String sender) {
