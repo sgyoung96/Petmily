@@ -26,5 +26,5 @@ public class AdoptBoardDto {
 	private String address;	// 주소
 	private String pic1;	// 첫번째 사진 파일 경로
 	private String pic2;	// 두번째 사진 파일 경로
-	private MultipartFile[] multipartFile = new MultipartFile[2];
+	private MultipartFile[] f = new MultipartFile[2];
 }

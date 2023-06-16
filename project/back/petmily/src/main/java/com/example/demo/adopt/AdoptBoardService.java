@@ -5,6 +5,10 @@ import java.util.ArrayList;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.example.demo.member.Member;
+import com.example.demo.volboard.Volboard;
+import com.example.demo.volboard.VolboardDto;
+
 @Service
 public class AdoptBoardService {
 	
@@ -30,7 +34,7 @@ public class AdoptBoardService {
 	 * @return
 	 */
 	public AdoptBoardDto getDetail(int num) {
-		Adoptboard adoptBoard = (Adoptboard) dao.findByNum(num);
+		Adoptboard adoptBoard = dao.findById(num).orElse(null);
 		if (adoptBoard == null) {
 			return null;
 		}
@@ -52,6 +56,20 @@ public class AdoptBoardService {
 	 * @param num
 	 */
 	public void remove(int num) {
-		dao.deleteByNum(num);
+		dao.deleteById(null);;
+	}
+	
+	/**
+	 * 작성자로 검색
+	 * @param id
+	 */
+	public ArrayList<AdoptBoardDto> getByWriter(String id) {
+		Member m = new Member(id,"","","","",null,"","","");
+		ArrayList<Adoptboard> list = dao.findById(m);
+		ArrayList<AdoptBoardDto> dtolist = new ArrayList<>();
+		for(Adoptboard v : list) {
+			dtolist.add(new AdoptBoardDto(v.getNum(), v.getId(), v.getTitle(), v.getContent(), v.getW_date(), v.getAddress(), v.getPic1(), v.getPic2(), null));
+		}
+		return dtolist;
 	}
 }

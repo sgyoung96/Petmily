@@ -49,13 +49,6 @@ public class AdoptCommentController {
 		return map;
 	}
 	
-	public Map getComment(AdoptCommentDto dto) {
-		AdoptCommentDto adoptComment = service.getComment(dto.getAb_num());
-		Map map = new HashMap();
-		map.put("adoptCommemt", adoptComment);
-		return map;
-	}
-	
 	/**
 	 * 댓글 삭제
 	 * @param ab_num

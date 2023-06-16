@@ -27,30 +27,20 @@ public class AdoptCommentService {
 	}
 	
 	/**
-	 * 댓글 입력
+	 * 댓글 입력, 수정
 	 * @param dtoz
 	 * @return
 	 */
 	public Adoptcomment add(AdoptCommentDto dto) {
-		Adoptcomment adoptComment = (Adoptcomment) dao.save(new AdoptCommentDto(dto.getAb_num(), dto.getContent(), dto.getId(), dto.getW_date(), dto.getNum()));
+		Adoptcomment adoptComment = (Adoptcomment) dao.save(new Adoptcomment(dto.getAb_num(),dto.getContent(),dto.getId(),dto.getW_date(),dto.getNum()));
 		return adoptComment;
 	}
 	
-	/**
-	 * 특정 댓글 조회
-	 * @param dto
-	 * @return
-	 */
-	public AdoptCommentDto getComment(int ab_num) {
-		AdoptCommentDto dto = new AdoptCommentDto();
-		dto = dao.findByAb_num(ab_num);
-		return dto;
-	}
 	/**
 	 * 댓글 삭제
 	 * @param num
 	 */
 	public void remove(int num) {
-		dao.deleteByAb_num(num);
+		dao.deleteById(num);
 	}
 }

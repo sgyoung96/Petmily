@@ -72,7 +72,7 @@ public class AdoptBoardController {
 			File dir = new File(path + num);
 			dir.mkdir();
 			
-			MultipartFile[] multipartFiles = dto.getMultipartFile();
+			MultipartFile[] multipartFiles = dto.getF();
 			String[] images = new String[4];
 			
 			for (int i = 0; i < multipartFiles.length; i++) {

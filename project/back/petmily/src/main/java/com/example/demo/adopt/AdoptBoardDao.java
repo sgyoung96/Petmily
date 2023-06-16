@@ -2,14 +2,14 @@ package com.example.demo.adopt;
 
 import java.util.ArrayList;
 
+
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
+import com.example.demo.member.Member;
+
 
 @Repository
 public interface AdoptBoardDao extends JpaRepository<Adoptboard, Integer>{
-
-	ArrayList<Adoptboard> findAll();			// 전체 조회
-	Adoptboard findByNum(int num);				// 디테일 조회
-	Adoptboard save(Adoptboard adoptBoard);		// 글 작성 및 수정
-	void deleteByNum(int num);					// 글 삭제
+	ArrayList<Adoptboard> findById(Member id);
+	ArrayList<Adoptboard> findByTitle(String title);
 }

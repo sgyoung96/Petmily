@@ -41,7 +41,7 @@ public class VolboardController {
 		boolean flag = true;
 		try {
 			int num = service.save(dto);
-			File dir = new File(path + num);
+			File dir = new File(path + "volboard/" + num); //c:/petmily/volboard/num
 			dir.mkdir();
 			MultipartFile f1 = dto.getF1();
 			MultipartFile f2 = dto.getF2();

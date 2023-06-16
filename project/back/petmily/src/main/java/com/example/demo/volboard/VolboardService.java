@@ -18,6 +18,14 @@ public class VolboardService {
 		return b.getNum();
 	}
 	
+	public VolboardDto getById(int num) {
+		Volboard v = dao.findById(num).orElse(null);
+		if(v == null) {
+			return null;
+		}
+		return new VolboardDto(v.getNum(), v.getWriter(), v.getTitle(), v.getContent(), v.getVol_date(), v.getVol_number(), v.getW_date(), v.getAddress(), v.getPic1(), v.getPic2(),v.getCount(),null,null);
+	}
+	
 	//봉사모집게시판 전체검색
 	public ArrayList<VolboardDto> getAll() {
 		ArrayList<Volboard> list = (ArrayList<Volboard>) dao.findAll();
