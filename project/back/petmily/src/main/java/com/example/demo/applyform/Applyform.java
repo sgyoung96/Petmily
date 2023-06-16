@@ -43,12 +43,12 @@ public class Applyform {
 	private String another;
 	private String reason;
 	private String feeding;
-	private int check;
+	private int isCheck;
 	
 	
 	@PrePersist
 	public void preprocess() {
-		check = 0;
+		isCheck = 0;
 		wdate = new Date(); //현재 날짜 생성
 	}
 }
