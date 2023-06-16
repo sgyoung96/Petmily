@@ -68,12 +68,12 @@ public class DiarycommentController {
 	}
 	
 	@DeleteMapping("/{num}")
-	public Map delete(@PathVariable("num") int num) {
+	public Map delete(@PathVariable("num") int db_num) {
 		Map map = new HashMap();
 		DiarycommentDto dto2 = null;
 		boolean flag = true;
 		try {
-			service.delDiarycomment(num);
+			service.delDiarycomment(db_num);
 		} catch (Exception e) {
 			flag = false;
 		}
