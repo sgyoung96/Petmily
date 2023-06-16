@@ -15,9 +15,9 @@ public class ApplyformService {
 	//추가, 수정
 	public ApplyformDto save(ApplyformDto dto) {
 		Applyform a = dao.save(new Applyform(dto.getNum(), dto.getId(), dto.getWdate(), dto.getAgreement(), 
-				dto.getAnother(), dto.getReason(), dto.getFeeding(), dto.getIsCheck()));
+				dto.getAnother(), dto.getReason(), dto.getFeeding(), dto.getIscheck()));
 		return new ApplyformDto(a.getNum(), a.getId(), a.getWdate(), a.getAgreement(), a.getAnother(),
-				a.getReason(), a.getFeeding(), a.getIsCheck());
+				a.getReason(), a.getFeeding(), a.getIscheck());
 	}
 	
 	//전체 검색
@@ -26,7 +26,7 @@ public class ApplyformService {
 		ArrayList<ApplyformDto> list2 = new ArrayList<ApplyformDto>();
 		for (Applyform a : list) {
 			list2.add(new ApplyformDto(a.getNum(), a.getId(), a.getWdate(), a.getAgreement(),
-					a.getAnother(), a.getReason(), a.getFeeding(), a.getIsCheck()));
+					a.getAnother(), a.getReason(), a.getFeeding(), a.getIscheck()));
 		}
 		return list2;
 	}
@@ -34,22 +34,22 @@ public class ApplyformService {
 	//Id로 검색
 	public ArrayList<ApplyformDto> findByMemberId(String id){
 		Member m = new Member(id, "", "", "", "", null, "", "", "");
-		ArrayList<Applyform> list = (ArrayList<Applyform>) dao.findByMemberId(m);
+		ArrayList<Applyform> list = (ArrayList<Applyform>) dao.findById(m);
 		ArrayList<ApplyformDto> list2 = new ArrayList<ApplyformDto>();
 		for (Applyform a : list) {
 			list2.add(new ApplyformDto(a.getNum(), a.getId(), a.getWdate(), a.getAgreement(),
-					a.getAnother(), a.getReason(), a.getFeeding(), a.getIsCheck()));
+					a.getAnother(), a.getReason(), a.getFeeding(), a.getIscheck()));
 		}
 		return list2;
 	}
 	
 	//check로 검색
 	public ArrayList<ApplyformDto> findByCheck(int check){
-		ArrayList<Applyform> list = (ArrayList<Applyform>) dao.findByCheck(check);
+		ArrayList<Applyform> list = (ArrayList<Applyform>) dao.findByIscheck(check);
 		ArrayList<ApplyformDto> list2 = new ArrayList<ApplyformDto>();
 		for (Applyform a : list) {
 			list2.add(new ApplyformDto(a.getNum(), a.getId(), a.getWdate(), a.getAgreement(),
-					a.getAnother(), a.getReason(), a.getFeeding(), a.getIsCheck()));
+					a.getAnother(), a.getReason(), a.getFeeding(), a.getIscheck()));
 		}
 		return list2;
 	}

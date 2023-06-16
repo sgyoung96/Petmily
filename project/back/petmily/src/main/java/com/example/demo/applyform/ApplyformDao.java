@@ -13,8 +13,8 @@ import com.example.demo.member.Member;
 import jakarta.transaction.Transactional;
 @Repository
 public interface ApplyformDao extends JpaRepository<Applyform, Integer> {
-	ArrayList<Applyform> findByMemberId(Member id);
-	ArrayList<Applyform> findByCheck(int check);
+	ArrayList<Applyform> findById(Member id);
+	ArrayList<Applyform> findByIscheck(int ischeck);
 	
 	@Transactional
 	@Modifying

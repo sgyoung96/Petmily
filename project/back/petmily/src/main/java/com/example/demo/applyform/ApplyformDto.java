@@ -23,5 +23,5 @@ public class ApplyformDto {
 	private String another;
 	private String reason;
 	private String feeding;
-	private int IsCheck;
+	private int ischeck;
 }

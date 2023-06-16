@@ -5,6 +5,8 @@ import java.util.ArrayList;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.example.demo.adopt.Adoptboard;
+
 @Service
 public class AdoptCommentService {
 	
@@ -17,7 +19,8 @@ public class AdoptCommentService {
 	 * @return
 	 */
 	public ArrayList<AdoptCommentDto> getAll(int num) {
-		ArrayList<Adoptcomment> list = dao.findByNum(num);
+		Adoptboard b = new Adoptboard(num,null,"","",null,"","","");
+		ArrayList<Adoptcomment> list = dao.findByNum(b);
 		ArrayList<AdoptCommentDto> list2 = new ArrayList<AdoptCommentDto>();
 		
 		for (Adoptcomment adoptComment : list) {
