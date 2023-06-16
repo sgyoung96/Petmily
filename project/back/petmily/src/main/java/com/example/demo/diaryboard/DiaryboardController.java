@@ -9,6 +9,7 @@ import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -16,6 +17,8 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
+
+import com.example.demo.diarycomment.DiarycommentDto;
 
 @RestController
 @CrossOrigin(origins="*")
@@ -39,23 +42,22 @@ public class DiaryboardController {
 	//글추가
 	@PostMapping("")
 	public Map addDiary(DiaryboardDto dto) {
-		boolean flag = true;
-		try {
-			int num = service.save(dto);// 추가. 추가될때 번호 자동 생성. 그 번호를 반환
-			File dir = new File(path + num);
-			dir.mkdir();// C:/shop/상품번호 인 디렉토리 생성 => 상품 이미지 폴더
-			MultipartFile[] f = dto.getF();
-			String[] imgs = new String[2];
+		boolean flag = true;//'flag'라는 boolean 변수를 'true'로 초기화
+		try {//에외 발생 가능성 있으므로 try블록 안에서 실행
+			int num = service.save(dto);//service.save를 호출하여 dto매개변수로 저장한 후 반환된 정수값을 num변수에 할당
+			File dir = new File(path + "diaryboard/" + num);//디렉토리 경로
+			dir.mkdir();//mkdir()메서드를 호출하여 디렉토리 생성
+			MultipartFile[] f = dto.getF();//dto객체의 getF()를 호출하여 f생성
+			String[] imgs = new String[2];//imgs를 초기화
 			for (int i = 0; i < f.length; i++) {
-				MultipartFile x = f[i];
-				String fname = x.getOriginalFilename();
+				MultipartFile x = f[i];//x라는 새 MultipartFile객체 생성
+				String fname = x.getOriginalFilename();//fname변수에 x의 원본 파일이름이 저장
 				if (fname != null && !fname.equals("")) {
-					// String fname = x.getOriginalFilename();//원본파일명
-					String newpath = path + num + "/" + fname;
-					File newfile = new File(newpath);// 복사할 새 파일 생성. c:/shop/번호/원본파일명
+					String newpath = path + "diaryboard/" + num + "/" + fname; //새 파일 경로인 newpath가 구성됨
+					File newfile = new File(newpath);//newpath를 사용하여 새File객체인 newfile이 생성됨
 					System.out.println(newpath);
 					try {
-						x.transferTo(newfile);// 파일 업로드
+						x.transferTo(newfile);
 						imgs[i] = newpath;
 					} catch (IllegalStateException e) {
 						// TODO Auto-generated catch block
@@ -108,6 +110,20 @@ public class DiaryboardController {
 		}
 		map.put("flag", flag);
 		map.put("dto", dto2);
+		return map;
+	}
+	
+	@DeleteMapping("/{num}")
+	public Map delete(@PathVariable("num") int num) {
+		Map map = new HashMap();
+		DiaryboardDto dto2 = null;
+		boolean flag = true;
+		try {
+			service.delDiaryboard(num);
+		} catch (Exception e) {
+			flag = false;
+		}
+		map.put("flag", flag);
 		return map;
 	}
 }
