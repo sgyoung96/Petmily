@@ -3,6 +3,8 @@
     <router-link to="/">Home</router-link> |
     <router-link to="/about">About</router-link> |
     <router-link to="/diaryboardhome">입양일기게시판</router-link>
+    <br>
+    <router-link to="/adopt">분양게시판홈</router-link>
   </nav>
   <router-view/>
 </template>

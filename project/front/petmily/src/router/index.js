@@ -1,6 +1,8 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import HomeView from '../views/HomeView.vue'
 import DiaryboardHome from '@/components/dboard/DiaryboardHome.vue'
+import AdoptBoardHome from '../views/adopt/AdoptBoardView.vue'
+import AdoptForm from '@/components/adopt/AdoptForm.vue'
 
 const routes = [
   {
@@ -12,6 +14,16 @@ const routes = [
     path: '/diaryboardhome',
     name: 'DiaryboardHome',
     component: DiaryboardHome
+  },
+  {
+    path:'/adopt',
+    name: 'AdoptBoardHome',
+    component: AdoptBoardHome
+  },
+  {
+    path:'/adopt/addform',
+    name: 'AdoptForm',
+    component: AdoptForm
   },
   {
     path: '/about',
