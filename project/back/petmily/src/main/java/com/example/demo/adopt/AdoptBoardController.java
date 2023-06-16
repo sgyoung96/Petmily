@@ -62,7 +62,7 @@ public class AdoptBoardController {
 	}
 	
 	/**
-	 * 글 추가
+	 * 글 작성 및 수정
 	 * @param dto
 	 * @return
 	 */
@@ -105,30 +105,6 @@ public class AdoptBoardController {
 		Map map = new HashMap();
 		map.put("flag", flag);
 		map.put("dto", dto);
-		return map;
-	}
-	
-	/**
-	 * 글 수정
-	 * @param dto
-	 * @return
-	 */
-	@PutMapping("")
-	public Map edit(AdoptBoardDto dto) {
-		AdoptBoardDto origin = service.getDetail(dto.getNum());
-		origin.setNum(dto.getNum());
-		origin.setId(dto.getId());
-		origin.setTitle(dto.getTitle());
-		origin.setContent(dto.getContent());
-		origin.setW_date(dto.getW_date());
-		origin.setAddress(dto.getAddress());
-		origin.setPic1(dto.getPic1());
-		origin.setPic2(dto.getPic2());
-		
-		int num = service.edit(origin);
-		
-		Map map = new HashMap();
-		map.put("num", num);
 		return map;
 	}
 	

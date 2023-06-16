@@ -32,7 +32,7 @@ public class AdoptCommentService {
 	 * @return
 	 */
 	public Adoptcomment add(AdoptCommentDto dto) {
-		Adoptcomment adoptComment = dao.add(new AdoptCommentDto(dto.getAb_num(), dto.getContent(), dto.getId(), dto.getW_date(), dto.getNum()));
+		Adoptcomment adoptComment = (Adoptcomment) dao.save(new AdoptCommentDto(dto.getAb_num(), dto.getContent(), dto.getId(), dto.getW_date(), dto.getNum()));
 		return adoptComment;
 	}
 	
@@ -43,25 +43,14 @@ public class AdoptCommentService {
 	 */
 	public AdoptCommentDto getComment(int ab_num) {
 		AdoptCommentDto dto = new AdoptCommentDto();
-		dto = dao.getComment(ab_num);
+		dto = dao.findByNum(ab_num);
 		return dto;
 	}
-	
-	/**
-	 * 댓글 수정
-	 * @param dto
-	 * @return
-	 */
-	public AdoptCommentDto edit(AdoptCommentDto newComment) {
-		AdoptCommentDto adoptCommentDto = dao.edit(new AdoptCommentDto(newComment.getAb_num(), newComment.getContent(), newComment.getId(), newComment.getW_date(), newComment.getNum()));
-		return adoptCommentDto;
-	}
-	
 	/**
 	 * 댓글 삭제
 	 * @param num
 	 */
 	public void remove(int num) {
-		dao.remove(num);
+		dao.deleteByNum(num);
 	}
 }
