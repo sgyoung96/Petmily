@@ -29,7 +29,7 @@ public class DiarycommentService {
 		return list2;
 	}
 	
-	public void delDiarycomment(int num) {
-		dao.deleteById(num);
+	public void delDiarycomment(int db_num) {
+		dao.deleteById(db_num);
 	}
 }
