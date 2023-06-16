@@ -17,7 +17,7 @@ public class AdoptCommentService {
 	 * @return
 	 */
 	public ArrayList<AdoptCommentDto> getAll(int num) {
-		ArrayList<Adoptcomment> list = dao.getAll(num);
+		ArrayList<Adoptcomment> list = dao.findByNum(num);
 		ArrayList<AdoptCommentDto> list2 = new ArrayList<AdoptCommentDto>();
 		
 		for (Adoptcomment adoptComment : list) {
@@ -43,7 +43,7 @@ public class AdoptCommentService {
 	 */
 	public AdoptCommentDto getComment(int ab_num) {
 		AdoptCommentDto dto = new AdoptCommentDto();
-		dto = dao.findByNum(ab_num);
+		dto = dao.findByAb_num(ab_num);
 		return dto;
 	}
 	/**
@@ -51,6 +51,6 @@ public class AdoptCommentService {
 	 * @param num
 	 */
 	public void remove(int num) {
-		dao.deleteByNum(num);
+		dao.deleteByAb_num(num);
 	}
 }

@@ -12,7 +12,6 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
@@ -21,7 +20,6 @@ import org.springframework.web.multipart.MultipartFile;
  * 1. 전체 목록 검색
  * 2. 디테일 조회
  * 3. 글 추가
- * 4. 글 수정
  * 5. 글 삭제
  * @author gayeong
  *
@@ -112,8 +110,17 @@ public class AdoptBoardController {
 	 * 글 삭제
 	 * @param num
 	 */
-	@DeleteMapping("")
-	public void remove(int num) {
-		service.remove(num);
+	@DeleteMapping("/{num}")
+	public Map remove(@PathVariable("num") int num) {
+		Map map = new HashMap();
+		AdoptBoardDto dto2 = null;
+		boolean flag = true;
+		try {
+			service.remove(num);
+		} catch (Exception e) {
+			flag = false;
+		}
+		map.put("flag", flag);
+		return map;
 	}
 }

@@ -16,7 +16,7 @@ public class AdoptBoardService {
 	 * @return
 	 */
 	public ArrayList<AdoptBoardDto> getAll() {
-		ArrayList<Adoptboard> list = (ArrayList<Adoptboard>) dao.getAll();
+		ArrayList<Adoptboard> list = (ArrayList<Adoptboard>) dao.findAll();
 		ArrayList<AdoptBoardDto> list2 = new ArrayList<AdoptBoardDto>();
 		for (Adoptboard adoptBoard : list) {
 			list2.add(new AdoptBoardDto(adoptBoard.getNum(), adoptBoard.getId(), adoptBoard.getTitle(), adoptBoard.getContent(), adoptBoard.getW_date(), adoptBoard.getAddress(), adoptBoard.getPic1(), adoptBoard.getPic2(), null));
@@ -52,6 +52,6 @@ public class AdoptBoardService {
 	 * @param num
 	 */
 	public void remove(int num) {
-		dao.delete(num);
+		dao.deleteByNum(num);
 	}
 }

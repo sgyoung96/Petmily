@@ -12,10 +12,11 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 
+import com.example.demo.adopt.AdoptBoardDto;
+
 /**
  * 1. 해당 게시글 댓글 전체 검색
  * 2. 댓글 입력
- * 3. 댓글 수정
  * 4. 댓글 삭제 
  * @author gayeong
  *
@@ -52,27 +53,20 @@ public class AdoptCommentController {
 	}
 	
 	/**
-	 * 댓글 수정
-	 * @param dto
-	 * @return
-	 */
-	@PutMapping("")
-	public Map edit(AdoptCommentDto dto) {
-		AdoptCommentDto adoptCommentDto = service.getComment(dto.getAb_num()); // 댓글 고유번호로 댓글 엔티티 조회
-		AdoptCommentDto newDto = new AdoptCommentDto(adoptCommentDto.getAb_num(), adoptCommentDto.getContent(), adoptCommentDto.getId(), adoptCommentDto.getW_date(), adoptCommentDto.getNum());
-		adoptCommentDto = service.edit(newDto);
-		
-		Map map = new HashMap();
-		map.put("comment", adoptCommentDto);
-		return map;
-	}
-	
-	/**
 	 * 댓글 삭제
 	 * @param ab_num
 	 */
-	@DeleteMapping("")
-	public void remove(int ab_num) {
-		service.remove(ab_num);
+	@DeleteMapping("/{num}")
+	public Map remove(@PathVariable("num") int ab_num) {
+		Map map = new HashMap();
+		AdoptCommentDto dto2 = null;
+		boolean flag = true;
+		try {
+			service.remove(ab_num);
+		} catch (Exception e) {
+			flag = false;
+		}
+		map.put("flag", flag);
+		return map;
 	}
 }
