@@ -14,10 +14,10 @@ public class ApplyformService {
 	
 	//추가, 수정
 	public ApplyformDto save(ApplyformDto dto) {
-		Applyform a = dao.save(new Applyform(dto.getNum(), dto.getId(), dto.getWdate(), dto.getAgreement(), 
-				dto.getAnother(), dto.getReason(), dto.getFeeding(), dto.getIscheck()));
-		return new ApplyformDto(a.getNum(), a.getId(), a.getWdate(), a.getAgreement(), a.getAnother(),
-				a.getReason(), a.getFeeding(), a.getIscheck());
+		Applyform a = dao.save(new Applyform(dto.getNum(), dto.getId(), null, dto.getAgreement(), 
+				dto.getAnother(), dto.getReason(), dto.getFeeding(), 0));
+		return new ApplyformDto(a.getNum(), a.getId(), null, a.getAgreement(), a.getAnother(),
+				a.getReason(), a.getFeeding(),0);
 	}
 	
 	//전체 검색
