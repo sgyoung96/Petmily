@@ -23,8 +23,8 @@ import lombok.ToString;
 @NoArgsConstructor
 @AllArgsConstructor
 public class VolboardDto {
-private int num;
 	
+	private int num;
 	private Member writer;
 	private String title;
 	private String content;
@@ -36,6 +36,5 @@ private int num;
 	private String pic2;
 	private int count;
 	
-	private MultipartFile f1;
-	private MultipartFile f2;
+	private MultipartFile[] f = new MultipartFile[2];
 }
