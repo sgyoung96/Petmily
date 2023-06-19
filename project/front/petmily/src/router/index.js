@@ -1,6 +1,9 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import HomeView from '../views/HomeView.vue'
-import DiaryboardHome from '@/components/dboard/DiaryboardHome.vue'
+import DiaryBoardHome from '@/components/diaryboard/DiaryBoardHome.vue'
+import DiaryBoardAdd from '@/components/diaryboard/DiaryBoardAdd.vue'
+import DiaryBoardDetail from '@/components/diaryboard/DiaryBoardDetail.vue'
+import KakaomapHome from '@/components/kakaomap/KakaomapHome.vue'
 
 const routes = [
   {
@@ -10,8 +13,23 @@ const routes = [
   },
   {
     path: '/diaryboardhome',
-    name: 'DiaryboardHome',
-    component: DiaryboardHome
+    name: 'DiaryBoardHome',
+    component: DiaryBoardHome
+  },
+  {
+    path: '/diaryboardadd',
+    name: 'DiaryBoardAdd',
+    component: DiaryBoardAdd
+  },
+  {
+    path: '/diaryboarddetail',
+    name: 'DiaryBoardDetail',
+    component: DiaryBoardDetail
+  },
+  {
+    path: '/kakaomaphome',
+    name: 'KakaomapHome',
+    component: KakaomapHome
   },
   {
     path: '/about',
