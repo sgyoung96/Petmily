@@ -4,6 +4,7 @@
     <router-link to="/about">About</router-link> |
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
     <router-link to="/diaryboardhome">입양일기게시판</router-link>
     <br>
     <router-link to="/adopt">분양게시판홈</router-link>
@@ -15,6 +16,10 @@
     <router-link to="/diaryboardhome">입양일기게시판</router-link> |
     <router-link to="/volboardhome">봉사모집게시판</router-link>
 >>>>>>> 332eb10dff6d05428f38826a8ae74405d34a0118
+=======
+    <router-link to="/applyform">Apply</router-link> |
+    <router-link to="/api">Api</router-link>
+>>>>>>> 0801ff5d1df1c063466acc099989a66b609aee22
   </nav>
   <router-view/>
   <footer>
@@ -24,6 +29,7 @@
     <router-link to="/volboardhome">봉사모집게시판</router-link>
   </footer>
 </template>
+
 
 <style>
 #app {

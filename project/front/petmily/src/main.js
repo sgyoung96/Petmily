@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 import { createApp } from 'vue'
 import App from './App.vue'
 import router from './router'
@@ -28,3 +29,16 @@ app.use(router) //라우터 사용설정. url별로 실행될 component등록
 >>>>>>> 332eb10dff6d05428f38826a8ae74405d34a0118
 app.config.globalProperties.$axios = axios; //비동기요청객체
 app.mount('#app')
+=======
+import { createApp } from 'vue';
+import App from './App.vue';
+import router from './router';
+import store from './store';
+import axios from 'axios';
+
+const app = createApp(App);
+app.config.productionTip = false;
+app.config.globalProperties.$http = axios;
+
+app.use(store).use(router).mount('#app');
+>>>>>>> 0801ff5d1df1c063466acc099989a66b609aee22

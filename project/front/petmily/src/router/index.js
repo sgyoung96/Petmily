@@ -1,6 +1,7 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import HomeView from '../views/HomeView.vue'
 <<<<<<< HEAD
+<<<<<<< HEAD
 import DiaryboardHome from '@/components/dboard/DiaryboardHome.vue'
 <<<<<<< HEAD
 import AdoptBoardHome from '../views/adopt/AdoptBoardView.vue'
@@ -15,6 +16,10 @@ import KakaomapHome from '@/components/kakaomap/KakaomapHome.vue'
 import VolBoardAdd from '@/components/volboard/VolBoardAdd.vue'
 import VolBoardHome from '@/components/volboard/VolBoardHome.vue'
 >>>>>>> 332eb10dff6d05428f38826a8ae74405d34a0118
+=======
+import ApplyForm from '@/components/cdh/ApplyForm.vue'
+import Api from '@/components/cdh/Api.vue'
+>>>>>>> 0801ff5d1df1c063466acc099989a66b609aee22
 
 const routes = [
   {
@@ -61,6 +66,7 @@ const routes = [
     component: () => import(/* webpackChunkName: "about" */ '../views/AboutView.vue')
   },
   {
+<<<<<<< HEAD
     path: '/volboardhome',
     name: 'VolBoardHome',
     component: VolBoardHome
@@ -69,6 +75,16 @@ const routes = [
     path: '/volboardadd',
     name: 'VolBoardAdd',
     component: VolBoardAdd
+=======
+    path: '/applyform',
+    name: 'ApplyForm',
+    component: ApplyForm
+  },
+  {
+    path: '/api',
+    name: 'Api',
+    component: Api
+>>>>>>> 0801ff5d1df1c063466acc099989a66b609aee22
   }
 ]
 
