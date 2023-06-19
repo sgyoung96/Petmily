@@ -2,9 +2,16 @@
   <nav>
     <router-link to="/">Home</router-link> |
     <router-link to="/about">About</router-link> |
-    <router-link to="/diaryboardhome">입양일기게시판</router-link>
+    <router-link to="/diaryboardhome">입양일기게시판</router-link> |
+    <router-link to="/volboardhome">봉사모집게시판</router-link>
   </nav>
   <router-view/>
+  <footer>
+    <router-link to="/">Home</router-link> |
+    <router-link to="/about">About</router-link> |
+    <router-link to="/diaryboardhome">입양일기게시판</router-link> |
+    <router-link to="/volboardhome">봉사모집게시판</router-link>
+  </footer>
 </template>
 
 <style>

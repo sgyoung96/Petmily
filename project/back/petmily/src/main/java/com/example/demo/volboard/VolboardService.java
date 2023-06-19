@@ -23,7 +23,7 @@ public class VolboardService {
 		if(v == null) {
 			return null;
 		}
-		return new VolboardDto(v.getNum(), v.getWriter(), v.getTitle(), v.getContent(), v.getVol_date(), v.getVol_number(), v.getW_date(), v.getAddress(), v.getPic1(), v.getPic2(),v.getCount(),null,null);
+		return new VolboardDto(v.getNum(), v.getWriter(), v.getTitle(), v.getContent(), v.getVol_date(), v.getVol_number(), v.getW_date(), v.getAddress(), v.getPic1(), v.getPic2(),v.getCount(),null);
 	}
 	
 	//봉사모집게시판 전체검색
@@ -31,7 +31,7 @@ public class VolboardService {
 		ArrayList<Volboard> list = (ArrayList<Volboard>) dao.findAll();
 		ArrayList<VolboardDto> dtolist = new ArrayList<>();
 		for(Volboard v : list) {
-			dtolist.add(new VolboardDto(v.getNum(), v.getWriter(), v.getTitle(), v.getContent(), v.getVol_date(), v.getVol_number(), v.getW_date(), v.getAddress(), v.getPic1(), v.getPic2(),v.getCount(),null,null));
+			dtolist.add(new VolboardDto(v.getNum(), v.getWriter(), v.getTitle(), v.getContent(), v.getVol_date(), v.getVol_number(), v.getW_date(), v.getAddress(), v.getPic1(), v.getPic2(),v.getCount(),null));
 		}
 		return dtolist;
 	}
@@ -41,7 +41,7 @@ public class VolboardService {
 		ArrayList<Volboard> list = dao.findByTitle(title);
 		ArrayList<VolboardDto> dtolist = new ArrayList<>();
 		for(Volboard v : list) {
-			dtolist.add(new VolboardDto(v.getNum(), v.getWriter(), v.getTitle(), v.getContent(), v.getVol_date(), v.getVol_number(), v.getW_date(), v.getAddress(), v.getPic1(), v.getPic2(),v.getCount(),null,null));
+			dtolist.add(new VolboardDto(v.getNum(), v.getWriter(), v.getTitle(), v.getContent(), v.getVol_date(), v.getVol_number(), v.getW_date(), v.getAddress(), v.getPic1(), v.getPic2(),v.getCount(),null));
 		}
 		return dtolist;
 	}
@@ -51,7 +51,7 @@ public class VolboardService {
 		ArrayList<Volboard> list = dao.findByWriter(m);
 		ArrayList<VolboardDto> dtolist = new ArrayList<>();
 		for(Volboard v : list) {
-			dtolist.add(new VolboardDto(v.getNum(), v.getWriter(), v.getTitle(), v.getContent(), v.getVol_date(), v.getVol_number(), v.getW_date(), v.getAddress(), v.getPic1(), v.getPic2(),v.getCount(),null,null));
+			dtolist.add(new VolboardDto(v.getNum(), v.getWriter(), v.getTitle(), v.getContent(), v.getVol_date(), v.getVol_number(), v.getW_date(), v.getAddress(), v.getPic1(), v.getPic2(),v.getCount(),null));
 		}
 		return dtolist;
 	}

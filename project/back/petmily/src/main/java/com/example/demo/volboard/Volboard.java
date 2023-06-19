@@ -42,8 +42,10 @@ public class Volboard {
 	
 	private String title; //게시판 제목
 	private String content; //게시판 내용 
+	
 	private Date vol_date; // 봉사일자
 	private int vol_number; // 봉사모집인원
+	
 	private Date w_date; // 작성일자
 	private String address; // 봉사장소의 주소
 	
@@ -58,6 +60,6 @@ public class Volboard {
 	@PrePersist
 	public void preprocess() {
 		w_date = new Date(); //현재 날짜 생성
-		vol_date = new Date();
+		vol_date = new Date(); //현재 날짜 생성
 	}
 }
