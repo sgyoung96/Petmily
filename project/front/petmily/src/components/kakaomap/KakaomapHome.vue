@@ -6,23 +6,22 @@
 </template>
 <style scoped>
 #map {
-  width: 100%;
-  height: 400px;
+  width:100%;
+  height:400px;
 }
 </style>
 <script>
 export default {
-  name: "KakaoMap", // 컴포넌트 이름 지정
+  name:"KakaoMap", // 컴포넌트 이름 지정
   data() {
     return {
       // map 객체 설정
-      map: null,
+      map:null,
     };
   },
   setup() {},
   created() {},
   mounted() {
-  	// api 스크립트 소스 불러오기 및 지도 출력
     if (window.kakao && window.kakao.maps) {
       this.loadMap();
     } else {
@@ -31,7 +30,6 @@ export default {
   },
   unmounted() {},
   methods: {
-  	// api 불러오기
     loadScript() {
       const script = document.createElement("script");
       script.src =
@@ -44,18 +42,17 @@ export default {
     loadMap() {
       const container = document.getElementById("map"); 
       const options = {
-        center: new window.kakao.maps.LatLng(33.450701, 126.570667), 
+        center: new window.kakao.maps.LatLng(37.541,126.986), 
         level: 3
       };
 
-      this.map = new window.kakao.maps.Map(container, options); 
+      this.map = new window.kakao.maps.Map(container,options); 
       this.loadMaker();
     },
     // 지정한 위치에 마커 불러오기
     loadMaker() {
       const markerPosition = new window.kakao.maps.LatLng(
-        33.450701,
-        126.570667
+        37.541,126.986
       );
 
       const marker = new window.kakao.maps.Marker({

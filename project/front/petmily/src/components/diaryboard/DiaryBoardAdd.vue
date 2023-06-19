@@ -64,19 +64,6 @@
             console.log(e)
             // self.$router.push('/diaryboardhome')
           })
-          // .then(function (res) {//요청 결과 받아옴. 파람 res에 결과저장됨. res.data가 백단에서 전송한 데이터
-          //   if (res.status == 200) {
-          //     if(res.data.flag){
-          //       let dto = res.data.dto
-          //       alert(dto.num + "/" + dto.name + " 상품이 등록되었습니다")
-          //       self.$router.push('/shophome')
-          //     }else{
-          //       alert('상품등록에 문제 발생')
-          //     }
-          //   } else {
-          //     alert('에러코드:' + res.status)
-          //   }
-          // })
       }
     }
   }
