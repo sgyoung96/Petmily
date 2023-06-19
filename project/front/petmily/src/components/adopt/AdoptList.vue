@@ -12,7 +12,7 @@ export default {
   name: 'adoptList',
   data () {
     return {
-
+        
     }
   },
   created: function () {

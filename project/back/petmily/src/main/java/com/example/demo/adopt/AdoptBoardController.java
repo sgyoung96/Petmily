@@ -26,7 +26,7 @@ import org.springframework.web.multipart.MultipartFile;
  */
 @RestController
 @CrossOrigin(origins= "*")
-@RequestMapping("/adaopt")
+@RequestMapping("/adopt")
 public class AdoptBoardController {
 	@Autowired
 	private AdoptBoardService service;

@@ -30,8 +30,8 @@ import lombok.ToString;
 public class Adoptboard {
 	
 	@Id
-	@SequenceGenerator(name="seq_adaoptboard_num", sequenceName="seq_adaoptboard_num", allocationSize=1)//시퀀스 생성. sequenceName:시퀀스 이름
-	@GeneratedValue(strategy=GenerationType.SEQUENCE, generator="seq_adaoptboard_num")//값 자동생성설정
+	@SequenceGenerator(name="seq_adoptboard_num", sequenceName="seq_adoptboard_num", allocationSize=1)//시퀀스 생성. sequenceName:시퀀스 이름
+	@GeneratedValue(strategy=GenerationType.SEQUENCE, generator="seq_adoptboard_num")//값 자동생성설정
 	private int num;		// 개인 분양 게시판 고유 번호 (PK)
 	
 	@ManyToOne
