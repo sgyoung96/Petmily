@@ -32,6 +32,8 @@ public class MemberController {
 	// 가입
 	@PostMapping("")
 	public Map join(MemberDto dto) {
+		System.out.println(dto);
+		System.out.println("가입해야지");
 		MemberDto d = service.save(dto);
 		Map map = new HashMap();
 		map.put("dto", d);
@@ -45,7 +47,7 @@ public class MemberController {
 	// 검색
 	@GetMapping("/{id}")
 	public Map get(@PathVariable("id") String id, @RequestHeader(name = "token", required = false) String token) {
-
+		System.out.println("idcheck");
 		Map map = new HashMap();
 
 		if (token != null) { // 로그인 후
@@ -78,7 +80,9 @@ public class MemberController {
 			String token = tokenprovider.generateJwtToken(dto); // 토큰 생성
 			flag = true;
 			map.put("token", token);
+			System.out.println("token : " + token);
 		}
+		
 		map.put("flag", flag);
 		return map;
 	}
@@ -95,6 +99,7 @@ public class MemberController {
 		} catch (Exception e) {
 			flag = false;
 		}
+		
 		map.put("flag", flag);
 		return map;
 	}

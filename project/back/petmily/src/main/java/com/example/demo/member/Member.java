@@ -21,7 +21,6 @@ public class Member {
 	
 	@Id
 	private String id;
-	@Column(nullable=true)
 	private String token;
 	private String pwd;
 	private String name;
