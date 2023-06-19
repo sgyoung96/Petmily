@@ -12,10 +12,6 @@
           <td><textarea id="content" rows="5" cols="30" v-model="content"></textarea></td>
         </tr>
         <tr>
-          <th>아이디</th>
-          <td><input type="text" id="id" v-model="id"></td>
-        </tr>
-        <tr>
           <th>이미지1</th>
           <td><input type="file" id="pic1"></td>
         </tr>
@@ -37,8 +33,7 @@
     name: 'DiaryboardAdd',
     data() {
       return {
-        // id: sessionStorage.getItem('loginId'),
-        id:'',
+        id: sessionStorage.getItem('loginId'),
         title: '',
         content: '',
       }
