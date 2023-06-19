@@ -4,6 +4,7 @@ import HomeView from '../views/HomeView.vue'
 <<<<<<< HEAD
 import DiaryboardHome from '@/components/dboard/DiaryboardHome.vue'
 <<<<<<< HEAD
+<<<<<<< HEAD
 import AdoptBoardHome from '../views/adopt/AdoptBoardView.vue'
 import AdoptForm from '@/components/adopt/AdoptForm.vue'
 =======
@@ -20,6 +21,13 @@ import VolBoardHome from '@/components/volboard/VolBoardHome.vue'
 import ApplyForm from '@/components/cdh/ApplyForm.vue'
 import Api from '@/components/cdh/Api.vue'
 >>>>>>> 0801ff5d1df1c063466acc099989a66b609aee22
+=======
+import MemJoin from '@/components/Member/MemJoin.vue'
+import MemLogin from '@/components/Member/MemLogin.vue' 
+import AdminHome from '@/components/Member/AdminHome.vue' 
+
+
+>>>>>>> c4ba16ca132204a42ac5c26955da46858a907088
 
 const routes = [
   {
@@ -67,6 +75,7 @@ const routes = [
   },
   {
 <<<<<<< HEAD
+<<<<<<< HEAD
     path: '/volboardhome',
     name: 'VolBoardHome',
     component: VolBoardHome
@@ -85,6 +94,21 @@ const routes = [
     name: 'Api',
     component: Api
 >>>>>>> 0801ff5d1df1c063466acc099989a66b609aee22
+=======
+    path: '/join',
+    name: 'MemJoin',
+    component: MemJoin
+  },
+  {
+    path: '/login',
+    name: 'MemLogin',
+    component: MemLogin
+  },
+  {
+    path: '/adminhome',
+    name: 'AdminHome',
+    component: AdminHome
+>>>>>>> c4ba16ca132204a42ac5c26955da46858a907088
   }
 ]
 

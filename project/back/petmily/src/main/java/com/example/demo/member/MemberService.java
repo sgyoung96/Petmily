@@ -10,6 +10,9 @@ public class MemberService {
 	
 	//회원가입, 내정보수정
 	public MemberDto save(MemberDto dto) {
+		System.out.println("회원가입");
+		System.out.println(dto.getBirth());
+		System.out.println(dto);
 		Member entity = dao.save(new Member(dto.getId(), dto.getToken(),dto.getPwd(),dto.getName(),dto.getEmail(),dto.getBirth(),dto.getGender(),dto.getPhone(),dto.getAddress()));
 	return new MemberDto(entity.getId(), entity.getToken(), entity.getPwd(),entity.getName(),entity.getEmail(),entity.getBirth(),entity.getGender(),entity.getPhone(),entity.getAddress());
 	}
