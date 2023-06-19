@@ -7,6 +7,7 @@ import org.hibernate.annotations.OnDeleteAction;
 
 import com.example.demo.member.Member;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -46,7 +47,8 @@ public class Message {
 	private Date send_dt;
 	private String title;
 	private String content;
-	private int m_check; // 메세지 확인 여부(default 0 : 안읽음, 1 : 읽음)
+	@Column(name="m_check")
+	private int check; // 메세지 확인 여부(default 0 : 안읽음, 1 : 읽음)
 	
 	@PrePersist
 	public void preprocess() {
