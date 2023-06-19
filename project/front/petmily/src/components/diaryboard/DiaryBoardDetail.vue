@@ -18,46 +18,67 @@
     </div>
     <div>
         <table border="1">
-        <tr><th>글내용</th></tr>
+        <tr><th>댓글내용</th></tr>
         <tr><th><input type="text" v-model="content" id="content"><button v-on:click="add">등록하기</button></th></tr>
+        <input type="text" v-model="id" id="id">
+        <input type="text" v-model="num" id="num">
       </table>
     </div>  
-    <div>
-      <table border="1">
-        <tr>{{ abc }}글내용</tr>
-      </table>
-    </div>
+    <h2>댓글</h2>
+    <ul>
+      <li v-for="comment in comments" :key="comment.id">
+        {{ comment.content }}
+        {{ comment.id.id }}
+      </li>
+    </ul>
   </template>
 
 <script>
 export default {
     name: 'DiaryBoardDetail',
-    data () {
-      return {
-        num:this.$route.query.num,
-        dto:{},
-        content:''
-      }
-    },
-    created:function(){
-        const self = this;
-        console.log("self",self.num)
-        self.$axios.get('http://localhost:8082/dboard/'+self.num)
-        .then(function(res){
-          console.log(res)
-            if(res.status == 200){
-                self.dto = res.data.dto
-            }else{
-                alert('에러코드'+res.status)
-            }
-        });
-    },
-    methods:{
-      detail(num){
-        // alert(num)
-        this.$router.push({name:'DiaryBoardDetail', params:{num:num}})
-      }
-    },
+    data() {
+  return {
+    num: this.$route.query.num,
+    dto: {},
+    comments: [],
+    content: ''
+  }
+},
+created() {
+  this.fetchPostDetails();
+  this.fetchComments();
+},
+methods: {
+  fetchPostDetails() {
+    this.$axios.get(`http://localhost:8082/dboard/${this.num}`)
+      .then(response => {
+        if (response.status === 200) {
+          this.dto = response.data.dto;
+        } else {
+          alert('게시글을 불러오는 중에 오류가 발생했습니다.');
+        }
+      })
+      .catch(error => {
+        console.error(error);
+        alert('게시글을 불러오는 중에 오류가 발생했습니다.');
+      });
+  },
+  fetchComments() {
+    this.$axios.get(`http://localhost:8082/dcomment/${this.num}`)
+      .then(response => {
+        if (response.status === 200) {
+          this.comments = response.data.dto;
+        } else {
+          alert('댓글을 불러오는 중에 오류가 발생했습니다.');
+        }
+      })
+      .catch(error => {
+        console.error(error);
+        alert('댓글을 불러오는 중에 오류가 발생했습니다.');
+      });
+  }
+  // ...
+},
       add() {
         const self = this;
         let formData = new FormData()
