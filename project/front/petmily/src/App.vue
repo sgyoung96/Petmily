@@ -45,9 +45,8 @@
       <div class="box-right">
         <div class="member-manage">
           <span style="display: none;">로그인 연장 00:00</span> <!-- 추가기능 -->
-          <span>로그인</span>
-          <span>로그아웃</span>
-          <span style="display: none;">회원가입</span>
+          <span v-on:click="login" >로그인</span>
+          <span v-on:clicl="logout" style="display: none;">로그아웃</span>
         </div>
         <div class="box-image">
           <img class="mypage" src="./assets/mypage_sample.jpg" >
@@ -110,6 +109,9 @@ export default {
      }
   },
   methods:{
+    login() {
+      this.$router.push('/member');
+    },
     logout(){
       
       sessionStorage.clear()
@@ -162,6 +164,7 @@ export default {
 .logo {
   width: 100px;
   height: 50px;
+  cursor: pointer;
 }
 
 /* 중앙 카테고리 */
@@ -186,6 +189,7 @@ export default {
   float: left;
   margin-left: 20px;
   font-weight: bold;
+  cursor: pointer;
 }
 
 /* 우측 콘텐츠 컨테이너 */
@@ -206,6 +210,7 @@ export default {
 .member-manage span {
   /*content: "|";*/
   margin-right: 5px;
+  cursor: pointer;
 }
 
 /* 마이페이지, 알림뱃지 */
@@ -215,6 +220,7 @@ export default {
 
 .mypage, .alert {
   height: 40px;
+  cursor: pointer;
 }
 
 .footer {
