@@ -1,5 +1,64 @@
 <template>
-  <nav>
+    <!-- 공통 헤더 -->
+    <div class="header"> 
+      <div class="box-left">
+        <img class="logo" src="./assets/logo_sample.png" >
+      </div>
+      
+      <div class="box-category">
+        <div class="category">
+          <ul class="category-list">
+            <li>
+              <div>
+                <span>동물보호소</span>
+              </div>
+            </li>
+            <li>
+              <div>
+                <span>분양해요</span>
+              </div>
+            </li>
+            <li>
+              <div>
+                <span>입양일지</span>
+              </div>
+            </li>
+            <li>
+              <div>
+                <span>봉사모집</span>
+              </div>
+            </li>
+            <li>
+              <div>
+                <span>입양신청</span>
+              </div>
+            </li>
+            <li>
+              <div>
+                <span>입양가이드</span>
+              </div>
+            </li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="box-right">
+        <div class="member-manage">
+          <span style="display: none;">로그인 연장 00:00</span> <!-- 추가기능 -->
+          <span>로그인</span>
+          <span>로그아웃</span>
+          <span style="display: none;">회원가입</span>
+        </div>
+        <div class="box-image">
+          <img class="mypage" src="./assets/mypage_sample.jpg" >
+          <img class="alert" src="./assets/alert_sample.jpg" >
+        </div>
+      </div>
+    </div>
+    <!-- //공통 헤더 -->
+    
+    <br>
+    <!-- 기존 링크 모음 (테스트용, 추후 삭제 예정) -->
     <router-link to="/">Home</router-link> |
     <router-link to="/diaryboardhome">입양일기게시판</router-link> |
     <router-link to="/adopt">분양게시판홈</router-link> |
@@ -15,14 +74,20 @@
     <div v-else>
       <button v-on:click="logout">로그아웃</button>
     </div>
-  </nav>
-  <router-view/>
+    <!-- //기존 링크 모음 (테스트용, 추후 삭제 예정) -->
 
-  <footer>
+  <!-- 이곳에 라우터로 설정한 화면이 로드됨 -->
+  <router-view/>
+  <!-- //이곳에 라우터로 설정한 화면이 로드됨 -->
+
+  <!-- 풋터 -->
+  <footer class="footer">
     <div>
       <p>이곳에 풋터 디자인</p>
+      <p>Copyright by Fetmily, ... etc</p>
     </div>
   </footer>
+  <!--//풋터-->
 </template>
 
 <script>
@@ -70,7 +135,6 @@ export default {
       });
     }
   }
-
 }
 </script>
 
@@ -82,6 +146,84 @@ export default {
   text-align: center;
   color: #2c3e50;
 }
+
+/* 헤더 전체 영역 */
+.header {
+  display: flex;
+}
+
+/* 좌측 로고 */
+.box-left {
+  width: 500px;
+  display: flex;
+  justify-content: left;
+}
+
+.logo {
+  width: 100px;
+  height: 50px;
+}
+
+/* 중앙 카테고리 */
+.box-category {
+  width: 100%;
+  height: 50px;
+  display: flex;
+  justify-content: center;
+}
+
+.category {
+  display: flex;
+  margin: 0 auto;
+}
+
+.category-list {
+  list-style: none;
+  list-style-type: none;
+}
+
+.category-list li {
+  float: left;
+  margin-left: 20px;
+  font-weight: bold;
+}
+
+/* 우측 콘텐츠 컨테이너 */
+.box-right {
+  width: 500px;
+  display: flex;
+  justify-content: right;
+  align-items: center;
+}
+
+/* 로그인 관련 */
+.member-manage {
+  display: block;
+  font-size: 12px;
+  font-weight: bold;
+}
+
+.member-manage span {
+  /*content: "|";*/
+  margin-right: 5px;
+}
+
+/* 마이페이지, 알림뱃지 */
+.box-image {
+  display: block;
+}
+
+.mypage, .alert {
+  height: 40px;
+}
+
+.footer {
+  height: 200px;
+  background-color: #efefef;
+}
+
+
+
 
 nav {
   padding: 30px;
