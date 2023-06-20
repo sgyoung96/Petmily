@@ -67,8 +67,8 @@ public class DiarycommentController {
 		return map;
 	}
 	
-	@DeleteMapping("/{num}")
-	public Map delete(@PathVariable("num") int db_num) {
+	@DeleteMapping("{db_num}")
+	public Map delete(@PathVariable("db_num") int db_num) {
 		Map map = new HashMap();
 		DiarycommentDto dto2 = null;
 		boolean flag = true;

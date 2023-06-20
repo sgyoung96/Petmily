@@ -29,12 +29,12 @@
     </div>  
     <h2>댓글</h2>
     <ul>
-      <li v-for="comment in comment" :key="comment.id">
-        {{ comment.content }}{{ comment.w_date }}{{ comment.id.id }}
-        <button v-on:click="commentedit">수정하기</button>
-        <button v-on:click="commentdelete">삭제하기</button>
-      </li>
-    </ul>
+  <li v-for="comment in comment" :key="comment.db_num">
+    {{ comment.content }} {{ comment.w_date }} {{ comment.id.id }} {{ comment.db_num }}
+    <button @click="commentedit(comment)">수정하기</button>
+    <button @click="commentdelete(comment.db_num)">삭제하기</button>
+  </li>
+</ul>
   </template>
 
 <script>
@@ -107,32 +107,30 @@ methods: {
         self.$axios.post('http://localhost:8082/dcomment', formData)
         .then(function(res){ 
         if(res.status == 200){
-          let dto = res.data.dto
+        let dto = res.data.dto
         alert(dto.id +'댓글작성 완료')
         self.comment.push(dto);
         }else{
           alert('에러코드:' + res.status)
         }
-      });
-    },
-    commentdelete() {//댓글삭제메소드
-    this.$axios.delete(`http://localhost:8082/dcomment/${this.db_num}`)
-    .then(function(res) {
-      if (res.status === 200) {
-        let dto = res.data.dto;
-        alert(dto.id + ' 댓글 작성 완료');
-        self.comment.push(dto); // 추가된 댓글을 comments 배열에 추가
+     });
+  },
+    commentdelete(db_num) {
+      this.$axios.delete(`http://localhost:8082/dcomment/${db_num}`)
+      .then(response => {
+      if (response.status === 200) {
+        alert('삭제완료');
       } else {
-        alert('에러코드:' + res.status);
+        alert('삭제오류.');
       }
     })
-    .catch(function(error) {
+    .catch(error => {
       console.error(error);
-      alert('댓글 작성 오류');
+      alert('삭제오류.');
     });
+    }
   }
   }
-}
     </script>
     // <!-- Add "scoped" attribute to limit CSS to this component only -->
   <style scoped>

@@ -51,10 +51,8 @@ export default {
     },
     // 지정한 위치에 마커 불러오기
     loadMaker() {
-      const markerPosition = new window.kakao.maps.LatLng(
-        37.541,126.986
-      );
-
+      const markerPosition = new window.kakao.maps.services.Geocoder();
+      this.Geocoder.addressSearch('제주특별자치도 제주시 첨단로 242')
       const marker = new window.kakao.maps.Marker({
         position: markerPosition,
       });

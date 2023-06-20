@@ -63,6 +63,7 @@
     <router-link to="/diaryboardhome">입양일기게시판</router-link> |
     <router-link to="/adopt">분양게시판홈</router-link> |
     <router-link to="/kakaomaphome">카카오맵</router-link> |
+    <router-link to="/dogmap">도그맵</router-link> |
     <router-link to="/volboardhome">봉사모집게시판</router-link> |
     <router-link to="/applyform">Apply</router-link> |
     <router-link to="/api">Api</router-link> |
