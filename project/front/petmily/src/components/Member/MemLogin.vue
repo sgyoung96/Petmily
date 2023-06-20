@@ -16,7 +16,7 @@
           <img class="btn-kakao" src="../../assets/kakao_login_large.png" >
         </div>
         <div class="links">
-          <span><u>회원가입</u></span><br>
+          <span @click="join()" ><u>회원가입</u></span><br>
           <span><u>ID/PW 찾기</u></span>
         </div>
       </div>
@@ -36,7 +36,7 @@ export default {
     }
   },
   methods:{
-    login(){
+    login(){ // 로그인
       const self = this;
       const form = new FormData();
       form.append('id', self.id) // form.append('name이 id인것(폼양식의 이름)', self.id(id의 값))
@@ -62,7 +62,7 @@ export default {
         }
       });
     },
-    kakaoLogin() {
+    kakaoLogin() { // 카카오로그인
       window.Kakao.Auth.login({
         scope: "account_email",
         success: this.getKakaoAccount
@@ -90,7 +90,7 @@ export default {
         }
       });
     },
-    kakaoLogout() {
+    kakaoLogout() { // '카카오로그아웃테스트' 클릭시 이벤트 발생 (ui 수정 필요)
       const self = this;
 
       /* 로그아웃 하나, 완전히 연결을 끊지 않음 */
@@ -109,6 +109,17 @@ export default {
       }).catch(function(error) {
         console.log(error)
       })
+    },
+    join() {
+      const loginId = sessionStorage.getItem('loginId')
+      const self = this;
+      
+      if (loginId != null) {
+        alert('로그아웃 후 이용 가능한 서비스입니다.');
+        self.$router.push('/'); // 메인 화면으로 이동
+      } else { // loginId 가 null ; 존재하지 않음
+        self.$router.push('/join'); // 회원가입 화면으로 이동
+      }
     }
   }
 }
