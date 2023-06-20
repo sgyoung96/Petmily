@@ -162,6 +162,10 @@ input {
   padding: 10px;
 }
 
+input:focus {
+  outline: none;
+}
+
 .btn-login {
   text-align: center;
   background-color: rgb(237, 255, 237);

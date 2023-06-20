@@ -38,8 +38,64 @@
                 <span @click="guide()" >입양가이드</span>
               </div>
             </li>
+            <li>
+              <!-- 기존 링크 모음 (테스트용, 추후 삭제 예정) -->
+              <router-link to="/kakaomaphome">카카오맵</router-link> | 
+              <router-link to="/api">Api</router-link>
+              <!-- //기존 링크 모음 (테스트용, 추후 삭제 예정) -->
+            </li>
           </ul>
         </div>
+        
+        <!-- 반응형 600px 이하 가로사이즈일 경우 -->
+        <div class="min-box-category">
+          <ul class="min-box-category-list" >
+            <li>
+                <div @click="open()" class="min-box-category-title"><img src='./assets/list.png'><span class="min-category">카테고리</span></div>
+                <ul v-show="isOpen" class="min-box-list">
+                  <li>
+                    <div>
+                      <span @click="guard()" >동물보호소</span>
+                    </div>
+                  </li>
+                  <li>
+                    <div>
+                      <span @click="adopt()" >분양해요</span>
+                    </div>
+                  </li>
+                  <li>
+                    <div>
+                      <span @click="diary()" >입양일지</span>
+                    </div>
+                  </li>
+                  <li>
+                    <div>
+                      <span @click="volunteer()" >봉사모집</span>
+                    </div>
+                  </li>
+                  <li>
+                    <div>
+                      <span @click="form()" >입양신청</span>
+                    </div>
+                  </li>
+                  <li>
+                    <div>
+                      <span @click="guide()" >입양가이드</span>
+                    </div>
+                  </li>
+                  <li>
+                    <!-- 기존 링크 모음 (테스트용, 추후 삭제 예정) -->
+                    <router-link to="/kakaomaphome">카카오맵</router-link> | 
+                    <router-link to="/api">Api</router-link>
+                    <!-- //기존 링크 모음 (테스트용, 추후 삭제 예정) -->
+                  </li>
+                </ul> 
+            </li>
+          </ul>
+
+          
+        </div>
+        
       </div>
 
       <div class="box-right">
@@ -61,10 +117,7 @@
     <!-- //공통 헤더 -->
     
     <br>
-    <!-- 기존 링크 모음 (테스트용, 추후 삭제 예정) -->
-    <router-link to="/kakaomaphome">카카오맵</router-link> | 
-    <router-link to="/api">Api</router-link>
-    <!-- //기존 링크 모음 (테스트용, 추후 삭제 예정) -->
+    
 
   <!-- 이곳에 라우터로 설정한 화면이 로드됨 -->
   <router-view/>
@@ -86,6 +139,7 @@ export default {
   data () {
     return {
       loginId:null,
+      isOpen: false
     }
   },
   created:function(){ // 이 컴포넌트가 시작될때 실행되는 함수
@@ -101,6 +155,9 @@ export default {
     gotoMain() { // 로고 클릭시 메인으로 이동
       this.$router.push('/');
     }, 
+    open() { // 작은 사이즈 화면일 때
+      this.isOpen = !this.isOpen;
+    },
     guard() { // (카테고리) 동물보호소
       this.$router.push('/'); // TODO : 수정해야함
       alert('경로 추가 및 페이지 작업 필요');
@@ -161,12 +218,14 @@ export default {
 /* 헤더 전체 영역 */
 .header {
   position: relative;
-  display: flex;
+  display: inline-flex;
+  width: 100%;
+  border-bottom: 3px solid rgb(147, 214, 147);
 }
 
 /* 좌측 로고 */
 .box-left {
-  width: 500px;
+  width: 200px;
   display: flex;
   justify-content: left;
 }
@@ -178,8 +237,14 @@ export default {
 }
 
 /* 중앙 카테고리 */
+.img-category {
+  width: 20px;
+  height: 20px;
+}
+
 .box-category {
-  width: 100%;
+  position: relative;
+  width: inherit;
   height: 50px;
   display: flex;
   justify-content: center;
@@ -202,9 +267,13 @@ export default {
   cursor: pointer;
 }
 
+.min-box-category  {
+  display: none;
+}
+
 /* 우측 콘텐츠 컨테이너 */
 .box-right {
-  width: 500px;
+  width: 200px;
   display: flex;
   justify-content: right;
   align-items: center;
@@ -215,6 +284,7 @@ export default {
   display: block;
   font-size: 12px;
   font-weight: bold;
+  justify-content: right;
 }
 
 .member-manage span {
@@ -232,6 +302,110 @@ export default {
   height: 40px;
   cursor: pointer;
 }
+
+@media screen and (max-width: 902px) {
+
+  /* 헤더 전체 영역 */
+  .header {
+    border-bottom: 3px solid rgb(147, 214, 147);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  /* 중앙 카테고리 */
+  .category {
+    display: none;
+  }
+
+  /* 카테고리 셀렉스박스 */
+  .min-box-category {
+    display: block;
+    list-style: none;
+    height: 30px;
+    padding: 5px 1px;
+    margin: 0;
+    background: #fff;
+    cursor: pointer
+  }
+
+  .min-box-category-title {
+    display: inline;
+    justify-content: center;
+    vertical-align: middle;
+  }
+
+  .min-box-category-title img {
+    width: 20px;
+    height: 20px;
+  }
+
+  .min-box-category-title span {
+    margin-bottom: 10px;
+  }
+
+  .min-box-category li {
+    margin-top: 10px;
+    float: inherit;
+    position: relative;
+    list-style: none;
+    vertical-align: middle;
+    text-align: center;
+  }
+
+  .min-box-category li span {
+    font-weight: bold;
+    padding: 10px;
+  }
+
+  .min-box-category li ul li div span {
+    text-decoration: none;
+    font-weight: bold;
+  }
+
+  .min-box-list {
+    
+  }
+
+  .min-box-category li ul li div span:hover {
+    color: white;
+    background-color: green;
+  }
+
+  /* 우측 콘텐츠 컨테이너 */
+  .box-right {
+    width: 200px;
+    display: flex;
+    justify-content: right;
+    align-items: right;
+  }
+
+  /* 로그인 관련 */
+  .member-manage {
+    display: block;
+    font-size: 12px;
+    font-weight: bold;
+  }
+
+  .member-manage span {
+    /*content: "|";*/
+    margin-right: 5px;
+    cursor: pointer;
+  }
+
+  /* 마이페이지, 알림뱃지 */
+  .box-image {
+    display: block;
+  }
+
+  .mypage, .alert {
+    height: 40px;
+    cursor: pointer;
+  }
+}
+
+
+
 
 .footer {
   height: 200px;
