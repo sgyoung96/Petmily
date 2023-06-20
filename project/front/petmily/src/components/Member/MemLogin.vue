@@ -112,11 +112,16 @@ input {
 
 .btn-login {
   width: 200px;
+  cursor: pointer;
 }
 
 .box-btns {
   display: flex;
   justify-content: center;
+}
+
+.btn-kakao {
+  cursor: pointer;
 }
 
 .links {
@@ -127,6 +132,10 @@ input {
   background-color: #42b983;
   font-size: 15px;
   font-weight: bold;
+}
+
+.links span {
+  cursor: pointer;
 }
 
 .btn-kakao {
