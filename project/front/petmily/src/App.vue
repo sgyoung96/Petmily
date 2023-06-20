@@ -2,7 +2,7 @@
     <!-- 공통 헤더 -->
     <div class="header"> 
       <div class="box-left">
-        <img class="logo" src="./assets/logo_sample.png" >
+        <img class="logo" @click="gotoMain" src="./assets/logo_sample.png" >
       </div>
       
       <div class="box-category">
@@ -10,32 +10,32 @@
           <ul class="category-list">
             <li>
               <div>
-                <span>동물보호소</span>
+                <span @click="guard()" >동물보호소</span>
               </div>
             </li>
             <li>
               <div>
-                <span>분양해요</span>
+                <span @click="adopt()" >분양해요</span>
               </div>
             </li>
             <li>
               <div>
-                <span>입양일지</span>
+                <span @click="diary()" >입양일지</span>
               </div>
             </li>
             <li>
               <div>
-                <span>봉사모집</span>
+                <span @click="volunteer()" >봉사모집</span>
               </div>
             </li>
             <li>
               <div>
-                <span>입양신청</span>
+                <span @click="form()" >입양신청</span>
               </div>
             </li>
             <li>
               <div>
-                <span>입양가이드</span>
+                <span @click="guide()" >입양가이드</span>
               </div>
             </li>
           </ul>
@@ -45,8 +45,12 @@
       <div class="box-right">
         <div class="member-manage">
           <span style="display: none;">로그인 연장 00:00</span> <!-- 추가기능 -->
-          <span v-on:click="login" >로그인</span>
-          <span v-on:clicl="logout" style="display: none;">로그아웃</span>
+          <div v-if="loginId == null">
+            <span v-on:click="login" id="link-login" >로그인</span>
+          </div>
+          <div v-else>
+            <span v-on:click="logout" id="link-logout">로그아웃</span>
+          </div>
         </div>
         <div class="box-image">
           <img class="mypage" src="./assets/mypage_sample.jpg" >
@@ -58,21 +62,8 @@
     
     <br>
     <!-- 기존 링크 모음 (테스트용, 추후 삭제 예정) -->
-    <router-link to="/">Home</router-link> |
-    <router-link to="/diaryboardhome">입양일기게시판</router-link> |
-    <router-link to="/adopt">분양게시판홈</router-link> |
-    <router-link to="/kakaomaphome">카카오맵</router-link> |
-    <router-link to="/volboardhome">봉사모집게시판</router-link> |
-    <router-link to="/applyform">Apply</router-link> |
-    <router-link to="/api">Api</router-link> |
-    <br>
-    <div v-if="loginId==null">
-      <router-link to="/join">회원가입</router-link> |
-      <router-link to="/login">로그인</router-link>
-    </div>
-    <div v-else>
-      <button v-on:click="logout">로그아웃</button>
-    </div>
+    <router-link to="/kakaomaphome">카카오맵</router-link> | 
+    <router-link to="/api">Api</router-link>
     <!-- //기존 링크 모음 (테스트용, 추후 삭제 예정) -->
 
   <!-- 이곳에 라우터로 설정한 화면이 로드됨 -->
@@ -83,7 +74,7 @@
   <footer class="footer">
     <div>
       <p>이곳에 풋터 디자인</p>
-      <p>Copyright by Fetmily, ... etc</p>
+      <p>Copyright by Petmily, ... etc</p>
     </div>
   </footer>
   <!--//풋터-->
@@ -98,26 +89,44 @@ export default {
     }
   },
   created:function(){ // 이 컴포넌트가 시작될때 실행되는 함수
-     
-      this.loginId = sessionStorage.getItem('loginId')
-      
-      if(this.loginId == 'admin'){
-          this.$router.push('/adminhome')
-        }else {
-          this.$router.push('/') //router로 이동하면 페이지가 전체 이동하는게 아니라 <router-view/>만 바뀐다
-        
-     }
+    this.loginId = sessionStorage.getItem('loginId')
+    
+    if(this.loginId == 'admin'){
+      this.$router.push('/adminhome')
+    } else {
+      this.$router.push('/') //router로 이동하면 페이지가 전체 이동하는게 아니라 <router-view/>만 바뀐다    
+    }
   },
   methods:{
-    login() {
+    gotoMain() { // 로고 클릭시 메인으로 이동
+      this.$router.push('/');
+    }, 
+    guard() { // (카테고리) 동물보호소
+      this.$router.push('/'); // TODO : 수정해야함
+      alert('경로 추가 및 페이지 작업 필요');
+    },
+    adopt() { // (카테고리) 분양해요
+      this.$router.push('/adopt');
+    },
+    diary() { // (카테고리) 입양일지
+      this.$router.push('/diaryboardhome');
+    },
+    volunteer() { // (카테고리) 봉사모집
+      this.$router.push('/volboardhome')
+    },
+    form() { // (카테고리) 입양신청
+      this.$router.push('/applyform');
+    },
+    guide() { // (카테고리) 입양가이드
+      this.$router.push('/'); // TODO : 수정해야함
+      alert('경로 추가 및 페이지 작업 필요');
+    },
+    login() { // 로그인
       this.$router.push('/member');
     },
-    logout(){
-      
+    logout(){ // 로그아웃
       sessionStorage.clear()
       window.location.href = "/" //리디렉션
-
-      
     },
     out(){
       
@@ -151,6 +160,7 @@ export default {
 
 /* 헤더 전체 영역 */
 .header {
+  position: relative;
   display: flex;
 }
 
