@@ -22,6 +22,7 @@
       </div>
     </div>
   </div>
+  <div @click="kakaoLogout()">카카오로그아웃테스트</div>
 </template>
 
   <script>
@@ -60,6 +61,54 @@ export default {
           alert('에러코드 :' + res.status)
         }
       });
+    },
+    kakaoLogin() {
+      window.Kakao.Auth.login({
+        scope: "account_email",
+        success: this.getKakaoAccount
+      });
+    },
+    getKakaoAccount() {
+      window.Kakao.API.request({
+        url: "/v2/user/me",
+        success: (res) => {
+          const kakao_account = res.kakao_account;
+          const email = kakao_account.email;
+          console.log("email: " + email)
+          console.log('kakao', res)
+          // console.log('nickname', kakao_account.profile_nickname) >> undefined
+
+          alert('로그인되었습니다.');
+          
+          /* 세션 처리하기 */
+          //sessionStorage.setItem('loginId', kakao_account.name)
+          
+          this.$router.push('/'); // 메인 페이지로 이동
+        },
+        fail: (error) => {
+          console.log(error)
+        }
+      });
+    },
+    kakaoLogout() {
+      const self = this;
+
+      /* 로그아웃 하나, 완전히 연결을 끊지 않음 */
+      // window.Kakao.Auth.logout((res) => {
+      //   console.log(res)
+      //   alert('로그아웃되었습니다.');
+      //   self.$router.push('/');
+      // })
+
+      /* 사용자가 카카오 연결을 끊고자 할 때 */
+      window.Kakao.API.request({
+        url: '/v1/user/unlink'
+      }).then(function(response) {
+        console.log(response)
+        self.$router.push('/'); // 메인 페이지로 이동
+      }).catch(function(error) {
+        console.log(error)
+      })
     }
   }
 }
