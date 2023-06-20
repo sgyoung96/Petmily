@@ -46,8 +46,7 @@
         <div class="member-manage">
           <span style="display: none;">로그인 연장 00:00</span> <!-- 추가기능 -->
           <span>로그인</span>
-          <span>로그아웃</span>
-          <span style="display: none;">회원가입</span>
+          <span style="display: none;">로그아웃</span>
         </div>
         <div class="box-image">
           <img class="mypage" src="./assets/mypage_sample.jpg" >
