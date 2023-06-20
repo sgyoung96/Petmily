@@ -20,7 +20,7 @@
             </li>
             <li>
               <div>
-                <span>분양일지</span>
+                <span>입양일지</span>
               </div>
             </li>
             <li>
