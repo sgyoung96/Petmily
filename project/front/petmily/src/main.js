@@ -5,6 +5,7 @@ import store from './store';
 import axios from "axios";
 import VueMoment from 'moment'
 
+window.Kakao.init('238a6ec85a58f614c0abe27a99a5b4e1');
 //createApp(App).use(store).use(router).mount('#app')
 const app = createApp(App) // vue 객체 생성
 app.use(store) // 전역 저장 라이브러리 사용
@@ -13,4 +14,3 @@ app.config.productionTip = false;
 app.config.globalProperties.$axios = axios; // 비동기 요청 객체
 app.use(VueMoment)
 app.mount('#app')
-

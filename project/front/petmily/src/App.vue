@@ -109,6 +109,9 @@ export default {
      }
   },
   methods:{
+    login() {
+      this.$router.push('/member');
+    },
     logout(){
       
       sessionStorage.clear()
@@ -132,9 +135,6 @@ export default {
           alert('에러코드:' + res.status)
         }
       });
-    },
-    login() {
-      alert('login clicked')
     }
   }
 }
