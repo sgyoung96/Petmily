@@ -19,7 +19,7 @@ public class DiaryboardService {
 
 	// 상품 전체 검색
 	public ArrayList<DiaryboardDto> getAll() {
-		ArrayList<Diaryboard> list = (ArrayList<Diaryboard>) dao.findAll();
+		ArrayList<Diaryboard> list = (ArrayList<Diaryboard>) dao.findAllByOrderByNumDesc();
 		ArrayList<DiaryboardDto> list2 = new ArrayList<DiaryboardDto>();
 		for (Diaryboard d : list) {
 			list2.add(new DiaryboardDto(d.getNum(), d.getTitle(), d.getContent(), d.getW_date(), d.getId(), d.getPic1(),
