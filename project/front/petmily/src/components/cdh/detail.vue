@@ -34,7 +34,7 @@ export default {
       items: [],
     };
   },
-
+  
   computed: {
     filteredItems() {
       if (!this.desertionNo) {
