@@ -1,0 +1,6 @@
+@font-face {
+    font-family: 'BagleFatOne';
+    font-style: normal;
+    font-weight: 100;
+    src: url(./BagelFatOne-Regular.ttf) format('ttf'), url(./BagelFatOne-Regular.ttf) format('ttf'), url(./BagelFatOne-Regular.ttf) format('opentype');
+}
