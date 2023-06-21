@@ -10,6 +10,7 @@ import DiaryBoardDetail from '@/components/diaryboard/DiaryBoardDetail.vue'
 import DiaryBoardEdit from '@/components/diaryboard/DiaryBoardEdit.vue'
 import KakaomapHome from '@/components/kakaomap/KakaomapHome.vue'
 import DogMap from '@/components/kakaomap/DogMap.vue'
+import Kaka from '@/components/kaka/KakaoMapHome.vue'
 import VolBoardAdd from '@/components/volboard/VolBoardAdd.vue'
 import VolBoardHome from '@/components/volboard/VolBoardHome.vue'
 import VolBoardDetail from '@/components/volboard/VolBoardDetail.vue'
@@ -65,6 +66,11 @@ const routes = [
     path: '/dogmap',
     name: 'DogMap',
     component: DogMap
+  },
+  {
+    path: '/kaka',
+    name: 'Kaka',
+    component: Kaka
   },
   {
     path:'/adopt',
