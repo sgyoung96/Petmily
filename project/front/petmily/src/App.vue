@@ -86,7 +86,6 @@
             </li>
             <li>
               <!-- 기존 링크 모음 (테스트용, 추후 삭제 예정) -->
-              <router-link to="/kakaomaphome">카카오맵</router-link> | 
               <router-link to="/api">Api</router-link>
               
               <!-- //기존 링크 모음 (테스트용, 추후 삭제 예정) -->
@@ -115,8 +114,6 @@
     
     <br>
     <!-- 기존 링크 모음 (테스트용, 추후 삭제 예정) -->
-    <router-link to="/kakaomaphome">카카오맵</router-link> |
-    <router-link to="/dogmap">도그맵</router-link> |
     <router-link to="/kaka">카카</router-link>
     <router-link to="/addressconvert">주소변환</router-link> |
     <router-link to="/volboardhome">봉사모집게시판</router-link> |
