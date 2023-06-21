@@ -3,6 +3,10 @@
 
   <div id="messagesender">
         <h2>{{loginId}}가 보낸 쪽지 목록</h2>
+    <div>
+    
+    </div>
+
   
      
   </div>
@@ -10,7 +14,7 @@
 
 <script>
 export default {
-  name: 'messagesender',
+  name: 'MessageSender',
   data () {
     return { 
      loginId:null,
