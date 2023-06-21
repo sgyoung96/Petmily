@@ -11,10 +11,11 @@ import KakaomapHome from '@/components/kakaomap/KakaomapHome.vue'
 import VolBoardAdd from '@/components/volboard/VolBoardAdd.vue'
 import VolBoardHome from '@/components/volboard/VolBoardHome.vue'
 import ApplyForm from '@/components/cdh/ApplyForm.vue'
+import Detail from '@/components/cdh/Detail.vue'
 import Api from '@/components/cdh/Api.vue'
 import MemJoin from '@/components/Member/MemJoin.vue'
 import MemLogin from '@/components/Member/MemLogin.vue' 
-import AdminHome from '@/components/Member/AdminHome.vue' 
+import AdminHome from '@/components/Member/AdminHome.vue'
 
 const routes = [
   {
@@ -84,6 +85,11 @@ const routes = [
     path: '/applyform',
     name: 'ApplyForm',
     component: ApplyForm
+  },
+  {
+    path: '/detail/:desertionNo',
+    name: 'Detail',
+    component: Detail
   },
   {
     path: '/api',
