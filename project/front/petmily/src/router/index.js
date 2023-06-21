@@ -6,6 +6,7 @@ import AdoptForm from '@/components/adopt/AdoptForm.vue'
 import DiaryBoardAdd from '@/components/diaryboard/DiaryBoardAdd.vue'
 import DiaryBoardDetail from '@/components/diaryboard/DiaryBoardDetail.vue'
 import KakaomapHome from '@/components/kakaomap/KakaomapHome.vue'
+import Kaka from '@/components/kaka/KakaoMapHome.vue'
 import VolBoardAdd from '@/components/volboard/VolBoardAdd.vue'
 import VolBoardHome from '@/components/volboard/VolBoardHome.vue'
 import VolBoardDetail from '@/components/volboard/VolBoardDetail.vue'
@@ -41,6 +42,12 @@ const routes = [
     name: 'KakaomapHome',
     component: KakaomapHome
   },
+  {
+    path: '/kaka',
+    name: 'Kaka',
+    component: Kaka
+  }
+  ,
   {
     path:'/adopt',
     name: 'AdoptBoardHome',
