@@ -41,6 +41,15 @@ public class VolboardController {
 		return map;
 	}
 	
+	//봉사모집게시판 디테일 페이지
+	@GetMapping("/{num}")
+	public Map getByNum(@PathVariable("num") int num) {
+		VolboardDto dto = service.getById(num);
+		Map map = new HashMap();
+		map.put("dto", dto);
+		return map;
+	}
+	
 	@PostMapping("")
 	public Map add(VolboardDto dto) {
 		boolean flag = true;

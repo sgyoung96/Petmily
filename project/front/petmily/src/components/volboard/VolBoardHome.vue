@@ -1,6 +1,6 @@
 <template>
     <div>
-        <h3>{{ loginId }}가 등록한 상품</h3>
+        <h3>봉사모집게시판 전체목록</h3>
         <router-link to="/volboardadd">봉사게시판 작성</router-link>
         <table border="1">
             <tr><th>img1</th><th>img2</th><th>num</th><th>writer</th><th>title</th><th>content</th><th>봉사일자</th><th>모집인원</th></tr>
@@ -9,7 +9,7 @@
             <td><img :src="'http://localhost:8082/volboard/imgs/' + vboard.num + '/2'"></td>
             <td>{{ vboard.num }}</td>
             <td>{{ vboard.writer.id }}</td>
-            <td>{{ vboard.title }}</td>
+            <td v-on:click="detail(vboard.num)">{{ vboard.title }}</td>
             <td>{{ vboard.content }}</td>
             <td>{{ vboard.vol_date }}</td>
             <td>{{ vboard.vol_number }}</td>
@@ -23,16 +23,18 @@
     name: 'VolBoardHome',
     data () {
       return {
-        loginId:null,
+        loginId:sessionStorage.getItem('loginId'),
         list:[]
       }
     },
     methods:{
-      
+      detail(num){
+        this.$router.push({ name: 'VolBoardDetail', query: {num: num}});
+      }
     },
     created:function(){//이 컴포넌트가 시작될때 실행되는 함수
         
-        this.loginId = 'aaa' //sessionStorage.getItem('loginId')
+        this.loginId = sessionStorage.getItem('loginId')
         const self = this
         self.$axios.get('http://localhost:8082/volboard')
         .then(function(res){

@@ -35,9 +35,9 @@ public class Participants {
 	
 	//봉사게시판 번호 참조
 	@ManyToOne
-	@JoinColumn(name="board_num", nullable=false)  //fk 설정
+	@JoinColumn(name="boardnum", nullable=false)  //fk 설정
 	@OnDelete(action = OnDeleteAction.CASCADE)
-	private Volboard board_num;
+	private Volboard boardnum;
 	
 	//참여자 ID
 	@ManyToOne
