@@ -122,7 +122,24 @@
     <!-- //공통 헤더 -->
     
     <br>
-    
+    <!-- 기존 링크 모음 (테스트용, 추후 삭제 예정) -->
+    <router-link to="/">Home</router-link> |
+    <router-link to="/diaryboardhome">입양일기게시판</router-link> |
+    <router-link to="/adopt">분양게시판홈</router-link> |
+    <router-link to="/kakaomaphome">카카오맵</router-link> |
+    <router-link to="/dogmap">도그맵</router-link> |
+    <router-link to="/volboardhome">봉사모집게시판</router-link> |
+    <router-link to="/applyform">Apply</router-link> |
+    <router-link to="/api">Api</router-link> |
+    <br>
+    <div v-if="loginId==null">
+      <router-link to="/join">회원가입</router-link> |
+      <router-link to="/login">로그인</router-link>
+    </div>
+    <div v-else>
+      <button v-on:click="logout">로그아웃</button>
+    </div>
+    <!-- //기존 링크 모음 (테스트용, 추후 삭제 예정) -->
 
   <!-- 이곳에 라우터로 설정한 화면이 로드됨 -->
   <router-view/>

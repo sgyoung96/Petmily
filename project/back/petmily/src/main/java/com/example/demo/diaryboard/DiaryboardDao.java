@@ -9,4 +9,5 @@ import com.example.demo.member.Member;
 public interface DiaryboardDao extends JpaRepository<Diaryboard, Integer> {
 	ArrayList<Diaryboard> findById(Member id);
 	ArrayList<Diaryboard> findByTitle(String title);
+	ArrayList<Diaryboard> findAllByOrderByNumDesc();
 }
