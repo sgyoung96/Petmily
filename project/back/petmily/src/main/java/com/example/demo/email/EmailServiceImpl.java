@@ -30,7 +30,7 @@ public class EmailServiceImpl implements EmailService {
  
         String msgg="";
         msgg+= "<div style='margin:20px;'>";
-        msgg+= "<h1> 안녕하세요 임준호입니다. </h1>";
+        msgg+= "<h1> 안녕하세요 Petmily입니다. 윤해현바보 </h1>";
         msgg+= "<br>";
         msgg+= "<p>아래 코드를 복사해 입력해주세요<p>";
         msgg+= "<br>";
@@ -43,8 +43,9 @@ public class EmailServiceImpl implements EmailService {
         msgg+= ePw+"</strong><div><br/> ";
         msgg+= "</div>";
         message.setText(msgg, "utf-8", "html");//내용
-        message.setFrom(new InternetAddress("properties에 입력한 이메일","limjunho"));//보내는 사람
- 
+        message.setFrom(new InternetAddress("sonsy0909@gmail.co.kr","Petmily"));//보내는 사람
+        
+        System.out.println("msgg : " + msgg);
         return message;
     }
  
@@ -78,6 +79,7 @@ public class EmailServiceImpl implements EmailService {
 		// TODO Auto-generated method stub
 		  MimeMessage message = createMessage(to);
 	        try{//예외처리
+	        	System.out.println("send : " +  message);
 	            emailSender.send(message);
 	        }catch(MailException es){
 	            es.printStackTrace();

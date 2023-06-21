@@ -16,6 +16,7 @@
         EMAIL : <input class="input-item" type="text" v-model="email" placeholder="예)petmily@petmily.co.kr" ><button v-on:click="sendEmail">이메일 확인</button><br/>
          <span class ="font_id_red" v-show="isEmailCheck">이메일 형식을 확인해주세요</span><br/> 
          <input input class="input-item" type="text" v-model="emailCode"><button v-on:click="emailCodeCheck">인증</button><br/> 
+         <span class ="font_id_red" v-show="isEmailCodeCheck">인증코드를 확인해주세요</span><br/> 
        
         
         
@@ -54,6 +55,7 @@ export default {
       isPwdCheckEqual:false,
       name:'',
       email:'',
+      emailCode:'',
       birth:'',
       gender:'m',
       phone:'',
@@ -94,9 +96,36 @@ export default {
      sendEmail(){
         const self = this;
 
-        self.$axios.post('http://localhost:8082/email/emailConfirm', self.email)
+         let formdata = new FormData();
+        formdata.append('email',self.email)
+        self.$axios.post('http://localhost:8082/emailConfirm', formdata)
+        .then(function(res){ 
+        if(res.status == 200){
+        self.confirm = res.data.confirm
+        alert(self.confirm)
+        alert('메일 전송 완료')
+        
+        }else{
+          alert('오류')
+        }
+      });
 
      },
+
+    emailCodeCheck(){
+        
+        const self = this;
+        let emailcode = self.emailcode;
+        alert(emailcode)
+        alert(self.confirm)
+        if(self.confirm === emailcode){
+            alert('인증완료')
+        }else{
+            this.isEmailCodeCheck=true;
+        }
+
+    },
+     
 
     join(){
       const self = this;

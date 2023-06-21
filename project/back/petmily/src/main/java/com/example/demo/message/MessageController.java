@@ -23,6 +23,7 @@ public class MessageController {
 	//메세지 작성
 	@PostMapping("")
 	public Map sendMessage(MessageDto dto) {
+		System.out.println("메세지 작성");
 		boolean flag = true;
 		MessageDto dto2 = null;
 		try {
