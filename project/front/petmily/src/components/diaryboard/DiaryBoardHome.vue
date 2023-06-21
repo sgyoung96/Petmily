@@ -1,19 +1,75 @@
 <template>
-  <div>
-      <h3>hi</h3>
-      <router-link to="/diaryboardadd">글쓰기</router-link>
-     <table border="1">
-          <tr><th>pic</th><th>num</th><th>title</th><th>content</th><th>w_date</th><th>id</th></tr>
-          <tr v-for="prod in list" :key="prod.num">
-          <td><img :src="'http://localhost:8082/dboard/imgs/' + prod.num + '/1'"></td>
-          <td>{{ prod.num }}</td>
-          <td><a v-on:click="$event=>detail(prod.num)">{{ prod.title }}</a></td>
-          <td>{{ prod.content }}</td>
-          <td>{{ prod.w_date }}</td>
-          <td>{{ prod.id.id }}</td>
-          </tr>
-     </table>
+  <div class="container text-center">
+  <div class="row" style="margin-bottom: 40px;">
+    <div class="col">
+      <h2>입양일지</h2>
+    </div>
+    <div class="col">
+    </div>
+    <div class="col">
+<div class='box-body'>
+	<select id='search_type'>
+		<option value="title">제목</option>
+		<option value="content">내용</option>
+	</select>
+	<input type="text" id="searchKeyword">
+	<button id="search_btn">검색</button>
+</div>
+<router-link to="/diaryboardadd">글쓰기</router-link>
+    </div>
   </div>
+</div>
+<div class="container text-center">
+  <div class="row">
+    <div class="col-1">
+    </div>
+    <div class="col-10">
+      <table class="table">
+  <thead>
+    <tr>
+      <th scope="col">글번호</th>
+      <th scope="col">사진</th>
+      <th scope="col">글제목</th>
+      <th scope="col">작성자</th>
+      <th scope="col">작성날짜</th>
+      <th scope="col">조회수</th>
+      <th scope="col">추천수</th>
+    </tr>
+  </thead>
+  <tbody class="table-group-divider">
+    <tr v-for="prod in list" :key="prod.num">
+      <th scope="row">{{ prod.num }}</th>
+      <td><img :src="'http://localhost:8082/dboard/imgs/' + prod.num + '/1'"></td>
+      <td><a v-on:click="$event=>detail(prod.num)">{{ prod.title }}</a></td>
+      <td>{{ prod.id.id }}</td>
+      <td>{{ prod.w_date }}</td>
+      <td>조회수</td>
+      <td>추천수</td>
+    </tr>
+  </tbody>
+</table>
+    </div>
+    <div class="col-1">
+    </div>
+  </div>
+  </div>
+  <nav aria-label="Page navigation example">
+  <ul class="pagination">
+    <li class="page-item">
+      <a class="page-link" href="#" aria-label="Previous">
+        <span aria-hidden="true">&laquo;</span>
+      </a>
+    </li>
+    <li class="page-item"><a class="page-link" href="#">1</a></li>
+    <li class="page-item"><a class="page-link" href="#">2</a></li>
+    <li class="page-item"><a class="page-link" href="#">3</a></li>
+    <li class="page-item">
+      <a class="page-link" href="#" aria-label="Next">
+        <span aria-hidden="true">&raquo;</span>
+      </a>
+    </li>
+  </ul>
+</nav>
 </template>
 
 <script>

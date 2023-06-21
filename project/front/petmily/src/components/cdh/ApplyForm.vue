@@ -4,7 +4,7 @@
         <h3>Apply form</h3>
         id:<input type="text" v-model="id"><br/>
         wdate:<input type="text" v-model="wdate"><br/>
-        agreement:<input name="ag" type="radio" v-model="agreement" value="0">미동의 /
+        agreement:<input name="age" type="radio" v-model="agreement" value="0">미동의 /
         <input name="ag" type="radio" v-model="agreement" value="1">동의<br/>
         another:<input type="text" v-model="another"><br/>
         reason:<input type="textarea" v-model="reason"><br/> 
@@ -52,7 +52,7 @@
     },
     apply(){
       const self = this;
-      self.$axios.get('http://localhost:8082/Applyform')//비동기 요청
+      self.$axios.post('http://localhost:8082/Applyform')//비동기 요청
       .then(function(res) {//요청 결과 받아옴. 파람 res에 결과저장됨. res.data가 백단에서 전송한 데이터
         if(res.status == 200){
           if(res.data.dto==null){

@@ -6,52 +6,46 @@
         
         <!-- 반응형 600px 이하 가로사이즈일 경우 -->
         <div class="min-box-category">
-          <ul class="min-box-category-list" >
+          <ul class="menu">
             <li>
-                <div @click="open()" class="min-box-category-title"><img src='./assets/list.png'></div>
-                <ul v-show="isOpen" class="min-box-list">
-                  <li>
-                    <div>
-                      <span @click="gotoMain" >메인</span>
-                    </div>
-                  </li>
-                  <li>
-                    <div>
-                      <span @click="guard()" >동물보호소</span>
-                    </div>
-                  </li>
-                  <li>
-                    <div>
-                      <span @click="adopt()" >분양해요</span>
-                    </div>
-                  </li>
-                  <li>
-                    <div>
-                      <span @click="diary()" >입양일지</span>
-                    </div>
-                  </li>
-                  <li>
-                    <div>
-                      <span @click="volunteer()" >봉사모집</span>
-                    </div>
-                  </li>
-                  <li>
-                    <div>
-                      <span @click="form()" >입양신청</span>
-                    </div>
-                  </li>
-                  <li>
-                    <div>
-                      <span @click="guide()" >입양가이드</span>
-                    </div>
-                  </li>
-                  <li>
-                    <!-- 기존 링크 모음 (테스트용, 추후 삭제 예정) -->
-                    <router-link to="/kakaomaphome">카카오맵</router-link> | 
-                    <router-link to="/api">Api</router-link>
-                    <!-- //기존 링크 모음 (테스트용, 추후 삭제 예정) -->
-                  </li>
-                </ul> 
+              <img class="icon-menu" src='./assets/list.png'>
+              <ul class="min-box-list">
+                <li>
+                  <div>
+                    <span @click="gotoMain" >메인</span>
+                  </div>
+                </li>
+                <li>
+                  <div>
+                    <span @click="guard()" >동물보호소</span>
+                  </div>
+                </li>
+                <li>
+                  <div>
+                    <span @click="adopt()" >분양해요</span>
+                  </div>
+                </li>
+                <li>
+                  <div>
+                    <span @click="diary()" >입양일지</span>
+                  </div>
+                </li>
+                <li>
+                  <div>
+                    <span @click="volunteer()" >봉사모집</span>
+                  </div>
+                </li>
+                <li>
+                  <div>
+                    <span @click="form()" >입양신청</span>
+                  </div>
+                </li>
+                <li>
+                  <div>
+                    <span @click="guide()" >입양가이드</span>
+                  </div>
+                </li>
+              </ul> 
             </li>
           </ul>
         </div>
@@ -92,16 +86,12 @@
             </li>
             <li>
               <!-- 기존 링크 모음 (테스트용, 추후 삭제 예정) -->
-              <router-link to="/kakaomaphome">카카오맵</router-link> | 
               <router-link to="/api">Api</router-link>
               
               <!-- //기존 링크 모음 (테스트용, 추후 삭제 예정) -->
             </li>
           </ul>
         </div>
-        
-        
-        
       </div>
 
       <div class="box-right">
@@ -124,8 +114,6 @@
     
     <br>
     <!-- 기존 링크 모음 (테스트용, 추후 삭제 예정) -->
-    <router-link to="/kakaomaphome">카카오맵</router-link> |
-    <router-link to="/dogmap">도그맵</router-link> |
     <router-link to="/kaka">카카</router-link>
     <router-link to="/addressconvert">주소변환</router-link> |
     <router-link to="/volboardhome">봉사모집게시판</router-link> |
@@ -151,6 +139,8 @@
 </template>
 
 <script>
+import './assets/fonts/BagleFatOne.css';
+
 export default {
   
   data () {
@@ -170,11 +160,8 @@ export default {
   },
   methods:{
     gotoMain() { // 로고 클릭시 메인으로 이동
-      this.$router.push('/');
+      location.href = '/';
     }, 
-    open() { // 작은 사이즈 화면일 때
-      this.isOpen = !this.isOpen;
-    },
     guard() { // (카테고리) 동물보호소
       this.$router.push('/'); // TODO : 수정해야함
       alert('경로 추가 및 페이지 작업 필요');
@@ -259,7 +246,7 @@ export default {
 
 <style>
 #app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
+  font-family: Avenir, Helvetica, Arial, sans-serif, BagleFatOne;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
@@ -314,8 +301,14 @@ export default {
 .category-list li {
   float: left;
   margin-left: 20px;
-  font-weight: bold;
+  font-weight: normal;
   cursor: pointer;
+  font-family: BagleFatOne;
+  font-size: 25px;
+}
+
+.category-list li:hover {
+  color: rgb(244, 191, 79);
 }
 
 .min-box-category  {
@@ -339,7 +332,12 @@ export default {
 }
 
 .member-manage span {
-  /*content: "|";*/
+  margin-right: 5px;
+  cursor: pointer;
+}
+
+.member-manage span:hover {
+  color: rgb(244, 191, 79);
   margin-right: 5px;
   cursor: pointer;
 }
@@ -354,7 +352,7 @@ export default {
   cursor: pointer;
 }
 
-@media screen and (max-width: 902px) {
+@media screen and (max-width: 1050px) {
 
   /* 헤더 전체 영역 */
   .header {
@@ -366,10 +364,11 @@ export default {
 
   /* 좌측 로고 및 카테고리 영역 */
   .box-left {
-    display: inline;
+    display: flex;
     position: relative;
     width: 200px;
     justify-content: left;
+    height: 40px;
   }
 
   /* 숨김처리할 것들 */
@@ -377,28 +376,20 @@ export default {
     display: none;
   }
 
-  /* 카테고리 셀렉스박스 */
+  /* 카테고리 셀렉트박스 */
   .min-box-category {
-    display: block;
+    position: absolute;
+    display: flex;
+    justify-content: left;
     list-style: none;
-    height: 50px;
-    cursor: pointer;
-    margin-left: -30px;
+    height: 40px;
+    margin: -30px;
   }
 
-  .min-box-category-title {
-    display: inline;
-    justify-content: center;
-    vertical-align: middle;
-  }
-
-  .min-box-category-title img {
+  .icon-menu {
     width: 25px;
     height: 25px;
-  }
-
-  .min-box-list {
-    margin: -20px;
+    cursor: pointer;
   }
 
   .min-box-category li {
@@ -411,26 +402,29 @@ export default {
     padding: 5px;
   }
 
-  .min-box-category li span {
+  .min-box-list li span {
     font-weight: bold;
     padding: 10px;
   }
 
-  .min-box-category li ul li div span {
+  ul.menu > li:hover ul.min-box-list {
+    display: block;
+    margin: -20px;
+  }
+
+  ul.menu > li ul.min-box-list {
+    display: none;
+  }
+
+  .min-box-category li div span {
     text-decoration: none;
     font-weight: bold;
     background-color: white;
   }
 
-  .min-box-category li ul li div span:hover {
+  .min-box-category li div span:hover {
     color: white;
     background-color: green;
-  }
-
-  .min-box-list li {
-    position: relative;
-    display: block;
-    width: 200px;
   }
 
   /* 우측 콘텐츠 컨테이너 */
@@ -466,27 +460,9 @@ export default {
   }
 }
 
-
-
-
 .footer {
   height: 200px;
   background-color: #efefef;
 }
 
-
-
-
-nav {
-  padding: 30px;
-}
-
-nav a {
-  font-weight: bold;
-  color: #2c3e50;
-}
-
-nav a.router-link-exact-active {
-  color: #42b983;
-}
 </style>
