@@ -3,6 +3,58 @@
     <div class="header"> 
       <div class="box-left">
         <img class="logo" @click="gotoMain" src="./assets/logo_sample.png" >
+        
+        <!-- 반응형 600px 이하 가로사이즈일 경우 -->
+        <div class="min-box-category">
+          <ul class="min-box-category-list" >
+            <li>
+                <div @click="open()" class="min-box-category-title"><img src='./assets/list.png'></div>
+                <ul v-show="isOpen" class="min-box-list">
+                  <li>
+                    <div>
+                      <span @click="gotoMain" >메인</span>
+                    </div>
+                  </li>
+                  <li>
+                    <div>
+                      <span @click="guard()" >동물보호소</span>
+                    </div>
+                  </li>
+                  <li>
+                    <div>
+                      <span @click="adopt()" >분양해요</span>
+                    </div>
+                  </li>
+                  <li>
+                    <div>
+                      <span @click="diary()" >입양일지</span>
+                    </div>
+                  </li>
+                  <li>
+                    <div>
+                      <span @click="volunteer()" >봉사모집</span>
+                    </div>
+                  </li>
+                  <li>
+                    <div>
+                      <span @click="form()" >입양신청</span>
+                    </div>
+                  </li>
+                  <li>
+                    <div>
+                      <span @click="guide()" >입양가이드</span>
+                    </div>
+                  </li>
+                  <li>
+                    <!-- 기존 링크 모음 (테스트용, 추후 삭제 예정) -->
+                    <router-link to="/kakaomaphome">카카오맵</router-link> | 
+                    <router-link to="/api">Api</router-link>
+                    <!-- //기존 링크 모음 (테스트용, 추후 삭제 예정) -->
+                  </li>
+                </ul> 
+            </li>
+          </ul>
+        </div>
       </div>
       
       <div class="box-category">
@@ -47,54 +99,7 @@
           </ul>
         </div>
         
-        <!-- 반응형 600px 이하 가로사이즈일 경우 -->
-        <div class="min-box-category">
-          <ul class="min-box-category-list" >
-            <li>
-                <div @click="open()" class="min-box-category-title"><img src='./assets/list.png'><span class="min-category">카테고리</span></div>
-                <ul v-show="isOpen" class="min-box-list">
-                  <li>
-                    <div>
-                      <span @click="guard()" >동물보호소</span>
-                    </div>
-                  </li>
-                  <li>
-                    <div>
-                      <span @click="adopt()" >분양해요</span>
-                    </div>
-                  </li>
-                  <li>
-                    <div>
-                      <span @click="diary()" >입양일지</span>
-                    </div>
-                  </li>
-                  <li>
-                    <div>
-                      <span @click="volunteer()" >봉사모집</span>
-                    </div>
-                  </li>
-                  <li>
-                    <div>
-                      <span @click="form()" >입양신청</span>
-                    </div>
-                  </li>
-                  <li>
-                    <div>
-                      <span @click="guide()" >입양가이드</span>
-                    </div>
-                  </li>
-                  <li>
-                    <!-- 기존 링크 모음 (테스트용, 추후 삭제 예정) -->
-                    <router-link to="/kakaomaphome">카카오맵</router-link> | 
-                    <router-link to="/api">Api</router-link>
-                    <!-- //기존 링크 모음 (테스트용, 추후 삭제 예정) -->
-                  </li>
-                </ul> 
-            </li>
-          </ul>
-
-          
-        </div>
+        
         
       </div>
 
@@ -308,13 +313,21 @@ export default {
   /* 헤더 전체 영역 */
   .header {
     border-bottom: 3px solid rgb(147, 214, 147);
-    display: flex;
-    justify-content: space-between;
+    display: inline-flex;
+    justify-content:space-between;
     align-items: center;
   }
 
-  /* 중앙 카테고리 */
-  .category {
+  /* 좌측 로고 및 카테고리 영역 */
+  .box-left {
+    display: inline;
+    position: relative;
+    width: 200px;
+    justify-content: left;
+  }
+
+  /* 숨김처리할 것들 */
+  div.box-category, .category, .logo {
     display: none;
   }
 
@@ -322,11 +335,9 @@ export default {
   .min-box-category {
     display: block;
     list-style: none;
-    height: 30px;
-    padding: 5px 1px;
-    margin: 0;
-    background: #fff;
-    cursor: pointer
+    height: 50px;
+    cursor: pointer;
+    margin-left: -30px;
   }
 
   .min-box-category-title {
@@ -336,12 +347,12 @@ export default {
   }
 
   .min-box-category-title img {
-    width: 20px;
-    height: 20px;
+    width: 25px;
+    height: 25px;
   }
 
-  .min-box-category-title span {
-    margin-bottom: 10px;
+  .min-box-list {
+    margin: -20px;
   }
 
   .min-box-category li {
@@ -350,7 +361,8 @@ export default {
     position: relative;
     list-style: none;
     vertical-align: middle;
-    text-align: center;
+    text-align: left;
+    padding: 5px;
   }
 
   .min-box-category li span {
@@ -361,10 +373,7 @@ export default {
   .min-box-category li ul li div span {
     text-decoration: none;
     font-weight: bold;
-  }
-
-  .min-box-list {
-    
+    background-color: white;
   }
 
   .min-box-category li ul li div span:hover {
@@ -372,10 +381,17 @@ export default {
     background-color: green;
   }
 
+  .min-box-list li {
+    position: relative;
+    display: block;
+    width: 200px;
+  }
+
   /* 우측 콘텐츠 컨테이너 */
   .box-right {
-    width: 200px;
+    width: 300px;
     display: flex;
+    position: relative;
     justify-content: right;
     align-items: right;
   }
