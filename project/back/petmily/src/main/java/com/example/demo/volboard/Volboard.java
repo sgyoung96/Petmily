@@ -60,6 +60,5 @@ public class Volboard {
 	@PrePersist
 	public void preprocess() {
 		w_date = new Date(); //현재 날짜 생성
-		vol_date = new Date(); //현재 날짜 생성
 	}
 }

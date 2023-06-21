@@ -18,6 +18,6 @@ import lombok.ToString;
 public class ParticipantsDto {
 	
 	private int num;
-	private Volboard board_num;
+	private Volboard boardnum;
 	private Member id;
 }

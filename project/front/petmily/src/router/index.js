@@ -10,6 +10,7 @@ import DiaryBoardDetail from '@/components/diaryboard/DiaryBoardDetail.vue'
 import KakaomapHome from '@/components/kakaomap/KakaomapHome.vue'
 import VolBoardAdd from '@/components/volboard/VolBoardAdd.vue'
 import VolBoardHome from '@/components/volboard/VolBoardHome.vue'
+import VolBoardDetail from '@/components/volboard/VolBoardDetail.vue'
 import ApplyForm from '@/components/cdh/ApplyForm.vue'
 import Detail from '@/components/cdh/Detail.vue'
 import Api from '@/components/cdh/Api.vue'
@@ -81,6 +82,12 @@ const routes = [
     name: 'VolBoardAdd',
     component: VolBoardAdd
   },
+  {
+    path: '/volboarddetail',
+    name: 'VolBoardDetail',
+    component: VolBoardDetail
+  }
+  ,
   {
     path: '/applyform',
     name: 'ApplyForm',
