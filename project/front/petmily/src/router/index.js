@@ -1,6 +1,7 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import HomeView from '../views/HomeView.vue'
 import MemberHome from '../views/MemberView.vue'
+import MyPageHome from '../views/MypageView.vue'
 import DiaryBoardHome from '@/components/diaryboard/DiaryBoardHome.vue'
 import AdoptBoardHome from '../views/adopt/AdoptBoardView.vue'
 import AdoptForm from '@/components/adopt/AdoptForm.vue'
@@ -25,6 +26,11 @@ const routes = [
     path: '/member',
     name: 'MemberHome',
     component: MemberHome
+  },
+  {
+    path: '/mypage',
+    name: 'MyPageHome',
+    component: MyPageHome
   },
   {
     path: '/diaryboardhome',

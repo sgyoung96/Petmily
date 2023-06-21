@@ -79,8 +79,9 @@ export default {
           //sessionStorage.setItem('loginId', kakao_account.name)
           sessionStorage.setItem('loginId', res.id);
           sessionStorage.setItem('loginFlag', 'kakao');
-
-          window.location.href = "/" //리디렉션
+          
+          const self = this;
+          self.$router.push('/join') // 회원가입 화면으로 이동, 회원가입 폼에서 세션의 플래그가 kakao 면 특정 엘리먼트 숨김 처리
         },
         fail: (error) => {
           console.log(error)

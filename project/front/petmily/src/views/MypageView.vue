@@ -1,16 +1,15 @@
 <template>
   <div>
     <div class="container">
-        <LoginForm class="form-login"/>
+       
     </div>
   </div>
 </template>
 
 <script>
-import LoginForm from '../components/Member/MemLogin.vue'
 
 export default {
-  name: 'MemberView',
+  name: 'MyPageHome',
   data () {
     return {
         
@@ -23,7 +22,7 @@ export default {
     
   },
   components: {
-      LoginForm
+     
   }
 }
 </script>
