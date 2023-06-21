@@ -1,6 +1,5 @@
 <template>
   <div id="app">
-    
     <table border="1px">
       <thead>
         <tr>
@@ -11,9 +10,9 @@
         </tr>
       </thead>
       <tbody>
-        <tr v-for="item in filteredItems" :key="item.careNm">
+        <tr v-for="item in items" :key="item.desertionNo">
           <td>
-            <img :src="item.filename" :alt="item.careNm" @click="goToDetail(item.desertionNo)" style="cursor: pointer;" />
+            <img :src="item.filename" :alt="item.careNm" @click="handleItemClick(item.desertionNo)" style="cursor: pointer;" />
           </td>
           <td>{{ item.careNm }}</td>
           <td>{{ item.happenPlace }}</td>
@@ -30,19 +29,9 @@ import axios from 'axios';
 export default {
   name: 'App',
   data() {
-    return {
-      items: [],
-      search: '',
-    };
-  },
-  computed: {
-    filteredItems() {
-      if (!this.search) {
-        return this.items;
-      }
-      const searchValue = this.search.toLowerCase();
-      return this.items.filter(item => item.desertionNo.toLowerCase().includes(searchValue));
-    },
+  return {
+    items: [],
+  };
   },
   created() {
     axios
@@ -54,8 +43,10 @@ export default {
       });
   },
   methods: {
-    goToDetail(desertionNo) {
-      this.$router.push({ name: 'Detail', params: { desertionNo: desertionNo } });
+    handleItemClick(desertionNo) {
+  console.log(desertionNo); // desertionNo 값 확인
+  this.desertionNo = desertionNo; // desertionNo 값을 설정
+  this.$router.push({ name: 'Detail', params: { desertionNo: desertionNo } });
     },
   },
 };
