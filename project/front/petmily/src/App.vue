@@ -187,8 +187,34 @@ export default {
       this.$router.push('/member');
     },
     logout(){ // 로그아웃
-      sessionStorage.clear()
-      window.location.href = "/" //리디렉션
+      if (sessionStorage.getItem('loginFlag') != 'kakao') {
+        sessionStorage.clear()
+        window.location.href = "/" //리디렉션
+      } else {
+        /* 로그아웃 하나, 완전히 연결을 끊지 않음 */
+        // window.Kakao.Auth.logout((res) => {
+        //   console.log(res)
+        //   alert('로그아웃되었습니다.');
+
+        //   /* 세션에 저장되어 있는 정보 날리기 */
+        //   sessionStorage.clear()
+        //   window.location.href = "/" //리디렉션
+        // })
+
+        /* 사용자가 카카오 연결을 끊고자 할 때 */
+        window.Kakao.API.request({
+          url: '/v1/user/unlink'
+        }).then(function(response) {
+          console.log(response)
+          alert('로그아웃되었습니다.');
+
+          /* 세션에 저장되어 있는 정보 날리기 */
+          sessionStorage.clear()
+          window.location.href = "/" //리디렉션
+        }).catch(function(error) {
+          console.log(error)
+        })
+      }
     },
     out(){
       
