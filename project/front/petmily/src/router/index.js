@@ -21,6 +21,7 @@ import MemJoin from '@/components/Member/MemJoin.vue'
 import MemLogin from '@/components/Member/MemLogin.vue' 
 import AdminHome from '@/components/Member/AdminHome.vue'
 import AddressConvert from '@/components/kaka/AddressConvert.vue' 
+import MessageWrite from '@/components/Message/MessageWrite.vue' 
 
 const routes = [
   {
@@ -141,6 +142,11 @@ const routes = [
     path: '/adminhome',
     name: 'AdminHome',
     component: AdminHome
+  },
+  {
+    path: '/messagewrite',
+    name: 'MessageWrite',
+    component: MessageWrite
   }
 ]
 

@@ -84,6 +84,13 @@
                 <span @click="guide()" >입양가이드</span>
               </div>
             </li>
+            <li>
+              <!-- 기존 링크 모음 (테스트용, 추후 삭제 예정) -->
+              <router-link to="/kakaomaphome">카카오맵</router-link> | 
+              <router-link to="/api">Api</router-link>
+              
+              <!-- //기존 링크 모음 (테스트용, 추후 삭제 예정) -->
+            </li>
           </ul>
         </div>
       </div>
@@ -115,6 +122,9 @@
     <router-link to="/volboardhome">봉사모집게시판</router-link> |
     <router-link to="/applyform">Apply</router-link> |
     <router-link to="/api">Api</router-link> |
+    
+    <router-link to="" @click="send">쪽지보내기</router-link>
+    
     <!-- //기존 링크 모음 (테스트용, 추후 삭제 예정) -->
 
   <!-- 이곳에 라우터로 설정한 화면이 로드됨 -->
@@ -224,6 +234,14 @@ export default {
           alert('에러코드:' + res.status)
         }
       });
+    },
+    send(){
+      alert('send 클릭')
+      if(this.loginId == null){
+        alert('로그인 후 이용가능')
+      }else{
+        this.$router.push('/messagewrite')
+      }
     }
   }
 }
