@@ -20,6 +20,7 @@ import Api from '@/components/cdh/Api.vue'
 import MemJoin from '@/components/Member/MemJoin.vue'
 import MemLogin from '@/components/Member/MemLogin.vue' 
 import AdminHome from '@/components/Member/AdminHome.vue'
+import AddressConvert from '@/components/kaka/AddressConvert.vue' 
 
 const routes = [
   {
@@ -76,6 +77,11 @@ const routes = [
     path:'/adopt',
     name: 'AdoptBoardHome',
     component: AdoptBoardHome
+  },
+  {
+    path:'/addressconvert',
+    name: 'AddressConvert',
+    component: AddressConvert
   },
   {
     path:'/adopt/addform',
