@@ -84,6 +84,7 @@
                 <span @click="guide()" >입양가이드</span>
               </div>
             </li>
+            
             <li>
               <!-- 기존 링크 모음 (테스트용, 추후 삭제 예정) -->
               <router-link to="/api">Api</router-link>
@@ -120,7 +121,9 @@
     <router-link to="/applyform">Apply</router-link> |
     <router-link to="/api">Api</router-link> |
     
-    <router-link to="" @click="send">쪽지보내기</router-link>
+    <router-link to="" @click="send">쪽지보내기</router-link> |
+    <router-link to="" @click="messagesender">보낸쪽지함</router-link> |
+    <router-link to="" @click="messagereciever">받은쪽지함</router-link>
     
     <!-- //기존 링크 모음 (테스트용, 추후 삭제 예정) -->
 
@@ -238,6 +241,20 @@ export default {
         alert('로그인 후 이용가능')
       }else{
         this.$router.push('/messagewrite')
+      }
+    },
+    messagesender(){
+      if(this.loginId == null){
+        alert('로그인 후 이용가능')
+      }else{
+        this.$router.push('/messagesender')
+      }
+    },
+    messagereciever(){
+      if(this.loginId == null){
+        alert('로그인 후 이용가능')
+      }else{
+        this.$router.push('/messagereciever')
       }
     }
   }

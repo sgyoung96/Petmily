@@ -1,14 +1,11 @@
 package com.example.demo.message;
 
-import java.util.Date;
+import java.time.LocalDate;
 
-import org.hibernate.annotations.OnDelete;
-import org.hibernate.annotations.OnDeleteAction;
+import org.springframework.beans.factory.annotation.Value;
 
 import com.example.demo.member.Member;
 
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -27,8 +24,10 @@ private int num;
 
 	private Member sender;
 	private Member reciever;
-	private Date send_dt;
+	private LocalDate send_dt;
 	private String title;
 	private String content;
 	private int check;
+	private String availablesender;
+	private String availablereciever;
 }

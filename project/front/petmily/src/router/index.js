@@ -21,6 +21,7 @@ import AdminHome from '@/components/Member/AdminHome.vue'
 import AddressConvert from '@/components/kaka/AddressConvert.vue' 
 import MessageWrite from '@/components/Message/MessageWrite.vue' 
 import MessageSender from '@/components/Message/MessageSender.vue' 
+import MessageReciever from '@/components/Message/MessageReciever.vue'
 
 const routes = [
   {
@@ -141,6 +142,11 @@ const routes = [
     path: '/messagesender',
     name: 'MessageSender',
     component: MessageSender
+  },
+  {
+    path: '/messagereciever',
+    name: 'MessageReciever',
+    component: MessageReciever
   }
 ]
 

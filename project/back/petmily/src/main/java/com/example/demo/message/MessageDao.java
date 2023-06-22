@@ -13,12 +13,24 @@ import com.example.demo.member.Member;
 import jakarta.transaction.Transactional;
 @Repository
 public interface MessageDao extends JpaRepository<Message, Integer> {
-	ArrayList<Message> findByReciever(Member loginId); // 받은 메세지함 목록
-	ArrayList<Message> findBySender(Member sender); // 보낸이로 검색
+	ArrayList<Message> findByRecieverAndAvailablereciever(Member loginId, String del); // 받은 메세지함 목록
+	ArrayList<Message> findBySenderAndAvailablesender(Member sender, String del); // 보낸이로 검색
+	
+	
 	ArrayList<Message> findByRecieverAndCheck(Member loginId, int check); // 읽은 메세지, 안읽은 메세지 검색
 	
 	@Transactional
 	@Modifying
 	@Query(value="update message set m_check=1 where num=:num", nativeQuery=true)
 	void updatem_check(@Param("num") int num);
+	
+	@Transactional
+	@Modifying
+	@Query(value="update message set availablesender='N' where num=:num", nativeQuery=true)
+	void updateavailablesender(@Param("num") int num);
+	
+	@Transactional
+	@Modifying
+	@Query(value="update message set availablereciever='N' where num=:num", nativeQuery=true)
+	void updateavailablereciever(@Param("num") int num);
 }

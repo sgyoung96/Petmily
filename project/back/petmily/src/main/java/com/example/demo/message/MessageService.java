@@ -1,6 +1,8 @@
 package com.example.demo.message;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -18,8 +20,9 @@ public class MessageService {
 	
 	//메세지 작성
 	public MessageDto save(MessageDto dto) {
-		Message entity = dao.save(new Message(dto.getNum(), dto.getSender(),dto.getReciever(),dto.getSend_dt(),dto.getTitle(),dto.getContent(),dto.getCheck()));
-	return new MessageDto(entity.getNum(), entity.getSender(), entity.getReciever(),entity.getSend_dt(),entity.getTitle(),entity.getContent(),entity.getCheck());
+		
+		Message entity = dao.save(new Message(dto.getNum(), dto.getSender(),dto.getReciever(),dto.getSend_dt(),dto.getTitle(),dto.getContent(),dto.getCheck(),dto.getAvailablesender(),dto.getAvailablereciever()));
+	return new MessageDto(entity.getNum(), entity.getSender(), entity.getReciever(),entity.getSend_dt(),entity.getTitle(),entity.getContent(),entity.getCheck(),entity.getAvailablesender(),entity.getAvailablereciever());
 	}
 	
 //	//메세지 전체
@@ -38,7 +41,7 @@ public class MessageService {
 		ArrayList<Message> list = (ArrayList<Message>)dao.findByRecieverAndCheck(member, check);
 		ArrayList<MessageDto> list2 = new ArrayList<MessageDto>();
 		for(Message m:list) {
-			list2.add(new MessageDto(m.getNum(),m.getSender(),m.getReciever(),m.getSend_dt(),m.getTitle(),m.getContent(),m.getCheck()));
+			list2.add(new MessageDto(m.getNum(),m.getSender(),m.getReciever(),m.getSend_dt(),m.getTitle(),m.getContent(),m.getCheck(),m.getAvailablesender(),m.getAvailablereciever()));
 		}
 		return list2;
 	}
@@ -46,21 +49,23 @@ public class MessageService {
 	//보낸이로 검색(sender)
 	public ArrayList<MessageDto> getBySender(String id){
 		Member member = new Member(id, "", "", "", "", null, "", "", "");
-		ArrayList<Message> list = (ArrayList<Message>)dao.findBySender(member);
+		ArrayList<Message> list = (ArrayList<Message>)dao.findBySenderAndAvailablesender(member, "A");	
 		ArrayList<MessageDto> list2 = new ArrayList<MessageDto>();
 		for(Message m:list) {
-			list2.add(new MessageDto(m.getNum(),m.getSender(),m.getReciever(),m.getSend_dt(),m.getTitle(),m.getContent(),m.getCheck()));
+			list2.add(new MessageDto(m.getNum(),m.getSender(),m.getReciever(),m.getSend_dt(),m.getTitle(),m.getContent(),m.getCheck(),m.getAvailablesender(),m.getAvailablereciever()));
 		}
 		return list2;
 	}
 	
 	//받은 메세지 목록(reciever)
 	public ArrayList<MessageDto> getByReciever(String loginId){
+		System.out.println("service reciever");
 		Member member = new Member(loginId, "", "", "", "", null, "", "", "");
-		ArrayList<Message> list = (ArrayList<Message>)dao.findByReciever(member);
+		ArrayList<Message> list = (ArrayList<Message>)dao.findByRecieverAndAvailablereciever(member,"A");
+		System.out.println("Service reciever : " + list);
 		ArrayList<MessageDto> list2 = new ArrayList<MessageDto>();
 		for(Message m:list) {
-			list2.add(new MessageDto(m.getNum(),m.getSender(),m.getReciever(),m.getSend_dt(),m.getTitle(),m.getContent(),m.getCheck()));
+			list2.add(new MessageDto(m.getNum(),m.getSender(),m.getReciever(),m.getSend_dt(),m.getTitle(),m.getContent(),m.getCheck(),m.getAvailablesender(),m.getAvailablereciever()));
 		}
 		return list2;
 	}
@@ -70,8 +75,14 @@ public class MessageService {
 		dao.updatem_check(num);
 	}
 	
-	//메세지 삭제
-	public void delMessage(int num) {
-		dao.deleteById(num);
+	//sender메세지 삭제
+	public void delMessagesender(int num) {
+		dao.updateavailablesender(num);
+	}
+	
+	
+	//reciever메세지 삭제
+	public void delMessagereciever(int num) {
+		dao.updateavailablereciever(num);
 	}
 }
