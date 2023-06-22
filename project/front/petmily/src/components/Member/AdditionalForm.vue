@@ -57,7 +57,7 @@ export default {
   },
   created: function () {
       if (sessionStorage.getItem('loginFlag') == 'kakao') {
-        this.name = sessionStorage.getItem('kakao_name');
+        this.name = sessionStorage.getItem('kakaoName');
       }
   },
   watch : {
@@ -159,7 +159,7 @@ export default {
       var address = self.roadAddress
       address += self.detailAddress 
       if(self.extraAddress != ''){
-      address += "," + self.extraAddress
+        address += "," + self.extraAddress
       }
 
       let formdata = new FormData();

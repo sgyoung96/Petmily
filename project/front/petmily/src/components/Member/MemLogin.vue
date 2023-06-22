@@ -78,23 +78,26 @@ export default {
         url: "/v2/user/me",
         success: (res) => {
           console.log('kakao', res);
-          //alert('로그인되었습니다.');
           
-          /* 세션 처리하기 */
-          //sessionStorage.setItem('loginId', kakao_account.name)
           this.kakaoId = res.id;
           this.kakaoName = res.kakao_account.profile.nickname;
           this.loginFlag = 'kakao';
+
+          sessionStorage.setItem('loginId', res.id);
+          sessionStorage.setItem('kakaoName', res.kakao_account.profile.nickname);
+          sessionStorage.setItem('loginFlag', 'kakao');
           
           const self = this;
 
           self.$axios.get('http://localhost:8082/members/' + sessionStorage.getItem('loginId')).then (function(rs) {
-            self.dto = rs.data.dto;
-            if (self.dto != null) {
-              window.location.href = "/";
-            } else {
-              self.$router.push({name:'KakaoAdditionalForm', query:{kakaoId: self.kakaoId, kakaoName: self.kakaoName, loginFlag: self.loginFlag}}) // 추가정보기입화면
-            }
+            console.log(rs);
+            window.location.href = '/';
+            // self.dto = rs.data.dto;
+            // if (self.dto != null) {
+            //   window.location.href = "/";
+            // } else {
+            //   self.$router.push({name:'KakaoAdditionalForm', query:{kakaoId: self.kakaoId, kakaoName: self.kakaoName, loginFlag: self.loginFlag}}) // 추가정보기입화면
+            // }
           });
         },
         fail: (error) => {

@@ -148,24 +148,25 @@ export default {
   created:function(){ // 이 컴포넌트가 시작될때 실행되는 함수
     if (sessionStorage.getItem('loginId') != null) {
       this.loginId = sessionStorage.getItem('loginId');
-    }
-    
-    if (this.loginId != null) {
-      if (this.loginId == 'admin') {
-        this.$router.push('/adminhome')
-      } else if (sessionStorage.getItem('loginFlag') == 'kakao') {
-        const self = this;
 
-        self.$axios.get('http://localhost:8082/members/' + this.loginId).then (function(rs) {
-          console.log(self.dto);
-          self.dto = rs.data.dto;
+      if (this.loginId != null) {
+        if (this.loginId == 'admin') {
+          this.$router.push('/adminhome')
+        } else if (sessionStorage.getItem('loginFlag') == 'kakao') {
+          const self = this;
 
-          if (self.dto.name == null) {
-            self.$router.push('/member/kakaoform');
-          } 
-        });
+          self.$axios.get('http://localhost:8082/members/' + this.loginId).then (function(rs) {
+            console.log(rs.data.dto);
+          
+            if (rs.data.dto == null) {
+              self.$router.push({name:'KakaoAdditionalForm', query:{kakaoId: sessionStorage.getItem('loginId'), kakaoName: sessionStorage.getItem('kakaoName')}});
+            }
+          });
+        }
       }
     }
+    
+    
   },
   methods:{
     gotoMain() { // 로고 클릭시 메인으로 이동
@@ -192,7 +193,12 @@ export default {
       alert('경로 추가 및 페이지 작업 필요');
     },
     login() { // 로그인
-      this.$router.push('/member');
+      if (sessionStorage.getItem('loginFlag') == 'kakao') {
+        alert('소셜 로그인이 연동된 상태입니다. \n로그아웃 후 이용 바랍니다.');
+        window.href = '/';
+      } else {
+        this.$router.push('/member');
+      }
     },
     logout(){ // 로그아웃
       if (sessionStorage.getItem('loginFlag') != 'kakao') {
