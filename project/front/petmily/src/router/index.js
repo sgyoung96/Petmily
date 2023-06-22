@@ -21,6 +21,8 @@ import MemLogin from '@/components/Member/MemLogin.vue'
 import AdminHome from '@/components/Member/AdminHome.vue'
 import AddressConvert from '@/components/kaka/AddressConvert.vue' 
 import MessageWrite from '@/components/Message/MessageWrite.vue' 
+import MessageSender from '@/components/Message/MessageSender.vue' 
+import MessageReciever from '@/components/Message/MessageReciever.vue'
 
 const routes = [
   {
@@ -141,6 +143,16 @@ const routes = [
     path: '/messagewrite',
     name: 'MessageWrite',
     component: MessageWrite
+  },
+  {
+    path: '/messagesender',
+    name: 'MessageSender',
+    component: MessageSender
+  },
+  {
+    path: '/messagereciever',
+    name: 'MessageReciever',
+    component: MessageReciever
   }
 ]
 
