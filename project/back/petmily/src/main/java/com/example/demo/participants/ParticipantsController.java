@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.demo.member.Member;
+import com.example.demo.volboard.VolboardService;
 
 @RestController
 @CrossOrigin(origins = "*")
@@ -22,6 +23,10 @@ public class ParticipantsController {
 	@Autowired
 	private ParticipantsService service;
 	
+	@Autowired
+	private VolboardService service2;
+	
+	//봉사모집게시판에 신청된 사람의 인원수 출력
 	@GetMapping("/boardnum/{boardnum}")
 	public Map getCount(@PathVariable("boardnum") int boardnum) {
 		int c = service.printPerson(boardnum);
@@ -30,14 +35,17 @@ public class ParticipantsController {
 		return map;
 	}
 	
+	//봉사신청 시 참가자테이블에 추가
 	@PostMapping("")
 	public Map addPerson(ParticipantsDto dto) {
 		Member m = service.save(dto);
+		service2.upCnt(dto.getBoardnum().getNum());
 		Map map = new HashMap();
 		map.put("member", m);
 		return map;
 	}
 	
+	//신청을 두 번하지 못하게 중복체크
 	@GetMapping("/{id}/{num}")
 	public Map checkUser(@PathVariable("id") String id, @PathVariable("num") int num) {
 		ArrayList<ParticipantsDto> d = service.getByIdAndNum(id, num);
@@ -46,10 +54,12 @@ public class ParticipantsController {
 		return map;
 	}
 	
+	//신청취소
 	@DeleteMapping("")
 	public Map delPerson2(String id, int boardnum) {
 		boolean flag = true;
 		service.delPerson(id, boardnum);
+		service2.downCnt(boardnum);
 		Map map = new HashMap();
 		map.put("flag", flag);
 		return map;

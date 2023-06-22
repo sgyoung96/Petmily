@@ -19,7 +19,8 @@ import MemJoin from '@/components/Member/MemJoin.vue'
 import MemLogin from '@/components/Member/MemLogin.vue' 
 import AdminHome from '@/components/Member/AdminHome.vue'
 import AddressConvert from '@/components/kaka/AddressConvert.vue' 
-import MessageWrite from '@/components/Message/MessageWrite.vue' 
+import MessageWrite from '@/components/Message/MessageWrite.vue'
+import AddressMap from '@/components/kaka/AddressMap.vue' 
 
 const routes = [
   {
@@ -61,6 +62,11 @@ const routes = [
     path: '/kaka',
     name: 'Kaka',
     component: Kaka
+  },
+  {
+    path: '/addressmap',
+    name: 'AddressMap',
+    component: AddressMap
   },
   {
     path:'/adopt',

@@ -109,8 +109,9 @@
     <br>
 
     <!-- 기존 링크 모음 (테스트용, 추후 삭제 예정) -->
-    <router-link to="/kaka">카카</router-link>
+    <router-link to="/kaka">카카</router-link> |
     <router-link to="/addressconvert">주소변환</router-link> |
+    <router-link to="/addressmap">주소로 지도</router-link> |
     <router-link to="/applyform">Apply</router-link> |
     <router-link to="/api">Api</router-link> |
     <router-link to="" @click="send">쪽지보내기</router-link>

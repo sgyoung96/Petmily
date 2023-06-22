@@ -26,7 +26,7 @@
     },
     methods:{
       detail(num){
-        this.$router.push({ name: 'OrderDetail', query: { num: num }});
+        this.$router.push({ name: 'OrderDetail', query: { num: num },});
       }
     },
     created:function(){//이 컴포넌트가 시작될때 실행되는 함수
