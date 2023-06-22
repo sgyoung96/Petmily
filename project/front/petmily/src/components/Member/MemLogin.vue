@@ -34,7 +34,10 @@ export default {
     return {
       id:'',
       pwd:'',
-      dto: {}
+      dto: {},
+      kakaoId: '',
+      kakaoName: '',
+      loginFlag: ''
     }
   },
   methods:{
@@ -79,9 +82,9 @@ export default {
           
           /* 세션 처리하기 */
           //sessionStorage.setItem('loginId', kakao_account.name)
-          sessionStorage.setItem('loginId', res.id);
-          sessionStorage.setItem('kakao_name', res.kakao_account.profile.nickname)
-          sessionStorage.setItem('loginFlag', 'kakao');
+          this.kakaoId = res.id;
+          this.kakaoName = res.kakao_account.profile.nickname;
+          this.loginFlag = 'kakao';
           
           const self = this;
 
@@ -90,7 +93,7 @@ export default {
             if (self.dto != null) {
               window.location.href = "/";
             } else {
-              self.$router.push('/member/kakaoform') // 추가정보기입화면
+              self.$router.push({name:'KakaoAdditionalForm', query:{kakaoId: self.kakaoId, kakaoName: self.kakaoName, loginFlag: self.loginFlag}}) // 추가정보기입화면
             }
           });
         },

@@ -4,32 +4,31 @@
         <div><span class="form-header-title-msg">서비스 이용을 위해 추가 정보를 기입해 주세요.</span></div>
         <span class="form-header-sub-msg">SNS 로그인시 원활한 서비스 이용을 위해 최초 1회만 작성합니다.</span>
     </div>
-    
 
-
-
-
-    <h3>서비스 이용을 위해 추가 정보를 기입해 주세요.</h3>
-        KAKAO NICKNAME: <input class="input-item" type="text" v-model="name" placeholder="NAME" on:click="" readonly><br/>
-
-        BIRTH : <input  type="date" v-model="birth" ><br/>  
-        <input name="g" type="radio" v-model="gender" value="m" >남 / 
-            <input name="g" type="radio" v-model="gender" value="f">여 <br/>
-        PHONE : <input class="input-item" type="text" v-model="phone" placeholder="예)010-1234-5678" ><br/>
-         <span class ="font_id_red" v-show="isPhoneCheck">전화번호 형식을 확인해주세요</span><br/> 
+    <div class="form-container">
         
+        <input class="ipt-name" type="text" v-model="name" placeholder="NAME" on:click="" readonly><br>
         
+        <div class="box-birth">
+            <span class="ipt-title">BIRTH</span>
+            <input  type="date" v-model="birth" ><br/>  
+        </div>
+
+        <span class="ipt-title">GENDER</span>
+        <input name="g" type="radio" v-model="gender" value="m" >남 / <input name="g" type="radio" v-model="gender" value="f">여 <br/>
+        
+        <span class="ipt-title">ADDRESS</span>
         <input  type="text" v-model="postcode" placeholder="우편번호" readonly>
         <button id="postcode" @click="execDaumPostcode">검색</button><br/>
         <input type="text" v-model="roadAddress" placeholder="주소" readonly><br/>
         <input type="text" v-model="detailAddress" placeholder="상세주소"><br/>
         <input type="text" v-model="extraAddress" placeholder="참고항목"><br/>
-       
-       <div ref="wrap" style="display:none;border:1px solid;width:500px;height:300px;margin:5px 0;position:relative">
-          <img src="//t1.daumcdn.net/postcode/resource/images/close.png" id="btnFoldWrap" style="cursor:pointer;position:absolute;right:0px;top:-1px;z-index:1" v-on:click="foldDaumPostcode()" alt="접기 버튼">
-        </div>
-        <button v-on:click="join">회원정보수정</button>
+      
     </div>
+
+    <button v-on:click="join">회원정보수정</button>
+
+  </div>
 
 </template>
 
@@ -39,18 +38,21 @@ export default {
   name: 'KakaoAdditionalForm',
   data () {
     return {
+
+        kakaoId: this.$route.query.kakaoId,
+        kakaoName: this.$route.query.kakaoName,
+        loginFlag: this.$route.query.loginFlag,
       
-      name:'',
-      
-      birth:'',
-      gender:'m',
-      phone:'',
-      postcode:'',
-      roadAddress:'',
-      detailAddress:'',
-      extraAddress:'',
-      address:'',
-      msg:''
+        name: this.$route.query.kakaoName,
+        birth:'',
+        gender:'m',
+        phone:'',
+        postcode:'',
+        roadAddress:'',
+        detailAddress:'',
+        extraAddress:'',
+        address:'',
+        msg:''
     }
   },
   created: function () {
@@ -69,11 +71,8 @@ export default {
         },
     'pwd' : function(){
         this.checkPwd()
-        },
-    'phone' : function(){
-        this.checkPhone()
-         
-    }
+        }
+    
   },  
   methods:{
     checkName(){
@@ -83,14 +82,6 @@ export default {
             this.isNameCheck = true;
         }else{
             this.isNameCheck = false;
-        }
-    },
-        checkPhone(){
-        const validatePhone = /^\d{3}-\d{3,4}-\d{4}$/;
-        if(!validatePhone.test(this.phone)){
-            this.isPhoneCheck = true;
-        }else{
-            this.isPhoneCheck = false;
         }
     },
     execDaumPostcode(){
@@ -175,16 +166,18 @@ export default {
       formdata.append('id', sessionStorage.getItem('loginId'))
       formdata.append('name',self.name)
       formdata.append('gender',self.gender)
-      formdata.append('birth',mybirth)
-      formdata.append('phone',self.phone)
+      formdata.append('birth', mybirth)
       formdata.append('address', address)
       
       self.$axios.post('http://localhost:8082/members', formdata) 
       .then(function(res){ 
         if(res.status == 200){
-          let dto = res.data.dto
-        alert(dto.name +'님 회원가입 완료')
-         window.location.href = "/"
+            let dto = res.data.dto;
+            sessionStorage.setItem('loginId', self.kakaoId);
+            sessionStorage.setItem('loginFlag', self.loginFlag);
+
+            alert(dto.name +'님 회원가입 완료');
+            window.location.href = "/";
         }else{
           alert('에러코드:' + res.status)
         }
@@ -197,23 +190,66 @@ export default {
 
 <style scoped>
 
+/* 전체 div */
 .additional-form-container {
     font-family: 'IBMPlexSansKR-Regular';
+    padding-bottom: 50px;
 }
 
+/* 헤더 div */
 .form-header {
-    
+    padding-top: 50px;
 }
 
+/* 안내문구 1 */
 .form-header-title-msg {
     font-family: 'IBMPlexSansKR-Bold';    
     font-size: 20px;
 }
 
+/* 안내문구 2 */
 .form-header-sub-msg {
     font-family: 'IBMPlexSansKR-ExtraLight';    
     font-size: 12px;
     color: black;
+}
+
+/* 정보 기입란 */
+.form-container {
+    width: 50%;
+    position: relative;
+    justify-content: space-evenly;
+    background-color: rgb(255, 249, 196);
+    border: 1px;
+    border-radius: 30px;
+    translate: 50%;
+    margin-top: 20px;
+    padding-top: 20px;
+    padding-bottom: 50px;
+}
+
+/* 인풋 란 상단에 위치한 제목 */
+.ipt-title {
+    font-family: 'IBMPlexSansKR-Medium';    
+    font-size: 17px;
+    color: black;
+    width: 50px;
+    margin-top: 20px;
+    transform: translateX(-100%);
+}
+
+.box-birth {
+    margin-top: 20px;
+}
+
+.ipt-name {
+    background-color: rgb(244,191,79);
+    border: none;
+    text-align: center;
+    font-family: 'IBMPlexSansKR-Medium';
+    font-size: 20px;
+    border-radius: 30px;
+    width: 150px;
 }
 
 </style>

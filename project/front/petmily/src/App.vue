@@ -160,7 +160,7 @@ export default {
           console.log(self.dto);
           self.dto = rs.data.dto;
 
-          if (self.dto.phone == null) {
+          if (self.dto.name == null) {
             self.$router.push('/member/kakaoform');
           } 
         });
