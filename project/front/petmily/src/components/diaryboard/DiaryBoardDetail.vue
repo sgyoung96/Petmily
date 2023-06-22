@@ -1,142 +1,163 @@
 <template>
-    <div>
-        <h3>{{ dto.name }} 상품 정보</h3>
-        <table>
-            <tr>
-                <td><img :src="'http://localhost:8082/dboard/imgs/' + dto.num + '/1'"></td>
-                <td><img :src="'http://localhost:8082/dboard/imgs/' + dto.num + '/2'"></td>
-            </tr>
-            </table>
-        <table border="1">
-            <tr><th>title</th><td><input type="text" v-model="dto.title" readonly></td></tr>
-            <tr><th>content</th><td><input type="text" v-model="dto.content" readonly></td></tr>
-            <tr><th>w_date</th><td><input type="text" v-model="dto.w_date" readonly></td></tr>
-            <tr v-if="dto.id"> <!-- dto.id가 있을 경우에만 랜더링 / 랜더링이 너무 빨리되서 일어나는 오류 -->
-            <th>id</th><td><input type="text" v-model="dto.id.id" readonly></td>
-            </tr>
-        </table>
+  <div class="container text-center">
+  <div class="row" style="margin-bottom: 40px;">
+    <div class="col">
+      <h2>입양일지</h2>
     </div>
-    <button v-on:click="boardedit">수정하기</button>
-    <button v-on:click="boarddelete">삭제하기</button>
-    <div>
+    <div class="col">
+    </div>
+    <div class="col">
+</div>
+</div>
+</div>
+<div class="container text-center">
+  <div class="row">
+    <div class="col-1">
+    </div>
+    <div class="col-10" style="border: solid green">
+      <div v-if="dto.id" style="border-bottom:solid green">
+      {{dto.title}}{{ dto.id.id }}{{ dto.w_date }}
+      </div>
+      <div style="border-bottom: solid green">
+      <img :src="'http://localhost:8082/dboard/imgs/' + dto.num + '/1'">
+      <img :src="'http://localhost:8082/dboard/imgs/' + dto.num + '/2'">
+      </div>
+      <div style="padding:50px; border-bottom:solid green">
+        {{ dto.content }}
+      </div>  
+      <div style="float:right">
+        <router-link to="/diaryboardedit">수정하기</router-link>
+     <button v-on:click="boarddelete">삭제하기</button>
+    </div><br/>
+     <div>
         <table border="1">
-        <tr><th>댓글내용</th></tr>
+        <tr><th>댓글작성</th></tr>
         <tr><th><input type="text" v-model="content" id="content">
           <button v-on:click="commentadd">등록하기</button></th></tr>
-        <input type="text" v-model="id" id="id">
-        <input type="text" v-model="num" id="num">
       </table>
-    </div>  
-    <h2>댓글</h2>
-    <ul>
-  <li v-for="comment in comment" :key="comment.db_num">
+  <div v-for="comment in comment" :key="comment.db_num" style="float:left">
     {{ comment.content }} {{ comment.w_date }} {{ comment.id.id }} {{ comment.db_num }}
     <button @click="commentedit(comment)">수정하기</button>
     <button @click="commentdelete(comment.db_num)">삭제하기</button>
-  </li>
-</ul>
+</div><br/>
+    </div>  
+    </div>
+    <div class="col-1">
+    </div>
+  </div>
+  </div>
+    <div>      
+    </div>
   </template>
 
 <script>
 export default {
-    name: 'DiaryBoardDetail', //뷰 컴포넌트 이름
-    data() { //컴포넌트 데이터 옵션(num, dto, comment, content)
-  return {
-    num: this.$route.query.num, //현재 라우트 쿼리 매개변수로부터 num값 가져와 저장
-    dto: {}, //초기에는 비어있는 객체로 초기화, 게시글 상세 정보 저장하는데 사용
-    comment: {}, //초기에는 비어있는 배열로 초기화, 댓글목록 저장하는데 사용
-    content: '', //댓글내용저장시사용
-    id: sessionStorage.getItem('loginId')
-  }
-},
-created() { //컴포넌트 생성시 호출되는 라이프사이클
-  this.boarddetail(); //게시글디테일
-  this.commentlist(); //댓글리스트
-},
-methods: {
-  boarddetail() {//게시글디테일메소드
-    this.$axios.get(`http://localhost:8082/dboard/${this.num}`)
-      .then(response => {
-        if (response.status === 200) {
-          this.dto = response.data.dto;
-        } else {
+  name: 'DiaryBoardDetail',
+  data() {
+    return {
+      num: this.$route.query.num,
+      dto: {},
+      comment: [],
+      content: '',
+      id: sessionStorage.getItem('loginId')
+    };
+  },
+  created() {
+    this.boarddetail();
+    this.commentlist();
+  },
+  methods: {
+    boarddetail() {
+      this.$axios
+        .get(`http://localhost:8082/dboard/${this.num}`)
+        .then(response => {
+          if (response.status === 200) {
+            this.dto = response.data.dto;
+          } else {
+            alert('게시글을 불러오는 중에 오류가 발생했습니다.');
+          }
+        })
+        .catch(error => {
+          console.error(error);
           alert('게시글을 불러오는 중에 오류가 발생했습니다.');
-        }
-      })
-      .catch(error => {
-        console.error(error);
-        alert('게시글을 불러오는 중에 오류가 발생했습니다.');
-      });
-  },
-  boarddelete() {//게시글삭제메소드
-    this.$axios.delete(`http://localhost:8082/dboard/${this.num}`)
-      .then(response => {
-        if (response.status === 200) {
-          alert('삭제완료');
-          this.$router.push({ name: 'DiaryBoardHome' }); // 게시글 홈으로 이동
-        } else {
+        });
+    },
+    boarddelete() {
+      this.$axios
+        .delete(`http://localhost:8082/dboard/${this.num}`)
+        .then(response => {
+          if (response.status === 200) {
+            alert('삭제완료');
+            this.$router.push({ name: 'DiaryBoardHome' });
+          } else {
+            alert('삭제오류.');
+          }
+        })
+        .catch(error => {
+          console.error(error);
           alert('삭제오류.');
-        }
-      })
-      .catch(error => {
-        console.error(error);
-        alert('삭제오류.');
-      });
-  },
-  commentlist() {//댓글리스트메소드
-    this.$axios.get(`http://localhost:8082/dcomment/${this.num}`)
-      .then(response => {
-        if (response.status === 200) {
-          this.comment = response.data.dto;
-        } else {
+        });
+    },
+    commentlist() {
+      this.$axios
+        .get(`http://localhost:8082/dcomment/${this.num}`)
+        .then(response => {
+          if (response.status === 200) {
+            this.comment = response.data.dto;
+          } else {
+            alert('댓글을 불러오는 중에 오류가 발생했습니다.');
+          }
+        })
+        .catch(error => {
+          console.error(error);
           alert('댓글을 불러오는 중에 오류가 발생했습니다.');
-        }
-      })
-      .catch(error => {
-        console.error(error);
-        alert('댓글을 불러오는 중에 오류가 발생했습니다.');
-      });
-  },
-    commentadd() {//댓글추가메소드
-        const self = this;
-        let formData = new FormData()
-        formData.append('num', this.num);
-        formData.append('id', this.id);
-        formData.append('content', this.content);
-        formData.append('w_date', new Date());
-        self.$axios.post('http://localhost:8082/dcomment', formData)
-        .then(function(res){ 
-        if(res.status == 200){
-        let dto = res.data.dto
-        alert(dto.id +'댓글작성 완료')
-        self.comment.push(dto);
-        }else{
-          alert('에러코드:' + res.status)
-        }
-     });
-  },
+        });
+    },
+    commentadd() {
+      const formData = new FormData();
+      formData.append('num', this.num);
+      formData.append('id', this.id);
+      formData.append('content', this.content);
+      formData.append('w_date', new Date());
+
+      this.$axios
+        .post('http://localhost:8082/dcomment', formData)
+        .then(response => {
+          if (response.status === 200) {
+            const dto = response.data.dto;
+            alert(dto.id + ' 댓글 작성 완료');
+            this.comment.push(dto);
+            this.content = ''; // 댓글 작성 완료 후 입력 필드 초기화
+          } else {
+            alert('에러코드:' + response.status);
+          }
+        });
+    },
     commentdelete(db_num) {
-      this.$axios.delete(`http://localhost:8082/dcomment/${db_num}`)
-      .then(response => {
-      if (response.status === 200) {
-        alert('삭제완료');
-      } else {
-        alert('삭제오류.');
-      }
-    })
-    .catch(error => {
-      console.error(error);
-      alert('삭제오류.');
-    });
+      this.$axios
+        .delete(`http://localhost:8082/dcomment/${db_num}`)
+        .then(response => {
+          if (response.status === 200) {
+            alert('삭제완료');
+            // 댓글 목록을 갱신하기 위해 API 호출 또는 데이터를 직접 업데이트하는 작업을 수행해야 합니다.
+            this.commentlist(); // 댓글 목록을 다시 불러오는 작업 예시
+          } else {
+            alert('삭제오류.');
+          }
+        })
+        .catch(error => {
+          console.error(error);
+          alert('삭제오류.');
+        });
     }
   }
-  }
-    </script>
+};
+</script>
     // <!-- Add "scoped" attribute to limit CSS to this component only -->
   <style scoped>
   img{
-    width:100px;
-    height:100px;
+    width: 300px;
+    height:300px;
   }
     h3 {
       margin: 40px 0 0;

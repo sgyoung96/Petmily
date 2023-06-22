@@ -100,22 +100,6 @@ public class DiaryboardController {
 		return map;
 }
 	
-//	@GetMapping("/{id}")
-//	public Map getById(@PathVariable("id")String id) {
-//		ArrayList<DiaryboardDto>list = service.getById(id);
-//		Map map = new HashMap();
-//		map.put("list", list);
-//		return map;
-//	}
-//	
-//	@GetMapping("/{title}")
-//	public Map getByTitle(@PathVariable("title")String title) {
-//		ArrayList<DiaryboardDto>list = service.getByTitle(title);
-//		Map map = new HashMap();
-//		map.put("list", list);
-//		return map;
-//	}
-	
 	@PutMapping("")
 	public Map edit(DiaryboardDto dto) {
 		Map map = new HashMap();
