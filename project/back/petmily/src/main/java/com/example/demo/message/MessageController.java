@@ -6,6 +6,7 @@ import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -58,7 +59,6 @@ public class MessageController {
 	//sender로 검색
 	@GetMapping("/sender/{sender}")
 	public Map getBySender(@PathVariable("sender") String sender) {
-		System.out.println(sender);
 		ArrayList<MessageDto> list = service.getBySender(sender);
 		Map map = new HashMap();
 		map.put("list", list);
@@ -69,6 +69,7 @@ public class MessageController {
 	@GetMapping("/reciever/{loginId}")
 	public Map getByReciever(@PathVariable("loginId") String loginId) {
 		ArrayList<MessageDto> list = service.getByReciever(loginId);
+		
 		Map map = new HashMap();
 		map.put("list", list);
 		return map;
@@ -77,6 +78,7 @@ public class MessageController {
 	//메세지 읽었을 때
 	@PatchMapping("/{num}") //patch: 일부 컬럼 수정
 	public Map check(@PathVariable("num") int num) {
+		System.out.println("메세지 읽음");
 		boolean flag = true;
 		try {
 			service.check(num);
@@ -87,4 +89,25 @@ public class MessageController {
 		map.put("flag", flag);
 		return map;
 	}
+	
+	@DeleteMapping("/sender/{num}")
+	public void delmessagebysender(@PathVariable("num") int num) {
+		System.out.println("쪽지 삭제");
+		System.out.println(num);
+		boolean flag = true;
+		Map map = new HashMap();
+		service.delMessagesender(num);
+	}
+	
+	@DeleteMapping("/reciever/{num}")
+	public void delmessagebyreciever(@PathVariable("num") int num) {
+		System.out.println("reciever 쪽지 삭제");
+		System.out.println(num);
+		boolean flag = true;
+		Map map = new HashMap();
+		service.delMessagereciever(num);
+	}
+	
+	
+	
 }

@@ -113,9 +113,10 @@
     <router-link to="/addressconvert">주소변환</router-link> |
     <router-link to="/applyform">Apply</router-link> |
     <router-link to="/api">Api</router-link> |
-    <router-link to="" @click="send">쪽지보내기</router-link> | 
+    <router-link to="" @click="send">쪽지보내기</router-link> |
+    <router-link to="" @click="messagesender">보낸쪽지함</router-link> |
+    <router-link to="" @click="messagereciever">받은쪽지함</router-link>
     <span @click="exitService()" style="cursor: pointer;">회원탈퇴</span>
-    <div class="tmp-line"></div>
     <!-- //기존 링크 모음 (테스트용, 추후 삭제 예정) -->
 
   <!-- 이곳에 라우터로 설정한 화면이 로드됨 -->
@@ -289,6 +290,20 @@ export default {
         alert('로그인 후 이용가능');
       } else {
         this.$router.push('/messagewrite');
+      }
+    },
+    messagesender(){
+      if(this.loginId == null){
+        alert('로그인 후 이용가능')
+      }else{
+        this.$router.push('/messagesender')
+      }
+    },
+    messagereciever(){
+      if(this.loginId == null){
+        alert('로그인 후 이용가능')
+      }else{
+        this.$router.push('/messagereciever')
       }
     }
   }
