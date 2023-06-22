@@ -60,5 +60,12 @@ public class VolboardService {
 		dao.deleteById(null);
 	}
 	
+	public void upCnt(int num) {
+		dao.updateCount(num);
+	}
+	
+	public void downCnt(int num) {
+		dao.updateCount2(num);
+	}
 	
 }

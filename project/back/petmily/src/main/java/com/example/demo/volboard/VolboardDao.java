@@ -19,6 +19,11 @@ public interface VolboardDao extends JpaRepository<Volboard, Integer> {
 	
 	@Transactional
 	@Modifying
-	@Query(value="update volboard set vol_number=vol_number-1 where num=:num", nativeQuery = true)
-	void updateIspay(@Param("num") int num);
+	@Query(value="update volboard set count=count+1 where num=:num", nativeQuery = true)
+	void updateCount(@Param("num") int num);
+	
+	@Transactional
+	@Modifying
+	@Query(value="update volboard set count=count-1 where num=:num", nativeQuery = true)
+	void updateCount2(@Param("num") int num);
 }

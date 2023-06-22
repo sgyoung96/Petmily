@@ -9,10 +9,10 @@
             <td><img :src="'http://localhost:8082/volboard/imgs/' + vboard.num + '/2'"></td>
             <td>{{ vboard.num }}</td>
             <td>{{ vboard.writer.id }}</td>
-            <td v-on:click="detail(vboard.num)">{{ vboard.title }}</td>
+            <td v-on:click="detail(vboard.num, vboard.address)">{{ vboard.title }}</td>
             <td>{{ vboard.content }}</td>
             <td>{{ vboard.vol_date }}</td>
-            <td>{{ vboard.vol_number }}</td>
+            <td>{{ vboard.count }} / {{ vboard.vol_number }} / {{ vboard.address }}</td>
             </tr>
         </table>
     </div>
@@ -25,13 +25,17 @@
     data () {
       return {
         loginId:sessionStorage.getItem('loginId'),
-        list:[]
+        list:[],
+        count:0
       }
     },
     methods:{
-      detail(num){
-        this.$router.push({ name: 'VolBoardDetail', query: {num: num}});
-      }
+      detail(num, address) {
+            this.$router.push({
+                name: 'VolBoardDetail',
+                query: { num: num, address: address }
+            });
+        }
     },
     created:function(){//이 컴포넌트가 시작될때 실행되는 함수
         
