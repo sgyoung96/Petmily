@@ -9,8 +9,8 @@
     <div class="col">
 <div class='box-body'>
 	<select id='search_type'>
-		<option value="title">제목</option>
-		<option value="content">내용</option>
+		<option value="1">제목</option>
+		<option value="2">작성자</option>
 	</select>
 	<input type="text" id="searchKeyword">
 	<button id="search_btn">검색</button>
@@ -24,30 +24,21 @@
     <div class="col-1">
     </div>
     <div class="col-10">
-      <table class="table">
-  <thead>
-    <tr>
-      <th scope="col">글번호</th>
-      <th scope="col">사진</th>
-      <th scope="col">글제목</th>
-      <th scope="col">작성자</th>
-      <th scope="col">작성날짜</th>
-      <th scope="col">조회수</th>
-      <th scope="col">추천수</th>
-    </tr>
-  </thead>
-  <tbody class="table-group-divider">
-    <tr v-for="prod in list" :key="prod.num">
-      <th scope="row">{{ prod.num }}</th>
-      <td><img :src="'http://localhost:8082/dboard/imgs/' + prod.num + '/1'"></td>
-      <td><a v-on:click="$event=>detail(prod.num)">{{ prod.title }}</a></td>
-      <td>{{ prod.id.id }}</td>
-      <td>{{ prod.w_date }}</td>
-      <td>조회수</td>
-      <td>추천수</td>
-    </tr>
-  </tbody>
-</table>
+      <div id="slider">
+    <div v-for="(dboard, index) in list" :key="dboard.num" class="slider-item" :class="{ 'new-row': index % itemsPerRow === 0 }">
+      <div style="border: 1px solid silver">
+      <div>
+      <a v-on:click="$event=>detail(dboard.num)"><img :src="'http://localhost:8082/dboard/imgs/' + dboard.num + '/1'"></a>
+    </div>
+    <div style="float:left">
+    {{ dboard.title }}
+    </div><br/>
+    <div style="color: grey; float:left; font-size:small">
+    작성자 : {{ dboard.id.id }}
+     </div><br/>
+     </div>
+    </div>
+  </div>
     </div>
     <div class="col-1">
     </div>
@@ -78,7 +69,8 @@ export default {
   data () {
     return {
       loginId:null,
-      list:[]
+      list:[],
+      itemsPerRow: 4
     }
   },
   created:function(){
@@ -104,9 +96,23 @@ export default {
   <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
 img{
-  width:100px;
-  height:100px;
+  width:256px;
+  height:200px;
 }
+#slider {
+  display: flex;
+  flex-wrap: wrap;
+}
+.slider-item {
+  flex: 0 0 calc(25% - 10px);
+  margin-right: 10px;
+  margin-bottom: 10px;
+}
+
+.new-row {
+  clear: both;
+}
+
   h3 {
     margin: 40px 0 0;
   }

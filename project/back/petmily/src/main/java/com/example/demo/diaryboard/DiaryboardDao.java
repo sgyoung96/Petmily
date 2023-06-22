@@ -7,7 +7,7 @@ import org.springframework.stereotype.Repository;
 import com.example.demo.member.Member;
 @Repository
 public interface DiaryboardDao extends JpaRepository<Diaryboard, Integer> {
-	ArrayList<Diaryboard> findById(Member id);
-	ArrayList<Diaryboard> findByTitle(String title);
+	ArrayList<Diaryboard> findByIdContaining(Member id);
+	ArrayList<Diaryboard> findByTitleContaining(String title);
 	ArrayList<Diaryboard> findAllByOrderByNumDesc();
 }

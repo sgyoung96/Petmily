@@ -40,26 +40,28 @@
     },
     methods: {
       add() {
-        let formData = new FormData()
-        formData.append('title', this.title);
-        formData.append('content', this.content);
-        formData.append('id', this.id);
-        // formData.append('num', this.num);
-        formData.append('w_date', new Date());
-        const file1 = document.getElementById('pic1')
-        const file2 = document.getElementById('pic2')
-        formData.append('f[0]', file1.files[0]);
-        formData.append('f[1]', file2.files[0]);
-        const self = this;
-        self.$axios.post('http://localhost:8082/dboard', formData,
-          { headers: { "Content-Type": "multipart/form-data" } })//비동기 요청
-          .then(function(){
-            self.$router.push('/diaryboardhome')
-          }).catch(function(e){
-            console.log(e)
-            // self.$router.push('/diaryboardhome')
-          })
-      }
+  let formData = new FormData();
+  formData.append('title', this.title);
+  formData.append('content', this.content);
+  formData.append('id', this.id);
+  formData.append('w_date', new Date());
+  const file1 = document.getElementById('pic1');
+  const file2 = document.getElementById('pic2');
+  formData.append('f[0]', file1.files[0]);
+  formData.append('f[1]', file2.files[0]);
+  const self = this;
+  self.$axios
+    .post('http://localhost:8082/dboard', formData, {
+      headers: { "Content-Type": "multipart/form-data" },
+    })
+    .then(function () {
+      self.$router.push('/diaryboardhome');
+    })
+    .catch(function (e) {
+      console.log(e);
+      self.$router.push('/diaryboardhome');
+    });
+}
     }
   }
   </script>

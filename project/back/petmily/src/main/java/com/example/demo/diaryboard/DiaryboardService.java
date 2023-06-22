@@ -5,6 +5,8 @@ import java.util.ArrayList;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.example.demo.member.Member;
+
 @Service
 public class DiaryboardService {
 	@Autowired
@@ -38,26 +40,26 @@ public class DiaryboardService {
 					d.getPic2(), null);
 	}
 	
-	// id로 검색
-	public ArrayList<DiaryboardDto> getById(String id) {
-		ArrayList<Diaryboard> list = (ArrayList<Diaryboard>) dao.findAll();
-		ArrayList<DiaryboardDto> list2 = new ArrayList<DiaryboardDto>();
-		for (Diaryboard d : list) {
-			list2.add(new DiaryboardDto(d.getNum(), d.getTitle(), d.getContent(), d.getW_date(), d.getId(), d.getPic1(),
-					d.getPic2(), null));
-		}
-		return list2;
+	//id로 검색
+	public ArrayList<DiaryboardDto> getById(Member id) {
+	    ArrayList<Diaryboard> list = dao.findByIdContaining(id);
+	    ArrayList<DiaryboardDto> list2 = new ArrayList<DiaryboardDto>();
+	    for (Diaryboard d : list) {
+	        list2.add(new DiaryboardDto(d.getNum(), d.getTitle(), d.getContent(), d.getW_date(), d.getId(), d.getPic1(),
+	                d.getPic2(), null));
+	    }
+	    return list2;
 	}
 	
-	//제목으로 검색
+	// 제목으로 검색
 	public ArrayList<DiaryboardDto> getByTitle(String title) {
-		ArrayList<Diaryboard> list = (ArrayList<Diaryboard>) dao.findAll();
-		ArrayList<DiaryboardDto> list2 = new ArrayList<DiaryboardDto>();
-		for (Diaryboard d : list) {
-			list2.add(new DiaryboardDto(d.getNum(), d.getTitle(), d.getContent(), d.getW_date(), d.getId(), d.getPic1(),
-					d.getPic2(), null));
-		}
-		return list2;
+	    ArrayList<Diaryboard> list = dao.findByTitleContaining(title);
+	    ArrayList<DiaryboardDto> list2 = new ArrayList<DiaryboardDto>();
+	    for (Diaryboard d : list) {
+	        list2.add(new DiaryboardDto(d.getNum(), d.getTitle(), d.getContent(), d.getW_date(), d.getId(), d.getPic1(),
+	                d.getPic2(), null));
+	    }
+	    return list2;
 	}
 	
 	//삭제
