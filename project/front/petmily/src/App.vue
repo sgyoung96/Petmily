@@ -1,12 +1,12 @@
 <template>
     <!-- 공통 헤더 -->
-    <div class="header"> 
+    <div class="pet-header"> 
       <div class="box-left">
         <img class="logo" @click="gotoMain" src="./assets/logo_sample.png" >
         
         <!-- 반응형 600px 이하 가로사이즈일 경우 -->
         <div class="min-box-category">
-          <ul class="menu">
+          <ul class="pet-menu">
             <li>
               <img class="icon-menu" src='./assets/list.png'>
               <ul class="min-box-list">
@@ -84,12 +84,6 @@
                 <span @click="guide()" >입양가이드</span>
               </div>
             </li>
-            <li>
-              <!-- 기존 링크 모음 (테스트용, 추후 삭제 예정) -->
-              <router-link to="/api">Api</router-link>
-              
-              <!-- //기존 링크 모음 (테스트용, 추후 삭제 예정) -->
-            </li>
           </ul>
         </div>
       </div>
@@ -106,22 +100,21 @@
         </div>
         <div class="box-image">
           <img class="mypage" src="./assets/mypage_sample.jpg" >
-          <img class="alert" src="./assets/alert_sample.jpg" >
+          <img class="pet-alert" src="./assets/alert_sample.jpg" >
         </div>
       </div>
     </div>
     <!-- //공통 헤더 -->
     
     <br>
+
     <!-- 기존 링크 모음 (테스트용, 추후 삭제 예정) -->
     <router-link to="/kaka">카카</router-link>
     <router-link to="/addressconvert">주소변환</router-link> |
-    <router-link to="/volboardhome">봉사모집게시판</router-link> |
     <router-link to="/applyform">Apply</router-link> |
     <router-link to="/api">Api</router-link> |
-    
     <router-link to="" @click="send">쪽지보내기</router-link>
-    
+    <div class="tmp-line"></div>
     <!-- //기존 링크 모음 (테스트용, 추후 삭제 예정) -->
 
   <!-- 이곳에 라우터로 설정한 화면이 로드됨 -->
@@ -140,6 +133,7 @@
 
 <script>
 import './assets/fonts/BagleFatOne.css';
+import './assets/fonts/IBMPlexSansKR.css';
 
 export default {
   
@@ -254,11 +248,11 @@ export default {
 }
 
 /* 헤더 전체 영역 */
-.header {
+.pet-header {
   position: relative;
   display: inline-flex;
   width: 100%;
-  border-bottom: 3px solid rgb(147, 214, 147);
+  border-bottom: 3px solid rgb(244, 191, 79);
 }
 
 /* 좌측 로고 */
@@ -299,12 +293,13 @@ export default {
 }
 
 .category-list li {
+  margin-top: 10px;
   float: left;
   margin-left: 20px;
   font-weight: normal;
   cursor: pointer;
-  font-family: BagleFatOne;
-  font-size: 25px;
+  font-family: 'BagleFatOne';
+  font-size: 20px;
 }
 
 .category-list li:hover {
@@ -334,6 +329,7 @@ export default {
 .member-manage span {
   margin-right: 5px;
   cursor: pointer;
+  font-family: 'IBMPlexSansKR-Bold';
 }
 
 .member-manage span:hover {
@@ -347,7 +343,7 @@ export default {
   display: block;
 }
 
-.mypage, .alert {
+.mypage, .pet-alert {
   height: 40px;
   cursor: pointer;
 }
@@ -355,8 +351,8 @@ export default {
 @media screen and (max-width: 1050px) {
 
   /* 헤더 전체 영역 */
-  .header {
-    border-bottom: 3px solid rgb(147, 214, 147);
+  .pet-header {
+    border-bottom: 3px solid rgb(244, 191, 79);
     display: inline-flex;
     justify-content:space-between;
     align-items: center;
@@ -383,13 +379,14 @@ export default {
     justify-content: left;
     list-style: none;
     height: 40px;
-    margin: -30px;
   }
 
   .icon-menu {
     width: 25px;
     height: 25px;
     cursor: pointer;
+    margin-left: -30px;
+    margin-top: -10px;
   }
 
   .min-box-category li {
@@ -402,17 +399,23 @@ export default {
     padding: 5px;
   }
 
-  .min-box-list li span {
-    font-weight: bold;
-    padding: 10px;
+  .min-box-list li {
+    margin-left: -50px;
   }
 
-  ul.menu > li:hover ul.min-box-list {
+  .min-box-list li span {
+    font-weight: normal;
+    padding: 10px;
+    font-size: 20px;
+    font-family: 'BagleFatOne';
+  }
+
+  ul.pet-menu > li:hover ul.min-box-list {
     display: block;
     margin: -20px;
   }
 
-  ul.menu > li ul.min-box-list {
+  ul.pet-menu > li ul.min-box-list {
     display: none;
   }
 
@@ -424,7 +427,7 @@ export default {
 
   .min-box-category li div span:hover {
     color: white;
-    background-color: green;
+    background-color: rgb(244, 191, 79);
   }
 
   /* 우측 콘텐츠 컨테이너 */
@@ -444,7 +447,6 @@ export default {
   }
 
   .member-manage span {
-    /*content: "|";*/
     margin-right: 5px;
     cursor: pointer;
   }
@@ -454,10 +456,14 @@ export default {
     display: block;
   }
 
-  .mypage, .alert {
+  .mypage, .pet-alert {
     height: 40px;
     cursor: pointer;
   }
+}
+
+.tmp-line {
+  border-bottom: 3px solid rgb(244, 191, 79);
 }
 
 .footer {

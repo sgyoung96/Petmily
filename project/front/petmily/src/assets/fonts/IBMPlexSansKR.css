@@ -1,0 +1,48 @@
+@font-face {
+    font-family: 'IBMPlexSansKR-Bold';
+    font-style: normal;
+    font-weight: 100;
+    src: url(./IBMPlexSansKR-Bold.ttf) format('ttf'), url(./IBMPlexSansKR-Bold.ttf) format('ttf'), url(./IBMPlexSansKR-Bold.ttf) format('opentype');
+}
+
+@font-face {
+    font-family: 'IBMPlexSansKR-ExtraLight';
+    font-style: normal;
+    font-weight: 100;
+    src: url(./IBMPlexSansKR-ExtraLight.ttf) format('ttf'), url(./IBMPlexSansKR-ExtraLight.ttf) format('ttf'), url(./IBMPlexSansKR-ExtraLight.ttf) format('opentype');
+}
+
+@font-face {
+    font-family: 'IBMPlexSansKR-Light';
+    font-style: normal;
+    font-weight: 100;
+    src: url(./IBMPlexSansKR-Light.ttf) format('ttf'), url(./IBMPlexSansKR-Light.ttf) format('ttf'), url(./IBMPlexSansKR-Light.ttf) format('opentype');
+}
+
+@font-face {
+    font-family: 'IBMPlexSansKR-Medium';
+    font-style: normal;
+    font-weight: 100;
+    src: url(./IBMPlexSansKR-Medium.ttf) format('ttf'), url(./IBMPlexSansKR-Medium.ttf) format('ttf'), url(./IBMPlexSansKR-Medium.ttf) format('opentype');
+}
+
+@font-face {
+    font-family: 'IBMPlexSansKR-Regular';
+    font-style: normal;
+    font-weight: 100;
+    src: url(./IBMPlexSansKR-Regular.ttf) format('ttf'), url(./IBMPlexSansKR-Regular.ttf) format('ttf'), url(./IBMPlexSansKR-Regular.ttf) format('opentype');
+}
+
+@font-face {
+    font-family: 'IBMPlexSansKR-SemiBold';
+    font-style: normal;
+    font-weight: 100;
+    src: url(./IBMPlexSansKR-SemiBold.ttf) format('ttf'), url(./IBMPlexSansKR-SemiBold.ttf) format('ttf'), url(./IBMPlexSansKR-SemiBold.ttf) format('opentype');
+}
+
+@font-face {
+    font-family: 'IBMPlexSansKR-Thin';
+    font-style: normal;
+    font-weight: 100;
+    src: url(./IBMPlexSansKR-Thin.ttf) format('ttf'), url(./IBMPlexSansKR-Thin.ttf) format('ttf'), url(./IBMPlexSansKR-Thin.ttf) format('opentype');
+}
