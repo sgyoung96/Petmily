@@ -141,16 +141,30 @@ export default {
   data () {
     return {
       loginId:null,
-      isOpen: false
+      isOpen: false,
+      dto: {}
     }
   },
   created:function(){ // 이 컴포넌트가 시작될때 실행되는 함수
-    this.loginId = sessionStorage.getItem('loginId')
+    if (sessionStorage.getItem('loginId') != null) {
+      this.loginId = sessionStorage.getItem('loginId');
+    }
     
-    if(this.loginId == 'admin'){
-      this.$router.push('/adminhome')
-    } else {
-      this.$router.push('/') //router로 이동하면 페이지가 전체 이동하는게 아니라 <router-view/>만 바뀐다    
+    if (this.loginId != null) {
+      if (this.loginId == 'admin') {
+        this.$router.push('/adminhome')
+      } else if (sessionStorage.getItem('loginFlag') == 'kakao') {
+        const self = this;
+
+        self.$axios.get('http://localhost:8082/members/' + this.loginId).then (function(rs) {
+          console.log(self.dto);
+          self.dto = rs.data.dto;
+
+          if (self.dto.phone == null) {
+            self.$router.push('/member/kakaoform');
+          } 
+        });
+      }
     }
   },
   methods:{
@@ -254,7 +268,8 @@ export default {
       .then(function(res){ 
         if(res.status == 200){
           if(res.data.flag){
-            self.logout()
+            self.logout();
+            sessionStorage.clear();
             alert('회원 정보가 삭제 되었습니다.');
           }
         } else {

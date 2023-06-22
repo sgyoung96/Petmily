@@ -47,21 +47,21 @@ export default {
       //post(url, 폼데이터)
       self.$axios.post('http://localhost:8082/members/login', form)
       .then(function(res){ 
-        if(res.status == 200) {
-        
-          if(res.data.flag){
+        console.log(res.data);
+        if (res.status == 200) {
+          if (res.data.flag) {
             sessionStorage.setItem('token', res.data.token)
             sessionStorage.setItem('loginId', self.id)
             sessionStorage.setItem('type', res.data.type)
             sessionStorage.setItem('loginFlag', 'normal')
-            // self.$router.push('/') location.href와 비슷 강사님 코드
-            window.location.href = "/"
-            //alert('로그인')
+            
+            window.location.href = "/";
           } else {
-             alert('로그인실패')
+            alert('회원정보를 다시 확인해 주세요.');
           }
-        }else{
-          alert('에러코드 :' + res.status)
+        } else {
+          alert('서비스 이용에 불편을 드려 죄송합니다. \n다시 시도해 주세요.');
+          console.log('에러코드 :' + res.status);
         }
       });
     },
@@ -90,7 +90,7 @@ export default {
             if (self.dto != null) {
               window.location.href = "/";
             } else {
-              self.$router.push('/kakaoform') // 추가정보기입화면
+              self.$router.push('/member/kakaoform') // 추가정보기입화면
             }
           });
         },

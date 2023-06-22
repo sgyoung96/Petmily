@@ -39,7 +39,7 @@ const routes = [
     component: MyPageHome
   },
   {
-    path: '/kakaoform',
+    path: '/member/kakaoform',
     name: 'KakaoAdditionalForm',
     component: KakaoAdditionalForm
   },

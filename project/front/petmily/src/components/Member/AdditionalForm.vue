@@ -1,5 +1,14 @@
 <template>
-  <div>
+  <div class="additional-form-container">
+    <div class="form-header">
+        <div><span class="form-header-title-msg">서비스 이용을 위해 추가 정보를 기입해 주세요.</span></div>
+        <span class="form-header-sub-msg">SNS 로그인시 원활한 서비스 이용을 위해 최초 1회만 작성합니다.</span>
+    </div>
+    
+
+
+
+
     <h3>서비스 이용을 위해 추가 정보를 기입해 주세요.</h3>
         KAKAO NICKNAME: <input class="input-item" type="text" v-model="name" placeholder="NAME" on:click="" readonly><br/>
 
@@ -188,5 +197,23 @@ export default {
 
 <style scoped>
 
+.additional-form-container {
+    font-family: 'IBMPlexSansKR-Regular';
+}
+
+.form-header {
+    
+}
+
+.form-header-title-msg {
+    font-family: 'IBMPlexSansKR-Bold';    
+    font-size: 20px;
+}
+
+.form-header-sub-msg {
+    font-family: 'IBMPlexSansKR-ExtraLight';    
+    font-size: 12px;
+    color: black;
+}
 
 </style>
