@@ -23,7 +23,6 @@ import AddressConvert from '@/components/kaka/AddressConvert.vue'
 import MessageWrite from '@/components/Message/MessageWrite.vue' 
 import MessageSender from '@/components/Message/MessageSender.vue' 
 import MessageReciever from '@/components/Message/MessageReciever.vue'
-import AddressMap from '@/components/kaka/AddressMap.vue' 
 
 const routes = [
   {
@@ -70,11 +69,6 @@ const routes = [
     path: '/kaka',
     name: 'Kaka',
     component: Kaka
-  },
-  {
-    path: '/addressmap',
-    name: 'AddressMap',
-    component: AddressMap
   },
   {
     path:'/adopt',
