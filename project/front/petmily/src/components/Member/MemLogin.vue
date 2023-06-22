@@ -33,7 +33,8 @@ export default {
   data () {
     return {
       id:'',
-      pwd:''
+      pwd:'',
+      dto: {}
     }
   },
   methods:{
@@ -54,7 +55,7 @@ export default {
             sessionStorage.setItem('type', res.data.type)
             sessionStorage.setItem('loginFlag', 'normal')
             // self.$router.push('/') location.href와 비슷 강사님 코드
-           window.location.href = "/"
+            window.location.href = "/"
             alert('로그인')
           } else {
              alert('로그인실패')
@@ -66,7 +67,6 @@ export default {
     },
     kakaoLogin() { // 카카오로그인
       window.Kakao.Auth.login({
-        scope: "account_email",
         success: this.getKakaoAccount
       });
     },
@@ -80,10 +80,19 @@ export default {
           /* 세션 처리하기 */
           //sessionStorage.setItem('loginId', kakao_account.name)
           sessionStorage.setItem('loginId', res.id);
+          sessionStorage.setItem('kakao_name', res.kakao_account.profile.nickname)
           sessionStorage.setItem('loginFlag', 'kakao');
           
           const self = this;
-          self.$router.push('/join') // 회원가입 화면으로 이동, 회원가입 폼에서 세션의 플래그가 kakao 면 특정 엘리먼트 숨김 처리
+
+          self.$axios.get('http://localhost:8082/members/' + sessionStorage.getItem('loginId')).then (function(rs) {
+            self.dto = rs.data.dto;
+            if (self.dto != null) {
+              window.location.href = "/";
+            } else {
+              self.$router.push('/kakaoform') // 추가정보기입화면
+            }
+          });
         },
         fail: (error) => {
           console.log(error)
@@ -91,14 +100,11 @@ export default {
       });
     },
     join() {
-      const loginId = sessionStorage.getItem('loginId')
       const self = this;
-      
-      if (loginId != null) {
-        alert('로그아웃 후 이용 가능한 서비스입니다.');
-        self.$router.push('/'); // 메인 화면으로 이동
-      } else { // loginId 가 null ; 존재하지 않음
+      if (sessionStorage.getItem('loginFlag') != 'normal') {
         self.$router.push('/join'); // 회원가입 화면으로 이동
+      } else {
+        console.log('normal');
       }
     }
   }
