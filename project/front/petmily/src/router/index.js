@@ -1,6 +1,7 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import HomeView from '../views/HomeView.vue'
 import MemberHome from '../views/MemberView.vue'
+import KakaoAdditionalForm from '@/components/Member/AdditionalForm.vue'
 import MyPageHome from '../views/MypageView.vue'
 import DiaryBoardHome from '@/components/diaryboard/DiaryBoardHome.vue'
 import AdoptBoardHome from '../views/adopt/AdoptBoardView.vue'
@@ -36,6 +37,11 @@ const routes = [
     path: '/mypage',
     name: 'MyPageHome',
     component: MyPageHome
+  },
+  {
+    path: '/member/kakaoform',
+    name: 'KakaoAdditionalForm',
+    component: KakaoAdditionalForm
   },
   {
     path: '/diaryboardhome',

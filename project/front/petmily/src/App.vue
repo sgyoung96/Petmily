@@ -113,7 +113,8 @@
     <router-link to="/addressconvert">주소변환</router-link> |
     <router-link to="/applyform">Apply</router-link> |
     <router-link to="/api">Api</router-link> |
-    <router-link to="" @click="send">쪽지보내기</router-link>
+    <router-link to="" @click="send">쪽지보내기</router-link> | 
+    <span @click="exitService()" style="cursor: pointer;">회원탈퇴</span>
     <div class="tmp-line"></div>
     <!-- //기존 링크 모음 (테스트용, 추후 삭제 예정) -->
 
@@ -140,17 +141,32 @@ export default {
   data () {
     return {
       loginId:null,
-      isOpen: false
+      isOpen: false,
+      dto: {}
     }
   },
   created:function(){ // 이 컴포넌트가 시작될때 실행되는 함수
-    this.loginId = sessionStorage.getItem('loginId')
-    
-    if(this.loginId == 'admin'){
-      this.$router.push('/adminhome')
-    } else {
-      this.$router.push('/') //router로 이동하면 페이지가 전체 이동하는게 아니라 <router-view/>만 바뀐다    
+    if (sessionStorage.getItem('loginId') != null) {
+      this.loginId = sessionStorage.getItem('loginId');
+
+      if (this.loginId != null) {
+        if (this.loginId == 'admin') {
+          this.$router.push('/adminhome')
+        } else if (sessionStorage.getItem('loginFlag') == 'kakao') {
+          const self = this;
+
+          self.$axios.get('http://localhost:8082/members/' + this.loginId).then (function(rs) {
+            console.log(rs.data.dto);
+          
+            if (rs.data.dto == null) {
+              self.$router.push({name:'KakaoAdditionalForm', query:{kakaoId: sessionStorage.getItem('loginId'), kakaoName: sessionStorage.getItem('kakaoName')}});
+            }
+          });
+        }
+      }
     }
+    
+    
   },
   methods:{
     gotoMain() { // 로고 클릭시 메인으로 이동
@@ -177,7 +193,12 @@ export default {
       alert('경로 추가 및 페이지 작업 필요');
     },
     login() { // 로그인
-      this.$router.push('/member');
+      if (sessionStorage.getItem('loginFlag') == 'kakao') {
+        alert('소셜 로그인이 연동된 상태입니다. \n로그아웃 후 이용 바랍니다.');
+        window.href = '/';
+      } else {
+        this.$router.push('/member');
+      }
     },
     logout(){ // 로그아웃
       if (sessionStorage.getItem('loginFlag') != 'kakao') {
@@ -185,32 +206,67 @@ export default {
         window.location.href = "/" //리디렉션
       } else {
         /* 로그아웃 하나, 완전히 연결을 끊지 않음 */
-        // window.Kakao.Auth.logout((res) => {
-        //   console.log(res)
-        //   alert('로그아웃되었습니다.');
-
-        //   /* 세션에 저장되어 있는 정보 날리기 */
-        //   sessionStorage.clear()
-        //   window.location.href = "/" //리디렉션
-        // })
-
-        /* 사용자가 카카오 연결을 끊고자 할 때 */
-        window.Kakao.API.request({
-          url: '/v1/user/unlink'
-        }).then(function(response) {
-          console.log(response)
+        window.Kakao.Auth.logout((res) => {
+          console.log(res)
           alert('로그아웃되었습니다.');
 
           /* 세션에 저장되어 있는 정보 날리기 */
           sessionStorage.clear()
           window.location.href = "/" //리디렉션
-        }).catch(function(error) {
-          console.log(error)
         })
+
+        /* 사용자가 카카오 연결을 끊고자 할 때 -> 회원 탈퇴시 이 함수 사용하도록 하기 */
+        // window.Kakao.API.request({
+        //   url: '/v1/user/unlink'
+        // }).then(function(response) {
+        //   console.log(response)
+        //   alert('로그아웃되었습니다.');
+
+        //   /* 세션에 저장되어 있는 정보 날리기 */
+        //   sessionStorage.clear();
+        //   window.location.href = "/"; //리디렉션
+        // }).catch(function(error) {
+        //   console.log(error)
+        // });
       }
     },
-    out(){
+    exitService() {
+      if (sessionStorage.getItem('loginFlag') == 'normal') {
+        this.out();
+      } else { 
+        this.kakaoExitService();
+      }
+    }, 
+    kakaoExitService() { // 카카오 회원 탈퇴
+      const self = this;
       
+      window.Kakao.API.request({
+        url: '/v1/user/unlink'
+      }).then(function(response) {
+        console.log(response);
+
+        self.$axios.delete('http://localhost:8082/members/' + sessionStorage.getItem('loginId')) 
+        .then(function(res){ 
+          console.log(res);
+          if( res.status == 200){
+            if (res.data.flag) {
+              /* 세션에 저장되어 있는 정보 날리기 */
+              sessionStorage.clear();
+              alert('회원 정보가 삭제 되었습니다.');
+
+              window.location.href = "/"; //리디렉션
+            }
+          } else {
+            console.log('에러코드:' + res.status);
+            window.location.href = "/"; //리디렉션
+          }
+        });
+      }).catch(function(error) {
+        console.log(error);
+        window.location.href = "/"; //리디렉션
+      });
+    },
+    out(){
       const self = this;
 
       let token = sessionStorage.getItem('token')
@@ -218,20 +274,21 @@ export default {
       .then(function(res){ 
         if(res.status == 200){
           if(res.data.flag){
-          self.logout()
-          alert('탈퇴완료')
+            self.logout();
+            sessionStorage.clear();
+            alert('회원 정보가 삭제 되었습니다.');
           }
-        }else{
-          alert('에러코드:' + res.status)
+        } else {
+          console.log('에러코드:' + res.status);
         }
       });
     },
-    send(){
+    send() {
       alert('send 클릭')
-      if(this.loginId == null){
-        alert('로그인 후 이용가능')
-      }else{
-        this.$router.push('/messagewrite')
+      if (this.loginId == null) {
+        alert('로그인 후 이용가능');
+      } else {
+        this.$router.push('/messagewrite');
       }
     }
   }

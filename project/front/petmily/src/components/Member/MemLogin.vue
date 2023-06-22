@@ -8,17 +8,19 @@
     <div id="mylogin">
       <input type="text" id="input_id" v-model="id" placeholder="아이디를 입력하세요.">
       <br>
-      <input type="password" id="input_pwd" v-model="pwd" placeholder="비밀번호를 입력하세요."><br/>
-      <input type="text" class="btn-login" v-on:click="login" value="로그인" readonly>
-
+      <input type="password" id="input_pwd" v-model="pwd" @keyup.enter="login()" placeholder="비밀번호를 입력하세요.">
+      
       <div class="box-btns">
-        <div id="kakao-login" @click="kakaoLogin()">
-          <img class="btn-kakao" src="../../assets/kakao_login_large.png" >
+        <div class="logins">
+          <img class="btn-kakao" @click="kakaoLogin()" src="../../assets/kakao_login_large_narrow.png" >
+          <br>
+          <span class="link-join" @click="join()" >회원가입</span>
+          <span class="deco">&nbsp;&nbsp;|&nbsp;&nbsp;</span>
+          <span class="link-id">ID 찾기</span>
+          <span class="deco">/</span>
+          <span class="link-pw">PW 찾기</span>
         </div>
-        <div class="links">
-          <span @click="join()" ><u>회원가입</u></span><br>
-          <span><u>ID/PW 찾기</u></span>
-        </div>
+        
       </div>
     </div>
   </div>
@@ -31,7 +33,11 @@ export default {
   data () {
     return {
       id:'',
-      pwd:''
+      pwd:'',
+      dto: {},
+      kakaoId: '',
+      kakaoName: '',
+      loginFlag: ''
     }
   },
   methods:{
@@ -44,27 +50,26 @@ export default {
       //post(url, 폼데이터)
       self.$axios.post('http://localhost:8082/members/login', form)
       .then(function(res){ 
-        if(res.status == 200) {
-        
-          if(res.data.flag){
+        console.log(res.data);
+        if (res.status == 200) {
+          if (res.data.flag) {
             sessionStorage.setItem('token', res.data.token)
             sessionStorage.setItem('loginId', self.id)
             sessionStorage.setItem('type', res.data.type)
             sessionStorage.setItem('loginFlag', 'normal')
-            // self.$router.push('/') location.href와 비슷 강사님 코드
-           window.location.href = "/"
-            alert('로그인')
+            
+            window.location.href = "/";
           } else {
-             alert('로그인실패')
+            alert('회원정보를 다시 확인해 주세요.');
           }
-        }else{
-          alert('에러코드 :' + res.status)
+        } else {
+          alert('서비스 이용에 불편을 드려 죄송합니다. \n다시 시도해 주세요.');
+          console.log('에러코드 :' + res.status);
         }
       });
     },
     kakaoLogin() { // 카카오로그인
       window.Kakao.Auth.login({
-        scope: "account_email",
         success: this.getKakaoAccount
       });
     },
@@ -73,15 +78,27 @@ export default {
         url: "/v2/user/me",
         success: (res) => {
           console.log('kakao', res);
-          alert('로그인되었습니다.');
           
-          /* 세션 처리하기 */
-          //sessionStorage.setItem('loginId', kakao_account.name)
+          this.kakaoId = res.id;
+          this.kakaoName = res.kakao_account.profile.nickname;
+          this.loginFlag = 'kakao';
+
           sessionStorage.setItem('loginId', res.id);
+          sessionStorage.setItem('kakaoName', res.kakao_account.profile.nickname);
           sessionStorage.setItem('loginFlag', 'kakao');
           
           const self = this;
-          self.$router.push('/join') // 회원가입 화면으로 이동, 회원가입 폼에서 세션의 플래그가 kakao 면 특정 엘리먼트 숨김 처리
+
+          self.$axios.get('http://localhost:8082/members/' + sessionStorage.getItem('loginId')).then (function(rs) {
+            console.log(rs);
+            window.location.href = '/';
+            // self.dto = rs.data.dto;
+            // if (self.dto != null) {
+            //   window.location.href = "/";
+            // } else {
+            //   self.$router.push({name:'KakaoAdditionalForm', query:{kakaoId: self.kakaoId, kakaoName: self.kakaoName, loginFlag: self.loginFlag}}) // 추가정보기입화면
+            // }
+          });
         },
         fail: (error) => {
           console.log(error)
@@ -89,14 +106,11 @@ export default {
       });
     },
     join() {
-      const loginId = sessionStorage.getItem('loginId')
       const self = this;
-      
-      if (loginId != null) {
-        alert('로그아웃 후 이용 가능한 서비스입니다.');
-        self.$router.push('/'); // 메인 화면으로 이동
-      } else { // loginId 가 null ; 존재하지 않음
+      if (sessionStorage.getItem('loginFlag') != 'normal') {
         self.$router.push('/join'); // 회원가입 화면으로 이동
+      } else {
+        console.log('normal');
       }
     }
   }
@@ -125,12 +139,23 @@ export default {
 
 #mylogin {
   width: 50%;
-  border: 3px solid rgb(147, 214, 147);
-  background-color: rgb(147, 214, 147);
+  border: 10px solid rgb(248, 237, 138);
+  background-color: #fff;
   border-radius: 30px; 
   padding-top: 5%;
   padding-bottom: 5%;
-  justify-content: center;
+}
+
+#input_id, #input_pwd {
+  color: white;
+  font-family: 'IBMPlexSansKR-Bold';
+  background-color: rgb(244, 206, 79);
+  border-radius: 10px;
+}
+
+#input_id::placeholder, #input_pwd::placeholder {
+  color: white;
+  font-family: 'IBMPlexSansKR-Bold';
 }
 
 input {
@@ -146,10 +171,14 @@ input:focus {
 
 .btn-login {
   text-align: center;
-  background-color: rgb(237, 255, 237);
-  border: none;
+  background-color: white;
+  border: 5px solid rgb(248, 237, 138);
+  border-radius: 10px;
   padding: 10px;
   font-weight: bold;
+  font-family: 'IBMPlexSansKR-Bold';
+  color: rgb(244,191,79);
+  font-size: 18px;
 }
 
 .btn-login {
@@ -158,41 +187,53 @@ input:focus {
 }
 
 .box-btns {
-  display: flex;
-  justify-content: center;
+  margin-top: 5px;
+  position: relative;
+}
+
+.logins {
+  display: block;
+}
+
+.deco {
+  font-family: 'IBMPlexSansKR-Regular';
+  font-weight: bold;
+  font-size: 12px;
 }
 
 .btn-kakao {
   cursor: pointer;
+  border-radius: 20px;
+  width: 200px;
+  padding-bottom: 5px;
 }
 
 .links {
-  margin-left: 10px;
+  margin-top: 10px;
   padding-left: 10px;
   padding-right: 10px;
-  height:50px;
-  background-color: #42b983;
-  font-size: 15px;
-  font-weight: bold;
+  padding-top: 5px;
+  padding-bottom: 5px;
+  background-color: #fff;
+  border-radius: 20px;
+  display: flex;
+  justify-content: space-evenly;
+  width: 180px;
 }
 
-.links span {
+.link-join, .link-id, .link-pw {
   cursor: pointer;
+  font-family: 'IBMPlexSansKR-Regular';
+  font-weight: bold;
+  font-size: 12px;
 }
 
-.btn-kakao {
-  width: 100px;
+.link-join:hover, .link-id:hover, .link-pw:hover {
+  cursor: pointer;
+  font-family: 'IBMPlexSansKR-Medium';
+  font-weight: bold;
+  font-size: 14px;
+  color: rgb(244,191,79);
 }
 
-  ul {
-    list-style-type: none;
-    padding: 0;
-  }
-  li {
-    display: inline-block;
-    /*margin: 0 10px;*/
-  }
-  a {
-    color: #42b983;
-  }
 </style>
