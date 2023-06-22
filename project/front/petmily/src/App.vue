@@ -113,7 +113,8 @@
     <router-link to="/addressconvert">주소변환</router-link> |
     <router-link to="/applyform">Apply</router-link> |
     <router-link to="/api">Api</router-link> |
-    <router-link to="" @click="send">쪽지보내기</router-link>
+    <router-link to="" @click="send">쪽지보내기</router-link> | 
+    <span @click="kakaoExitService()" style="cursor: pointer;">카카오회원탈퇴</span>
     <div class="tmp-line"></div>
     <!-- //기존 링크 모음 (테스트용, 추후 삭제 예정) -->
 
@@ -202,12 +203,41 @@ export default {
         //   alert('로그아웃되었습니다.');
 
         //   /* 세션에 저장되어 있는 정보 날리기 */
-        //   sessionStorage.clear()
-        //   window.location.href = "/" //리디렉션
+        //   sessionStorage.clear();
+        //   window.location.href = "/"; //리디렉션
         // }).catch(function(error) {
         //   console.log(error)
-        // })
+        // });
       }
+    },
+    kakaoExitService() { // 카카오 회원 탈퇴
+      const self = this;
+      
+      window.Kakao.API.request({
+        url: '/v1/user/unlink'
+      }).then(function(response) {
+        console.log(response);
+
+        self.$axios.delete('http://localhost:8082/members/' + sessionStorage.getItem('loginId')) 
+        .then(function(res){ 
+          console.log(res);
+          if( res.status == 200){
+            if (res.data.flag) {
+              /* 세션에 저장되어 있는 정보 날리기 */
+              sessionStorage.clear();
+              alert('회원 정보가 삭제 되었습니다.');
+
+              window.location.href = "/"; //리디렉션
+            }
+          } else {
+            console.log('에러코드:' + res.status);
+            window.location.href = "/"; //리디렉션
+          }
+        });
+      }).catch(function(error) {
+        console.log(error);
+        window.location.href = "/"; //리디렉션
+      });
     },
     out(){
       

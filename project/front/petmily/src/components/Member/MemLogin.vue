@@ -56,7 +56,7 @@ export default {
             sessionStorage.setItem('loginFlag', 'normal')
             // self.$router.push('/') location.href와 비슷 강사님 코드
             window.location.href = "/"
-            alert('로그인')
+            //alert('로그인')
           } else {
              alert('로그인실패')
           }
@@ -75,7 +75,7 @@ export default {
         url: "/v2/user/me",
         success: (res) => {
           console.log('kakao', res);
-          alert('로그인되었습니다.');
+          //alert('로그인되었습니다.');
           
           /* 세션 처리하기 */
           //sessionStorage.setItem('loginId', kakao_account.name)
