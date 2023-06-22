@@ -114,7 +114,7 @@
     <router-link to="/applyform">Apply</router-link> |
     <router-link to="/api">Api</router-link> |
     <router-link to="" @click="send">쪽지보내기</router-link> | 
-    <span @click="kakaoExitService()" style="cursor: pointer;">카카오회원탈퇴</span>
+    <span @click="exitService()" style="cursor: pointer;">회원탈퇴</span>
     <div class="tmp-line"></div>
     <!-- //기존 링크 모음 (테스트용, 추후 삭제 예정) -->
 
@@ -210,6 +210,13 @@ export default {
         // });
       }
     },
+    exitService() {
+      if (sessionStorage.getItem('loginFlag') == 'normal') {
+        this.out();
+      } else { 
+        this.kakaoExitService();
+      }
+    }, 
     kakaoExitService() { // 카카오 회원 탈퇴
       const self = this;
       
@@ -240,7 +247,6 @@ export default {
       });
     },
     out(){
-      
       const self = this;
 
       let token = sessionStorage.getItem('token')
@@ -248,20 +254,20 @@ export default {
       .then(function(res){ 
         if(res.status == 200){
           if(res.data.flag){
-          self.logout()
-          alert('탈퇴완료')
+            self.logout()
+            alert('회원 정보가 삭제 되었습니다.');
           }
-        }else{
-          alert('에러코드:' + res.status)
+        } else {
+          console.log('에러코드:' + res.status);
         }
       });
     },
-    send(){
+    send() {
       alert('send 클릭')
-      if(this.loginId == null){
-        alert('로그인 후 이용가능')
-      }else{
-        this.$router.push('/messagewrite')
+      if (this.loginId == null) {
+        alert('로그인 후 이용가능');
+      } else {
+        this.$router.push('/messagewrite');
       }
     }
   }
