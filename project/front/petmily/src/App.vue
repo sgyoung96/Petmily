@@ -114,10 +114,13 @@
     <router-link to="/addressmap">주소로 지도</router-link> |
     <router-link to="/applyform">Apply</router-link> |
     <router-link to="/api">Api</router-link> |
-    <router-link to="" @click="send">쪽지보내기</router-link> |
-    <router-link to="" @click="messagesender">보낸쪽지함</router-link> |
-    <router-link to="" @click="messagereciever">받은쪽지함</router-link>
-    <span @click="exitService()" style="cursor: pointer;">회원탈퇴</span>
+    <div v-if="loginId != null">
+      <router-link to="" @click="send">쪽지보내기</router-link> |
+      <router-link to="" @click="messagesender">보낸쪽지함</router-link> |
+      <router-link to="" @click="messagereciever">쪽지함</router-link>
+      <span v-show="cntcheck" @click="cntcheck">{{cnt}}</span> 
+    </div>
+        <span @click="exitService()" style="cursor: pointer;">회원탈퇴</span>
     <!-- //기존 링크 모음 (테스트용, 추후 삭제 예정) -->
 
   <!-- 이곳에 라우터로 설정한 화면이 로드됨 -->
@@ -144,7 +147,9 @@ export default {
     return {
       loginId:null,
       isOpen: false,
-      dto: {}
+      dto: {},
+      cnt:0,
+      
     }
   },
   created:function(){ // 이 컴포넌트가 시작될때 실행되는 함수
@@ -168,8 +173,12 @@ export default {
       }
     }
     
+
+    
     
   },
+
+
   methods:{
     gotoMain() { // 로고 클릭시 메인으로 이동
       location.href = '/';
@@ -306,7 +315,31 @@ export default {
       }else{
         this.$router.push('/messagereciever')
       }
+    },
+
+    cntcheck(){
+      alert('cntcheck 클릭')
+      this.loginId = sessionStorage.getItem('loginId')
+     const self = this;
+     self.$axios.get('http://localhost:8082/message/cnt/' + self.loginId)
+      .then(function(res){
+        if(res.status == 200){
+         self.cnt = res.data.cnt
+         alert('cnt' + self.cnt)
+         if(self.cnt == 0){
+          this.cntcheck = false;
+         }else{
+          alert(self.cnt)
+          this.cntcheck = true;
+          this.cnt = self.cnt;
+         }
+        
+        }else{
+          alert('에러코드 :' + res.status)
+        }
+      });  
     }
+    
   }
 }
 </script>

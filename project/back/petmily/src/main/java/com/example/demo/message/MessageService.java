@@ -75,6 +75,8 @@ public class MessageService {
 		dao.updatem_check(num);
 	}
 	
+
+	
 	//sender메세지 삭제
 	public void delMessagesender(int num) {
 		dao.updateavailablesender(num);
