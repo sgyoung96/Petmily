@@ -23,6 +23,8 @@ public interface ParticipantsDao extends JpaRepository<Participants, Integer> {
     
     ArrayList<Participants> findByIdAndBoardnum(Member id, Volboard boardnum);
     
+    ArrayList<Participants> findByBoardnum(Volboard boardnum);
+    
     // 봉사게시판 번호와 맴버 id를 받아와서 한 줄 삭제
     @Transactional
     void deleteByIdAndBoardnum(Member id, Volboard boardnum);

@@ -22,20 +22,31 @@ public class ParticipantsService {
 	//봉사가 끝나거나 취소하면 데이터 삭제
 	public void delPerson(String id, int boardnum) {
 		Member m = new Member(id,"","","","",null,"","","");
-		Volboard b = new Volboard(boardnum,null,"","",null,0,null,"","","",0);
+		Volboard b = new Volboard(boardnum,null,"","",null,0,null,"",null,"","","",0);
 		dao.deleteByIdAndBoardnum(m, b);
 	}
 	
-	//현재 봉사모집인원 출력
+	//현재 봉사모집인원수 출력
 	public int printPerson(int boardNum) {
 		//Volboard vb = new Volboard(boardNum,null,"","",null,0,null,"","","",0);
 		return dao.countByBoardNum(boardNum);
 	}
 	
+	//모집인원 ID 출력
+	public ArrayList<ParticipantsDto> getByNum(int boardNum){
+		Volboard vb = new Volboard(boardNum,null,"","",null,0,null,"",null,"","","",0);
+		ArrayList<Participants> list = dao.findByBoardnum(vb);
+		ArrayList<ParticipantsDto> dlist = new ArrayList<>();
+		for(Participants p : list) {
+			dlist.add(new ParticipantsDto(p.getNum(), p.getBoardnum(), p.getId()));
+		}
+		return dlist;
+	}
+	
 	//봉사게시판에 중복신청 검사
 	public ArrayList<ParticipantsDto> getByIdAndNum(String id, int boardnum) {
 		Member m = new Member(id,"","","","",null,"","","");
-		Volboard b = new Volboard(boardnum,null,"","",null,0,null,"","","",0);
+		Volboard b = new Volboard(boardnum, null,"","",null,0,null,"",null,"","","",0);
 		ArrayList<Participants> list = dao.findByIdAndBoardnum(m, b);
 		ArrayList<ParticipantsDto> dlist = new ArrayList<>();
 		for(Participants p : list) {

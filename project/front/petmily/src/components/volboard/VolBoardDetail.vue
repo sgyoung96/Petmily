@@ -29,8 +29,15 @@
         <td><input type="text" v-model="dto.vol_number" readonly></td>
       </tr>
     </table>
+    <div>참여자 리스트 ID</div>
+    <table border="1">
+      <tr v-for="person in list2" :key="person.num">
+        <td>{{ person.id.id }}</td>
+      </tr>
+    </table>
+    
     <button type="button" v-on:click="apply()">봉사신청</button>
-    <button type="button" v-on:click="list(dto.num)">봉사참여자목록</button>
+    
     {{ count }} / {{ dto.vol_number }} {{ address }}
     <div>
         <label>주소:</label>
@@ -61,7 +68,8 @@ export default {
       count: 0,
       address: this.$route.query.address,
       map: null,
-      marker: null
+      marker: null,
+      list2: []
     }
   },
   mounted() {
@@ -83,7 +91,6 @@ export default {
       self.$axios.get('http://localhost:8082/participants/' + self.loginId + '/' + self.num)
         .then(function (res) {
           if (res.status == 200) {
-            alert(res.data.list)
             if (res.data.list.length === 0) {
               let formData = new FormData();
               formData.append('boardnum', self.num)
@@ -97,12 +104,7 @@ export default {
                   }
                 })
             } else {
-              alert('이미 신청되었습니다.')
-              
-              // let formData2 = new FormData();
-              // formData2.append('boardnum', self.num)
-              // formData2.append('id', self.loginId)
-              
+              alert('이미 신청되었습니다.') 
               self.$axios.delete('http://localhost:8082/participants?boardnum=' + self.num + '&id=' + self.loginId)
                 .then(function (res) {
                   if (res.status == 200) {
@@ -115,9 +117,7 @@ export default {
           }
         })}
     },
-    list(num) {
-      this.$router.push({ name: 'ParticipantsList', params: { num: num } })
-    },
+  
     loadScript() {
         const script = document.createElement("script");
         script.src =
@@ -142,7 +142,6 @@ export default {
           alert("주소를 입력하세요.");
           return;
         }
-        alert(this.address)
         const encodedAddress = encodeURIComponent(this.address);
         const apiUrl = `https://maps.googleapis.com/maps/api/geocode/json?address=${encodedAddress}&key=AIzaSyAEMcBVXcTsB5UmbNou29kkZkSPpq4mDJA`;
   
@@ -187,8 +186,6 @@ export default {
       }
   },
   created: function () {//이 컴포넌트가 시작될때 실행되는 함수
-    alert(this.num)
-    alert(this.address+"***********************************")
     this.loginId = sessionStorage.getItem('loginId')
     const self = this
     self.$axios.get('http://localhost:8082/volboard/' + self.num)
@@ -206,6 +203,15 @@ export default {
         if (res.status == 200) {
           self.count = res.data.count
         } else {
+          alert('에러')
+        }
+      })
+
+    self.$axios.get('http://localhost:8082/participants/' + self.num)
+      .then(function (res) {
+        if (res.status == 200){
+          self.list2 = res.data.list
+        }else{
           alert('에러')
         }
       })

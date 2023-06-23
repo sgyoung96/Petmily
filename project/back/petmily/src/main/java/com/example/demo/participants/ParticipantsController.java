@@ -35,6 +35,15 @@ public class ParticipantsController {
 		return map;
 	}
 	
+	//봉사모집게시판에 신청된 사람의 인원명단 출력
+	@GetMapping("/{boardnum}")
+	public Map getPerson(@PathVariable("boardnum") int boardnum) {
+		ArrayList<ParticipantsDto> list = service.getByNum(boardnum);
+		Map map = new HashMap<>();
+		map.put("list", list);
+		return map;
+	}
+	
 	//봉사신청 시 참가자테이블에 추가
 	@PostMapping("")
 	public Map addPerson(ParticipantsDto dto) {

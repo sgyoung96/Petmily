@@ -32,6 +32,8 @@ public class VolboardDto {
 	private int vol_number;
 	private Date w_date;
 	private String address;
+	private Date deadline;
+	private String place;
 	private String pic1;
 	private String pic2;
 	private int count;

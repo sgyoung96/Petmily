@@ -14,11 +14,19 @@
         </div>
         <div class="form-group">
           <label for="volboard-content">내용</label>
-          <input type="text" class="form-control" v-model="content" required>
+          <input type="textarea" class="form-control" v-model="content" required>
         </div>
         <div class="form-group">
           <label for="volboard-count">모집인원</label>
           <input type="number" class="form-control" v-model="vol_number">
+        </div>
+        <div class="form-group">
+          <label for="volboard-count">봉사모집기관</label>
+          <input type="text" class="form-control" v-model="place">
+        </div>
+        <div class="form-group">
+          <label for="volboard-count">모집마감일</label>
+          <input type="date" class="form-control" v-model="deadline">
         </div>
         <div class="form-group">
           <label for="volboard-address">봉사장소주소</label>
@@ -34,10 +42,6 @@
         <div class="form-group">
           <label for="volboard-voldate">봉사일자</label>
           <input type="date" class="form-control" v-model="vol_date" required>
-        </div>
-        <div class="form-group">
-          <label for="volboard-count">등록여부</label>
-          <input type="number" class="form-control" v-model="count">
         </div>
         <div class="form-group">
           <label for="volboard-img1">게시판이미지1</label>
@@ -70,6 +74,8 @@
         detailAddress:'',
         extraAddress:'',
         address: '',
+        deadline: '',
+        place: '',
         count: 0
       }
     },
@@ -78,6 +84,7 @@
         const self = this
         const moment = require('moment');
         const voldate = moment(self.vol_date).format('L');
+        const deadline = moment(self.deadline).format('L');
 
         var address = self.roadAddress
         address += self.detailAddress 
@@ -92,8 +99,10 @@
         formData.append('vol_number', this.vol_number)
         formData.append('w_date', new Date())
         formData.append('vol_date', voldate)
+        formData.append('deadline', deadline)
+        formData.append('place', this.place)
         formData.append('address', address)
-        formData.append('count', this.count)
+        formData.append('count', 0)
         const file1 = document.getElementById('f1')
         const file2 = document.getElementById('f2')
         
