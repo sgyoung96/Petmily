@@ -279,9 +279,11 @@ export default {
             self.logout();
             sessionStorage.clear();
             alert('회원 정보가 삭제 되었습니다.');
+            location.href = '/';
           }
         } else {
           console.log('에러코드:' + res.status);
+          location.href = '/';
         }
       });
     },
