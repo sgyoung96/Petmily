@@ -41,3 +41,14 @@ public class Alarmsender {
 	private int num;		// 고유 번호 (PK)
 	private int clicked;
 }
+
+/*
+	
+CREATE OR REPLACE TRIGGER TR_MONITOR
+AFTER INSERT ON ALARMSENDER
+BEGIN 
+	INSERT INTO MONITOR (NUM, CONTENT) VALUES (SEQ_MONITOR_NUM.NEXTVAL, '수정이력삽입');
+END;
+ 
+ 
+*/
