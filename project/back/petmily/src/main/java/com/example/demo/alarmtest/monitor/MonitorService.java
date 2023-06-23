@@ -1,30 +1,53 @@
 package com.example.demo.alarmtest.monitor;
 
-import java.util.ArrayList;
-
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.servlet.mvc.method.annotation.SseEmitter;
 
-import com.example.demo.member.Member;
-import com.example.demo.volboard.Volboard;
-import com.example.demo.volboard.VolboardDto;
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 
+
+@Slf4j
 @Service
+@RequiredArgsConstructor
 public class MonitorService {
-	
-	@Autowired
-	private MonitorDao dao;
-	
-	/**
-	 * 전체 목록 조회
-	 * @return
-	 */
-	public ArrayList<MonitorDto> getAll() {
-		ArrayList<Monitor> list = (ArrayList<Monitor>) dao.findAll();
-		ArrayList<MonitorDto> list2 = new ArrayList<MonitorDto>();
-		for (Monitor monitor : list) {
-			list2.add(new MonitorDto(monitor.getNum(), monitor.getContent()));
+
+	private final static Long DEFAULT_TIMEOUT = 3600000L;
+	private final static String NOTIFICATION_NAME = "notify";
+
+	private final MonitorDao dao;
+
+	public SseEmitter connectNotification(int num) {
+		// 새로운 SseEmitter를 만든다
+		SseEmitter sseEmitter = new SseEmitter(DEFAULT_TIMEOUT);
+
+		// 유저 ID로 SseEmitter를 저장한다.
+		dao.save(num, sseEmitter);
+
+		// 세션이 종료될 경우 저장한 SseEmitter를 삭제한다.
+		sseEmitter.onCompletion(() -> dao.delete(num));
+		sseEmitter.onTimeout(() -> dao.delete(num));
+
+		// 503 Service Unavailable 오류가 발생하지 않도록 첫 데이터를 보낸다.
+		try {
+			sseEmitter.send(SseEmitter.event().id("").name(NOTIFICATION_NAME).data("Connection completed"));
+		} catch (java.io.IOException e) {
+			e.printStackTrace();
 		}
-		return list2;
+		
+		return sseEmitter;
 	}
+	
+	public void send(int num, Long notificationId) {
+        // 유저 ID로 SseEmitter를 찾아 이벤트를 발생 시킨다.
+        dao.get(num).ifPresentOrElse(sseEmitter -> {
+        	try {
+				sseEmitter.send(SseEmitter.event().id(notificationId.toString()).name(NOTIFICATION_NAME).data("New notification"));
+			} catch (java.io.IOException e) {
+				// IOException이 발생하면 저장된 SseEmitter를 삭제하고 예외를 발생시킨다.
+				dao.delete(num);
+				e.printStackTrace();
+			}
+        }, () -> log.info("No emitter found"));
+    }
 }

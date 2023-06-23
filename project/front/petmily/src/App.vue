@@ -314,15 +314,12 @@ export default {
     alarmTestSaver() {
       const self = this;
       self.$axios.post('http://localhost:8082/alarm/sender').then (function(rs) {
-        console.log(rs.data.dto);
-        alert(rs.data.dto.num + '번 클릭하셨습니다.');
+        alert('DB에 적재되었습니다.');
+        console.log(rs);
       });
     },
     alarmTestHistory() { // 트리거를 통해 saver 의 값을 알림 전용 테이블에 insert, insert된 데이터를 가져와 콘솔에 출력
-      const self = this;
-      self.$axios.get('http://localhost:8082/monitor').then (function(rs) {
-        console.log(rs.data.dto.num + " : " + rs.data.dto.content);
-      });
+      
     }
   }
 }
