@@ -116,8 +116,10 @@
     <router-link to="/api">Api</router-link> |
     <router-link to="" @click="send">쪽지보내기</router-link> |
     <router-link to="" @click="messagesender">보낸쪽지함</router-link> |
-    <router-link to="" @click="messagereciever">받은쪽지함</router-link>
-    <span @click="exitService()" style="cursor: pointer;">회원탈퇴</span>
+    <router-link to="" @click="messagereciever">받은쪽지함</router-link> |
+    <span @click="exitService()" style="cursor: pointer;">회원탈퇴</span> |
+    <span @click="alarmTestSaver()" style="cursor: pointer;">알람 기능 테스트용 DB 적재</span> |
+    <span @click="alarmTestHistory()" style="cursor: pointer;">[알람] 트리거 동작 확인 (테스트용 알람 테이블 DB적재)</span>
     <!-- //기존 링크 모음 (테스트용, 추후 삭제 예정) -->
 
   <!-- 이곳에 라우터로 설정한 화면이 로드됨 -->
@@ -308,6 +310,19 @@ export default {
       }else{
         this.$router.push('/messagereciever')
       }
+    },
+    alarmTestSaver() {
+      const self = this;
+      self.$axios.post('http://localhost:8082/alarm/sender').then (function(rs) {
+        console.log(rs.data.dto);
+        alert(rs.data.dto.num + '번 클릭하셨습니다.');
+      });
+    },
+    alarmTestHistory() { // 트리거를 통해 saver 의 값을 알림 전용 테이블에 insert, insert된 데이터를 가져와 콘솔에 출력
+      const self = this;
+      self.$axios.get('http://localhost:8082/monitor').then (function(rs) {
+        console.log(rs.data.dto.num + " : " + rs.data.dto.content);
+      });
     }
   }
 }
