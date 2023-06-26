@@ -23,6 +23,7 @@ import BarChart from '@/components/kaka/BarChart.vue'
 import PieChart from '@/components/kaka/PieChart.vue'
 import MemEdit from '@/components/Member/MemEdit.vue'
 import FindPwd from '@/components/Member/FindPwd.vue'
+import FindId from '@/components/Member/FindId.vue'
 import AddressConvert from '@/components/kaka/AddressConvert.vue' 
 import MessageWrite from '@/components/Message/MessageWrite.vue' 
 import MessageSender from '@/components/Message/MessageSender.vue' 
@@ -177,6 +178,11 @@ const routes = [
     path: '/findpwd',
     name: 'FindPwd',
     component: FindPwd
+  },
+  {
+    path: '/findid',
+    name: 'FindId',
+    component: FindId
   }
 ]
 
