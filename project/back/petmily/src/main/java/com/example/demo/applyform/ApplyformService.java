@@ -33,7 +33,7 @@ public class ApplyformService {
 	
 	//Id로 검색
 	public ArrayList<ApplyformDto> findByMemberId(String id){
-		Member m = new Member(id, "", "", "", "", null, "", "", "");
+		Member m = new Member(id, "", "", "", "", null, "", "", "",null);
 		ArrayList<Applyform> list = (ArrayList<Applyform>) dao.findById(m);
 		ArrayList<ApplyformDto> list2 = new ArrayList<ApplyformDto>();
 		for (Applyform a : list) {

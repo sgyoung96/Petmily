@@ -64,7 +64,7 @@ public class AdoptBoardService {
 	 * @param id
 	 */
 	public ArrayList<AdoptBoardDto> getByWriter(String id) {
-		Member m = new Member(id,"","","","",null,"","","");
+		Member m = new Member(id,"","","","",null,"","","",null);
 		ArrayList<Adoptboard> list = dao.findById(m);
 		ArrayList<AdoptBoardDto> dtolist = new ArrayList<>();
 		for(Adoptboard v : list) {
