@@ -48,11 +48,6 @@ export default {
     }
   },
 
-  created:function(){
-     
-   
-
-  },
 
   methods:{
     sendEmail(){

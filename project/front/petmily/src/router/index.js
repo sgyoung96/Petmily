@@ -21,6 +21,7 @@ import MemLogin from '@/components/Member/MemLogin.vue'
 import AdminHome from '@/components/Member/AdminHome.vue'
 import MemEdit from '@/components/Member/MemEdit.vue'
 import FindPwd from '@/components/Member/FindPwd.vue'
+import FindId from '@/components/Member/FindID.vue'
 import AddressConvert from '@/components/kaka/AddressConvert.vue' 
 import MessageWrite from '@/components/Message/MessageWrite.vue' 
 import MessageSender from '@/components/Message/MessageSender.vue' 
@@ -165,6 +166,11 @@ const routes = [
     path: '/findpwd',
     name: 'FindPwd',
     component: FindPwd
+  },
+  {
+    path: '/findid',
+    name: 'FindId',
+    component: FindId
   }
 ]
 
