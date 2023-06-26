@@ -6,12 +6,12 @@
       <button v-on:click="CatkindCd">고양이</button>
     </div>
   </div>
-  <div id="app">
+  <div id="app" style="margin-top:50px;">
     <div class="grid-container">
       <div v-for="item in items" :key="item.desertionNo" class="grid-item">
         <div class="card">
           <div>
-            <img :src="item.filename" :alt="item.careNm" @click="handleItemClick(item.desertionNo)"
+            <img :src="item.popfile" :alt="item.careNm" @click="handleItemClick(item.desertionNo)"
               style="cursor: pointer; width:300px; height: 200px;">
           </div>
           <div class="item-info-space-between">
@@ -38,17 +38,11 @@
       </div>
     </div>
   </div>
-  <div><button v-on:click="previousPage">이전</button>
-    <button v-on:click="page1">1</button>
-    <button v-on:click="page2">2</button>
-    <button v-on:click="page3">3</button>
-    <button v-on:click="page4">4</button>
-    <button v-on:click="page5">5</button>
-    <button v-on:click="page6">6</button>
-    <button v-on:click="page7">7</button>
-    <button v-on:click="page8">8</button>
-    <button v-on:click="page9">9</button>
-    <button v-on:click="page10">10</button>
+  <div style="margin-top: 2%;">
+    <button v-on:click="previousPage">이전</button>
+    <button v-for="pageNumber in totalPages" :key="pageNumber" v-on:click="goToPage(pageNumber)">
+      {{ pageNumber }}
+    </button>
     <button v-on:click="nextPage">다음</button>
   </div>
 </template>
@@ -64,7 +58,11 @@ export default {
       pageNo: 1, // 현재 페이지 번호
       pageSize: 24, // 한 페이지에 표시할 항목 수
       totalItems: 0, // 전체 항목 수
-      kindCd: ''
+      totalPages: 0, // 전체 페이지 수
+      kindCd: '',
+      displayedPages: [], // 현재 표시되는 페이지 버튼
+      startPage: 1, // 시작 페이지 번호
+      endPage: 10, // 끝 페이지 번호
     };
   },
   created() {
@@ -78,6 +76,8 @@ export default {
           const data = response.data.response.body;
           this.items = data.items.item;
           this.totalItems = data.totalCount;
+          this.totalPages = 20;
+          this.updateDisplayedPages();
         })
         .catch((error) => {
           console.error(error);
@@ -86,7 +86,7 @@ export default {
     handleItemClick(desertionNo) {
       console.log(desertionNo); // desertionNo 값 확인
       this.desertionNo = desertionNo; // desertionNo 값을 설정
-      this.$router.push({ name: 'Detail', params: { desertionNo: desertionNo } });
+      this.$router.push({ name: 'Detail', params: { desertionNo: desertionNo} });
     },
     previousPage() {
       if (this.pageNo > 1) {
@@ -101,45 +101,35 @@ export default {
         this.fetchData();
       }
     },
-    page1() {
-      this.pageNo = 1;
+    goToPage(pageNumber) {
+      this.pageNo = pageNumber;
       this.fetchData();
     },
-    page2() {
-      this.pageNo = 2;
-      this.fetchData();
-    },
-    page3() {
-      this.pageNo = 3;
-      this.fetchData();
-    },
-    page4() {
-      this.pageNo = 4;
-      this.fetchData();
-    },
-    page5() {
-      this.pageNo = 5;
-      this.fetchData();
-    },
-    page6() {
-      this.pageNo = 6;
-      this.fetchData();
-    },
-    page7() {
-      this.pageNo = 7;
-      this.fetchData();
-    },
-    page8() {
-      this.pageNo = 8;
-      this.fetchData();
-    },
-    page9() {
-      this.pageNo = 9;
-      this.fetchData();
-    },
-    page10() {
-      this.pageNo = 10;
-      this.fetchData();
+
+    updateDisplayedPages() {
+      // 현재 표시할 페이지 범위 계산
+      const maxDisplayedPages = 10; // 한 번에 표시할 페이지 버튼의 최대 개수
+      const halfMaxDisplayedPages = Math.floor(maxDisplayedPages / 2);
+      let startPage = this.pageNo - halfMaxDisplayedPages;
+      let endPage = this.pageNo + halfMaxDisplayedPages;
+
+      // 시작 페이지와 끝 페이지가 유효한 범위를 벗어나지 않도록 조정
+      if (startPage < 1) {
+        startPage = 1;
+        endPage = Math.min(maxDisplayedPages, this.totalPages);
+      }
+      if (endPage > this.totalPages) {
+        endPage = this.totalPages;
+        startPage = Math.max(1, endPage - maxDisplayedPages + 1);
+      }
+
+      // 현재 표시되는 페이지 버튼 업데이트
+      this.startPage = startPage;
+      this.endPage = endPage;
+      this.displayedPages = Array.from(
+        { length: endPage - startPage + 1 },
+        (_, i) => startPage + i
+      );
     },
     AllKindCd() {
       this.kindCd = "";
@@ -161,6 +151,7 @@ export default {
 
 
 <style>
+
 .card {
   border-radius: 10px; /* 모서리를 둥글게 만듭니다 */
   /* 다른 스타일을 추가로 적용할 수 있습니다 */
