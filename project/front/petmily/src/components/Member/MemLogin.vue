@@ -18,7 +18,7 @@
           <span class="deco">&nbsp;&nbsp;|&nbsp;&nbsp;</span>
           <span class="link-id">ID 찾기</span>
           <span class="deco">/</span>
-          <span class="link-pw">PW 찾기</span>
+          <span class="link-pw" @click="findPwd">PW 찾기</span>
         </div>
         
       </div>
@@ -112,6 +112,15 @@ export default {
       } else {
         console.log('normal');
       }
+    },
+    findPwd(){
+      const self = this;
+      if (sessionStorage.getItem('loginFlag') != 'normal') {
+        self.$router.push('/findpwd'); // 회원가입 화면으로 이동
+      } else {
+        console.log('normal');
+      }
+
     }
   }
 }

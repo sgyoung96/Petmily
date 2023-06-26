@@ -96,10 +96,16 @@
           </div>
           <div v-else>
             <span v-on:click="logout" id="link-logout">로그아웃</span>
+            
           </div>
         </div>
         <div class="box-image">
-          <img class="mypage" src="./assets/mypage_sample.jpg" >
+          <span v-if="loginId == null">
+            <img class="mypage" src="./assets/mypage_sample.jpg" >
+          </span>
+          <span v-else class="box-profile" style="background: #black;"> 
+            <img class="profile" :src="'http://localhost:8082/members/imgs/'+loginId">
+          </span>
           <img class="pet-alert" src="./assets/alert_sample.jpg" >
         </div>
       </div>
@@ -116,9 +122,13 @@
     <router-link to="/piechart">파이차트</router-link> |
     <router-link to="/applyform">Apply</router-link> |
     <router-link to="/api">Api</router-link> |
-    <router-link to="" @click="send">쪽지보내기</router-link> |
-    <router-link to="" @click="messagesender">보낸쪽지함</router-link> |
-    <router-link to="" @click="messagereciever">받은쪽지함</router-link>
+    <div v-if="loginId != null">
+      <router-link to="/messagewrite" >쪽지보내기</router-link> |
+      <router-link to="/messagesender" >보낸쪽지함</router-link> |
+      <router-link to="/messagereciever">쪽지함</router-link>
+      <span v-show="cntcheck" @click="cntcheck">{{cnt}}</span> 
+      <router-link to="/memedit">내정보 수정</router-link>
+    </div>
     <span @click="exitService()" style="cursor: pointer;">회원탈퇴</span>
     <!-- //기존 링크 모음 (테스트용, 추후 삭제 예정) -->
 
@@ -146,7 +156,9 @@ export default {
     return {
       loginId:null,
       isOpen: false,
-      dto: {}
+      dto: {},
+      cnt:0,
+      
     }
   },
   created:function(){ // 이 컴포넌트가 시작될때 실행되는 함수
@@ -170,8 +182,12 @@ export default {
       }
     }
     
+
+    
     
   },
+
+
   methods:{
     gotoMain() { // 로고 클릭시 메인으로 이동
       location.href = '/';
@@ -235,10 +251,15 @@ export default {
       }
     },
     exitService() {
-      if (sessionStorage.getItem('loginFlag') == 'normal') {
-        this.out();
-      } else { 
-        this.kakaoExitService();
+      var result = confirm('회원탈퇴를 진행하시겠어요?');
+      if (result) {
+        if (sessionStorage.getItem('loginFlag') == 'normal') {
+          this.out();
+        } else { 
+          this.kakaoExitService();
+        }
+      } else {
+        alert('회원탈퇴를 취소하셨습니다.');
       }
     }, 
     kakaoExitService() { // 카카오 회원 탈퇴
@@ -281,11 +302,35 @@ export default {
             self.logout();
             sessionStorage.clear();
             alert('회원 정보가 삭제 되었습니다.');
+            location.href = '/';
           }
         } else {
           console.log('에러코드:' + res.status);
+          location.href = '/';
         }
       });
+    },
+    cntcheck(){
+      alert('cntcheck 클릭')
+      this.loginId = sessionStorage.getItem('loginId')
+     const self = this;
+     self.$axios.get('http://localhost:8082/message/cnt/' + self.loginId)
+      .then(function(res){
+        if(res.status == 200){
+         self.cnt = res.data.cnt
+         alert('cnt' + self.cnt)
+         if(self.cnt == 0){
+          this.cntcheck = false;
+         }else{
+          alert(self.cnt)
+          this.cntcheck = true;
+          this.cnt = self.cnt;
+         }
+        
+        }else{
+          alert('에러코드 :' + res.status)
+        }
+      });  
     },
     send() {
       alert('send 클릭')
@@ -387,7 +432,7 @@ export default {
 
 /* 우측 콘텐츠 컨테이너 */
 .box-right {
-  width: 200px;
+  width: 300px;
   display: flex;
   justify-content: right;
   align-items: center;
@@ -420,6 +465,20 @@ export default {
 
 .mypage, .pet-alert {
   height: 40px;
+  cursor: pointer;
+}
+
+.box-profile {
+  display: block;
+  width: 35px;
+  height: 35px; 
+  border-radius: 70%;
+  overflow: hidden;
+}
+.profile {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
   cursor: pointer;
 }
 

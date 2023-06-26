@@ -19,9 +19,15 @@ import Api from '@/components/cdh/Api.vue'
 import MemJoin from '@/components/Member/MemJoin.vue'
 import MemLogin from '@/components/Member/MemLogin.vue' 
 import AdminHome from '@/components/Member/AdminHome.vue'
+<<<<<<< HEAD
 import AddressConvert from '@/components/kaka/AddressConvert.vue'
 import BarChart from '@/components/kaka/BarChart.vue'
 import PieChart from '@/components/kaka/PieChart.vue'
+=======
+import MemEdit from '@/components/Member/MemEdit.vue'
+import FindPwd from '@/components/Member/FindPwd.vue'
+import AddressConvert from '@/components/kaka/AddressConvert.vue' 
+>>>>>>> e0a9b5eb4e7ea0a9a30bfdd474786f078b925327
 import MessageWrite from '@/components/Message/MessageWrite.vue' 
 import MessageSender from '@/components/Message/MessageSender.vue' 
 import MessageReciever from '@/components/Message/MessageReciever.vue'
@@ -165,6 +171,16 @@ const routes = [
     path: '/messagereciever',
     name: 'MessageReciever',
     component: MessageReciever
+  },
+  {
+    path: '/memedit',
+    name: 'MemEdit',
+    component: MemEdit
+  },
+  {
+    path: '/findpwd',
+    name: 'FindPwd',
+    component: FindPwd
   }
 ]
 

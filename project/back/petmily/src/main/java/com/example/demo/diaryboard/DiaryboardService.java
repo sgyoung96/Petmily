@@ -41,8 +41,9 @@ public class DiaryboardService {
 	}
 	
 	//id로 검색
-	public ArrayList<DiaryboardDto> getById(Member id) {
-	    ArrayList<Diaryboard> list = dao.findByIdContaining(id);
+	public ArrayList<DiaryboardDto> getById(String id) {
+		Member m = new Member(id,"","","","",null,"","","");
+	    ArrayList<Diaryboard> list = dao.findByIdContaining(m);
 	    ArrayList<DiaryboardDto> list2 = new ArrayList<DiaryboardDto>();
 	    for (Diaryboard d : list) {
 	        list2.add(new DiaryboardDto(d.getNum(), d.getTitle(), d.getContent(), d.getW_date(), d.getId(), d.getPic1(),
