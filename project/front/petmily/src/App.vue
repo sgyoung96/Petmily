@@ -1,4 +1,5 @@
 <template>
+  <div class="petmily">
     <!-- 공통 헤더 -->
     <div class="pet-header"> 
       
@@ -66,35 +67,36 @@
 
     
 
-  <!-- 이곳에 라우터로 설정한 화면이 로드됨 -->
-  <router-view/>
-  <!-- //이곳에 라우터로 설정한 화면이 로드됨 -->
+    <!-- 이곳에 라우터로 설정한 화면이 로드됨 -->
+    <router-view/>
+    <!-- //이곳에 라우터로 설정한 화면이 로드됨 -->
 
-  <!-- 풋터 -->
-  <footer class="footer">
-    <div>
-      <p>이곳에 풋터 디자인</p>
-      <!-- 기존 링크 모음 (테스트용, 추후 삭제 예정) -->
-      <router-link to="/kaka">카카</router-link> |
-      <router-link to="/addressconvert">주소변환</router-link> |
-      <router-link to="/addressmap">주소로 지도</router-link> |
-      <router-link to="/barchart">막대그래프</router-link> |
-      <router-link to="/piechart">파이차트</router-link> |
-      <router-link to="/applyform">Apply</router-link> |
-      <router-link to="/api">Api</router-link> |
-      <div v-if="loginId != null">
-        <router-link to="/messagewrite" >쪽지보내기</router-link> |
-        <router-link to="/messagesender" >보낸쪽지함</router-link> |
-        <router-link to="/messagereciever">쪽지함</router-link>
-        <span v-show="cntcheck" @click="cntcheck">{{cnt}}</span> 
-        <router-link to="/memedit">내정보 수정</router-link>
+    <!-- 풋터 -->
+    <footer class="footer">
+      <div>
+        <p>이곳에 풋터 디자인</p>
+        <!-- 기존 링크 모음 (테스트용, 추후 삭제 예정) -->
+        <router-link to="/kaka">카카</router-link> |
+        <router-link to="/addressconvert">주소변환</router-link> |
+        <router-link to="/addressmap">주소로 지도</router-link> |
+        <router-link to="/barchart">막대그래프</router-link> |
+        <router-link to="/piechart">파이차트</router-link> |
+        <router-link to="/applyform">Apply</router-link> |
+        <router-link to="/api">Api</router-link> |
+        <div v-if="loginId != null">
+          <router-link to="/messagewrite" >쪽지보내기</router-link> |
+          <router-link to="/messagesender" >보낸쪽지함</router-link> |
+          <router-link to="/messagereciever">쪽지함</router-link>
+          <span v-show="cntcheck" @click="cntcheck">{{cnt}}</span> 
+          <router-link to="/memedit">내정보 수정</router-link>
+        </div>
+        <span @click="exitService()" style="cursor: pointer;">회원탈퇴</span>
+        <!-- //기존 링크 모음 (테스트용, 추후 삭제 예정) -->`
+        <p>Copyright by Petmily, ... etc</p>
       </div>
-      <span @click="exitService()" style="cursor: pointer;">회원탈퇴</span>
-      <!-- //기존 링크 모음 (테스트용, 추후 삭제 예정) -->`
-      <p>Copyright by Petmily, ... etc</p>
-    </div>
-  </footer>
+    </footer>
   <!--//풋터-->
+  </div>
 </template>
 
 <script>
@@ -324,6 +326,10 @@ export default {
 </script>
 
 <style>
+.petmily {
+  position: relative;
+}
+
 #app {
   font-family: Avenir, Helvetica, Arial, sans-serif, BagleFatOne;
   -webkit-font-smoothing: antialiased;
@@ -392,7 +398,9 @@ export default {
 }
 
 .footer {
+  position: absolute;
   height: 200px;
+  width: 100%;
   background-color: #efefef;
 }
 

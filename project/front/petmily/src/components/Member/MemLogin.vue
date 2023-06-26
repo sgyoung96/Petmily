@@ -1,14 +1,17 @@
 <template>
 
-  <div class="box-logo">
-    <img class="login-logo" src="../../assets/logo_sample.png" >
-  </div>
+<div class="petmily-login">
+
   
   <div class="form-container">
+    
+    <img src="../../assets/bg_login_image.png" />
+  
     <div id="mylogin">
       <input type="text" id="input_id" v-model="id" placeholder="아이디를 입력하세요.">
       <br>
       <input type="password" id="input_pwd" v-model="pwd" @keyup.enter="login()" placeholder="비밀번호를 입력하세요.">
+      <img class="ico-enter" @click="login()" src="../../assets/ico-enter.png" />
       
       <div class="box-btns">
         <div class="logins">
@@ -23,7 +26,9 @@
         
       </div>
     </div>
+
   </div>
+</div>
 </template>
 
   <script>
@@ -127,71 +132,67 @@ export default {
 </script>
   <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
-.box-logo {
-  position: relative;
-  display: inline;
-  z-index: 2;
-}
 
-.login-logo {
-  width: 30%;
-  margin-bottom: -5%;
+.petmily-login {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  width: 100%;
+  padding-left: 150px;
+  padding-right: 150px;
 }
 
 .form-container {
+  border: 2px solid #ffffff;
+  border-radius: 30px; 
   position: relative;
   display: flex;
   justify-content: center;
   vertical-align: middle;
-  z-index: 1;
+  width: 100%;
+  height: auto;
+  padding-right: 100px;
+  margin-top: -50px;
 }
 
 #mylogin {
-  width: 50%;
-  border: 10px solid rgb(248, 237, 138);
-  background-color: #fff;
-  border-radius: 30px; 
-  padding-top: 5%;
-  padding-bottom: 5%;
+  margin-top: 100px;
+  margin-left: -100px;
+  display: block;
 }
 
 #input_id, #input_pwd {
-  color: white;
+  color: #777777;
   font-family: 'IBMPlexSansKR-Bold';
-  background-color: rgb(244, 206, 79);
+  background-color: #eeeeee;
   border-radius: 10px;
 }
 
 #input_id::placeholder, #input_pwd::placeholder {
-  color: white;
-  font-family: 'IBMPlexSansKR-Bold';
+  color: #777777;
+  font-family: 'IBMPlexSansKR-ExtraLight';
 }
 
 input {
-  width: 200px;
+  width: 250px;
+  height: 60px;
   margin-bottom: 5px;
   border: none;
   padding: 10px;
+  position: relative;
 }
 
 input:focus {
   outline: none;
 }
 
-.btn-login {
-  text-align: center;
-  background-color: white;
-  border: 5px solid rgb(248, 237, 138);
-  border-radius: 10px;
-  padding: 10px;
-  font-weight: bold;
-  font-family: 'IBMPlexSansKR-Bold';
-  color: rgb(244,191,79);
-  font-size: 18px;
-}
-
-.btn-login {
-  width: 200px;
+.ico-enter {
+  position: absolute;
+  width: 30px;
+  height: auto;
+  z-index: 2;
+  margin-left: -40px;
+  margin-top: 15px;
   cursor: pointer;
 }
 
@@ -213,7 +214,7 @@ input:focus {
 .btn-kakao {
   cursor: pointer;
   border-radius: 20px;
-  width: 200px;
+  width: 250px;
   padding-bottom: 5px;
 }
 
@@ -235,14 +236,7 @@ input:focus {
   font-family: 'IBMPlexSansKR-Regular';
   font-weight: bold;
   font-size: 12px;
-}
-
-.link-join:hover, .link-id:hover, .link-pw:hover {
   cursor: pointer;
-  font-family: 'IBMPlexSansKR-Medium';
-  font-weight: bold;
-  font-size: 14px;
-  color: rgb(244,191,79);
 }
 
 </style>
