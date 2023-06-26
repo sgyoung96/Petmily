@@ -18,7 +18,7 @@ public class EmailServiceImpl implements EmailService {
 	@Autowired
 	JavaMailSender emailSender;
 	
-	public static final String ePw = createKey();
+	public static  String ePw;
 	 
     private MimeMessage createMessage(String to)throws Exception{
         System.out.println("보내는 대상 : "+ to);
@@ -77,6 +77,7 @@ public class EmailServiceImpl implements EmailService {
 	@Override
 	public String sendSimpleMessage(String to) throws Exception {
 		// TODO Auto-generated method stub
+			ePw = createKey();
 		  MimeMessage message = createMessage(to);
 	        try{//예외처리
 	        	System.out.println("send : " +  message);

@@ -14,6 +14,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.util.FileCopyUtils;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -139,6 +140,21 @@ public class VolboardController {
 		ArrayList<VolboardDto> list = service.getByWriter(writer);
 		Map map = new HashMap();
 		map.put("list", list);
+		return map;
+	}
+	
+	//봉사게시판 삭제
+	@DeleteMapping("/{num}")
+	public Map delBoard(@PathVariable("num") int num) {
+		boolean flag = true;
+		Map map = new HashMap();
+		try {
+			service.delBoard(num);
+		}catch(Exception e){
+			e.printStackTrace();
+			flag = false;
+		}
+		map.put("flag", flag);
 		return map;
 	}
 	

@@ -55,6 +55,10 @@ export default {
           if(res.data.flag){
             
             alert('쪽지 보내기 완료')
+            self.title=''
+            self.content=''
+            self.reciever=''
+
           } else {
              alert('쪽지 보내기 실패')
           }

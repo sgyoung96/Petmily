@@ -2,6 +2,7 @@ package com.example.demo.member;
 
 import java.util.Date;
 
+import org.springframework.web.multipart.MultipartFile;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -26,6 +27,9 @@ public class MemberDto {
 	private String gender;
 	private String phone;
 	private String address;
+	private String profile;
+	private MultipartFile f;
+	
 
 	@Override
 	public boolean equals(Object obj) { // equals는 object를 상속받았는데 object는 참조값이 같으면 같다

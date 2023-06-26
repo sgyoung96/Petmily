@@ -48,6 +48,8 @@ public class Volboard {
 	
 	private Date w_date; // 작성일자
 	private String address; // 봉사장소의 주소
+	private Date deadline;
+	private String place;
 	
 	@Column(nullable=true)
 	private String pic1; //게시판 사진1
