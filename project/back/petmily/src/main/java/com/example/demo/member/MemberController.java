@@ -1,9 +1,17 @@
 package com.example.demo.member;
 
+import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
 import java.util.HashMap;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.util.FileCopyUtils;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -13,6 +21,7 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.example.demo.auth.JwtTokenProvider;
 
@@ -28,17 +37,83 @@ public class MemberController {
 	@Autowired
 	private JwtTokenProvider tokenprovider;// 멤버변수로 토큰 브로바이더 추가
 	
+	//application.properties 파일의 속성값 읽기
+	@Value("${spring.servlet.multipart.location}") 
+	private String path; 
 
-	// 가입
+//	// 가입
+//	@PostMapping("")
+//	public Map join(MemberDto dto) {
+//		System.out.println(dto);
+//		System.out.println("가입해야지");
+//		MemberDto d = service.save(dto);
+//		Map map = new HashMap();
+//		map.put("dto", d);
+//		return map;
+//	}
+	
+	// multipart가입
 	@PostMapping("")
 	public Map join(MemberDto dto) {
 		System.out.println(dto);
 		System.out.println("가입해야지");
+		
+		boolean flag = true;
 		MemberDto d = service.save(dto);
+
+		
 		Map map = new HashMap();
+		
+		File dir = new File(path+d.getId());
+		dir.mkdir();
+		MultipartFile f = dto.getF();
+		System.out.println("getF : " + dto.getF());
+		String fname = f.getOriginalFilename();
+		
+		if (fname != null && !fname.equals("")) { // 업로드된 파일이 있으면
+			//String fname = x.getOriginalFilename();//원본파일명
+			String newpath = path + d.getId() + "/" + fname;
+			File newfile = new File(newpath); // 복사할 새 파일 생성. c:/img/shop/번호/원본파일명
+			System.out.println(newpath);
+			try {
+				f.transferTo(newfile);//파일 업로드 
+				dto.setProfile(newpath);
+			} catch (IllegalStateException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			
+		}
+		service.save(dto);
 		map.put("dto", d);
 		return map;
 	}
+	
+	//프로필 사진
+	@GetMapping("/imgs/{id}") 
+	public ResponseEntity<byte[]> read_img(@PathVariable("id") String id) {
+		String fname = "";
+		MemberDto dto = service.getMember(id);
+		fname = dto.getProfile();
+		System.out.println(fname);
+	
+		File f = new File(fname);
+		HttpHeaders header = new HttpHeaders(); // HttpHeaders 객체 생성
+		ResponseEntity<byte[]> result = null; // 선언
+		try {
+			header.add("Content-Type", Files.probeContentType(f.toPath()));// 응답 데이터의 종류를 설정
+			// 응답 객체 생성
+			result = new ResponseEntity<byte[]>(FileCopyUtils.copyToByteArray(f), header, HttpStatus.OK);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return result;
+	}
+	
 	
 	//==================== token ======================
 	
@@ -64,7 +139,7 @@ public class MemberController {
 		}
 		MemberDto d = service.getMember(id);
 		map.put("dto", d);
-
+		System.out.println(d);
 		return map;
 		}
 	
@@ -82,7 +157,7 @@ public class MemberController {
 			map.put("token", token);
 			System.out.println("token : " + token);
 		}
-		
+		map.put("dto",dto);
 		map.put("flag", flag);
 		return map;
 	}
@@ -112,6 +187,7 @@ public class MemberController {
 		try {
 			String id = tokenprovider.getUsernameFromToken(token);
 			map.put("id", id);
+			
 		} catch (Exception e) {
 			flag = false;
 		}

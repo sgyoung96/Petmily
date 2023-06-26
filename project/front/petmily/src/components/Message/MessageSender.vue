@@ -7,7 +7,12 @@
       받는사람 : {{message.reciever.id}}<br/>
       보낸날짜 : {{message.send_dt}}<br/>
       제목 : <a v-on:click="$event => detail(message.num,message.reciever.id,message.send_dt,message.title,message.content)">{{message.title}}</a><br/>
-      <span v-show="message.check == 0">안읽음</span><br/>
+      <div v-if="message.check == 0">
+        <span class="material-symbols-outlined">mail</span><br/>
+      </div>
+      <div v-else>
+        <span class="material-symbols-outlined" >drafts</span>
+      </div>
     <span class="material-symbols-outlined" @click="del(message.num)">delete</span>
     </div>
 
@@ -69,6 +74,13 @@ export default {
         .then(function(res){
         if(res.status == 200){
          alert('삭제완료')
+         self.$axios.get('http://localhost:8082/message/sender/'+ self.loginId)  .then(function(res){
+        if(res.status == 200){
+         self.list = res.data.list
+        }else{
+          alert('에러코드 :' + res.status)
+        }
+      });   
 
         }else{
           alert('에러코드 :' + res.status)

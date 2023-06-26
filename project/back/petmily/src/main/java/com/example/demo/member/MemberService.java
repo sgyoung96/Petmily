@@ -13,8 +13,8 @@ public class MemberService {
 		System.out.println("회원가입");
 		System.out.println(dto.getBirth());
 		System.out.println(dto);
-		Member entity = dao.save(new Member(dto.getId(), dto.getToken(),dto.getPwd(),dto.getName(),dto.getEmail(),dto.getBirth(),dto.getGender(),dto.getPhone(),dto.getAddress()));
-	return new MemberDto(entity.getId(), entity.getToken(), entity.getPwd(),entity.getName(),entity.getEmail(),entity.getBirth(),entity.getGender(),entity.getPhone(),entity.getAddress());
+		Member entity = dao.save(new Member(dto.getId(), dto.getToken(),dto.getPwd(),dto.getName(),dto.getEmail(),dto.getBirth(),dto.getGender(),dto.getPhone(),dto.getAddress(),dto.getProfile()));
+	return new MemberDto(entity.getId(), entity.getToken(), entity.getPwd(),entity.getName(),entity.getEmail(),entity.getBirth(),entity.getGender(),entity.getPhone(),entity.getAddress(),entity.getProfile(),null);
 	}
 	
 	//로그인, 내정보확인
@@ -23,7 +23,7 @@ public class MemberService {
 		if(m==null) {
 			return null;
 		}
-		return new MemberDto(m.getId(), m.getToken(),m.getPwd(),m.getName(),m.getEmail(),m.getBirth(),m.getGender(),m.getPhone(),m.getAddress());
+		return new MemberDto(m.getId(), m.getToken(),m.getPwd(),m.getName(),m.getEmail(),m.getBirth(),m.getGender(),m.getPhone(),m.getAddress(),m.getProfile(),null);
 		}
 		
 		

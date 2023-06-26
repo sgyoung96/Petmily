@@ -109,6 +109,7 @@ public class MessageController {
 		boolean flag = true;
 		Map map = new HashMap();
 		service.delMessagesender(num);
+		service.delMessage(num);
 	}
 	
 	//받는이가 받은 쪽지 삭제
@@ -119,8 +120,10 @@ public class MessageController {
 		boolean flag = true;
 		Map map = new HashMap();
 		service.delMessagereciever(num);
+		service.delMessage(num);
 	}
 	
+
 	
 	
 }

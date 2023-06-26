@@ -96,10 +96,16 @@
           </div>
           <div v-else>
             <span v-on:click="logout" id="link-logout">로그아웃</span>
+            
           </div>
         </div>
         <div class="box-image">
-          <img class="mypage" src="./assets/mypage_sample.jpg" >
+          <span v-if="loginId == null">
+            <img class="mypage" src="./assets/mypage_sample.jpg" >
+          </span>
+          <span v-else class="box-profile" style="background: #black;"> 
+            <img class="profile" :src="'http://localhost:8082/members/imgs/'+loginId">
+          </span>
           <img class="pet-alert" src="./assets/alert_sample.jpg" >
         </div>
       </div>
@@ -115,10 +121,11 @@
     <router-link to="/applyform">Apply</router-link> |
     <router-link to="/api">Api</router-link> |
     <div v-if="loginId != null">
-      <router-link to="" @click="send">쪽지보내기</router-link> |
-      <router-link to="" @click="messagesender">보낸쪽지함</router-link> |
-      <router-link to="" @click="messagereciever">쪽지함</router-link>
+      <router-link to="/messagewrite" >쪽지보내기</router-link> |
+      <router-link to="/messagesender" >보낸쪽지함</router-link> |
+      <router-link to="/messagereciever">쪽지함</router-link>
       <span v-show="cntcheck" @click="cntcheck">{{cnt}}</span> 
+      <router-link to="/memedit">내정보 수정</router-link>
     </div>
         <span @click="exitService()" style="cursor: pointer;">회원탈퇴</span>
     <!-- //기존 링크 모음 (테스트용, 추후 삭제 예정) -->
@@ -294,28 +301,6 @@ export default {
         }
       });
     },
-    send() {
-      alert('send 클릭')
-      if (this.loginId == null) {
-        alert('로그인 후 이용가능');
-      } else {
-        this.$router.push('/messagewrite');
-      }
-    },
-    messagesender(){
-      if(this.loginId == null){
-        alert('로그인 후 이용가능')
-      }else{
-        this.$router.push('/messagesender')
-      }
-    },
-    messagereciever(){
-      if(this.loginId == null){
-        alert('로그인 후 이용가능')
-      }else{
-        this.$router.push('/messagereciever')
-      }
-    },
 
     cntcheck(){
       alert('cntcheck 클릭')
@@ -418,7 +403,7 @@ export default {
 
 /* 우측 콘텐츠 컨테이너 */
 .box-right {
-  width: 200px;
+  width: 300px;
   display: flex;
   justify-content: right;
   align-items: center;
@@ -451,6 +436,20 @@ export default {
 
 .mypage, .pet-alert {
   height: 40px;
+  cursor: pointer;
+}
+
+.box-profile {
+  display: block;
+  width: 35px;
+  height: 35px; 
+  border-radius: 70%;
+  overflow: hidden;
+}
+.profile {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
   cursor: pointer;
 }
 

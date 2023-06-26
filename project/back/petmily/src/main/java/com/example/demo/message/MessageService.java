@@ -3,6 +3,7 @@ package com.example.demo.message;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -37,7 +38,7 @@ public class MessageService {
 	
 	//읽은 메세지, 안읽은 메세지 목록
 	public ArrayList<MessageDto> getByRecieverAndCheck(String loginId, int check){
-		Member member = new Member(loginId, "", "", "", "", null, "", "", "");
+		Member member = new Member(loginId, "", "", "", "", null, "", "", "","");
 		ArrayList<Message> list = (ArrayList<Message>)dao.findByRecieverAndCheck(member, check);
 		ArrayList<MessageDto> list2 = new ArrayList<MessageDto>();
 		for(Message m:list) {
@@ -48,7 +49,7 @@ public class MessageService {
 	
 	//보낸이로 검색(sender)
 	public ArrayList<MessageDto> getBySender(String id){
-		Member member = new Member(id, "", "", "", "", null, "", "", "");
+		Member member = new Member(id, "", "", "", "", null, "", "", "","");
 		ArrayList<Message> list = (ArrayList<Message>)dao.findBySenderAndAvailablesender(member, "A");	
 		ArrayList<MessageDto> list2 = new ArrayList<MessageDto>();
 		for(Message m:list) {
@@ -60,7 +61,7 @@ public class MessageService {
 	//받은 메세지 목록(reciever)
 	public ArrayList<MessageDto> getByReciever(String loginId){
 		System.out.println("service reciever");
-		Member member = new Member(loginId, "", "", "", "", null, "", "", "");
+		Member member = new Member(loginId, "", "", "", "", null, "", "", "","");
 		ArrayList<Message> list = (ArrayList<Message>)dao.findByRecieverAndAvailablereciever(member,"A");
 		System.out.println("Service reciever : " + list);
 		ArrayList<MessageDto> list2 = new ArrayList<MessageDto>();
@@ -86,5 +87,17 @@ public class MessageService {
 	//reciever메세지 삭제
 	public void delMessagereciever(int num) {
 		dao.updateavailablereciever(num);
+	}
+	
+	//db메세지 삭제
+	public void delMessage(int num) {
+	Optional<Message> message = dao.findById(num);
+	if(message.isPresent()) {
+		Message m = message.get();
+		if(m.getAvailablereciever().equals("N") && m.getAvailablesender().equals("N")) {
+	
+			dao.deleteById(num);
+		}
+	}
 	}
 }

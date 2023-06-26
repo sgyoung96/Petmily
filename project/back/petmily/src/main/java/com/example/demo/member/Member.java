@@ -30,6 +30,8 @@ public class Member {
 	private String phone;
 	private String address;
 	
+	@Column(nullable=true)
+	private String profile;
 	
 
 }
