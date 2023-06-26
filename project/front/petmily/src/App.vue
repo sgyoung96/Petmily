@@ -117,9 +117,7 @@
     <router-link to="" @click="send">쪽지보내기</router-link> |
     <router-link to="" @click="messagesender">보낸쪽지함</router-link> |
     <router-link to="" @click="messagereciever">받은쪽지함</router-link> |
-    <span @click="exitService()" style="cursor: pointer;">회원탈퇴</span> |
-    <span @click="alarmTestSaver()" style="cursor: pointer;">알람 기능 테스트용 DB 적재</span> |
-    <span @click="alarmTestHistory()" style="cursor: pointer;">[알람] 트리거 동작 확인 (테스트용 알람 테이블 DB적재)</span>
+    <span @click="exitService()" style="cursor: pointer;">회원탈퇴</span>
     <!-- //기존 링크 모음 (테스트용, 추후 삭제 예정) -->
 
   <!-- 이곳에 라우터로 설정한 화면이 로드됨 -->
@@ -235,10 +233,15 @@ export default {
       }
     },
     exitService() {
-      if (sessionStorage.getItem('loginFlag') == 'normal') {
-        this.out();
-      } else { 
-        this.kakaoExitService();
+      var result = confirm('회원탈퇴를 진행하시겠어요?');
+      if (result) {
+        if (sessionStorage.getItem('loginFlag') == 'normal') {
+          this.out();
+        } else { 
+          this.kakaoExitService();
+        }
+      } else {
+        alert('회원탈퇴를 취소하셨습니다.');
       }
     }, 
     kakaoExitService() { // 카카오 회원 탈퇴
