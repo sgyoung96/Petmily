@@ -209,6 +209,22 @@ public class MemberController {
 		return map;
 	}
 	
+
+	//비밀번호 수정
+	@PutMapping("/pwd")
+	public Map changepwd(MemberDto dto) {
+		System.out.println("비밀번호 찾기 수정");
+		MemberDto old = service.getMember(dto.getId());
+		
+		old.setPwd(dto.getPwd());
+		
+
+		MemberDto d = service.save(old);
+		Map map = new HashMap();
+		map.put("dto",d);
+		return map;
+	}
+	
 	//탈퇴
 	@DeleteMapping("/{id}")
 	public Map del(@PathVariable("id") String id) {
