@@ -14,20 +14,39 @@
   <div class="row">
     <div class="col-1">
     </div>
-    <div class="col-10" style="border: solid green">
-      <div v-if="dto.id" style="border-bottom:solid green">
-      {{dto.title}}{{ dto.id.id }}{{ dto.w_date }}
-      </div>
-      <div style="border-bottom: solid green">
+    <div class="col-10">
+      <table class="table table-bordered">
+  <thead>
+    <tr>
+      <th scope="col" style="background-color: lightgrey;  width: 100px">제목</th>
+      <th scope="col" style="text-align: left;">{{dto.title}}</th>
+    </tr>
+    <tr>
+      <th scope="col" style="background-color: lightgrey;  width: 100px">작성자</th>
+      <th scope="col" style="text-align: left;;" v-if="dto.id">{{ dto.id.id }}({{ formatDate(dto.w_date) }})</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th scope="row" colspan="2">
+  <div style="display: flex; flex-direction: column;">
+    <div>
       <img :src="'http://localhost:8082/dboard/imgs/' + dto.num + '/1'">
       <img :src="'http://localhost:8082/dboard/imgs/' + dto.num + '/2'">
-      </div>
-      <div style="padding:50px; border-bottom:solid green">
-        {{ dto.content }}
-      </div>  
-      <div style="float:right">
-        <router-link to="/diaryboardedit">수정하기</router-link>
-     <button v-on:click="boarddelete">삭제하기</button>
+    </div>
+    <div style="padding-top: 20px;">
+      {{ dto.content }}
+    </div>
+  </div>
+</th>
+    </tr>
+  </tbody>
+</table>
+        <div style="float:right">
+          <button>
+  <router-link to="/diaryboardedit">수정하기</router-link>
+</button>
+        <button v-on:click="boarddelete">삭제하기</button>
     </div><br/>
      <div>
         <table border="1">
@@ -35,10 +54,19 @@
         <tr><th><input type="text" v-model="content" id="content">
           <button v-on:click="commentadd">등록하기</button></th></tr>
       </table>
-  <div v-for="comment in comment" :key="comment.db_num" style="float:left">
+      <div style="float:left">
+  <div v-for="comment in comment" :key="comment.db_num">
+  <div>
     {{ comment.content }} {{ comment.w_date }} {{ comment.id.id }} {{ comment.db_num }}
-    <button @click="commentedit(comment)">수정하기</button>
+    <button @click="showEditForm(comment)">수정하기</button>
     <button @click="commentdelete(comment.db_num)">삭제하기</button>
+  </div>
+  <div v-if="comment.editMode">
+    <textarea v-model="comment.editContent"></textarea>
+    <button @click="saveComment(comment)">저장</button>
+    <button @click="cancelEdit(comment)">취소</button>
+  </div>
+</div>
 </div><br/>
     </div>  
     </div>
@@ -59,7 +87,8 @@ export default {
       dto: {},
       comment: [],
       content: '',
-      id: sessionStorage.getItem('loginId')
+      id: sessionStorage.getItem('loginId'),
+      editContent:''
     };
   },
   created() {
@@ -67,6 +96,10 @@ export default {
     this.commentlist();
   },
   methods: {
+    formatDate(date) {
+  const options = { year: '2-digit', month: '2-digit', day: '2-digit', hour12: false };
+  return new Date(date).toLocaleString('ko-KR', options);
+},
     boarddetail() {
       this.$axios
         .get(`http://localhost:8082/dboard/${this.num}`)
@@ -133,6 +166,30 @@ export default {
           }
         });
     },
+    showEditForm(comment) {
+    comment.editMode = !comment.editMode;
+    comment.editContent = comment.content;
+  },
+  saveComment(comment) {
+  const formData = new FormData();
+  formData.append('db_num', comment.db_num);
+  formData.append('content', comment.editContent);
+  formData.append('w_date', new Date());
+
+  this.$axios
+    .put('http://localhost:8082/dcomment', formData)
+    .then(response => {
+      if (response.status === 200) {
+        alert(response.data.dto.content);
+        this.commentlist();
+      } else {
+        alert('에러코드:' + response.status);
+      }
+    });
+},
+  cancelEdit(comment) {
+    comment.editMode = false;
+  },
     commentdelete(db_num) {
       this.$axios
         .delete(`http://localhost:8082/dcomment/${db_num}`)
@@ -156,8 +213,10 @@ export default {
     // <!-- Add "scoped" attribute to limit CSS to this component only -->
   <style scoped>
   img{
-    width: 300px;
-    height:300px;
+    width: 700px;
+    height:400px;
+    padding: 20px;
+    float:left;
   }
     h3 {
       margin: 40px 0 0;

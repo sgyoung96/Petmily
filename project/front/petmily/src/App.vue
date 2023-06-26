@@ -127,7 +127,7 @@
       <span v-show="cntcheck" @click="cntcheck">{{cnt}}</span> 
       <router-link to="/memedit">내정보 수정</router-link>
     </div>
-        <span @click="exitService()" style="cursor: pointer;">회원탈퇴</span>
+    <span @click="exitService()" style="cursor: pointer;">회원탈퇴</span>
     <!-- //기존 링크 모음 (테스트용, 추후 삭제 예정) -->
 
   <!-- 이곳에 라우터로 설정한 화면이 로드됨 -->
@@ -249,10 +249,15 @@ export default {
       }
     },
     exitService() {
-      if (sessionStorage.getItem('loginFlag') == 'normal') {
-        this.out();
-      } else { 
-        this.kakaoExitService();
+      var result = confirm('회원탈퇴를 진행하시겠어요?');
+      if (result) {
+        if (sessionStorage.getItem('loginFlag') == 'normal') {
+          this.out();
+        } else { 
+          this.kakaoExitService();
+        }
+      } else {
+        alert('회원탈퇴를 취소하셨습니다.');
       }
     }, 
     kakaoExitService() { // 카카오 회원 탈퇴
@@ -295,13 +300,14 @@ export default {
             self.logout();
             sessionStorage.clear();
             alert('회원 정보가 삭제 되었습니다.');
+            location.href = '/';
           }
         } else {
           console.log('에러코드:' + res.status);
+          location.href = '/';
         }
       });
     },
-
     cntcheck(){
       alert('cntcheck 클릭')
       this.loginId = sessionStorage.getItem('loginId')
@@ -323,8 +329,29 @@ export default {
           alert('에러코드 :' + res.status)
         }
       });  
+    },
+    send() {
+      alert('send 클릭')
+      if (this.loginId == null) {
+        alert('로그인 후 이용가능');
+      } else {
+        this.$router.push('/messagewrite');
+      }
+    },
+    messagesender(){
+      if(this.loginId == null){
+        alert('로그인 후 이용가능')
+      }else{
+        this.$router.push('/messagesender')
+      }
+    },
+    messagereciever(){
+      if(this.loginId == null){
+        alert('로그인 후 이용가능')
+      }else{
+        this.$router.push('/messagereciever')
+      }
     }
-    
   }
 }
 </script>
