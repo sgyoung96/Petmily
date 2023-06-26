@@ -90,6 +90,18 @@ public class MessageController {
 		return map;
 	}
 	
+	//안읽은 메세지 cnt
+	@GetMapping("/cnt/{loginId}")
+	public Map getcntcheck(@PathVariable("loginId") String loginId){
+		System.out.println("controller : 안읽은 메세지");
+		ArrayList<MessageDto> list = service.getByRecieverAndCheck(loginId, 0);
+		System.out.println("list size : " + list.size());
+		Map map = new HashMap();
+		map.put("list", list.size());
+		return map;
+	}
+	
+	// 보낸이가 보낸 쪽지 삭제
 	@DeleteMapping("/sender/{num}")
 	public void delmessagebysender(@PathVariable("num") int num) {
 		System.out.println("쪽지 삭제");
@@ -97,8 +109,10 @@ public class MessageController {
 		boolean flag = true;
 		Map map = new HashMap();
 		service.delMessagesender(num);
+		service.delMessage(num);
 	}
 	
+	//받는이가 받은 쪽지 삭제
 	@DeleteMapping("/reciever/{num}")
 	public void delmessagebyreciever(@PathVariable("num") int num) {
 		System.out.println("reciever 쪽지 삭제");
@@ -106,8 +120,10 @@ public class MessageController {
 		boolean flag = true;
 		Map map = new HashMap();
 		service.delMessagereciever(num);
+		service.delMessage(num);
 	}
 	
+
 	
 	
 }

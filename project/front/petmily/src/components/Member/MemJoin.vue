@@ -1,21 +1,22 @@
 <template>
     <div id="myjoin">
         <h3>join form</h3>
+       <input type="file" id="profile"><br/> 
         <input class="input-item" type="text" v-model="id" placeholder="ID" @blur="idcheck" ><br/>
         {{msg}}<br/>
      
       
-        <input class="input-item" type="text" v-model="name" placeholder="NAME" on:click="" ><br/>
+        <input class="input-item" type="text" v-model="name" placeholder="NAME" @blur="checkName" ><br/>
         <span class ="font_id_red" v-show="isNameCheck">한글 또는 영어만 허용합니다</span><br/>
         
         <input class="input-item" type="password"  v-model="pwd" placeholder="PWD" ><br/>
          <span class ="font_id_red" v-show="isPwdCheck">영문, 숫자, 특수문자 8~16문자</span><br/>  
-        <input class="input-item" type="password" v-model="pwdcheck" placeholder="PWD 확인" @blur="checkPwdEqual" ><br/>
+        <input class="input-item" type="password" id="pwdcheck"  v-model="pwdcheck" placeholder="PWD 확인" @blur="checkPwdEqual" ><br/>
         <span class ="font_id_red" v-show="isPwdCheckEqual">비밀번호 확인해주세요</span><br/>  
 
-        EMAIL : <input class="input-item" type="text" v-model="email" placeholder="예)petmily@petmily.co.kr" ><button v-on:click="sendEmail">이메일 확인</button><br/>
+        EMAIL : <input class="input-item" type="text" id="email" v-model="email" placeholder="예)petmily@petmily.co.kr" ><button v-on:click="sendEmail">이메일 확인</button><br/>
          <span class ="font_id_red" v-show="isEmailCheck">이메일 형식을 확인해주세요</span><br/> 
-         <input input class="input-item" type="text" v-model="emailCode"><button v-on:click="emailCodeCheck">인증</button><br/> 
+         <input input class="input-item" type="text" id="emailCode" v-model="emailCode"><button v-on:click="emailCodeCheck">인증</button><br/> 
          <span class ="font_id_red" v-show="isEmailCodeCheck">인증코드를 확인해주세요</span><br/> 
        
         
@@ -23,7 +24,7 @@
         BIRTH : <input  type="date" v-model="birth" ><br/>  
         <input name="g" type="radio" v-model="gender" value="m" >남 / 
             <input name="g" type="radio" v-model="gender" value="f">여 <br/>
-        PHONE : <input class="input-item" type="text" v-model="phone" placeholder="예)010-1234-5678" ><br/>
+        PHONE : <input class="input-item" type="text" v-model="phone" placeholder="예)010-1234-5678" @blur="checkPhone"><br/>
          <span class ="font_id_red" v-show="isPhoneCheck">전화번호 형식을 확인해주세요</span><br/> 
         
         
@@ -36,7 +37,7 @@
        <div ref="wrap" style="display:none;border:1px solid;width:500px;height:300px;margin:5px 0;position:relative">
           <img src="//t1.daumcdn.net/postcode/resource/images/close.png" id="btnFoldWrap" style="cursor:pointer;position:absolute;right:0px;top:-1px;z-index:1" v-on:click="foldDaumPostcode()" alt="접기 버튼">
         </div>
-        <button v-on:click="join">가입</button>
+        <button v-on:click="joincheck" >가입</button>
     </div>
   </template>
  
@@ -52,25 +53,34 @@ export default {
       
       id:'',
       pwd:'',
-      isPwdCheckEqual:false,
+      isPwdCheckEqual:'',
       name:'',
       email:'',
       emailCode:'',
+      isEmailCodeCheck:false,
+      emailtf:false,
+      pwdcheck:'',
       birth:'',
       gender:'m',
       phone:'',
+      isPhoneCheck:false,
       postcode:'',
       roadAddress:'',
       detailAddress:'',
       extraAddress:'',
       address:'',
-      msg:''
+      msg:'',
+      tf:false
+      
+     
    
     }
 
     
    
   },
+
+ 
   watch : {
      
     'name': function(){
@@ -82,9 +92,7 @@ export default {
     'pwd' : function(){
         this.checkPwd()
     },
-    'phone' : function(){
-        this.checkPhone()
-    }
+   
 
     },
   
@@ -92,7 +100,7 @@ export default {
 
  
   methods:{
-     
+
      sendEmail(){
         const self = this;
 
@@ -102,7 +110,9 @@ export default {
         .then(function(res){ 
         if(res.status == 200){
         self.confirm = res.data.confirm
+        
         alert(self.confirm)
+        
         alert('메일 전송 완료')
         
         }else{
@@ -115,24 +125,57 @@ export default {
     emailCodeCheck(){
         
         const self = this;
-        let emailcode = self.emailcode;
-        alert(emailcode)
+
+        alert(self.emailCode)
         alert(self.confirm)
-        if(self.confirm === emailcode){
+  
+        if(self.confirm === self.emailCode){
             alert('인증완료')
+            this.isEmailCodeCheck=false;
+            self.emailtf=true;
+            
+            document.getElementById("email").readOnly = true;
+            document.getElementById("emailCode").readOnly = true;
+      
         }else{
             this.isEmailCodeCheck=true;
+            self.emailtf=false;
+            
         }
 
     },
-     
+
+    //회원가입 필수항목 검사
+    joincheck(){
+      const self = this;
+      if(this.isEmpty(self.id)&&this.isEmpty(self.name)&&this.isEmpty(self.pwd)&&this.isEmpty(self.pwdcheck)&&self.emailtf 
+      &&this.isEmpty(self.birth)&&this.isEmpty(self.phone)&&this.isEmpty(self.postcode)){
+ 
+       this.join()
+      return true
+      }else{
+       
+        alert('필수 항목 기입 확인 필요')
+        return false;
+      }
+    },
+
+    isEmpty(value){
+      const self = this;
+      
+      if(value == '' || value == null || value == undefined){
+        return false
+      }else{
+         self.tf = true;
+        return true
+      }
+    },
 
     join(){
+      
       const self = this;
-
       const moment = require('moment');
       const mybirth = moment(self.birth).format('L');
-
      
       var address = self.roadAddress
       address += self.detailAddress 
@@ -149,8 +192,12 @@ export default {
       formdata.append('birth',mybirth)
       formdata.append('phone',self.phone)
       formdata.append('address', address)
+      const file = document.getElementById('profile')
+      formdata.append('f', file.files[0]);
       
-      self.$axios.post('http://localhost:8082/members', formdata) 
+     
+      self.$axios.post('http://localhost:8082/members', formdata,
+      {headers:{"Content-Type":"multipart/form-data"}}) 
       .then(function(res){ 
         if(res.status == 200){
           let dto = res.data.dto
@@ -188,51 +235,67 @@ export default {
  
 
     checkName(){
-        const validateName = /^[가-힣a-zA-Z]+$/;
+      const self = this;
+      const validateName = /^[가-힣a-zA-Z]+$/;
          if(!validateName.test(this.name)){
     
         this.isNameCheck = true;
+        self.name='';
     }else{
         this.isNameCheck = false;
     }
     },
+
     checkPwd(){
         const validatePassword = /^(?=.*[a-zA-z])(?=.*[0-9])(?=.*[$`~!@$!%*#^?&\\(\\)\-_=+]).{8,16}$/
     if(!validatePassword.test(this.pwd)){
     
         this.isPwdCheck = true;
+        document.getElementById("pwdcheck").readOnly = true;
     }else{
         this.isPwdCheck = false;
+        document.getElementById("pwdcheck").readOnly = false;
+        
     }
   },
 
   checkPwdEqual(){
+    const self = this;
     console.log(this.pwd + "/" + this.pwdcheck)
     if(this.pwd === this.pwdcheck){
-    this.isPwdCheckEqual = false;
+      this.isPwdCheckEqual = false;
+      
     }else{
-        this.isPwdCheckEqual=true;
+      this.isPwdCheckEqual=true;
+      console.log(self.pwdcheck)
+      self.pwdcheck = '';
+      
     }
 
   },
 
   checkEmail(){
+    
     const validateEmail = /^[A-Za-z0-9_\\.\\-]+@[A-Za-z0-9\\-]+\.[A-Za-z0-9\\-]+/
      
     if(!validateEmail.test(this.email)){
         this.isEmailCheck = true;
+       
     }else{
         this.isEmailCheck = false;
+        
     }
   
   },
 
   checkPhone(){
+    const self = this;
     const validatePhone = /^\d{3}-\d{3,4}-\d{4}$/;
     if(!validatePhone.test(this.phone)){
-        this.isPhoneCheck = true;
+        self.isPhoneCheck = true;
+        self.phone='';
     }else{
-        this.isPhoneCheck = false;
+        self.isPhoneCheck = false;
     }
   },
 
