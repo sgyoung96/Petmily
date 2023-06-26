@@ -62,7 +62,13 @@ export default {
       return { difference, days }
     },
     formatDate(date) {
-      return new Date(date).toLocaleString('ko-KR')
+      const options = {
+        year: 'numeric',
+        month: '2-digit',
+        day: '2-digit'
+    };
+
+    return new Date(date).toLocaleString('ko-KR', options).replace(/\D/g, '');
     },
   },
   created: function () {

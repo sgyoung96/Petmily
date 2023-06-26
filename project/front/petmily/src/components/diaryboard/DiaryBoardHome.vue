@@ -1,10 +1,13 @@
 <template>
+  <div style="float:center; margin:50px"><h1>입양일지</h1></div>
+  <div>
+    <img class="logo" @click="gotoMain" src="../../assets/dboardpic.png" style="width: 1200px; height: 160px; margin-bottom: 20px;">
+  </div>
   <div class="container text-center">
   <div class="row" style="margin-bottom: 40px;">
     <div class="col-1">
     </div>
     <div class="col-10">
-      <div style="float:left"><h2>입양일지</h2></div>
       <div class='box-body' style="float:right">
       <select id='search_type'>
         <option value="1">제목</option>

@@ -118,6 +118,8 @@
     <router-link to="/kaka">카카</router-link> |
     <router-link to="/addressconvert">주소변환</router-link> |
     <router-link to="/addressmap">주소로 지도</router-link> |
+    <router-link to="/barchart">막대그래프</router-link> |
+    <router-link to="/piechart">파이차트</router-link> |
     <router-link to="/applyform">Apply</router-link> |
     <router-link to="/api">Api</router-link> |
     <div v-if="loginId != null">

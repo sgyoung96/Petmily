@@ -19,6 +19,8 @@ import Api from '@/components/cdh/Api.vue'
 import MemJoin from '@/components/Member/MemJoin.vue'
 import MemLogin from '@/components/Member/MemLogin.vue' 
 import AdminHome from '@/components/Member/AdminHome.vue'
+import BarChart from '@/components/kaka/BarChart.vue'
+import PieChart from '@/components/kaka/PieChart.vue'
 import MemEdit from '@/components/Member/MemEdit.vue'
 import FindPwd from '@/components/Member/FindPwd.vue'
 import FindId from '@/components/Member/FindID.vue'
@@ -72,6 +74,16 @@ const routes = [
     path: '/kaka',
     name: 'Kaka',
     component: Kaka
+  },
+  {
+    path: '/barchart',
+    name: 'BarChart',
+    component: BarChart
+  },
+  {
+    path: '/piechart',
+    name: 'PieChart',
+    component: PieChart
   },
   {
     path:'/adopt',

@@ -15,38 +15,20 @@
     <div class="col-1">
     </div>
     <div class="col-10">
-      <table class="table table-bordered">
-  <thead>
-    <tr>
-      <th scope="col" style="background-color: lightgrey;  width: 100px">제목</th>
-      <th scope="col" style="text-align: left;">{{dto.title}}</th>
-    </tr>
-    <tr>
-      <th scope="col" style="background-color: lightgrey;  width: 100px">작성자</th>
-      <th scope="col" style="text-align: left;;" v-if="dto.id">{{ dto.id.id }}({{ formatDate(dto.w_date) }})</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <th scope="row" colspan="2">
-  <div style="display: flex; flex-direction: column;">
-    <div>
+      <div v-if="dto.id" style="border-top: 2px solid black; border-bottom: 2px solid lightgrey; display: flex; justify-content: space-between; padding: 10px;">
+  <div style="text-align: left;">{{dto.title}}</div>
+  <div style="text-align: right;">{{ dto.id.id }}{{ formatDate(dto.w_date) }}</div>
+</div>
+      <div>
       <img :src="'http://localhost:8082/dboard/imgs/' + dto.num + '/1'">
       <img :src="'http://localhost:8082/dboard/imgs/' + dto.num + '/2'">
-    </div>
-    <div style="padding-top: 20px;">
-      {{ dto.content }}
-    </div>
-  </div>
-</th>
-    </tr>
-  </tbody>
-</table>
-        <div style="float:right">
-          <button>
-  <router-link to="/diaryboardedit">수정하기</router-link>
-</button>
-        <button v-on:click="boarddelete">삭제하기</button>
+      </div>
+      <div style="padding:50px; border-bottom:solid 2px lightgrey">
+        {{ dto.content }}
+      </div>  
+      <div style="float:right">
+        <router-link to="/diaryboardedit">수정하기</router-link>
+     <button v-on:click="boarddelete">삭제하기</button>
     </div><br/>
      <div>
         <table border="1">
@@ -213,10 +195,8 @@ export default {
     // <!-- Add "scoped" attribute to limit CSS to this component only -->
   <style scoped>
   img{
-    width: 700px;
-    height:400px;
-    padding: 20px;
-    float:left;
+    width: 300px;
+    height:300px;
   }
     h3 {
       margin: 40px 0 0;
