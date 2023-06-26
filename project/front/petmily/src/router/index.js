@@ -19,7 +19,9 @@ import Api from '@/components/cdh/Api.vue'
 import MemJoin from '@/components/Member/MemJoin.vue'
 import MemLogin from '@/components/Member/MemLogin.vue' 
 import AdminHome from '@/components/Member/AdminHome.vue'
-import AddressConvert from '@/components/kaka/AddressConvert.vue' 
+import AddressConvert from '@/components/kaka/AddressConvert.vue'
+import BarChart from '@/components/kaka/BarChart.vue'
+import PieChart from '@/components/kaka/PieChart.vue'
 import MessageWrite from '@/components/Message/MessageWrite.vue' 
 import MessageSender from '@/components/Message/MessageSender.vue' 
 import MessageReciever from '@/components/Message/MessageReciever.vue'
@@ -69,6 +71,16 @@ const routes = [
     path: '/kaka',
     name: 'Kaka',
     component: Kaka
+  },
+  {
+    path: '/barchart',
+    name: 'BarChart',
+    component: BarChart
+  },
+  {
+    path: '/piechart',
+    name: 'PieChart',
+    component: PieChart
   },
   {
     path:'/adopt',
