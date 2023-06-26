@@ -119,8 +119,6 @@ public class MemberController {
 		return map;
 		}
 	
-	// ======================================================
-	
 	//내정보 수정
 	@PutMapping("")
 	public Map edit(MemberDto dto) {

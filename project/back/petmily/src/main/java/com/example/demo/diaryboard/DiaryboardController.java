@@ -23,6 +23,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.example.demo.member.Member;
 import com.example.demo.member.MemberDto;
 
 @RestController
@@ -160,5 +161,28 @@ public class DiaryboardController {
 		}
 		return result;
 	}
+	
+	 // id로 검색
+    @GetMapping("/id/{id}")
+    public Map getById(@PathVariable("id") String id) {
+        Map map = new HashMap();
+    	ArrayList<DiaryboardDto> dto = null;
+    	boolean flag = true;
+		try {
+			dto = service.getById(id);
+		} catch (Exception e) {
+			flag = false;
+		}
+		map.put("flag", flag);
+		map.put("dto", dto);
+		return map;
+	}
+
+    // 제목으로 검색
+    @GetMapping("/getByTitle/{title}")
+    public ResponseEntity<ArrayList<DiaryboardDto>> getByTitle(@PathVariable String title) {
+        ArrayList<DiaryboardDto> list = service.getByTitle(title);
+        return ResponseEntity.ok(list);
+    }
 	
 }

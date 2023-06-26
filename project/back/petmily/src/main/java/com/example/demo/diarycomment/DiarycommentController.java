@@ -21,7 +21,7 @@ public class DiarycommentController {
 	@Autowired
 	private DiarycommentService service;
 	
-	//추가 수정
+	//추가
 	@PostMapping("")
 	public Map addComment(DiarycommentDto dto) {
 		Map map = new HashMap();
@@ -54,11 +54,14 @@ public class DiarycommentController {
 	
 	@PutMapping("")
 	public Map edit(DiarycommentDto dto) {
+		DiarycommentDto c = service.getByNum2(dto.getDb_num());
+		c.setContent(dto.getContent());
+		c.setW_date(dto.getW_date());
 		Map map = new HashMap();
 		DiarycommentDto dto2 = null;
 		boolean flag = true;
 		try {
-			dto2 = service.save(dto);
+			dto2 = service.save(c);
 		} catch (Exception e) {
 			flag = false;
 		}
