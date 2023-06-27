@@ -1,51 +1,78 @@
 <template>
   <div id="app">
-    <h3>{{ dto.title }} 봉사모집게시판</h3>
-    <table border="1">
-      <tr>
-        <td><img :src="'http://localhost:8082/volboard/imgs/' + dto.num + '/1'"></td>
-        <td><img :src="'http://localhost:8082/volboard/imgs/' + dto.num + '/2'"></td>
-      </tr>
-    </table>
-    <table border="1">
-      <tr>
-        <th>num</th>
-        <td><input type="text" v-model="dto.num" readonly></td>
-      </tr>
-      <tr>
-        <th>내용</th>
-        <td><input type="text" v-model="dto.title" readonly></td>
-      </tr>
-      <tr>
-        <th>봉사장소</th>
-        <td><input type="text" v-model="dto.address" readonly></td>
-      </tr>
-      <tr>
-        <th>봉사실시일자</th>
-        <td><input type="text" v-model="dto.vol_date" readonly></td>
-      </tr>
-      <tr>
-        <th>봉사인원</th>
-        <td><input type="text" v-model="dto.vol_number" readonly></td>
-      </tr>
-    </table>
-    <div>참여자 리스트 ID</div>
-    <table border="1">
-      <tr v-for="person in list2" :key="person.num">
-        <td>{{ person.id.id }}</td>
-      </tr>
-    </table>
-    
-    <button type="button" v-on:click="apply()">봉사신청</button>
-    
-    {{ count }} / {{ dto.vol_number }} {{ address }}
+    <div class="container text-center">
+  <div class="row">
+    <div class="col-1">
+    </div>
+    <div class="col-10">
+      <h3>{{ dto.title }} 봉사모집게시판</h3>
+      <div style="display: flex; justify-content: space-between;">
+        <div>
+      <span class="badge text-bg-danger" style="font-size: 17px;">목록</span>
+    </div>
+  <div style="float:right">
+      <span v-on:click="apply()" class="badge text-bg-danger" style="font-size: 17px;">신청하기</span>&nbsp;
+      <span class="badge text-bg-secondary" style="font-size: 17px;">♡관심목록담기</span>
+    </div>
+      </div>
+      <div class="vhead">
+        &nbsp;<span class="badge text-bg-primary" style="font-size: 17px;">
+    <span v-if="calculateDateDifference(dto.deadline).difference < 0">모집마감</span>
+    <span v-else>마감 D-{{ calculateDateDifference(dto.deadline).days }}</span>
+  </span>&nbsp;
+    <span style="font-size:20px">{{ dto.title }}</span>
+  </div>
+  <table class="table table-bordered" style="margin-bottom:50px">
+  <tbody div class="tbody">
+    <tr>
+      <th>봉사날짜</th>
+      <td>{{ dto.vol_date }}</td>
+      <th>모집기간</th>
+      <td>{{ formatDate(dto.deadline) }}까지</td>
+    </tr>
+    <tr>
+      <th>모집인원</th>
+      <td>{{ dto.vol_number }}</td>
+      <th>신청인원</th>
+      <td>{{ dto.count }}</td>
+    </tr>
+    <tr>
+      <th>모집기관</th>
+      <td colspan="3">{{ dto.place }}</td>
+    </tr>
+    <tr>  
+      <th>봉사장소</th>
+      <td colspan="3">{{ dto.address }}<br/>
+        <button v-on:click="scrollToMap()">지도참조</button>
+      </td>
+    </tr>
+  </tbody>
+</table>
+<div style="border:1px solid black">    
+<img :src="'http://localhost:8082/volboard/imgs/' + dto.num + '/1'">
+<img :src="'http://localhost:8082/volboard/imgs/' + dto.num + '/2'">
+</div>
     <div>
         <label>주소:</label>
         <input type="text" v-model="address" placeholder="주소를 입력하세요" />
         <button @click="showLocation">위치 보기</button>
       </div>
       <div id="map"></div>
+      <div>참여자 리스트 ID</div>
+    <table border="1">
+      <tr v-for="person in list2" :key="person.num">
+        <td>{{ person.id.id }}</td>
+      </tr>
+    </table>
+    {{ count }} / {{ dto.vol_number }} {{ address }}
+      
   </div>
+    </div>
+    <div class="col-1">
+    </div>
+  </div>
+  </div>
+    
 </template>
 
 <style scoped>
@@ -53,6 +80,30 @@
     width: 100%;
     height: 400px;
   }
+  .vhead{
+    text-align: left;
+    background-color:rgb(233, 230, 230);
+    border-top:2px solid black;
+    border-bottom:1px solid black;
+    padding-top:10px;
+    padding-bottom:10px;
+    margin-bottom:10px;
+    margin-top:10px;
+  }
+
+  .table th {
+    background-color: #bab9b9;
+  }
+
+  .tbody{
+    border-top:2px solid black;
+    text-align: left;
+  }
+
+  img {
+    width: 530px;
+    height: 310px;
+}
 </style>
 
 <script>
@@ -69,7 +120,9 @@ export default {
       address: this.$route.query.address,
       map: null,
       marker: null,
-      list2: []
+      list2: [],
+      state: '',
+      sysdate: new Date()
     }
   },
   mounted() {
@@ -183,7 +236,26 @@ export default {
             console.error("Error:", error);
             alert("주소를 가져오는 도중 오류가 발생했습니다.");
           });
-      }
+      },
+      calculateDateDifference(deadline) {
+      const deadlineDate = new Date(deadline)
+      const difference = deadlineDate.getTime() - this.sysdate.getTime()
+      const days = Math.ceil(difference / (1000 * 60 * 60 * 24))
+      return { difference, days }
+    },
+    formatDate(date) {
+      const options = {
+        year: 'numeric',
+        month: '2-digit',
+        day: '2-digit'
+    };
+
+    return new Date(date).toLocaleString('ko-KR', options).replace(/\D/g, '');
+    },
+    scrollToMap() {
+      const mapElement = document.getElementById('map');
+      mapElement.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
   },
   created: function () {//이 컴포넌트가 시작될때 실행되는 함수
     this.loginId = sessionStorage.getItem('loginId')
@@ -218,26 +290,3 @@ export default {
   }
 }
 </script>
-<style scoped>
-img {
-  width: 100px;
-  height: 100px;
-}
-
-h3 {
-  margin: 40px 0 0;
-}
-
-ul {
-  list-style-type: none;
-  padding: 0;
-}
-
-li {
-  display: inline-block;
-  margin: 0 10px;
-}
-
-a {
-  color: #42b983;
-}</style>

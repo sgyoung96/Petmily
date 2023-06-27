@@ -1,7 +1,10 @@
 <template>
+  <div>
+    <img src="../../assets/images/dboardpic2.jpg" style="width: 85%; height: 500px; margin-bottom: 20px;">
+  </div>
   <div style="float:center; margin:50px"><h1>입양일지</h1></div>
   <div>
-    <img src="../../assets/dboardpic.png" style="width: 1200px; height: 160px; margin-bottom: 20px;">
+    <img src="../../assets/images/dboardpic.png" style="width: 1200px; height: 160px; margin-bottom: 20px;">
   </div>
   <div class="container text-center">
   <div class="row" style="margin-bottom: 40px;">

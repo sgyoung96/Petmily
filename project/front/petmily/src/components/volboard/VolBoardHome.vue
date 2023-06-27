@@ -1,38 +1,39 @@
 <template>
-  <div>
+    <div>
+    <img src="../../assets/images/dboardpic2.jpg" style="width: 85%; height: 500px; margin-bottom: 20px;">
+  </div>
     <h3>봉사모집게시판 전체목록</h3>
+    <div class="container text-center">
+  <div class="row">
+    <div class="col">
+    </div>
+    <div class="col-10">
     <router-link to="/volboardadd">봉사게시판 작성</router-link>
     <input type="text" placeholder="검색어를 입력하시오">
     <button v-on:click="search(title)">검색</button>
-    <table border="1">
-      <tr>
-        <th>img1</th>
-        <th>img2</th>
-        <th>봉사게시판 작성자ID</th>
-        <th>제목</th>
-        <th>모집기한</th>
-        <th>봉사일자</th>
-        <th>모집인원</th>
-        <th>봉사장소주소</th>
-        <th>모집상태</th>
-      </tr>
-      <tr v-for="vboard in list" :key="vboard.num">
-        <td><img :src="'http://localhost:8082/volboard/imgs/' +vboard.num+ '/1'"></td>
-        <td><img :src="'http://localhost:8082/volboard/imgs/' + vboard.num + '/2'"></td>
-        <td>{{ vboard.writer.id }}</td>
-        <td v-on:click="detail(vboard.num, vboard.address)">{{ vboard.title }}</td>
-        <td>{{ formatDate(vboard.deadline) }}</td>
-        <td>{{ formatDate(vboard.vol_date) }}</td>
-        <td>{{ vboard.count }} / {{ vboard.vol_number }}</td>
-        <td>{{ vboard.address }}</td>
-        <td>
-          <span v-if="calculateDateDifference(vboard.deadline).difference < 0">모집마감</span>
-          <span v-else>
-            D-{{ calculateDateDifference(vboard.deadline).days }}
-          </span>
-        </td>
-      </tr>
-    </table>
+      <div class="vbody" v-for="vboard in list" :key="vboard.num">
+        <div style="text-align: left;">
+  <span class="badge text-bg-primary" style="font-size: 17px;">
+    <span v-if="calculateDateDifference(vboard.deadline).difference < 0">모집마감</span>
+    <span v-else>마감 D-{{ calculateDateDifference(vboard.deadline).days }}</span>
+  </span>&nbsp;
+  <strong>모집기간</strong> {{ formatDate(vboard.deadline) }}까지
+  <br/>
+  <div class=vtitle v-on:click="detail(vboard.num, vboard.address)">{{ vboard.title }}</div>
+  <div style="margin-bottom: 10px;">
+  <strong>[모집기관]</strong> {{ vboard.place }} &nbsp;
+  <strong>[봉사날짜]</strong> {{ formatDate(vboard.vol_date) }} &nbsp;<br/>
+  <strong>[봉사장소]</strong> {{ vboard.address }}
+</div>
+</div>
+        <div style class="vcount">
+          모집인원<br/>({{ vboard.count }} / {{ vboard.vol_number }})
+      </div>
+      </div>
+    </div>
+    <div class="col">
+    </div>
+  </div>
   </div>
 </template>
 
@@ -86,11 +87,27 @@ export default {
 </script>
 
 <style scoped>
-img {
-  width: 100px;
-  height: 100px;
+.vbody{
+  border-bottom: 1px solid #666666;
+  display: flex;
+  justify-content: space-between;
+  margin-bottom:10px;
 }
-
+.vcount {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 70px;
+  height: 70px;
+  border: 2px solid #666666;
+  font-size: 15px;
+  font-weight: bold;
+  text-align: center;
+  margin-top:20px;
+}
+.vtitle{
+  font-size: 30px;
+}
 h3 {
   margin: 40px 0 0;
 }
