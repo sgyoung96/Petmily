@@ -27,7 +27,7 @@
           {{ dto.content }}
         </div>  
         <div style="float:right">
-          <router-link to="/diaryboardedit">수정하기</router-link>
+        <button v-on:click="editbtn">글수정하기</button>
        <button v-on:click="boarddelete">삭제하기</button>
       </div><br/>
        <div>
