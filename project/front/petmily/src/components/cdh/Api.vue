@@ -155,9 +155,11 @@ export default {
     },
     PlacetoggleButtons() {
       this.showPlaceButtons = !this.showPlaceButtons; // showPlaceButtons 값을 토글
+      this.showNeuteredButtons= false;
     },
     NeuteredtoggleButtons() {
       this.showNeuteredButtons = !this.showNeuteredButtons; // showPlaceButtons 값을 토글
+      this.showPlaceButtons= false;
     },
     handleItemClick(desertionNo) {
       console.log(desertionNo); // desertionNo 값 확인
