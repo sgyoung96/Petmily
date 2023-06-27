@@ -14,7 +14,7 @@
         <input class="input-item" type="password" id="pwdcheck"  v-model="pwdcheck" placeholder="PWD 확인" @blur="checkPwdEqual" ><br/>
         <span class ="font_id_red" v-show="isPwdCheckEqual">비밀번호 확인해주세요</span><br/>  
 
-        EMAIL : <input class="input-item" type="text" id="email" v-model="email" placeholder="예)petmily@petmily.co.kr" ><button v-on:click="sendEmail">이메일 확인</button><br/>
+        EMAIL : <input class="input-item" type="text" id="email" v-model="email" placeholder="예)petmily@petmily.co.kr" ><button v-on:click="emailcheck">이메일 확인</button><br/>
          <span class ="font_id_red" v-show="isEmailCheck">이메일 형식을 확인해주세요</span><br/> 
          <input input class="input-item" type="text" id="emailCode" v-model="emailCode"><button v-on:click="emailCodeCheck">인증</button><br/> 
          <span class ="font_id_red" v-show="isEmailCodeCheck">인증코드를 확인해주세요</span><br/> 
@@ -34,9 +34,7 @@
         <input type="text" v-model="detailAddress" placeholder="상세주소"><br/>
         <input type="text" v-model="extraAddress" placeholder="참고항목"><br/>
        
-       <div ref="wrap" style="display:none;border:1px solid;width:500px;height:300px;margin:5px 0;position:relative">
-          <img src="//t1.daumcdn.net/postcode/resource/images/close.png" id="btnFoldWrap" style="cursor:pointer;position:absolute;right:0px;top:-1px;z-index:1" v-on:click="foldDaumPostcode()" alt="접기 버튼">
-        </div>
+       
         <button v-on:click="joincheck" >가입</button>
     </div>
   </template>
@@ -70,7 +68,8 @@ export default {
       extraAddress:'',
       address:'',
       msg:'',
-      tf:false
+      tf:false,
+      profile:''
       
      
    
@@ -154,6 +153,7 @@ export default {
        this.join()
       return true
       }else{
+  
        
         alert('필수 항목 기입 확인 필요')
         return false;
@@ -192,9 +192,15 @@ export default {
       formdata.append('birth',mybirth)
       formdata.append('phone',self.phone)
       formdata.append('address', address)
-      const file = document.getElementById('profile')
-      formdata.append('f', file.files[0]);
+     
+      if(self.profile != ''){
+        const file = document.getElementById('profile')
+        formdata.append('f', file.files[0])
+      }
       
+      
+      
+  
      
       self.$axios.post('http://localhost:8082/members', formdata,
       {headers:{"Content-Type":"multipart/form-data"}}) 
@@ -226,6 +232,26 @@ export default {
           }else{
              self.msg='중복된 아이디'
              self.id=''
+          }
+        }else{
+          alert('에러코드 :' + res.status)
+        }
+  });
+  },
+
+  emailcheck(){
+    const self = this;
+
+    self.$axios.get('http://localhost:8082/members/email/'+self.email)
+    .then(function(res){ //
+        if(res.status == 200){
+        
+          if(res.data.dto == null){
+           self.sendEmail()
+          
+          }else{
+             alert('중복된 이메일')
+             self.email=''
           }
         }else{
           alert('에러코드 :' + res.status)
@@ -301,12 +327,9 @@ export default {
 
   
   
-  execDaumPostcode(){
-    const element_wrap =  this.$refs.wrap;
+ execDaumPostcode(){
+ 
     
-
-    // 현재 scroll 위치를 저장해놓는다.
-    const currentScroll = Math.max(document.body.scrollTop, document.documentElement.scrollTop);
 
     new window.daum.Postcode({
         oncomplete:(data) =>{
@@ -348,23 +371,11 @@ export default {
             this.postcode = data.zonecode;
             this.roadAddress = addr;
 
-            element_wrap.style.display = 'none';
-            document.body.scrollTop = currentScroll;
+       
         },
-         // 우편번호 찾기 화면 크기가 조정되었을때 실행할 코드를 작성하는 부분. iframe을 넣은 element의 높이값을 조정한다.
-            onresize : function(size) {
-                element_wrap.style.height = size.height+'px';
-            },
-            width : '100%',
-            height : '100%'
-    }).embed(element_wrap)
-    element_wrap.style.display = 'block';
-    },
-
-      foldDaumPostcode () {
-    const element_wrap =  this.$refs.wrap;
+        
+    }).open();
     
-      element_wrap.style.display = 'none';
     },
 
  

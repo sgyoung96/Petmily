@@ -102,6 +102,7 @@
 </template>
 
 <script>
+import img from "@/assets/imgs/mypage_sample.jpg";
 import './assets/fonts/BagleFatOne.css';
 import './assets/fonts/IBMPlexSansKR.css';
 
@@ -337,7 +338,10 @@ export default {
       }else{
         this.$router.push('/messagereciever')
       }
-    }
+    },
+          replaceImg(e) {
+            e.target.src = img;
+        },
   }
 }
 </script>

@@ -3,6 +3,7 @@ package com.example.demo.member;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -20,6 +21,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -54,7 +56,7 @@ public class MemberController {
 	
 	// multipart가입
 	@PostMapping("")
-	public Map join(MemberDto dto) {
+	public Map join(@RequestParam(required=false) MultipartFile f, MemberDto dto) {
 		System.out.println(dto);
 		System.out.println("가입해야지");
 		
@@ -66,12 +68,12 @@ public class MemberController {
 		
 		File dir = new File(path+d.getId());
 		dir.mkdir();
-		MultipartFile f = dto.getF();
-		System.out.println("getF : " + dto.getF());
+
+		f = dto.getF();
 		String fname = f.getOriginalFilename();
 		
 		if (fname != null && !fname.equals("")) { // 업로드된 파일이 있으면
-			//String fname = x.getOriginalFilename();//원본파일명
+	
 			String newpath = path + d.getId() + "/" + fname;
 			File newfile = new File(newpath); // 복사할 새 파일 생성. c:/img/shop/번호/원본파일명
 			System.out.println(newpath);
@@ -143,6 +145,23 @@ public class MemberController {
 		return map;
 		}
 	
+	//email검색
+	@GetMapping("/email/{email}")
+	public Map getbyemail(@PathVariable("email") String email) {
+		System.out.println("emailcheck");
+		Map map = new HashMap();
+
+	
+		ArrayList<MemberDto> d = service.getByEmail(email);
+		if(d==null) {
+			map.put("dto", d);
+			return map;
+		}
+		MemberDto m = d.get(0);
+		map.put("dto", m);
+		System.out.println("email : " + m);
+		return map;
+	}
 	
 	
 	//로그인
@@ -199,9 +218,39 @@ public class MemberController {
 	@PutMapping("")
 	public Map edit(MemberDto dto) {
 		MemberDto old = service.getMember(dto.getId());
+		
+		MultipartFile f = dto.getF();
+		System.out.println("getF : " + dto.getF());
+		String fname = f.getOriginalFilename();
+		
+		if (fname != null && !fname.equals("")) { // 업로드된 파일이 있으면
+			//String fname = x.getOriginalFilename();//원본파일명
+			String newpath = path + old.getId() + "/" + fname;
+			File newfile = new File(newpath); // 복사할 새 파일 생성. c:/img/shop/번호/원본파일명
+			System.out.println(newpath);
+			try {
+				f.transferTo(newfile);//파일 업로드 
+				dto.setProfile(newpath);
+				String delf = old.getProfile();
+				if(delf != null) {
+					File delFile = new File(delf);
+					delFile.delete();
+				}
+				old.setProfile(dto.getProfile());
+			} catch (IllegalStateException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			
+		}
+		
 		old.setEmail(dto.getEmail());
 		old.setPwd(dto.getPwd());
 		old.setPhone(dto.getPhone());
+		
 		
 		MemberDto d = service.save(old);
 		Map map = new HashMap();
