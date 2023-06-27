@@ -1,149 +1,102 @@
 <template>
+  <div class="petmily">
     <!-- 공통 헤더 -->
     <div class="pet-header"> 
-      <div class="box-left">
-        <img class="logo" @click="gotoMain" src="./assets/logo_sample.png" >
-        
-        <!-- 반응형 600px 이하 가로사이즈일 경우 -->
-        <div class="min-box-category">
-          <ul class="pet-menu">
-            <li>
-              <img class="icon-menu" src='./assets/list.png'>
-              <ul class="min-box-list">
-                <li>
-                  <div>
-                    <span @click="gotoMain" >메인</span>
-                  </div>
-                </li>
-                <li>
-                  <div>
-                    <span @click="guard()" >동물보호소</span>
-                  </div>
-                </li>
-                <li>
-                  <div>
-                    <span @click="adopt()" >분양해요</span>
-                  </div>
-                </li>
-                <li>
-                  <div>
-                    <span @click="diary()" >입양일지</span>
-                  </div>
-                </li>
-                <li>
-                  <div>
-                    <span @click="volunteer()" >봉사모집</span>
-                  </div>
-                </li>
-                <li>
-                  <div>
-                    <span @click="form()" >입양신청</span>
-                  </div>
-                </li>
-                <li>
-                  <div>
-                    <span @click="guide()" >입양가이드</span>
-                  </div>
-                </li>
-              </ul> 
-            </li>
-          </ul>
-        </div>
-      </div>
       
-      <div class="box-category">
-        <div class="category">
-          <ul class="category-list">
-            <li>
-              <div>
-                <span @click="guard()" >동물보호소</span>
-              </div>
-            </li>
-            <li>
-              <div>
-                <span @click="adopt()" >분양해요</span>
-              </div>
-            </li>
-            <li>
-              <div>
-                <span @click="diary()" >입양일지</span>
-              </div>
-            </li>
-            <li>
-              <div>
-                <span @click="volunteer()" >봉사모집</span>
-              </div>
-            </li>
-            <li>
-              <div>
-                <span @click="form()" >입양신청</span>
-              </div>
-            </li>
-            <li>
-              <div>
-                <span @click="guide()" >입양가이드</span>
-              </div>
-            </li>
-          </ul>
-        </div>
-      </div>
-
-      <div class="box-right">
-        <div class="member-manage">
-          <span style="display: none;">로그인 연장 00:00</span> <!-- 추가기능 -->
+      <!-- 로고, 로그인/회원가입, 마이페이지, 알림뱃지 등 -->
+      <div class="pet-box-up">
+        <div class="box-member" >
           <div v-if="loginId == null">
             <span v-on:click="login" id="link-login" >로그인</span>
+            <span @click="register()">회원가입</span>
           </div>
           <div v-else>
             <span v-on:click="logout" id="link-logout">로그아웃</span>
-            
           </div>
+          
         </div>
-        <div class="box-image">
-          <span v-if="loginId == null">
-            <img class="mypage" src="./assets/mypage_sample.jpg" >
-          </span>
-          <span v-else class="box-profile" style="background: #black;"> 
-            <img class="profile" :src="'http://localhost:8082/members/imgs/'+loginId">
-          </span>
-          <img class="pet-alert" src="./assets/alert_sample.jpg" >
+        <div class="box-logo">
+          <img @click="gotoMain()" class="petmily-logo" src="./assets/logo_petmily.png" />
+        </div>
+        <div class="box-mypage">
+          <img class="ico-bell" src="./assets/bell.png" />
+          <img class="ico-mypage" src="./assets/profile-user.png" />
+        </div>
+      </div>
+
+      <div class="pet-box-bottom">
+        <div class="box-category">
+          <ul class="petmily-category">
+            <li>
+              <span @click="about_petmily()">ABOUT PETMILY</span>
+            </li>
+            <li>
+              <span @click="groups()">OUR GROUPS</span>
+            </li>
+            <li>
+              <span @click="all_pets()" >ALL PETS</span>
+            </li>
+            <li>
+              <span @click="all_dogs()">ALL DOGS</span>
+            </li>
+            <li>
+              <span @clicl="all_cats()">ALL CATS</span>
+            </li>
+            <li>
+              <span @click="adopt()">ADOPT PETS</span>
+            </li>
+            <li>
+              <span @click="volunteer()">VOLUNTEER</span>
+            </li>
+            <li>
+              <span @click="diary()">PET DIARY</span>
+            </li>
+            <li>
+              <span @click="guide()">GUIDE</span>
+            </li>
+            <li>
+              <span @click="contact_us()">CONTACT US</span>
+            </li>
+          </ul>
         </div>
       </div>
     </div>
     <!-- //공통 헤더 -->
-    
+
     <br>
 
-    <!-- 기존 링크 모음 (테스트용, 추후 삭제 예정) -->
-    <router-link to="/kaka">카카</router-link> |
-    <router-link to="/addressconvert">주소변환</router-link> |
-    <router-link to="/addressmap">주소로 지도</router-link> |
-    <router-link to="/barchart">막대그래프</router-link> |
-    <router-link to="/piechart">파이차트</router-link> |
-    <router-link to="/applyform">Apply</router-link> |
-    <router-link to="/api">Api</router-link> |
-    <div v-if="loginId != null">
-      <router-link to="/messagewrite" >쪽지보내기</router-link> |
-      <router-link to="/messagesender" >보낸쪽지함</router-link> |
-      <router-link to="/messagereciever">쪽지함</router-link>
-      <span v-show="cntcheck" @click="cntcheck">{{cnt}}</span> 
-      <router-link to="/memedit">내정보 수정</router-link>
-    </div>
-    <span @click="exitService()" style="cursor: pointer;">회원탈퇴</span>
-    <!-- //기존 링크 모음 (테스트용, 추후 삭제 예정) -->
+    
 
-  <!-- 이곳에 라우터로 설정한 화면이 로드됨 -->
-  <router-view/>
-  <!-- //이곳에 라우터로 설정한 화면이 로드됨 -->
+    <!-- 이곳에 라우터로 설정한 화면이 로드됨 -->
+    <router-view/>
+    <!-- //이곳에 라우터로 설정한 화면이 로드됨 -->
 
-  <!-- 풋터 -->
-  <footer class="footer">
-    <div>
-      <p>이곳에 풋터 디자인</p>
-      <p>Copyright by Petmily, ... etc</p>
-    </div>
-  </footer>
+    <!-- 풋터 -->
+    <footer class="footer">
+      <div>
+        <p>이곳에 풋터 디자인</p>
+        <!-- 기존 링크 모음 (테스트용, 추후 삭제 예정) -->
+        <router-link to="/kaka">카카</router-link> |
+        <router-link to="/addressconvert">주소변환</router-link> |
+        <router-link to="/addressmap">주소로 지도</router-link> |
+        <router-link to="/barchart">막대그래프</router-link> |
+        <router-link to="/piechart">파이차트</router-link> |
+        <router-link to="/applyform">Apply</router-link> |
+        <router-link to="/api">Api</router-link> |
+        <div v-if="loginId != null">
+          <router-link to="/messagewrite" >쪽지보내기</router-link> |
+          <router-link to="/messagesender" >보낸쪽지함</router-link> |
+          <router-link to="/messagereciever">쪽지함</router-link>
+          <span v-show="cntcheck" @click="cntcheck">{{cnt}}</span> 
+          <router-link to="/memedit">내정보 수정</router-link>
+        </div>
+        <span @click="exitService()" style="cursor: pointer;">회원탈퇴</span>
+        <!-- //기존 링크 모음 (테스트용, 추후 삭제 예정) -->`
+        <p>Copyright by Petmily, ... etc</p>
+      </div>
+    </footer>
   <!--//풋터-->
+  </div>
 </template>
 
 <script>
@@ -181,20 +134,31 @@ export default {
         }
       }
     }
-    
-
-    
-    
   },
 
 
   methods:{
+    register() { // 회원가입
+      this.$router.push('/join');
+    },
     gotoMain() { // 로고 클릭시 메인으로 이동
       location.href = '/';
     }, 
-    guard() { // (카테고리) 동물보호소
+    about_petmily() {
+      alert('페이지 추가하고 작업해야함');
+    },
+    groups() { // (카테고리) 동물보호소
       this.$router.push('/'); // TODO : 수정해야함
       alert('경로 추가 및 페이지 작업 필요');
+    },
+    all_pets() { // 모든 동물
+      alert('페이지 추가하고 작업해야함');
+    },
+    all_dogs() { // 강아지
+      alert('페이지 추가하고 작업해야함');
+    },
+    all_cats() { // 고양이
+      alert('페이지 추가하고 작업해야함');  
     },
     adopt() { // (카테고리) 분양해요
       this.$router.push('/adopt');
@@ -210,6 +174,9 @@ export default {
     },
     guide() { // (카테고리) 입양가이드
       this.$router.push('/'); // TODO : 수정해야함
+      alert('경로 추가 및 페이지 작업 필요');
+    },
+    contact_us() { // 고객센터 ; 메일 발송 및 FAQ
       alert('경로 추가 및 페이지 작업 필요');
     },
     login() { // 로그인
@@ -359,6 +326,10 @@ export default {
 </script>
 
 <style>
+.petmily {
+  position: relative;
+}
+
 #app {
   font-family: Avenir, Helvetica, Arial, sans-serif, BagleFatOne;
   -webkit-font-smoothing: antialiased;
@@ -370,239 +341,105 @@ export default {
 /* 헤더 전체 영역 */
 .pet-header {
   position: relative;
-  display: inline-flex;
   width: 100%;
+  height: 200px;
   border-bottom: 3px solid rgb(244, 191, 79);
 }
 
-/* 좌측 로고 */
-.box-left {
-  width: 200px;
+.pet-box-up {
+  width: 100%;
+  height: 170px;
   display: flex;
-  justify-content: left;
+  justify-content: space-between;
+  padding-left: 50px;
+  padding-right: 50px;
 }
 
-.logo {
-  width: 100px;
-  height: 50px;
-  cursor: pointer;
-}
-
-/* 중앙 카테고리 */
-.img-category {
-  width: 20px;
-  height: 20px;
-}
-
-.box-category {
-  position: relative;
-  width: inherit;
-  height: 50px;
-  display: flex;
-  justify-content: center;
-}
-
-.category {
-  display: flex;
-  margin: 0 auto;
-}
-
-.category-list {
-  list-style: none;
-  list-style-type: none;
-}
-
-.category-list li {
-  margin-top: 10px;
-  float: left;
-  margin-left: 20px;
-  font-weight: normal;
-  cursor: pointer;
-  font-family: 'BagleFatOne';
-  font-size: 20px;
-}
-
-.category-list li:hover {
-  color: rgb(244, 191, 79);
-}
-
-.min-box-category  {
-  display: none;
-}
-
-/* 우측 콘텐츠 컨테이너 */
-.box-right {
+.box-member {
   width: 300px;
+  height: 170px;
   display: flex;
-  justify-content: right;
-  align-items: center;
+  justify-content: flex-start;
+  padding: 10px;
+  margin-top: 50px;
 }
 
-/* 로그인 관련 */
-.member-manage {
-  display: block;
+.box-member > div span {
+  margin: 10px;
+  font-family: 'IBMPlexSansKR-Medium';
   font-size: 12px;
-  font-weight: bold;
-  justify-content: right;
-}
-
-.member-manage span {
-  margin-right: 5px;
-  cursor: pointer;
-  font-family: 'IBMPlexSansKR-Bold';
-}
-
-.member-manage span:hover {
-  color: rgb(244, 191, 79);
-  margin-right: 5px;
   cursor: pointer;
 }
 
-/* 마이페이지, 알림뱃지 */
-.box-image {
-  display: block;
+.box-logo {
+  height: 150px;
+  padding-top: 25px;
 }
 
-.mypage, .pet-alert {
-  height: 40px;
+.petmily-logo {
+  width: 200px;
+  height: auto;
   cursor: pointer;
 }
 
-.box-profile {
-  display: block;
-  width: 35px;
-  height: 35px; 
-  border-radius: 70%;
-  overflow: hidden;
-}
-.profile {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  cursor: pointer;
+.box-mypage {
+  width: 300px;
+  height: 170px;
+  display: flex;
+  justify-content: flex-end;
+  padding: 10px;
+  margin-top: 50px;
 }
 
-@media screen and (max-width: 1050px) {
-
-  /* 헤더 전체 영역 */
-  .pet-header {
-    border-bottom: 3px solid rgb(244, 191, 79);
-    display: inline-flex;
-    justify-content:space-between;
-    align-items: center;
-  }
-
-  /* 좌측 로고 및 카테고리 영역 */
-  .box-left {
-    display: flex;
-    position: relative;
-    width: 200px;
-    justify-content: left;
-    height: 40px;
-  }
-
-  /* 숨김처리할 것들 */
-  div.box-category, .category, .logo {
-    display: none;
-  }
-
-  /* 카테고리 셀렉트박스 */
-  .min-box-category {
-    position: absolute;
-    display: flex;
-    justify-content: left;
-    list-style: none;
-    height: 40px;
-  }
-
-  .icon-menu {
-    width: 25px;
-    height: 25px;
-    cursor: pointer;
-    margin-left: -30px;
-    margin-top: -10px;
-  }
-
-  .min-box-category li {
-    margin-top: 10px;
-    float: inherit;
-    position: relative;
-    list-style: none;
-    vertical-align: middle;
-    text-align: left;
-    padding: 5px;
-  }
-
-  .min-box-list li {
-    margin-left: -50px;
-  }
-
-  .min-box-list li span {
-    font-weight: normal;
-    padding: 10px;
-    font-size: 20px;
-    font-family: 'BagleFatOne';
-  }
-
-  ul.pet-menu > li:hover ul.min-box-list {
-    display: block;
-    margin: -20px;
-  }
-
-  ul.pet-menu > li ul.min-box-list {
-    display: none;
-  }
-
-  .min-box-category li div span {
-    text-decoration: none;
-    font-weight: bold;
-    background-color: white;
-  }
-
-  .min-box-category li div span:hover {
-    color: white;
-    background-color: rgb(244, 191, 79);
-  }
-
-  /* 우측 콘텐츠 컨테이너 */
-  .box-right {
-    width: 300px;
-    display: flex;
-    position: relative;
-    justify-content: right;
-    align-items: right;
-  }
-
-  /* 로그인 관련 */
-  .member-manage {
-    display: block;
-    font-size: 12px;
-    font-weight: bold;
-  }
-
-  .member-manage span {
-    margin-right: 5px;
-    cursor: pointer;
-  }
-
-  /* 마이페이지, 알림뱃지 */
-  .box-image {
-    display: block;
-  }
-
-  .mypage, .pet-alert {
-    height: 40px;
-    cursor: pointer;
-  }
-}
-
-.tmp-line {
-  border-bottom: 3px solid rgb(244, 191, 79);
+.box-mypage > img {
+  margin: 10px;
+  font-family: 'IBMPlexSansKR-Medium';
+  font-size: 12px;
 }
 
 .footer {
+  position: absolute;
   height: 200px;
+  width: 100%;
   background-color: #efefef;
+}
+
+.pet-box-bottom {
+  height: 30px;
+  justify-content: center;
+  display: flex;
+  border-top: 1px solid rgb(244, 191, 79);
+  padding-top: 5px;
+}
+
+.petmily-category {
+  list-style: none;
+  list-style-type: none;
+  height: 30px;
+  justify-content: center;
+}
+
+li {
+  float:left;
+  margin-right: 50px;
+  font-family: 'IBMPlexSansKR-Bold';
+  font-size: 12px;
+  cursor: pointer;
+}
+
+li:hover {
+  float:left;
+  margin-right: 50px;
+  font-family: 'IBMPlexSansKR-Bold';
+  font-size: 13px;
+  cursor: pointer;
+  color: rgb(244, 191, 79);
+}
+
+.ico-mypage, .ico-bell {
+  width: 25px;
+  height: 25px;
+  cursor: pointer;
 }
 
 </style>
