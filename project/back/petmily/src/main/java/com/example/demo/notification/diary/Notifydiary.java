@@ -1,11 +1,10 @@
 package com.example.demo.notification.diary;
 
-import java.util.Date;
-
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
 
 import com.example.demo.diaryboard.Diaryboard;
+import com.example.demo.diarycomment.Diarycomment;
 import com.example.demo.member.Member;
 
 import jakarta.persistence.Entity;
@@ -32,20 +31,28 @@ public class Notifydiary {
 	@SequenceGenerator(name="seq_notify_diary", sequenceName="seq_notify_diary", allocationSize=1)//시퀀스 생성. sequenceName:시퀀스 이름
 	@GeneratedValue(strategy=GenerationType.SEQUENCE, generator="seq_notify_diary")//값 자동생성설정
 	private int num;
-	
+
 	@ManyToOne
 	@JoinColumn(name="id", nullable=false)  //fk 설정
 	@OnDelete(action = OnDeleteAction.CASCADE)
 	private Member id;
 	
 	@ManyToOne
-	@JoinColumn(name="dbnum", nullable=false)  //fk 설정
+	@JoinColumn(name="name", nullable=false)  //fk 설정
 	@OnDelete(action = OnDeleteAction.CASCADE)
-	private Diaryboard dbnum;
+	private Member name;
+	
+	@ManyToOne
+	@JoinColumn(name="title", nullable=false)  //fk 설정
+	@OnDelete(action = OnDeleteAction.CASCADE)
+	private Diaryboard title;
 	
 	private String content;
-	
-	private Date instTime;
+
+	@ManyToOne
+	@JoinColumn(name="w_date", nullable=false)  //fk 설정
+	@OnDelete(action = OnDeleteAction.CASCADE)
+	private Diarycomment instTime;
 	
 	private String isClicked;
 }

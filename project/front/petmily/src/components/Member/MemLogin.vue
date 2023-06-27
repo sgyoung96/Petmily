@@ -1,11 +1,12 @@
 <template>
 
-<div class="petmily-login">
+<img class="bg-image" src="../../assets/images/bg_login.jpg" />
 
+<div class="petmily-login">
   
   <div class="form-container">
     
-    <img src="../../assets/bg_login_image.png" />
+    <img class="bg-login" src="../../assets/images/bg_login.jpg" />
   
     <div id="mylogin">
       <input type="text" id="input_id" v-model="id" placeholder="아이디를 입력하세요.">
@@ -133,6 +134,18 @@ export default {
   <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
 
+.bg-image {
+  width: 100%;
+  height: 700px;
+  display:inline-block;
+  z-index: -1;
+  padding-left: -50px;
+  padding-right: -50px;
+  opacity: 0.3;
+  border-radius: 30px;
+  filter: blur(5px);
+}
+
 .petmily-login {
   position: relative;
   display: flex;
@@ -140,42 +153,44 @@ export default {
   width: 100%;
   padding-left: 150px;
   padding-right: 150px;
+  transform: translateY(-80%);
 }
 
 .form-container {
-  border: 2px solid #ffffff;
   border-radius: 30px; 
   position: relative;
-  display: flex;
+  display: block;
   justify-content: center;
-  vertical-align: middle;
   width: 100%;
   height: auto;
-  padding-right: 100px;
-  margin-top: -50px;
+}
+
+.bg-login {
+  width: 1000px;
+  height: auto;
+  border-radius: 10px;
 }
 
 #mylogin {
-  margin-top: 100px;
-  margin-left: -100px;
   display: block;
+  transform: translateY(-250%) translateX(30%);
 }
 
 #input_id, #input_pwd {
   color: #777777;
   font-family: 'IBMPlexSansKR-Bold';
-  background-color: #eeeeee;
+  background-color: #eeeeee77;
   border-radius: 10px;
 }
 
 #input_id::placeholder, #input_pwd::placeholder {
-  color: #777777;
+  color: #333333;
   font-family: 'IBMPlexSansKR-ExtraLight';
 }
 
 input {
-  width: 250px;
-  height: 60px;
+  width: 200px;
+  height: 50px;
   margin-bottom: 5px;
   border: none;
   padding: 10px;
@@ -188,10 +203,10 @@ input:focus {
 
 .ico-enter {
   position: absolute;
-  width: 30px;
+  width: 25px;
   height: auto;
   z-index: 2;
-  margin-left: -40px;
+  margin-left: -35px;
   margin-top: 15px;
   cursor: pointer;
 }
@@ -214,7 +229,7 @@ input:focus {
 .btn-kakao {
   cursor: pointer;
   border-radius: 20px;
-  width: 250px;
+  width: 200px;
   padding-bottom: 5px;
 }
 

@@ -1,11 +1,4 @@
 <template>
-  <div class="button-container">
-    <div id="button-style">
-      <button v-on:click="AllKindCd">전체</button>
-      <button v-on:click="DogkindCd">개</button>
-      <button v-on:click="CatkindCd">고양이</button>
-    </div>
-  </div>
   <div id="app" style="margin-top:50px;">
     <div class="grid-container">
       <div v-for="item in items" :key="item.desertionNo" class="grid-item">
@@ -39,11 +32,11 @@
     </div>
   </div>
   <div style="margin-top: 2%;">
-    <button v-on:click="previousPage">이전</button>
-    <button v-for="pageNumber in totalPages" :key="pageNumber" v-on:click="goToPage(pageNumber)">
+    <button v-on:click="previousPage" class="custom-button">이전</button>
+    <button v-for="pageNumber in displayedPages" :key="pageNumber" v-on:click="goToPage(pageNumber)" class="custom-button">
       {{ pageNumber }}
     </button>
-    <button v-on:click="nextPage">다음</button>
+    <button v-on:click="nextPage" class="custom-button">다음</button>
   </div>
 </template>
 
@@ -70,7 +63,7 @@ export default {
   },
   methods: {
     fetchData() {
-      const apiUrl = `http://apis.data.go.kr/1543061/abandonmentPublicSrvc/abandonmentPublic?_type=json&upkind=${this.kindCd}&pageNo=${this.pageNo}&numOfRows=${this.pageSize}&serviceKey=JkjPRne8oXZTCJTyLN9579FQZI6%2FkhepY9kJhsmdEpdiEjyDUj8HjiEo8ba4BAa8AOGXfQWZA7AAHiljNzoOBA%3D%3D`;
+      const apiUrl = `http://apis.data.go.kr/1543061/abandonmentPublicSrvc/abandonmentPublic?_type=json&pageNo=${this.pageNo}&numOfRows=${this.pageSize}&serviceKey=JkjPRne8oXZTCJTyLN9579FQZI6%2FkhepY9kJhsmdEpdiEjyDUj8HjiEo8ba4BAa8AOGXfQWZA7AAHiljNzoOBA%3D%3D`;
       axios.get(apiUrl)
         .then((response) => {
           const data = response.data.response.body;
@@ -86,20 +79,27 @@ export default {
     handleItemClick(desertionNo) {
       console.log(desertionNo); // desertionNo 값 확인
       this.desertionNo = desertionNo; // desertionNo 값을 설정
-      this.$router.push({ name: 'Detail', params: { desertionNo: desertionNo} });
+      this.$router.push({ name: 'Detail', params: { desertionNo: desertionNo } });
     },
     previousPage() {
       if (this.pageNo > 1) {
         this.pageNo--;
         this.fetchData();
-      }
+      } 
+      else {
+          alert("이전 페이지가 없습니다")
+        }
     },
     nextPage() {
       const totalPages = Math.ceil(this.totalItems / this.pageSize);
-      if (this.pageNo < totalPages) {
+      if (this.pageNo < totalPages && this.pageNo < 20) {
         this.pageNo++;
         this.fetchData();
       }
+      else{
+          alert("다음 페이지가 없습니다")
+        }
+        
     },
     goToPage(pageNumber) {
       this.pageNo = pageNumber;
@@ -107,13 +107,11 @@ export default {
     },
 
     updateDisplayedPages() {
-      // 현재 표시할 페이지 범위 계산
       const maxDisplayedPages = 10; // 한 번에 표시할 페이지 버튼의 최대 개수
       const halfMaxDisplayedPages = Math.floor(maxDisplayedPages / 2);
       let startPage = this.pageNo - halfMaxDisplayedPages;
       let endPage = this.pageNo + halfMaxDisplayedPages;
 
-      // 시작 페이지와 끝 페이지가 유효한 범위를 벗어나지 않도록 조정
       if (startPage < 1) {
         startPage = 1;
         endPage = Math.min(maxDisplayedPages, this.totalPages);
@@ -123,39 +121,41 @@ export default {
         startPage = Math.max(1, endPage - maxDisplayedPages + 1);
       }
 
-      // 현재 표시되는 페이지 버튼 업데이트
       this.startPage = startPage;
       this.endPage = endPage;
       this.displayedPages = Array.from(
         { length: endPage - startPage + 1 },
         (_, i) => startPage + i
       );
-    },
-    AllKindCd() {
-      this.kindCd = "";
-      this.fetchData();
-    },
-    DogkindCd() {
-      this.kindCd = '417000';
-      this.fetchData();
-    },
-    CatkindCd() {
-      this.kindCd = '422400';
-      this.fetchData();
     }
   },
-
-
 };
 </script>
 
 
 <style>
-
+.custom-button {
+  background-color: #f0cf81; /* 배경색 설정 */
+  border: none; /* 테두리 제거 */
+  color: white; /* 텍스트 색상 설정 */
+  padding: 10px 20px; /* 안쪽 여백 설정 */
+  text-align: center; /* 텍스트 가운데 정렬 */
+  text-decoration: none; /* 밑줄 제거 */
+  display: inline-block; /* 인라인 요소로 표시 */
+  font-size: 16px; /* 폰트 크기 설정 */
+  margin: 4px 2px; /* 외부 여백 설정 */
+  cursor: pointer; /* 커서 포인터로 변경 */
+  border-radius: 4px; /* 모서리를 둥글게 설정 */
+}
+.custom-button:hover {
+  background-color: #f0cf81; /* 마우스 호버시 배경색 변경 */
+}
 .card {
-  border-radius: 10px; /* 모서리를 둥글게 만듭니다 */
+  border-radius: 10px;
+  /* 모서리를 둥글게 만듭니다 */
   /* 다른 스타일을 추가로 적용할 수 있습니다 */
 }
+
 .button-container {
   display: flex;
   justify-content: flex-end;

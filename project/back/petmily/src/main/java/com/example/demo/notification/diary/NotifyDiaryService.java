@@ -18,7 +18,7 @@ public class NotifyDiaryService {
 		ArrayList<NotifyDiaryDto> dtoList = new ArrayList<>();
 		
 		for (Notifydiary n : list) {
-			dtoList.add(new NotifyDiaryDto(n.getNum(), n.getId(), n.getDbnum(), n.getContent(), n.getInstTime(), n.getIsClicked()));
+			dtoList.add(new NotifyDiaryDto(n.getNum(), n.getId(), n.getName(), n.getTitle(), n.getContent(), n.getInstTime(), n.getIsClicked()));
 		}
 		
 		return dtoList;
