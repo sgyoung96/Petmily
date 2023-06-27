@@ -2,9 +2,13 @@
 
 
     <div id="memedit">
+
+        
+
         <span class="box-profile" style="background: #black;"> 
             <img class="profile" :src="'http://localhost:8082/members/imgs/'+ id">
         </span>
+        <input type="file" id="profile"><br/> 
         ID : <input type="text" v-model="id" readonly><br/>
         NAME : <input type="text" v-model="name" readonly><br/>
         PWD : <input type="password" v-model="oldpwd1" ><button @click="pwdcheck">비밀번호 확인</button><br/>
@@ -12,7 +16,7 @@
          <span class ="font_id_red" v-show="isPwdCheck">영문, 숫자, 특수문자 8~16문자</span><br/>  
         pwd check : <input class="input-item" type="password"  v-show = "newpwdchecktrue" id="newpwdcheck" v-model="newpwdcheck"  @blur="checkNewPwdEqual"><br/>
         <span class ="font_id_red" v-show="isPwdCheckEqual">비밀번호 확인해주세요</span><br/>  
-        EMAIL : <input type="text" id="email" v-model="email"><button v-on:click="sendEmail" >이메일 확인</button><br/>
+        EMAIL : <input type="text" id="email" v-model="email"><button v-on:click="emailcheck" >이메일 확인</button><br/>
         <span class ="font_id_red" v-show="isEmailCheck">이메일 형식을 확인해주세요</span><br/> 
          <input input class="input-item" type="text" id="emailCode" v-model="emailCode"><button v-on:click="emailCodeCheck">인증</button><br/> 
          <span class ="font_id_red" v-show="isEmailCodeCheck">인증코드를 확인해주세요</span><br/> 
@@ -150,11 +154,14 @@ export default {
       formdata.append('pwd',self.pwd)
       formdata.append('email',self.email)
       formdata.append('phone',self.phone)
-    
+
+      const file = document.getElementById('profile')
+      formdata.append('f', file.files[0]);
   
       
      
-      self.$axios.put('http://localhost:8082/members', formdata) 
+      self.$axios.put('http://localhost:8082/members', formdata,
+      {headers:{"Content-Type":"multipart/form-data"}}) 
       .then(function(res){ 
         if(res.status == 200){
           let dto = res.data.dto
@@ -223,6 +230,25 @@ export default {
       });
 
      },
+     emailcheck(){
+    const self = this;
+
+    self.$axios.get('http://localhost:8082/members/email/'+self.email)
+    .then(function(res){ //
+        if(res.status == 200){
+        
+          if(res.data.dto == null){
+           self.sendEmail()
+          
+          }else{
+             alert('중복된 이메일')
+             self.email=''
+          }
+        }else{
+          alert('에러코드 :' + res.status)
+        }
+  });
+  },
      emailCodeCheck(){
         
         const self = this;
@@ -261,7 +287,7 @@ export default {
     const self = this;
  
     if(self.oldemail === self.email){
-       
+        self.emailtf=true;
         self.editemailtf=true;
     }else{
         if(self.emailtf){

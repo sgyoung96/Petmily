@@ -16,7 +16,7 @@
           <br>
           <span class="link-join" @click="join()" >회원가입</span>
           <span class="deco">&nbsp;&nbsp;|&nbsp;&nbsp;</span>
-          <span class="link-id">ID 찾기</span>
+          <span class="link-id" @click="findId">ID 찾기</span>
           <span class="deco">/</span>
           <span class="link-pw" @click="findPwd">PW 찾기</span>
         </div>
@@ -27,6 +27,7 @@
 </template>
 
   <script>
+
 
 export default {
   name: 'MemLogin',
@@ -116,12 +117,23 @@ export default {
     findPwd(){
       const self = this;
       if (sessionStorage.getItem('loginFlag') != 'normal') {
-        self.$router.push('/findpwd'); // 회원가입 화면으로 이동
+        self.$router.push('/findpwd'); 
       } else {
         console.log('normal');
       }
 
-    }
+    },
+    findId(){
+      const self = this;
+      if (sessionStorage.getItem('loginFlag') != 'normal') {
+        self.$router.push('/findid'); 
+      } else {
+        console.log('normal');
+      }
+
+    },
+    
+  
   }
 }
 </script>

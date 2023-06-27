@@ -104,7 +104,8 @@
             <img class="mypage" src="./assets/mypage_sample.jpg" >
           </span>
           <span v-else class="box-profile" style="background: #black;"> 
-            <img class="profile" :src="'http://localhost:8082/members/imgs/'+loginId">
+          
+            <img class="profile" @error="replaceImg" :src="'http://localhost:8082/members/imgs/'+loginId">
           </span>
           <img class="pet-alert" src="./assets/alert_sample.jpg" >
         </div>
@@ -147,6 +148,7 @@
 </template>
 
 <script>
+import img from "@/assets/imgs/mypage_sample.jpg";
 import './assets/fonts/BagleFatOne.css';
 import './assets/fonts/IBMPlexSansKR.css';
 
@@ -353,7 +355,10 @@ export default {
       }else{
         this.$router.push('/messagereciever')
       }
-    }
+    },
+          replaceImg(e) {
+            e.target.src = img;
+        },
   }
 }
 </script>

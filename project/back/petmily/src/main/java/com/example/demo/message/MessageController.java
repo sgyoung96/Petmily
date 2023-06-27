@@ -60,6 +60,7 @@ public class MessageController {
 	@GetMapping("/sender/{sender}")
 	public Map getBySender(@PathVariable("sender") String sender) {
 		ArrayList<MessageDto> list = service.getBySender(sender);
+		
 		Map map = new HashMap();
 		map.put("list", list);
 		return map;
