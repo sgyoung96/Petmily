@@ -1,15 +1,11 @@
 <template>
-  <div class="container text-center">
-  <div class="row" style="margin-bottom: 40px;">
-    <div class="col">
-      <h2>입양일지</h2>
-    </div>
-    <div class="col">
-    </div>
-    <div class="col">
-</div>
-</div>
-</div>
+    <div>
+    <img src="../../assets/images/dboardpic2.jpg" style="width: 85%; height: 500px; margin-bottom: 20px;">
+  </div>
+  <div style="float:center; margin:50px"><h1>입양일지</h1></div>
+  <div>
+    <img src="../../assets/images/dboardpic.png" style="width: 1200px; height: 160px; margin-bottom: 20px;">
+  </div>
 <div class="container text-center">
   <div class="row">
     <div class="col-1">
@@ -25,25 +21,29 @@
       </div>
       <div style="padding:50px; border-bottom:solid 2px lightgrey">
         {{ dto.content }}
-      </div>  
-      <div style="float:right">
-        <router-link to="/diaryboardedit">수정하기</router-link>
-     <button v-on:click="boarddelete">삭제하기</button>
-    </div><br/>
-     <div>
-        <table border="1">
-        <tr><th>댓글작성</th></tr>
-        <tr><th><input type="text" v-model="content" id="content">
-          <button v-on:click="commentadd">등록하기</button></th></tr>
-      </table>
+      </div>
       <div style="float:left">
+        <span router-link to="/diaryboardhome" class="badge text-bg-secondary" style="font-size: 17px;">목록으로</span>
+      </div>
+      <div style="float:right">
+      <span router-link to="/diaryboardedit" class="badge text-bg-secondary" style="font-size: 17px;">수정하기</span>
+     <span v-on:click="boarddelete" class="badge text-bg-secondary" style="font-size: 17px;">삭제하기</span>
+    </div><br/>
+     <div style="float:left; display:block;">
+<textarea style="width:800px;" v-model="content" id="content"></textarea>
+          <button v-on:click="commentadd">등록하기</button>
+      <div>
   <div v-for="comment in comment" :key="comment.db_num">
-  <div>
+  <div style="display:flex; justify-content: space-between">
+    <div style="float:left">
     {{ comment.content }} {{ comment.w_date }} {{ comment.id.id }} {{ comment.db_num }}
+  </div>
+  <div>
     <button @click="showEditForm(comment)">수정하기</button>
     <button @click="commentdelete(comment.db_num)">삭제하기</button>
   </div>
-  <div v-if="comment.editMode">
+  </div>
+  <div v-if="comment.editMode" style="float:left">
     <textarea v-model="comment.editContent"></textarea>
     <button @click="saveComment(comment)">저장</button>
     <button @click="cancelEdit(comment)">취소</button>

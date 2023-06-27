@@ -1,6 +1,6 @@
 <template>
-    <div>
-    <img src="../../assets/images/dboardpic2.jpg" style="width: 85%; height: 500px; margin-bottom: 20px;">
+  <div>
+    <img src="../../assets/images/vboard2.jpg" style="width: 85%; height: 500px; margin-bottom: 20px;">
   </div>
     <h3>봉사모집게시판 전체목록</h3>
     <div class="container text-center">
@@ -35,6 +35,39 @@
     </div>
   </div>
   </div>
+  <ul class="pagination" style="display: inline-block">
+    <!-- 이전 페이지 버튼 -->
+    <li class="page-item">
+      <a
+        class="page-link"
+        href="#"
+        aria-label="Previous"
+        @click="previousPage"
+      >
+        <span aria-hidden="true">&laquo;</span>
+      </a>
+    </li>
+    <!-- 페이지 번호 -->
+    <li
+      class="page-item"
+      v-for="pageNumber in totalPages"
+      :key="pageNumber"
+      :class="{ active: pageNumber === currentPage }"
+    >
+      <a class="page-link" href="#" @click="goToPage(pageNumber)">{{ pageNumber }}</a>
+    </li>
+    <!-- 다음 페이지 버튼 -->
+    <li class="page-item">
+      <a
+        class="page-link"
+        href="#"
+        aria-label="Next"
+        @click="nextPage"
+      >
+        <span aria-hidden="true">&raquo;</span>
+      </a>
+    </li>
+  </ul>
 </template>
 
 <script>
@@ -47,6 +80,18 @@ export default {
       count: 0,
       state: '',
       sysdate: new Date(),
+      currentPage: 1,
+      pageSize: 8
+    }
+  },
+  computed: {
+    totalPages() {
+      return Math.ceil(this.list.length / this.pageSize);
+    },
+    paginatedList() {
+      const startIndex = (this.currentPage - 1) * this.pageSize;
+      const endIndex = startIndex + this.pageSize;
+      return this.list.slice(startIndex, endIndex);
     }
   },
   methods: {
@@ -71,6 +116,19 @@ export default {
 
     return new Date(date).toLocaleString('ko-KR', options).replace(/\D/g, '');
     },
+    previousPage() {
+      if (this.currentPage > 1) {
+        this.currentPage--;
+      }
+    },
+    nextPage() {
+      if (this.currentPage < this.totalPages) {
+        this.currentPage++;
+      }
+    },
+    goToPage(pageNumber) {
+      this.currentPage = pageNumber;
+    }
   },
   created: function () {
     this.loginId = sessionStorage.getItem('loginId')
@@ -87,6 +145,17 @@ export default {
 </script>
 
 <style scoped>
+.image {
+  width: 100%;
+  height: 500px;
+  display:inline-block;
+  z-index: -1;
+  padding-left: -50px;
+  padding-right: -50px;
+  opacity: 0.3;
+  border-radius: 30px;
+  filter: blur(5px);
+}
 .vbody{
   border-bottom: 1px solid #666666;
   display: flex;
