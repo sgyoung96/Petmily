@@ -48,7 +48,6 @@ export default {
   },
   methods: {
     detail: function(num) {
-      alert(num)
       this.$router.push({name: 'AdoptDetail', query: {num: num}})
     }
   },

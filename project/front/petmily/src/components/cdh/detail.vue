@@ -129,6 +129,16 @@ export default {
     };
   },
 
+  mounted() {
+  const mapElement = document.getElementById("map");
+  if (window.kakao && window.kakao.maps && mapElement) {
+    this.loadMap();
+  } else {
+    this.loadScript();
+  }
+},
+
+
   computed: {
     filteredItems() {
       if (!this.desertionNo) {
@@ -145,13 +155,6 @@ export default {
 
     alert(this.$data.careAddr);
   },
-  mounted() {
-      if (window.kakao && window.kakao.maps) {
-        this.loadMap();
-      } else {
-        this.loadScript();
-      }
-  },
 
   methods: {
     fetchItems() {
@@ -162,9 +165,7 @@ export default {
           const items = data.response.body.items.item;
           this.items = items; // 데이터를 items 배열에 할당
         })
-        .catch((error) => {
-          console.error(error);
-        });
+        .catch(this.handleError); // handleError 함수 호출
     },
     loadScript() {
       const script = document.createElement("script");

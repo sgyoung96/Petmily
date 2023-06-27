@@ -1,6 +1,7 @@
 package com.example.demo.volboard;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -47,9 +48,8 @@ public class VolboardService {
 	}
 	
 	//작성자로 검색
-	public ArrayList<VolboardDto> getByWriter(String writer) {
-	    Member m = new Member(writer, null, null, null, null, null, null, null, null,null);
-	    ArrayList<Volboard> list = dao.findByWriter(m);
+	public ArrayList<VolboardDto> getByAddress(String address) {
+	     List<Volboard> list = dao.findByAddressContaining(address);
 	    ArrayList<VolboardDto> dtolist = new ArrayList<>();
 	    if (list != null) {
 	        for (Volboard v : list) {

@@ -18,10 +18,12 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.example.demo.diaryboard.DiaryboardDto;
 import com.example.demo.volboard.VolboardDto;
 
 /**
@@ -144,6 +146,24 @@ public class AdoptBoardController {
 			e.printStackTrace();
 		}
 		return result;
+	}
+	
+	@PutMapping("")
+	public Map edit(AdoptBoardDto dto) {
+		Map map = new HashMap();
+		AdoptBoardDto dto3 = null;
+		AdoptBoardDto dto2 = service.getDetail(dto.getNum());
+		boolean flag = true;
+		try {
+			dto2.setContent(dto.getContent());
+			int num = service.add(dto2);
+			dto3 = service.getDetail(num);
+		}catch(Exception e) {
+			flag = false;
+		}
+		map.put("flag", flag);
+		map.put("dto", dto3);
+		return map;
 	}
 	
 	/**

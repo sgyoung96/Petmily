@@ -27,7 +27,7 @@
           {{ dto.content }}
         </div>  
         <div style="float:right">
-        <button v-on:click="editbtn">글수정하기</button>
+          <router-link to="/diaryboardedit">수정하기</router-link>
        <button v-on:click="boarddelete">삭제하기</button>
       </div><br/>
        <div>
@@ -83,7 +83,7 @@
     return new Date(date).toLocaleString('ko-KR', options);
   },
       boarddetail() {
-        alert(this.num)
+        
         this.$axios
           .get('http://localhost:8082/adopt/' +  this.num)
           .then(response => {
@@ -130,7 +130,6 @@
           });
       },
       commentadd() {
-        alert(this.content)
         const formData = new FormData();
         formData.append('num', this.num);
         formData.append('id', this.id);
@@ -138,7 +137,7 @@
         formData.append('w_date', new Date());
   
         this.$axios
-          .post('http://localhost:8082/adoptcomment', formData)
+          .post('http://localhost:8082/adopt', formData)
           .then(response => {
             if (response.status === 200) {
               const dto = response.data.dto;
