@@ -1,7 +1,8 @@
 <template>
 
-<div class="petmily-login">
+<img class="bg-image" src="../../assets/images/bg_login.jpg" />
 
+<div class="petmily-login">
   
   <div class="form-container">
     
@@ -133,6 +134,18 @@ export default {
   <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
 
+.bg-image {
+  width: 100%;
+  height: 700px;
+  display:inline-block;
+  z-index: -1;
+  padding-left: -50px;
+  padding-right: -50px;
+  opacity: 0.3;
+  border-radius: 30px;
+  filter: blur(5px);
+}
+
 .petmily-login {
   position: relative;
   display: flex;
@@ -140,10 +153,10 @@ export default {
   width: 100%;
   padding-left: 150px;
   padding-right: 150px;
+  transform: translateY(-80%);
 }
 
 .form-container {
-  border: 2px solid #ffffff;
   border-radius: 30px; 
   position: relative;
   display: block;
@@ -155,6 +168,7 @@ export default {
 .bg-login {
   width: 1000px;
   height: auto;
+  border-radius: 10px;
 }
 
 #mylogin {
