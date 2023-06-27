@@ -1,12 +1,18 @@
 package com.example.demo.adopt;
 
 import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.util.FileCopyUtils;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -15,6 +21,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
+
+import com.example.demo.volboard.VolboardDto;
 
 /**
  * 1. 전체 목록 검색
@@ -67,43 +75,75 @@ public class AdoptBoardController {
 	@PostMapping("")
 	public Map add(AdoptBoardDto dto) {
 		boolean flag = true;
+		int saveNum = 0;
 		try {
 			int num = service.add(dto);
-			File dir = new File(path + num);
+			File dir = new File(path + "adoptboard/" + num); //c:/petmily/adoptboard/num
 			dir.mkdir();
-			
-			MultipartFile[] multipartFiles = dto.getF();
-			String[] images = new String[4];
-			
-			for (int i = 0; i < multipartFiles.length; i++) {
-				MultipartFile multipartFile = multipartFiles[i];
-				String fileName = multipartFile.getOriginalFilename();
-				if (fileName != null && !fileName.equals("")) {
-					String newPath = path + num + "/" + fileName;
-					File newFile = new File(newPath);
-					System.out.println(newPath);
-					
+			MultipartFile[] f = dto.getF();
+			String[] imgs = new String[2];
+			for(int i = 0; i < f.length; i++) {
+				MultipartFile x = f[i];
+				String fname = x.getOriginalFilename();
+				if(fname != null && !fname.equals("")) {
+					String newpath = path + "adoptboard/" + num + "/" + fname;
+					File newfile = new File(newpath);
 					try {
-						multipartFile.transferTo(newFile); // 파일 업로드
-						images[i] = newPath;
-					} catch (Exception e) {
+					x.transferTo(newfile);
+					imgs[i] = newpath;
+					} catch (IllegalStateException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					} catch (IOException e) {
+						// TODO Auto-generated catch block
 						e.printStackTrace();
 					}
 				}
 			}
-			
-			dto.setPic1(images[0]);
-			dto.setPic2(images[1]);
-			
-			int saveNum = service.add(dto);
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
 		
+			dto.setPic1(imgs[0]);
+			dto.setPic2(imgs[1]);
+			dto.setNum(num);
+			saveNum = service.add(dto);// 수정
+		}catch (Exception e) {
+			flag = false;
+		}
+		AdoptBoardDto dto2 = service.getDetail(saveNum);
 		Map map = new HashMap();
 		map.put("flag", flag);
-		map.put("dto", dto);
+		map.put("dto", dto2);
 		return map;
+	}
+	
+	@GetMapping("/imgs/{num}/{idx}")
+	public ResponseEntity<byte[]> read_img(@PathVariable("num") int num, @PathVariable("idx") int idx) {
+		String fname = "";
+		AdoptBoardDto dto = service.getDetail(num);
+		switch (idx) {
+		case 1:
+			fname = dto.getPic1();
+			break;
+		case 2:
+			fname = dto.getPic2();
+			break;
+		default:
+			return null;
+		}
+		System.out.println(fname);
+		// 응답 객체를 생성해서 반환. 응답 객체는 헤더와 바디. 헤더:목적지주소, 나의주소, 마임타입, 크기...
+		// 바디. 전송할 데이터
+		File f = new File(fname);
+		HttpHeaders header = new HttpHeaders(); // HttpHeaders 객체 생성
+		ResponseEntity<byte[]> result = null; // 선언
+		try {
+			header.add("Content-Type", Files.probeContentType(f.toPath()));// 응답 데이터의 종류를 설정
+			// 응답 객체 생성
+			result = new ResponseEntity<byte[]>(FileCopyUtils.copyToByteArray(f), header, HttpStatus.OK);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return result;
 	}
 	
 	/**
