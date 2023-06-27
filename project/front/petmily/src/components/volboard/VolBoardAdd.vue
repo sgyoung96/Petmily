@@ -51,7 +51,7 @@
           <label for="volboard-img2">게시판이미지2</label>
           <input type="file" class="form-control" id="f2">
         </div>
-    
+        
         <button type="button" class="btn btn-primary" v-on:click="add">추가</button>
         <button type="button" class="btn btn-secondary" v-on:click="cancel">취소</button>
     </div>

@@ -1,5 +1,5 @@
 <template>
-  <canvas id="BarChart" width="200" height="200"></canvas>
+  <canvas id="BarChart" width="50px" height="50px"></canvas>
   <div>{{ t1 }}</div>
   <div>{{ t2 }}</div>
   <div>{{ t3 }}</div>
@@ -107,7 +107,7 @@ export default {
           labels: labels,
           datasets: [
             {
-              label: '# of Votes',
+              label: '최근 6일간 들어온 아기들 추이',
               data: data,
               backgroundColor: [
                 'rgba(255, 99, 132, 0.2)',

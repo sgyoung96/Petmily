@@ -11,7 +11,7 @@
       <div v-for="item in items" :key="item.desertionNo" class="grid-item">
         <div class="card">
           <div>
-            <img :src="item.popfile" :alt="item.careNm" @click="handleItemClick(item.desertionNo)"
+            <img :src="item.popfile" :alt="item.careNm" @click="handleItemClick(item.desertionNo, item.careAddr)"
               style="cursor: pointer; width:300px; height: 200px;">
           </div>
           <div class="item-info-space-between">
@@ -63,6 +63,7 @@ export default {
       displayedPages: [], // 현재 표시되는 페이지 버튼
       startPage: 1, // 시작 페이지 번호
       endPage: 10, // 끝 페이지 번호
+      careAddr: ''
     };
   },
   created() {
@@ -83,10 +84,11 @@ export default {
           console.error(error);
         });
     },
-    handleItemClick(desertionNo) {
+    handleItemClick(desertionNo, careAddr) {
       console.log(desertionNo); // desertionNo 값 확인
       this.desertionNo = desertionNo; // desertionNo 값을 설정
-      this.$router.push({ name: 'Detail', params: { desertionNo: desertionNo} });
+      
+      this.$router.push({ name: 'Detail', query: { desertionNo: desertionNo, careAddr: careAddr} });
     },
     previousPage() {
       if (this.pageNo > 1) {

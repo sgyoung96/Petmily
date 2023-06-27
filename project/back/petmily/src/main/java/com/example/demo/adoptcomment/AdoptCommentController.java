@@ -6,10 +6,13 @@ import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 /**
  * 1. 해당 게시글 댓글 전체 검색
@@ -18,7 +21,9 @@ import org.springframework.web.bind.annotation.PostMapping;
  * @author gayeong
  *
  */
-@Controller
+@RestController
+@CrossOrigin(origins= "*")
+@RequestMapping("/adoptcomment")
 public class AdoptCommentController {
 	
 	@Autowired
@@ -45,7 +50,7 @@ public class AdoptCommentController {
 	public Map add(AdoptCommentDto dto) {
 		Adoptcomment adoptComment = service.add(dto);
 		Map map = new HashMap();
-		map.put("adoptComment", adoptComment);
+		map.put("dto", adoptComment);
 		return map;
 	}
 	

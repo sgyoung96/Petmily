@@ -6,6 +6,7 @@ import MyPageHome from '../views/MypageView.vue'
 import DiaryBoardHome from '@/components/diaryboard/DiaryBoardHome.vue'
 import AdoptBoardHome from '../views/adopt/AdoptBoardView.vue'
 import AdoptForm from '@/components/adopt/AdoptForm.vue'
+import AdoptDetail from '@/components/adopt/AdoptDetail.vue'
 import DiaryBoardAdd from '@/components/diaryboard/DiaryBoardAdd.vue'
 import DiaryBoardDetail from '@/components/diaryboard/DiaryBoardDetail.vue'
 import DiaryBoardEdit from '@/components/diaryboard/DiaryBoardEdit.vue'
@@ -91,6 +92,11 @@ const routes = [
     component: AdoptBoardHome
   },
   {
+    path:'/adoptdetail',
+    name: 'AdoptDetail',
+    component: AdoptDetail
+  },
+  {
     path:'/addressconvert',
     name: 'AddressConvert',
     component: AddressConvert
@@ -130,7 +136,7 @@ const routes = [
     component: ApplyForm
   },
   {
-    path: '/detail/:desertionNo',
+    path: '/detail',
     name: 'Detail',
     component: Detail
   },
