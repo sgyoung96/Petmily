@@ -170,7 +170,7 @@ export default {
       alert('경로 추가 및 페이지 작업 필요');
     },
     all_pets() { // 모든 동물
-      alert('페이지 추가하고 작업해야함');
+      this.$router.push('/api');
     },
     all_dogs() { // 강아지
       this.$router.push('/apidog');

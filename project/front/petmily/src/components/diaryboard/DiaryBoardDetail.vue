@@ -139,6 +139,7 @@ export default {
         .post('http://localhost:8082/dcomment', formData)
         .then(response => {
           if (response.status === 200) {
+            
             const dto = response.data.dto;
             alert(dto.id + ' 댓글 작성 완료');
             this.comment.push(dto);
