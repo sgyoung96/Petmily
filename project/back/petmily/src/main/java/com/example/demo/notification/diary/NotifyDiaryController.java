@@ -20,7 +20,7 @@ import org.springframework.web.bind.annotation.RestController;
  */
 @RestController
 @CrossOrigin(origins= "*")
-@RequestMapping("/notification")
+@RequestMapping("/notify")
 public class NotifyDiaryController {
 	@Autowired
 	private NotifyDiaryService service;

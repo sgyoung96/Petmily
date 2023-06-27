@@ -28,6 +28,9 @@ import AddressConvert from '@/components/kaka/AddressConvert.vue'
 import MessageWrite from '@/components/Message/MessageWrite.vue' 
 import MessageSender from '@/components/Message/MessageSender.vue' 
 import MessageReciever from '@/components/Message/MessageReciever.vue'
+import NotifyList from '@/components/notify/NotifyList.vue'
+import ApiCat from '@/components/cdh/ApiCat.vue'
+import ApiDog from '@/components/cdh/ApiDog.vue'
 
 const routes = [
   {
@@ -183,6 +186,21 @@ const routes = [
     path: '/findid',
     name: 'FindId',
     component: FindId
+  },
+  {
+    path: '/notify',
+    name: 'NotifyList',
+    component: NotifyList
+  },
+  {
+    path: '/apicat',
+    name: 'ApiCat',
+    component: ApiCat
+  },
+  {
+    path: '/apidog',
+    name: 'ApiDog',
+    component: ApiDog
   }
 ]
 

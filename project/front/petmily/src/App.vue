@@ -90,6 +90,8 @@
           <span v-show="cntcheck" @click="cntcheck">{{cnt}}</span> 
           <router-link to="/memedit">내정보 수정</router-link>
         </div>
+        |
+        <router-link to="/notify">알림함페이지이동</router-link> |
         <span @click="exitService()" style="cursor: pointer;">회원탈퇴</span>
         <!-- //기존 링크 모음 (테스트용, 추후 삭제 예정) -->`
         <p>Copyright by Petmily, ... etc</p>
@@ -111,7 +113,7 @@ export default {
       isOpen: false,
       dto: {},
       cnt:0,
-      
+      notifyData: null
     }
   },
   created:function(){ // 이 컴포넌트가 시작될때 실행되는 함수
@@ -135,9 +137,25 @@ export default {
       }
     }
   },
-
-
+  mounted: function() {
+    this.notifyPolling();
+  },
+  beforeUnmount: function() {
+    clearInterval(this.notifyData);
+  },
   methods:{
+    notifyPolling() { // 알림 뱃지 실시간 확인
+      this.notifyData = setInterval(() => {
+        // 3초마다 한번씩 알림 테이블의 데이터 확인
+        if (this.loginId != null) {
+          const self = this;
+          self.$axios.get('http://localhost:8082/notify/' + this.loginId)
+          .then (function(rs) {
+            document.write('<span>' + rs + '</span>');
+          });
+        }
+      }, 3000);
+    },
     register() { // 회원가입
       this.$router.push('/join');
     },
@@ -148,17 +166,16 @@ export default {
       alert('페이지 추가하고 작업해야함');
     },
     groups() { // (카테고리) 동물보호소
-      this.$router.push('/'); // TODO : 수정해야함
       alert('경로 추가 및 페이지 작업 필요');
     },
     all_pets() { // 모든 동물
       alert('페이지 추가하고 작업해야함');
     },
     all_dogs() { // 강아지
-      alert('페이지 추가하고 작업해야함');
+      this.$router.push('/apidog');
     },
     all_cats() { // 고양이
-      alert('페이지 추가하고 작업해야함');  
+      this.$router.push('/apicat');
     },
     adopt() { // (카테고리) 분양해요
       this.$router.push('/adopt');
