@@ -57,7 +57,7 @@
         <input type="text" v-model="address" placeholder="주소를 입력하세요" />
         <button @click="showLocation">위치 보기</button>
       </div>
-      <div id="map"></div>
+      <div id="map" ref="map"></div>
       <div>참여자 리스트 ID</div>
     <table border="1">
       <tr v-for="person in list2" :key="person.num">
@@ -126,12 +126,15 @@ export default {
     }
   },
   mounted() {
-      if (window.kakao && window.kakao.maps) {
-        this.loadMap();
-      } else {
-        this.loadScript();
-      }
-  },
+  if (window.kakao && window.kakao.maps) {
+    this.loadMap();
+  } else {
+    this.loadScript();
+  }
+
+  // 페이지 맨 위로 스크롤하기
+  window.scrollTo({ top: 0, behavior: 'auto' });
+},
   methods: {
     detail(num) {
       this.$router.push({ name: 'VolBoardDetail', params: { num: num } })
@@ -253,9 +256,8 @@ export default {
     return new Date(date).toLocaleString('ko-KR', options).replace(/\D/g, '');
     },
     scrollToMap() {
-      const mapElement = document.getElementById('map');
-      mapElement.scrollIntoView({ behavior: 'smooth', block: 'start' });
-    }
+    this.$refs.map.scrollIntoView({ behavior: 'smooth' });
+  }
   },
   created: function () {//이 컴포넌트가 시작될때 실행되는 함수
     this.loginId = sessionStorage.getItem('loginId')
