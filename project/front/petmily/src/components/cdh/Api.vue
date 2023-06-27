@@ -4,11 +4,25 @@
   <div class="col-10"
     style="border: solid #e5e7eb; border-radius: 20px; margin-top: 50px; position: relative; margin-left: 130px; text-align: left; background-color:white;">
     <div>
-  <button v-on:click="place" class="custom-button">전체</button>
-  <div v-for="button in placeButtons" :key="button.label">
-    <button v-on:click="button.onClick" class="custom-button">{{ button.label }}</button>
-  </div>
-</div>
+      <button v-on:click="PlacetoggleButtons" class="custom-button">시도조회</button>
+      <button v-on:click="NeuteredtoggleButtons" class="custom-button">중성화</button>
+      <div v-if="showPlaceButtons">
+        <div class="place-container">
+          <button v-on:click="onClickAll" class="custom-button" style="width:160px; height:40px">전체</button>
+          <div v-for="button in placeButtons" :key="button.label">
+            <button v-on:click="button.onClick" class="custom-button" style="width:160px; height:40px">{{ button.label }}</button>
+          </div>
+        </div>
+      </div>
+      <div v-if="showNeuteredButtons">
+        <div class="Neutered-container">
+          <button v-on:click="onClickAll" class="custom-button" style="width:160px; height:40px">전체</button>
+          <button v-on:click="onClickAll" class="custom-button" style="width:160px; height:40px">예</button>
+          <button v-on:click="onClickAll" class="custom-button" style="width:160px; height:40px">아니요</button>
+          <button v-on:click="onClickAll" class="custom-button" style="width:160px; height:40px">미상</button>
+        </div>
+      </div>
+    </div>
   </div>
   <div id="app" style="margin-top:50px;">
     <div class="grid-container">
@@ -36,6 +50,11 @@
             </div>
             <div id="weight">
               {{ item.weight }}
+            </div>
+            <div class="item-info">
+            <div id="orgNm">
+              {{ item.orgNm }}
+            </div>
             </div>
           </div>
         </div>
@@ -69,7 +88,10 @@ export default {
       displayedPages: [], // 현재 표시되는 페이지 버튼
       startPage: 1, // 시작 페이지 번호
       endPage: 10, // 끝 페이지 번호
-      careAddr: ''
+      careAddr: '',
+      showPlaceButtons: false,
+      showNeuteredButtons: false,
+      orgCd: '',
     };
   },
 
@@ -77,9 +99,14 @@ export default {
     this.fetchData(); // 페이지가 생성될 때 데이터 가져오기
   },
   methods: {
-    fetchData() {
-      // 기존 코드
-      const apiUrl = `http://apis.data.go.kr/1543061/abandonmentPublicSrvc/abandonmentPublic?_type=json&pageNo=${this.pageNo}&numOfRows=${this.pageSize}&serviceKey=JkjPRne8oXZTCJTyLN9579FQZI6%2FkhepY9kJhsmdEpdiEjyDUj8HjiEo8ba4BAa8AOGXfQWZA7AAHiljNzoOBA%3D%3D`;
+    fetchData(orgCd) {
+      let apiUrl;
+      if (orgCd) {
+        apiUrl = `http://apis.data.go.kr/1543061/abandonmentPublicSrvc/abandonmentPublic?_type=json&pageNo=${this.pageNo}&numOfRows=${this.pageSize}&upr_cd=${orgCd}&serviceKey=JkjPRne8oXZTCJTyLN9579FQZI6%2FkhepY9kJhsmdEpdiEjyDUj8HjiEo8ba4BAa8AOGXfQWZA7AAHiljNzoOBA%3D%3D`;
+      } else {
+        apiUrl = `http://apis.data.go.kr/1543061/abandonmentPublicSrvc/abandonmentPublic?_type=json&pageNo=${this.pageNo}&numOfRows=${this.pageSize}&serviceKey=JkjPRne8oXZTCJTyLN9579FQZI6%2FkhepY9kJhsmdEpdiEjyDUj8HjiEo8ba4BAa8AOGXfQWZA7AAHiljNzoOBA%3D%3D`;
+      }
+
       axios.get(apiUrl)
         .then((response) => {
           const data = response.data.response.body;
@@ -92,36 +119,50 @@ export default {
           console.error(error);
         });
 
-      // 새로운 코드 - 장소 데이터 가져오기
+      // 장소 데이터 가져오기
       this.place();
     },
     place() {
       const apiUrl = `http://apis.data.go.kr/1543061/abandonmentPublicSrvc/sido?_type=json&pageNo=1&numOfRows=100&serviceKey=JkjPRne8oXZTCJTyLN9579FQZI6%2FkhepY9kJhsmdEpdiEjyDUj8HjiEo8ba4BAa8AOGXfQWZA7AAHiljNzoOBA%3D%3D`;
       axios.get(apiUrl)
-      .then((response) => {
-        const placeData = response.data.response.body;
-        const items = placeData.items.item;
+        .then((response) => {
+          const placeData = response.data.response.body;
+          const items = placeData.items.item;
 
-        // orgdownNm 값을 추출하여 버튼 배열을 생성합니다
-        this.orgdownNms = items.map(item => item.orgdownNm);
+          // orgdownNm 값을 추출하여 버튼 배열을 생성합니다
+          this.orgdownNms = items.map(item => ({
+            orgCd: item.orgCd,
+            orgdownNm: item.orgdownNm
+          }));
 
-        // placeButtons 배열을 생성하여 각 버튼을 저장합니다
-        this.placeButtons = this.orgdownNms.map(orgdownNm => ({
-          label: orgdownNm,
-          onClick: () => {
-            // 버튼 클릭 시 동작할 로직을 여기에 작성합니다
-            // 예: 선택한 지역에 따라 다른 데이터를 가져오거나 처리합니다
-          }
-        }));
-      })
-      .catch((error) => {
-        console.error(error);
-      });
+          // placeButtons 배열을 생성하여 각 버튼을 저장합니다
+          this.placeButtons = this.orgdownNms.map(org => ({
+            label: org.orgdownNm,
+            onClick: () => {
+              this.fetchData(org.orgCd);
+              this.showPlaceButtons = false;
+            }
+          }));
+        })
+        .catch((error) => {
+          console.error(error);
+        });
+    },
+    onClickAll() {
+      this.orgCd = '';
+      this.fetchData(this.orgCd);
+      this.showPlaceButtons = false;
+    },
+    PlacetoggleButtons() {
+      this.showPlaceButtons = !this.showPlaceButtons; // showPlaceButtons 값을 토글
+    },
+    NeuteredtoggleButtons() {
+      this.showNeuteredButtons = !this.showNeuteredButtons; // showPlaceButtons 값을 토글
     },
     handleItemClick(desertionNo) {
       console.log(desertionNo); // desertionNo 값 확인
       this.desertionNo = desertionNo; // desertionNo 값을 설정
-      this.$router.push({ name: 'Detail', query: { desertionNo: desertionNo, careAddr: this.careAddr} });
+      this.$router.push({ name: 'Detail', query: { desertionNo: desertionNo, careAddr: this.careAddr } });
     },
     previousPage() {
       if (this.pageNo > 1) {
@@ -212,10 +253,17 @@ export default {
   /* 다른 스타일을 추가로 적용할 수 있습니다 */
 }
 
-.button-container {
-  display: flex;
-  justify-content: flex-end;
-  margin-right: 136px;
+.place-container {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  padding: 0;
+
+}
+.Neutered-container {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  padding: 0;
+
 }
 
 .grid-container {
@@ -280,5 +328,12 @@ export default {
   display: inline-block;
   margin-right: 10px;
   background-color: rgb(199, 97, 129);
+  color: white;
+}
+
+#orgNm {
+  display: inline-block;
+  margin-right: 10px;
+  background-color: rgb(125, 182, 243);
   color: white;
 }</style>

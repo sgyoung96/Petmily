@@ -139,7 +139,7 @@ export default {
     }
   },
   mounted: function() {
-    this.notifyPolling();
+    //this.notifyPolling();
   },
   beforeUnmount: function() {
     clearInterval(this.notifyData);
