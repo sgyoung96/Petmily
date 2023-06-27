@@ -1,4 +1,15 @@
 <template>
+  <div id="p" class="col-1">
+  </div>
+  <div class="col-10"
+    style="border: solid #e5e7eb; border-radius: 20px; margin-top: 50px; position: relative; margin-left: 130px; text-align: left; background-color:white;">
+    <div>
+  <button v-on:click="place" class="custom-button">전체</button>
+  <div v-for="button in placeButtons" :key="button.label">
+    <button v-on:click="button.onClick" class="custom-button">{{ button.label }}</button>
+  </div>
+</div>
+  </div>
   <div id="app" style="margin-top:50px;">
     <div class="grid-container">
       <div v-for="item in items" :key="item.desertionNo" class="grid-item">
@@ -33,7 +44,8 @@
   </div>
   <div style="margin-top: 2%;">
     <button v-on:click="previousPage" class="custom-button">이전</button>
-    <button v-for="pageNumber in displayedPages" :key="pageNumber" v-on:click="goToPage(pageNumber)" class="custom-button">
+    <button v-for="pageNumber in displayedPages" :key="pageNumber" v-on:click="goToPage(pageNumber)"
+      class="custom-button">
       {{ pageNumber }}
     </button>
     <button v-on:click="nextPage" class="custom-button">다음</button>
@@ -48,10 +60,11 @@ export default {
   data() {
     return {
       items: [],
-      pageNo: 1, // 현재 페이지 번호
-      pageSize: 24, // 한 페이지에 표시할 항목 수
-      totalItems: 0, // 전체 항목 수
-      totalPages: 0, // 전체 페이지 수
+      placeButtons: [],
+      pageNo: 1,
+      pageSize: 24,
+      totalItems: 0,
+      totalPages: 0,
       kindCd: '',
       displayedPages: [], // 현재 표시되는 페이지 버튼
       startPage: 1, // 시작 페이지 번호
@@ -59,11 +72,13 @@ export default {
       careAddr: ''
     };
   },
+
   created() {
     this.fetchData(); // 페이지가 생성될 때 데이터 가져오기
   },
   methods: {
     fetchData() {
+      // 기존 코드
       const apiUrl = `http://apis.data.go.kr/1543061/abandonmentPublicSrvc/abandonmentPublic?_type=json&pageNo=${this.pageNo}&numOfRows=${this.pageSize}&serviceKey=JkjPRne8oXZTCJTyLN9579FQZI6%2FkhepY9kJhsmdEpdiEjyDUj8HjiEo8ba4BAa8AOGXfQWZA7AAHiljNzoOBA%3D%3D`;
       axios.get(apiUrl)
         .then((response) => {
@@ -76,20 +91,46 @@ export default {
         .catch((error) => {
           console.error(error);
         });
+
+      // 새로운 코드 - 장소 데이터 가져오기
+      this.place();
     },
-    handleItemClick(desertionNo, careAddr) {
+    place() {
+      const apiUrl = `http://apis.data.go.kr/1543061/abandonmentPublicSrvc/sido?_type=json&pageNo=1&numOfRows=100&serviceKey=JkjPRne8oXZTCJTyLN9579FQZI6%2FkhepY9kJhsmdEpdiEjyDUj8HjiEo8ba4BAa8AOGXfQWZA7AAHiljNzoOBA%3D%3D`;
+      axios.get(apiUrl)
+      .then((response) => {
+        const placeData = response.data.response.body;
+        const items = placeData.items.item;
+
+        // orgdownNm 값을 추출하여 버튼 배열을 생성합니다
+        this.orgdownNms = items.map(item => item.orgdownNm);
+
+        // placeButtons 배열을 생성하여 각 버튼을 저장합니다
+        this.placeButtons = this.orgdownNms.map(orgdownNm => ({
+          label: orgdownNm,
+          onClick: () => {
+            // 버튼 클릭 시 동작할 로직을 여기에 작성합니다
+            // 예: 선택한 지역에 따라 다른 데이터를 가져오거나 처리합니다
+          }
+        }));
+      })
+      .catch((error) => {
+        console.error(error);
+      });
+    },
+    handleItemClick(desertionNo) {
       console.log(desertionNo); // desertionNo 값 확인
       this.desertionNo = desertionNo; // desertionNo 값을 설정
-      this.$router.push({ name: 'Detail', query: { desertionNo: desertionNo, careAddr: careAddr} });
+      this.$router.push({ name: 'Detail', query: { desertionNo: desertionNo, careAddr: this.careAddr} });
     },
     previousPage() {
       if (this.pageNo > 1) {
         this.pageNo--;
         this.fetchData();
-      } 
-      else {
-          alert("이전 페이지가 없습니다")
-        }
+      } else {
+        alert("이전 페이지가 없습니다");
+      }
+
     },
     nextPage() {
       const totalPages = Math.ceil(this.totalItems / this.pageSize);
@@ -97,10 +138,10 @@ export default {
         this.pageNo++;
         this.fetchData();
       }
-      else{
-          alert("다음 페이지가 없습니다")
-        }
-        
+      else {
+        alert("다음 페이지가 없습니다")
+      }
+
     },
     goToPage(pageNumber) {
       this.pageNo = pageNumber;
@@ -136,21 +177,35 @@ export default {
 
 <style>
 .custom-button {
-  background-color: #f0cf81; /* 배경색 설정 */
-  border: none; /* 테두리 제거 */
-  color: white; /* 텍스트 색상 설정 */
-  padding: 10px 20px; /* 안쪽 여백 설정 */
-  text-align: center; /* 텍스트 가운데 정렬 */
-  text-decoration: none; /* 밑줄 제거 */
-  display: inline-block; /* 인라인 요소로 표시 */
-  font-size: 16px; /* 폰트 크기 설정 */
-  margin: 4px 2px; /* 외부 여백 설정 */
-  cursor: pointer; /* 커서 포인터로 변경 */
-  border-radius: 4px; /* 모서리를 둥글게 설정 */
+  background-color: #f0cf81;
+  /* 배경색 설정 */
+  border: none;
+  /* 테두리 제거 */
+  color: white;
+  /* 텍스트 색상 설정 */
+  padding: 10px 20px;
+  /* 안쪽 여백 설정 */
+  text-align: center;
+  /* 텍스트 가운데 정렬 */
+  text-decoration: none;
+  /* 밑줄 제거 */
+  display: inline-block;
+  /* 인라인 요소로 표시 */
+  font-size: 16px;
+  /* 폰트 크기 설정 */
+  margin: 4px 2px;
+  /* 외부 여백 설정 */
+  cursor: pointer;
+  /* 커서 포인터로 변경 */
+  border-radius: 4px;
+  /* 모서리를 둥글게 설정 */
 }
+
 .custom-button:hover {
-  background-color: #f0cf81; /* 마우스 호버시 배경색 변경 */
+  background-color: #f0cf81;
+  /* 마우스 호버시 배경색 변경 */
 }
+
 .card {
   border-radius: 10px;
   /* 모서리를 둥글게 만듭니다 */
@@ -226,5 +281,4 @@ export default {
   margin-right: 10px;
   background-color: rgb(199, 97, 129);
   color: white;
-}
-</style>
+}</style>
