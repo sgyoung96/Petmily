@@ -123,7 +123,7 @@ export default {
   data() {
     return {
       items: [],
-      address: this.$route.query.careAddr,
+      careAddr: '',
       map: null,
       marker: null,
     };
@@ -139,11 +139,11 @@ export default {
   },
 
   created: function () {
-    this.desertionNo = this.$route.query.desertionNo;
-    this.careAddr = this.$route.query.careAddr;
+    this.$data.desertionNo = this.$route.query.desertionNo;
+    this.$data.careAddr = this.$route.query.careAddr;
     this.fetchItems();
 
-    alert(this.careAddr)
+    alert(this.$data.careAddr);
   },
   mounted() {
       if (window.kakao && window.kakao.maps) {
@@ -186,11 +186,11 @@ export default {
       this.showLocation();
     },
     showLocation() {
-      if (this.address === "") {
+      if (this.careAddr === "") {
         alert("주소를 입력하세요.");
         return;
       }
-      const encodedAddress = encodeURIComponent(this.address);
+      const encodedAddress = encodeURIComponent(this.careAddr);
       const apiUrl = `https://maps.googleapis.com/maps/api/geocode/json?address=${encodedAddress}&key=AIzaSyAEMcBVXcTsB5UmbNou29kkZkSPpq4mDJA`;
 
       axios
