@@ -25,7 +25,7 @@ public class NotifyDiaryController {
 	@Autowired
 	private NotifyDiaryService service;
 	
-	@GetMapping("")
+	@GetMapping("/{id}")
 	public HashMap<String, Object> getAll(@PathVariable("id") String id) {
 		ArrayList<NotifyDiaryDto> list = new ArrayList<>();
 		list = service.getAll(id);

@@ -1,8 +1,7 @@
 package com.example.demo.notification.diary;
 
-import java.util.Date;
-
 import com.example.demo.diaryboard.Diaryboard;
+import com.example.demo.diarycomment.Diarycomment;
 import com.example.demo.member.Member;
 
 import lombok.AllArgsConstructor;
@@ -19,8 +18,9 @@ import lombok.ToString;
 public class NotifyDiaryDto {
 	private int num;
 	private Member id;
-	private Diaryboard dbnum;
+	private Member name;
+	private Diaryboard title;
 	private String content;
-	private Date instTime;
+	private Diarycomment instTime;
 	private String isClicked;
 }

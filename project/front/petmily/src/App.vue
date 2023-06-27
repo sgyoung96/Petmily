@@ -151,7 +151,7 @@ export default {
           const self = this;
           self.$axios.get('http://localhost:8082/notify/' + this.loginId)
           .then (function(rs) {
-            document.write('<span>' + rs + '</span>');
+            console.log(rs);
           });
         }
       }, 3000);
