@@ -42,7 +42,7 @@ public class DiaryboardService {
 	
 	//id로 검색
 	public ArrayList<DiaryboardDto> getById(String id) {
-		Member m = new Member(id,"","","","",null,"","","");
+		Member m = new Member(id,"","","","",null,"","","",null);
 	    ArrayList<Diaryboard> list = dao.findByIdContaining(m);
 	    ArrayList<DiaryboardDto> list2 = new ArrayList<DiaryboardDto>();
 	    for (Diaryboard d : list) {
