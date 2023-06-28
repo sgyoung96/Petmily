@@ -134,10 +134,10 @@ public class VolboardController {
 		return map;
 	}
 	
-	//작성자로 검색
-	@GetMapping("/writer/{writer}")
-	public Map getByWriter(@PathVariable("writer") String writer) {
-		ArrayList<VolboardDto> list = service.getByWriter(writer);
+	//봉사장소로 검색
+	@GetMapping("/address/{address}")
+	public Map getByWriter(@PathVariable("address") String address) {
+		ArrayList<VolboardDto> list = service.getByAddress(address);
 		Map map = new HashMap();
 		map.put("list", list);
 		return map;

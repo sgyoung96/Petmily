@@ -1,6 +1,7 @@
 package com.example.demo.volboard;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
@@ -16,6 +17,7 @@ import jakarta.transaction.Transactional;
 public interface VolboardDao extends JpaRepository<Volboard, Integer> {
 	ArrayList<Volboard> findByTitle(String title);
 	ArrayList<Volboard> findByWriter(Member writer);
+	List<Volboard> findByAddressContaining(String address);
 	
 	@Transactional
 	@Modifying

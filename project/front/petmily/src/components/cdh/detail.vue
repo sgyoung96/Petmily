@@ -123,11 +123,21 @@ export default {
   data() {
     return {
       items: [],
-      address: this.$route.query.careAddr,
+      careAddr: '',
       map: null,
       marker: null,
     };
   },
+
+  mounted() {
+  const mapElement = document.getElementById("map");
+  if (window.kakao && window.kakao.maps && mapElement) {
+    this.loadMap();
+  } else {
+    this.loadScript();
+  }
+},
+
 
   computed: {
     filteredItems() {
@@ -139,18 +149,11 @@ export default {
   },
 
   created: function () {
-    this.desertionNo = this.$route.query.desertionNo;
-    this.careAddr = this.$route.query.careAddr;
+    this.$data.desertionNo = this.$route.query.desertionNo;
+    this.$data.careAddr = this.$route.query.careAddr;
     this.fetchItems();
 
-    alert(this.careAddr)
-  },
-  mounted() {
-      if (window.kakao && window.kakao.maps) {
-        this.loadMap();
-      } else {
-        this.loadScript();
-      }
+    alert(this.$data.careAddr);
   },
 
   methods: {
@@ -162,9 +165,7 @@ export default {
           const items = data.response.body.items.item;
           this.items = items; // 데이터를 items 배열에 할당
         })
-        .catch((error) => {
-          console.error(error);
-        });
+        .catch(this.handleError); // handleError 함수 호출
     },
     loadScript() {
       const script = document.createElement("script");
@@ -186,11 +187,11 @@ export default {
       this.showLocation();
     },
     showLocation() {
-      if (this.address === "") {
+      if (this.careAddr === "") {
         alert("주소를 입력하세요.");
         return;
       }
-      const encodedAddress = encodeURIComponent(this.address);
+      const encodedAddress = encodeURIComponent(this.careAddr);
       const apiUrl = `https://maps.googleapis.com/maps/api/geocode/json?address=${encodedAddress}&key=AIzaSyAEMcBVXcTsB5UmbNou29kkZkSPpq4mDJA`;
 
       axios

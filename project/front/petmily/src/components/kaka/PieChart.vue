@@ -1,5 +1,5 @@
 <template>
-    <canvas id="PieChart" width="50" height="50"></canvas>
+    <canvas id="PieChart" width="1" height="1"></canvas>
     {{ formatDate(this.sysdate) }}
   </template>
   
