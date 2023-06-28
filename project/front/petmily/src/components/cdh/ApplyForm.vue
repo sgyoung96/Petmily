@@ -1,17 +1,95 @@
 <template>
-    <div class="hello">
-      <h1>입양 신청 양식폼</h1>
-        <h3>Apply form</h3>
-        id:<input type="text" v-model="id" readonly><br/>
-        wdate:<input type="text" v-model="wdate" readonly><br/>
-        agreement:<input name="age" type="radio" v-model="agreement" value="0">미동의 /
+    <div>
+      <div class="base-info-container">
+        <div class="base-info-pet">
+          <div>
+            <p>입양하실 아가의 기본정보예요.</p>
+
+            <input type="text" v-model="info.kindCd" />
+          </div>
+        </div>
+
+        <div class="base-info-center">
+          <div>
+            <p>아가를 보호하고 있는 곳의 정보예요.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="applier-container">
+        <p>입양 신청 양식을 작성해 주세요.</p>
+
+        <div>
+          <div>
+
+            <textarea style="width: 1000px; height: 300px;" readonly>
+개인정보 취급방침
+
+펫밀리 (이하 '단체'는) 입양신청자의 개인정보를 중요시하며, "정보통신망 이용촉진 및 정보보호"에 관한 법률을 준수하고 있습니다.
+단체는 개인정보취급방침을 통하여 입양신청자께서 제공하시는 개인정보가 어떠한 용도와 방식으로 이용되고 있으며, 개인정보보호를 위해 어떠한 조치가 취해지고 있는지 알려드립니다.
+■ 개인정보 수집에 대한 동의
+
+1) "단체"는 이용자의 개인정보를 수집하는 경우에는 [위의 개인정보취급방침에 동의합니다]의 체크박스에 체크하는 절차를 마련하고 있으며, [위의 개인정보취급방침에 동의합니다]의 체크박스에 체크하였을 경우 개인정보 수집에 대하여 동의한 것으로 봅니다.
+2) "단체"는 다음 사항에 해당하는 경우에 이용자의 별도 동의 없이 개인정보를 수집.이용할 수 있습니다.
+- 서비스의 제공에 관한 계약의 이행을 위하여 필요한 개인정보로서 경제적.기술적인 사유로 통상의 동의를 받는 것이 현저히 곤란한 경우
+- 서비스의 제공에 따른 요금정산을 위하여 필요한 경우
+- 이 법 또는 다른 법률에 특별한 규정이 있는 경우
+
+■ 수집하는 개인정보 항목
+
+단체는 회원가입, 상담, 서비스 신청 등등을 위해 아래와 같은 개인정보를 수집하고 있습니다.
+
+ο 수집항목 : 이름, 생년월일, 로그인ID, 비밀번호, 자택 전화번호, 자택 주소, 휴대전화번호, 이메일, 직업, 단체명, 단체전화번호, 주민등록번호, 은행계좌 정보, 접속 로그, 쿠키, 후원회비, 자동이체날짜, 봉사희망분야, 단체주소, 자기소개, 자기정보공개여부
+ο 개인정보 수집방법 : 홈페이지(회원가입,후원하기)
+
+■ 개인정보의 수집 및 이용목적
+
+단체는 수집한 개인정보를 다음의 목적을 위해 활용합니다..
+
+ο 서비스 제공에 관한 계약 이행 및 서비스 제공에 따른 요금정산
+- 콘텐츠 제공
+ο 회원 관리
+- 회원제 서비스 이용에 따른 본인확인 , 개인 식별 , 불만처리 등 민원처리 , 고지사항 전달
+ο 마케팅 및 광고에 활용
+- 이벤트 등 광고성 정보 전달
+
+■ 개인정보의 보유 및 이용기간
+
+원칙적으로, 개인정보 수집 및 이용목적이 달성된 후에는 해당 정보를 지체 없이 파기합니다. 단, 관계법령의 규정에 의하여 보존할 필요가 있는 경우 단체는 아래와 같이 관계법령에서 정한 일정한 기간 동안 회원정보를 보관합니다.
+
+- 보존 항목 : 이름, 휴대전화번호, 이메일, 은행계좌 정보, 후원회비, 자동이체날짜, 봉사희망분야, 단체주소, 자기소개, 자기정보공개여부
+- 보존 근거 : 전자상거래등에서의 소비자보호에 관한 법률
+- 보존 기간 : 5년
+            </textarea> 
+          </div>
+
+        </div>
+
+        위 개인정보취급방침에 동의합니다. <input name="age" type="radio" v-model="agreement" value="0">미동의 /
         <input name="ag" type="radio" v-model="agreement" value="1">동의<br/>
-        another:<input type="text" v-model="another"><br/>
-        reason:<input type="textarea" v-model="reason"><br/> 
-        feeding:<input type="textarea" v-model="feeding"><br/>
+
+        <div><span>NAME</span><span>님의 정보를 기입해 주세요.</span></div>
+        id:<input type="text" v-model="id" readonly><br/>
+
+        
+
+        <p>입양을 결심하신 이유를 알려주세요.</p>
+       <input type="text" v-model="reason"><br/> 
+
+        <p>다른 반려 동물이 있으십니까?</p>
+        <input type="text" v-model="another"><br/>
+
+        <p>반려 동물로 맞이한 후에 아가와 함께할 시간들을 생각하며, 입양 후 다짐을 자유롭게 기술해 주세요.</p>
+        <input type="text" v-model="feeding"><br/>
+
+        <div><span>입양신청일 : </span><input type="text" v-model="wdate" readonly></div>
+
+
         <button v-on:click="apply()">신청</button>
+      </div>
     </div>
-  </template>
+
+</template>
   
   <script>
   export default {
@@ -52,6 +130,8 @@
     const self = this;
     self.info = JSON.parse(this.$route.query.info);
     console.log(self.info);
+
+    
   },
   methods:{
     apply(){
