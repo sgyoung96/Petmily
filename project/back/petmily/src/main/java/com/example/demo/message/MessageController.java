@@ -98,7 +98,7 @@ public class MessageController {
 		ArrayList<MessageDto> list = service.getByRecieverAndCheck(loginId, 0);
 		System.out.println("list size : " + list.size());
 		Map map = new HashMap();
-		map.put("list", list.size());
+		map.put("cnt", list.size());
 		return map;
 	}
 	
