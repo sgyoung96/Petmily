@@ -88,8 +88,7 @@ export default {
   created() {
     window.onpopstate = () => {
     // 뒤로 가기 버튼 클릭 시에 실행될 코드를 여기에 작성합니다.
-    // 예를 들어, 이전 페이지로 이동하는 코드를 작성할 수 있습니다.
-    this.goBack();
+    // 예를 들어, 이전 페이지로 이동하는 코드를 작성할 수 있습니다
   };
 
   const orgCd = this.$route.query.orgCd;
