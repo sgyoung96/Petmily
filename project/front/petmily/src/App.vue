@@ -83,8 +83,6 @@
         <router-link to="/addressmap">주소로 지도</router-link> |
         <router-link to="/barchart">막대그래프</router-link> |
         <router-link to="/piechart">파이차트</router-link> |
-        <router-link to="/applyform">Apply</router-link> |
-        <router-link to="/api">Api</router-link> |
         <div v-if="loginId != null">
           <router-link to="/messagewrite" >쪽지보내기</router-link> |
           <router-link to="/messagesender" >보낸쪽지함</router-link> |
@@ -95,7 +93,7 @@
         |
         <router-link to="/notify">알림함페이지이동</router-link> |
         <span @click="exitService()" style="cursor: pointer;">회원탈퇴</span>
-        <!-- //기존 링크 모음 (테스트용, 추후 삭제 예정) -->`
+        <!-- //기존 링크 모음 (테스트용, 추후 삭제 예정) -->
         <p>Copyright by Petmily, ... etc</p>
       </div>
     </footer>
