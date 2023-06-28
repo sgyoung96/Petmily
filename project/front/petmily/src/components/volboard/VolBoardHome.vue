@@ -2,63 +2,56 @@
   <div>
     <img src="../../assets/images/vboard2.jpg" style="width: 85%; height: 500px; margin-bottom: 20px;">
   </div>
-  <div class="d-title">
+  <div class="v-title">
     <h4 style="text-align: center;"><strong><span style="color:rgb(156, 156, 39)">PETMILY</span>
-      &nbsp;<span style="color:rgb(244, 191, 79);">VOLUNTEER</span></strong></h4>
-<h6 style="text-align: center;">유기동물에게 사랑의 손길을 나눠요.</h6></div>
+        &nbsp;<span style="color:rgb(244, 191, 79);">VOLUNTEER</span></strong></h4>
+  </div>
   <div style="padding-left: 150px;padding-right:150px">
-    <router-link to="/volboardadd">봉사게시판 작성</router-link>
-    <input type="text" placeholder="검색어를 입력하시오">
-    <button v-on:click="search(title)">검색</button>
-      <div class="vbody" v-for="vboard in list" :key="vboard.num">
-        <div style="text-align: left;">
-  <span class="badge text-bg-primary" style="font-size: 17px;">
-    <span v-if="calculateDateDifference(vboard.deadline).difference < 0">모집마감</span>
-    <span v-else>마감 D-{{ calculateDateDifference(vboard.deadline).days }}</span>
-  </span>&nbsp;
-  <strong>모집기간</strong> {{ formatDate(vboard.deadline) }}까지
-  <br/>
-  <div class=vtitle v-on:click="detail(vboard.num, vboard.address)">{{ vboard.title }}</div>
-  <div style="margin-bottom: 10px;">
-  <strong>[모집기관]</strong> {{ vboard.place }} &nbsp;
-  <strong>[봉사날짜]</strong> {{ formatDate(vboard.vol_date) }} &nbsp;<br/>
-  <strong>[봉사장소]</strong> {{ vboard.address }}
-</div>
-</div>
-        <div style class="vcount">
-          모집인원<br/>({{ vboard.count }} / {{ vboard.vol_number }})
+    <div style="display: flex;justify-content: space-between;">
+      <div>
+        <router-link to="/volboardadd">봉사게시판 작성</router-link>
       </div>
+      <div>
+        <input type="text" placeholder="검색어를 입력하시오">
+        <button v-on:click="search(title)">검색</button>
       </div>
     </div>
+    <div style="border-top:2px solid black; padding-top:10px; margin-top:10px">
+      <div class="vbody" v-for="vboard in list" :key="vboard.num" @click="detail(vboard.num, vboard.address)">
+        <div style="text-align: left;">
+            <span class="badge text-bg-danger" style="font-size: 17px;" v-if="calculateDateDifference(vboard.deadline).difference < 0">모집마감</span>
+            <span class="badge text-bg-primary" style="font-size: 17px;" v-else >마감 D-{{ calculateDateDifference(vboard.deadline).days }}</span>&nbsp;
+          <strong>모집기간</strong> {{ formatDate(vboard.deadline) }}까지
+          <br />
+          <div class=vtitle>{{ vboard.title }}</div>
+          <div style="margin-bottom: 10px;">
+            <strong>[모집기관]</strong> {{ vboard.place }} &nbsp;
+            <strong>[봉사날짜]</strong> {{ formatDate(vboard.vol_date) }} &nbsp;<br />
+            <strong>[봉사장소]</strong> {{ vboard.address }}
+          </div>
+        </div>
+        <div style class="vcount">
+          모집인원<br />({{ vboard.count }} / {{ vboard.vol_number }})
+        </div>
+      </div>
+
+    </div>
+  </div>
   <ul class="pagination" style="display: inline-block">
     <!-- 이전 페이지 버튼 -->
     <li class="page-item">
-      <a
-        class="page-link"
-        href="#"
-        aria-label="Previous"
-        @click="previousPage"
-      >
+      <a class="page-link" href="#" aria-label="Previous" @click="previousPage">
         <span aria-hidden="true">&laquo;</span>
       </a>
     </li>
     <!-- 페이지 번호 -->
-    <li
-      class="page-item"
-      v-for="pageNumber in totalPages"
-      :key="pageNumber"
-      :class="{ active: pageNumber === currentPage }"
-    >
+    <li class="page-item" v-for="pageNumber in totalPages" :key="pageNumber"
+      :class="{ active: pageNumber === currentPage }">
       <a class="page-link" href="#" @click="goToPage(pageNumber)">{{ pageNumber }}</a>
     </li>
     <!-- 다음 페이지 버튼 -->
     <li class="page-item">
-      <a
-        class="page-link"
-        href="#"
-        aria-label="Next"
-        @click="nextPage"
-      >
+      <a class="page-link" href="#" aria-label="Next" @click="nextPage">
         <span aria-hidden="true">&raquo;</span>
       </a>
     </li>
@@ -107,9 +100,9 @@ export default {
         year: 'numeric',
         month: '2-digit',
         day: '2-digit'
-    };
+      };
 
-    return new Date(date).toLocaleString('ko-KR', options).replace(/\D/g, '');
+      return new Date(date).toLocaleString('ko-KR', options).replace(/\D/g, '');
     },
     previousPage() {
       if (this.currentPage > 1) {
@@ -140,29 +133,19 @@ export default {
 </script>
 
 <style scoped>
-.image {
-  width: 100%;
-  height: 500px;
-  display:inline-block;
-  z-index: -1;
-  padding-left: -50px;
-  padding-right: -50px;
-  opacity: 0.3;
-  border-radius: 30px;
-  filter: blur(5px);
+.v-title {
+  margin-top: 120px;
+  margin-bottom: 120px;
 }
-.d-title{
-  flex-direction: column;
-  display:flex;
-  margin-top:120px;
-  margin-bottom:120px;
- }
-.vbody{
+
+.vbody {
   border-bottom: 1px solid #666666;
   display: flex;
   justify-content: space-between;
-  margin-bottom:10px;
+  margin-bottom: 10px;
+  cursor: pointer;
 }
+
 .vcount {
   display: flex;
   align-items: center;
@@ -173,11 +156,13 @@ export default {
   font-size: 15px;
   font-weight: bold;
   text-align: center;
-  margin-top:20px;
+  margin-top: 20px;
 }
-.vtitle{
+
+.vtitle {
   font-size: 30px;
 }
+
 h3 {
   margin: 40px 0 0;
 }
