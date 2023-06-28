@@ -15,9 +15,9 @@ public class ApplyformService {
 	//추가, 수정
 	public ApplyformDto save(ApplyformDto dto) {
 		Applyform a = dao.save(new Applyform(dto.getNum(), dto.getId(), dto.getWdate(), dto.getAgreement(), 
-				dto.getAnother(), dto.getReason(), dto.getFeeding(), dto.getIscheck()));
+				dto.getAnother(), dto.getReason(), dto.getFeeding(), dto.getIscheck(), dto.getPetCd()));
 		return new ApplyformDto(a.getNum(), a.getId(), a.getWdate(), a.getAgreement(), a.getAnother(),
-				a.getReason(), a.getFeeding(),a.getIscheck());
+				a.getReason(), a.getFeeding(),a.getIscheck(), a.getPetCd());
 	}
 	
 	//전체 검색
@@ -26,7 +26,7 @@ public class ApplyformService {
 		ArrayList<ApplyformDto> list2 = new ArrayList<ApplyformDto>();
 		for (Applyform a : list) {
 			list2.add(new ApplyformDto(a.getNum(), a.getId(), a.getWdate(), a.getAgreement(),
-					a.getAnother(), a.getReason(), a.getFeeding(), a.getIscheck()));
+					a.getAnother(), a.getReason(), a.getFeeding(), a.getIscheck(), a.getPetCd()));
 		}
 		return list2;
 	}
@@ -38,7 +38,7 @@ public class ApplyformService {
 		ArrayList<ApplyformDto> list2 = new ArrayList<ApplyformDto>();
 		for (Applyform a : list) {
 			list2.add(new ApplyformDto(a.getNum(), a.getId(), a.getWdate(), a.getAgreement(),
-					a.getAnother(), a.getReason(), a.getFeeding(), a.getIscheck()));
+					a.getAnother(), a.getReason(), a.getFeeding(), a.getIscheck(), a.getPetCd()));
 		}
 		return list2;
 	}
@@ -49,7 +49,7 @@ public class ApplyformService {
 		ArrayList<ApplyformDto> list2 = new ArrayList<ApplyformDto>();
 		for (Applyform a : list) {
 			list2.add(new ApplyformDto(a.getNum(), a.getId(), a.getWdate(), a.getAgreement(),
-					a.getAnother(), a.getReason(), a.getFeeding(), a.getIscheck()));
+					a.getAnother(), a.getReason(), a.getFeeding(), a.getIscheck(), a.getPetCd()));
 		}
 		return list2;
 	}
