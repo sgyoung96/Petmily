@@ -72,7 +72,21 @@ public class ApplyformController {
 		return map;
 	}	
 	
-	//거부및 삭제
+	//거부
+		@PatchMapping("/{num}")
+		public Map refuse(@PathVariable("num") int num) {
+			boolean flag = true;
+			try {
+				service.refuse(num);
+			} catch (Exception e) {
+				flag = false;
+			}
+			Map map = new HashMap();
+			map.put("flag", flag);
+			return map;
+		}	
+		
+	//삭제
 	@DeleteMapping("/{num}")
 	public void delform(@PathVariable("num") int num) {
 		service.delApplyform(num);

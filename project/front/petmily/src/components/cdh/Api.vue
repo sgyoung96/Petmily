@@ -4,7 +4,7 @@
   <div class="col-10"
     style="border: solid #e5e7eb; border-radius: 20px; margin-top: 50px; position: relative; margin-left: 130px; text-align: left; background-color:white;">
     <div>
-      <button v-on:click="PlacetoggleButtons" class="custom-button">시도조회</button>
+      <button v-on:click="PlacetoggleButtons" class="custom-button">시도조회</button><br>
       <div v-if="showPlaceButtons">
         <div class="place-container">
           <button v-on:click="PlaceAll" class="custom-button" style="width:160px; height:40px">전체</button>
@@ -14,6 +14,18 @@
         </div>
       </div>
     </div>
+    <div>
+      <button v-on:click="NeutertoggleButtons" class="custom-button">중성화여부</button>
+      <div v-if="showNeuterButtons">
+        <div class="Neuter-container">
+          <button v-on:click="NeuterAll" class="custom-button" style="width:160px; height:40px">전체</button>
+          <button v-on:click="NeuterY" class="custom-button" style="width:160px; height:40px">예</button>
+          <button v-on:click="NeuterN" class="custom-button" style="width:160px; height:40px">아니요</button>
+          <button v-on:click="NeuterU" class="custom-button" style="width:160px; height:40px">미상</button>
+        </div>
+      </div>
+    </div>
+    <button v-on:click="search" class="custom-button">{{this.orgCd}}, {{this.neuter_yn}}검색</button>
   </div>
   <div id="app" style="margin-top:50px;">
     <div class="grid-container">
@@ -81,7 +93,9 @@ export default {
       endPage: 10, // 끝 페이지 번호
       careAddr: '',
       showPlaceButtons: false,
-      orgCd: ''
+      showNeuterButtons: false,
+      orgCd: '',
+      neuter_yn:''
     };
   },
 
@@ -98,10 +112,14 @@ export default {
 },
 
   methods: {
-    fetchData(orgCd) {
+    fetchData(orgCd, neuter_yn) {
       let apiUrl;
-      if (orgCd) {
-        apiUrl = `http://apis.data.go.kr/1543061/abandonmentPublicSrvc/abandonmentPublic?_type=json&pageNo=${this.pageNo}&numOfRows=${this.pageSize}&upr_cd=${orgCd}&serviceKey=JkjPRne8oXZTCJTyLN9579FQZI6%2FkhepY9kJhsmdEpdiEjyDUj8HjiEo8ba4BAa8AOGXfQWZA7AAHiljNzoOBA%3D%3D`;
+      if (orgCd && neuter_yn) {
+        apiUrl = `http://apis.data.go.kr/1543061/abandonmentPublicSrvc/abandonmentPublic?_type=json&pageNo=${this.pageNo}&numOfRows=${this.pageSize}&upr_cd=${orgCd}&neuter_yn=${neuter_yn}&serviceKey=JkjPRne8oXZTCJTyLN9579FQZI6%2FkhepY9kJhsmdEpdiEjyDUj8HjiEo8ba4BAa8AOGXfQWZA7AAHiljNzoOBA%3D%3D`;
+      } else if (orgCd) {
+        apiUrl = `http://apis.data.go.kr/1543061/abandonmentPublicSrvc/abandonmentPublic?_type=json&pageNo=${this.pageNo}&numOfRows=${this.pageSize}&upr_cd=${orgCd}}&serviceKey=JkjPRne8oXZTCJTyLN9579FQZI6%2FkhepY9kJhsmdEpdiEjyDUj8HjiEo8ba4BAa8AOGXfQWZA7AAHiljNzoOBA%3D%3D`;
+      } else if (neuter_yn) {
+        apiUrl = `http://apis.data.go.kr/1543061/abandonmentPublicSrvc/abandonmentPublic?_type=json&pageNo=${this.pageNo}&numOfRows=${this.pageSize}&neuter_yn=${neuter_yn}&serviceKey=JkjPRne8oXZTCJTyLN9579FQZI6%2FkhepY9kJhsmdEpdiEjyDUj8HjiEo8ba4BAa8AOGXfQWZA7AAHiljNzoOBA%3D%3D`;
       } else {
         apiUrl = `http://apis.data.go.kr/1543061/abandonmentPublicSrvc/abandonmentPublic?_type=json&pageNo=${this.pageNo}&numOfRows=${this.pageSize}&serviceKey=JkjPRne8oXZTCJTyLN9579FQZI6%2FkhepY9kJhsmdEpdiEjyDUj8HjiEo8ba4BAa8AOGXfQWZA7AAHiljNzoOBA%3D%3D`;
       }
@@ -148,7 +166,7 @@ export default {
           this.placeButtons = this.orgdownNms.map(org => ({
             label: org.orgdownNm,
             onClick: () => {
-              this.fetchData(org.orgCd);
+              this.orgCd=org.orgCd;
               this.showPlaceButtons = false;
             }
           }));
@@ -157,14 +175,34 @@ export default {
           console.error(error);
         });
     },
-    NoPlace() {
-      this.orgCd = '';
-      this.fetchData(this.orgCd);
-      this.showPlaceButtons = false;
-    },
+    NeuterAll() {
+  this.neuter_yn = '';
+  this.showNeuterButtons = false;
+},
+NeuterY() {
+  this.neuter_yn = 'Y';
+  this.showNeuterButtons = false;
+},
+NeuterN() {
+  this.neuter_yn = 'N';
+  this.showNeuterButtons = false;
+},
+NeuterU() {
+  this.neuter_yn = 'U';
+  this.showNeuterButtons = false;
+},
+PlaceAll() {
+  this.orgCd = '';
+  this.showPlaceButtons = false;
+},
+search(){
+  this.fetchData(this.orgCd, this.neuter_yn);
+},
     PlacetoggleButtons() {
       this.showPlaceButtons = !this.showPlaceButtons; // showPlaceButtons 값을 토글
-      this.showNeuteredButtons= false;
+    },
+    NeutertoggleButtons() {
+      this.showNeuterButtons = !this.showNeuterButtons; // showNeuterButtons 값을 토글
     },
     handleItemClick(desertionNo) {
       console.log(desertionNo); // desertionNo 값 확인

@@ -58,7 +58,9 @@ public class ApplyformService {
 	public void apply(int num) {
 		dao.updateApply(num);
 	}
-	
+	public void refuse(int num) {
+		dao.updateRefuse(num);
+	}
 	//삭제 -> 거부
 	public void delApplyform(int num) {
 		dao.deleteById(num);
