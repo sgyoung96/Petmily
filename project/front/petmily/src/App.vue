@@ -124,20 +124,16 @@ export default {
     if (sessionStorage.getItem('loginId') != null) {
       this.loginId = sessionStorage.getItem('loginId');
 
-      if (this.loginId != null) {
-        if (this.loginId == 'admin') {
-          this.$router.push('/adminhome')
-        } else if (sessionStorage.getItem('loginFlag') == 'kakao') {
-          const self = this;
+      if (sessionStorage.getItem('loginFlag') == 'kakao') {
+        const self = this;
 
-          self.$axios.get('http://localhost:8082/members/' + this.loginId).then (function(rs) {
-            console.log(rs.data.dto);
-          
-            if (rs.data.dto == null) {
-              self.$router.push({name:'KakaoAdditionalForm', query:{kakaoId: sessionStorage.getItem('loginId'), kakaoName: sessionStorage.getItem('kakaoName')}});
-            }
-          });
-        }
+        self.$axios.get('http://localhost:8082/members/' + this.loginId).then (function(rs) {
+          console.log(rs.data.dto);
+        
+          if (rs.data.dto == null) {
+            self.$router.push({name:'KakaoAdditionalForm', query:{kakaoId: sessionStorage.getItem('loginId'), kakaoName: sessionStorage.getItem('kakaoName')}});
+          }
+        });
       }
     }
   },
