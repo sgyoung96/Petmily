@@ -21,4 +21,18 @@ public class LiketableService {
 			return new LiketableDto(dto.getDb_num(), dto.getId(), dto.getNum());
 		}
 	}
+	
+	void save(LiketableDto dto) {
+		dao.save(new Liketable(dto.getDb_num(), dto.getId(), dto.getNum()));
+	}
+	
+	void deleteById(String id, int num) {
+		Member m = new Member(id,"","","","",null,"","","",null);
+		Diaryboard d = new Diaryboard(num,"","",null,null,"","",0);
+		dao.deleteByIdAndNum(m, d);
+	}
+	
+	void deleteOne(LiketableDto dto) {
+		dao.delete(new Liketable(dto.getDb_num(), dto.getId(), dto.getNum()));
+	}
 }
