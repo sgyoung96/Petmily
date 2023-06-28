@@ -48,6 +48,7 @@
       formdata.append('reason', self.reason);
       formdata.append('feeding', self.feeding);
       formdata.append('ischeck', self.ischeck);
+      formdata.append('petCd', self.applyPetCd);
 
       self.$axios.post('http://localhost:8082/Applyform', formdata)//비동기 요청
       .then(function(res) {//요청 결과 받아옴. 파람 res에 결과저장됨. res.data가 백단에서 전송한 데이터
