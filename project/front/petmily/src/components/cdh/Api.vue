@@ -7,9 +7,10 @@
       <button v-on:click="PlacetoggleButtons" class="custom-button">시도조회</button><br>
       <div v-if="showPlaceButtons">
         <div class="place-container">
-          <button v-on:click="PlaceAll" class="custom-button" style="width:160px; height:40px">전체</button>
+          <button v-on:click="PlaceAll" class="place-button" style="width:160px; height:40px">전체</button>
           <div v-for="button in placeButtons" :key="button.label">
-            <button v-on:click="button.onClick" class="custom-button" style="width:160px; height:40px">{{ button.label }}</button>
+            <button v-on:click="button.onClick" class="place-button" style="width:160px; height:40px">{{ button.label
+            }}</button>
           </div>
         </div>
       </div>
@@ -18,14 +19,14 @@
       <button v-on:click="NeutertoggleButtons" class="custom-button">중성화여부</button>
       <div v-if="showNeuterButtons">
         <div class="Neuter-container">
-          <button v-on:click="NeuterAll" class="custom-button" style="width:160px; height:40px">전체</button>
-          <button v-on:click="NeuterY" class="custom-button" style="width:160px; height:40px">예</button>
-          <button v-on:click="NeuterN" class="custom-button" style="width:160px; height:40px">아니요</button>
-          <button v-on:click="NeuterU" class="custom-button" style="width:160px; height:40px">미상</button>
-        </div>
+    <button v-on:click="setNeuter('')" :class="{ active: neuter === '' }" class="Neuter-button" :style="{ backgroundColor: neuter === '' ? activeColor : defaultColor }" style="width:160px; height:40px">전체</button>
+    <button v-on:click="setNeuter('Y')" :class="{ active: neuter === 'Y' }" class="Neuter-button" :style="{ backgroundColor: neuter === 'Y' ? activeColor : defaultColor }" style="width:160px; height:40px">예</button>
+    <button v-on:click="setNeuter('N')" :class="{ active: neuter === 'N' }" class="Neuter-button" :style="{ backgroundColor: neuter === 'N' ? activeColor : defaultColor }" style="width:160px; height:40px">아니요</button>
+    <button v-on:click="setNeuter('U')" :class="{ active: neuter === 'U' }" class="Neuter-button" :style="{ backgroundColor: neuter === 'U' ? activeColor : defaultColor }" style="width:160px; height:40px">미상</button>
+  </div>
       </div>
     </div>
-    <button v-on:click="search" class="custom-button">{{this.orgCd}}, {{this.neuter_yn}}검색</button>
+    <button v-on:click="search" class="custom-button">검색</button>
   </div>
   <div id="app" style="margin-top:50px;">
     <div class="grid-container">
@@ -55,9 +56,9 @@
               {{ item.weight }}
             </div>
             <div class="item-info">
-            <div id="orgNm">
-              {{ item.orgNm }}
-            </div>
+              <div id="orgNm">
+                {{ item.orgNm }}
+              </div>
             </div>
           </div>
         </div>
@@ -95,21 +96,24 @@ export default {
       showPlaceButtons: false,
       showNeuterButtons: false,
       orgCd: '',
-      neuter_yn:''
+      neuter_yn: '',
+      neuter: '', // Stores the active button value
+      defaultColor: '#e5e7eb', // Default button background color
+      activeColor: '#4caf50'
     };
   },
 
   created() {
     window.onpopstate = () => {
-    // 뒤로 가기 버튼 클릭 시에 실행될 코드를 여기에 작성합니다.
-    // 예를 들어, 이전 페이지로 이동하는 코드를 작성할 수 있습니다
-  };
+      // 뒤로 가기 버튼 클릭 시에 실행될 코드를 여기에 작성합니다.
+      // 예를 들어, 이전 페이지로 이동하는 코드를 작성할 수 있습니다
+    };
 
-  const orgCd = this.$route.query.orgCd;
-  const pageNo = this.$route.query.pageNo || 1;
-  this.pageNo = parseInt(pageNo);
-  this.fetchData(orgCd);
-},
+    const orgCd = this.$route.query.orgCd;
+    const pageNo = this.$route.query.pageNo || 1;
+    this.pageNo = parseInt(pageNo);
+    this.fetchData(orgCd);
+  },
 
   methods: {
     fetchData(orgCd, neuter_yn) {
@@ -124,7 +128,7 @@ export default {
         apiUrl = `http://apis.data.go.kr/1543061/abandonmentPublicSrvc/abandonmentPublic?_type=json&pageNo=${this.pageNo}&numOfRows=${this.pageSize}&serviceKey=JkjPRne8oXZTCJTyLN9579FQZI6%2FkhepY9kJhsmdEpdiEjyDUj8HjiEo8ba4BAa8AOGXfQWZA7AAHiljNzoOBA%3D%3D`;
       }
 
-      axios.get(apiUrl )
+      axios.get(apiUrl)
         .then((response) => {
           const data = response.data.response.body;
           this.items = data.items.item;
@@ -135,20 +139,20 @@ export default {
         .catch((error) => {
           console.error(error);
         });
-      
+
 
       const routeParams = {
-        path: 'Api', 
+        path: 'Api',
         query: {
-        orgCd: orgCd
+          orgCd: orgCd
         }
       };
-    this.$router.push(routeParams);
+      this.$router.push(routeParams);
 
-    // 장소 데이터 가져오기
-    this.place();
+      // 장소 데이터 가져오기
+      this.place();
     },
-    
+
     place() {
       const apiUrl = `http://apis.data.go.kr/1543061/abandonmentPublicSrvc/sido?_type=json&pageNo=1&numOfRows=100&serviceKey=JkjPRne8oXZTCJTyLN9579FQZI6%2FkhepY9kJhsmdEpdiEjyDUj8HjiEo8ba4BAa8AOGXfQWZA7AAHiljNzoOBA%3D%3D`;
       axios.get(apiUrl)
@@ -166,8 +170,7 @@ export default {
           this.placeButtons = this.orgdownNms.map(org => ({
             label: org.orgdownNm,
             onClick: () => {
-              this.orgCd=org.orgCd;
-              this.showPlaceButtons = false;
+              this.orgCd = org.orgCd;
             }
           }));
         })
@@ -175,39 +178,36 @@ export default {
           console.error(error);
         });
     },
+    setNeuter(value) {
+      this.neuter = value;
+    },
     NeuterAll() {
-  this.neuter_yn = '';
-  this.showNeuterButtons = false;
-},
-NeuterY() {
-  this.neuter_yn = 'Y';
-  this.showNeuterButtons = false;
-},
-NeuterN() {
-  this.neuter_yn = 'N';
-  this.showNeuterButtons = false;
-},
-NeuterU() {
-  this.neuter_yn = 'U';
-  this.showNeuterButtons = false;
-},
-PlaceAll() {
-  this.orgCd = '';
-  this.showPlaceButtons = false;
-},
-search(){
-  this.fetchData(this.orgCd, this.neuter_yn);
-},
+      this.neuter_yn = '';
+    },
+    NeuterY() {
+      this.neuter_yn = 'Y';
+    },
+    NeuterN() {
+      this.neuter_yn = 'N';
+    },
+    NeuterU() {
+      this.neuter_yn = 'U';
+    },
+    PlaceAll() {
+      this.orgCd = '';
+    },
+    search() {
+      this.fetchData(this.orgCd, this.neuter_yn);
+    },
     PlacetoggleButtons() {
       this.showPlaceButtons = !this.showPlaceButtons; // showPlaceButtons 값을 토글
     },
     NeutertoggleButtons() {
       this.showNeuterButtons = !this.showNeuterButtons; // showNeuterButtons 값을 토글
     },
-    handleItemClick(desertionNo, careAddr) {
+    handleItemClick(desertionNo) {
       console.log(desertionNo); // desertionNo 값 확인
-      this.desertionNo = desertionNo;
-      this.careAddr = careAddr; // desertionNo 값을 설정
+      this.desertionNo = desertionNo; // desertionNo 값을 설정
       this.$router.push({ name: 'Detail', query: { desertionNo: desertionNo, careAddr: this.careAddr } });
     },
     previousPage() {
@@ -261,29 +261,57 @@ search(){
 <style>
 .custom-button {
   background-color: #f0cf81;
-  /* 배경색 설정 */
   border: none;
-  /* 테두리 제거 */
   color: white;
-  /* 텍스트 색상 설정 */
   padding: 10px 20px;
-  /* 안쪽 여백 설정 */
   text-align: center;
-  /* 텍스트 가운데 정렬 */
   text-decoration: none;
-  /* 밑줄 제거 */
   display: inline-block;
-  /* 인라인 요소로 표시 */
   font-size: 16px;
-  /* 폰트 크기 설정 */
   margin: 4px 2px;
-  /* 외부 여백 설정 */
   cursor: pointer;
-  /* 커서 포인터로 변경 */
-  border-radius: 4px;
-  /* 모서리를 둥글게 설정 */
+}
+.Neuter-button {
+  margin: 5px;
+  padding: 5px;
+  border-radius: 5px;
+  border: none;
+  color: black;
+  cursor: pointer;
 }
 
+.Neuter-button.active {
+  color: f0cf81;
+}
+.place-button {
+  background-color: #f0cf81;
+  border: none;
+  color: white;
+  padding: 10px 20px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  margin: 4px 2px;
+  cursor: pointer;
+}
+
+.Neuter-button {
+  background-color: #f0cf81;
+  border: none;
+  color: white;
+  padding: 10px 20px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  margin: 4px 2px;
+  cursor: pointer;
+}
+.Neuter-button:active {
+  background-color: #4caf50;
+  color: white;
+}
 .custom-button:hover {
   background-color: #f0cf81;
   /* 마우스 호버시 배경색 변경 */
@@ -301,6 +329,13 @@ search(){
   padding: 0;
 
 }
+
+.place-container:focus {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  padding: 0;  
+}
+
 .Neutered-container {
   display: grid;
   grid-template-columns: repeat(4, 1fr);

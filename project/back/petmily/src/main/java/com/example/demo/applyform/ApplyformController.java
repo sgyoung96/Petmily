@@ -60,7 +60,7 @@ public class ApplyformController {
 		}
 	
 	//승인
-	@PatchMapping("/{num}")
+	@PatchMapping("/agree/{num}")
 	public Map apply(@PathVariable("num") int num) {
 		boolean flag = true;
 		try {
@@ -74,7 +74,7 @@ public class ApplyformController {
 	}	
 	
 	//거부
-		@PatchMapping("/{num}")
+		@PatchMapping("/refuse/{num}")
 		public Map refuse(@PathVariable("num") int num) {
 			boolean flag = true;
 			try {
