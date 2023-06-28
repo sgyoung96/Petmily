@@ -4,8 +4,7 @@
   </div>
   <div class="d-title">
     <h4 style="text-align: center;"><strong><span style="color:rgb(156, 156, 39)">PETMILY</span>
-      &nbsp;<span style="color:rgb(244, 191, 79);">DIARY</span></strong></h4>
-<h6 style="text-align: center;">새로운 가족을 만나게 된 아이들의 소식을 남겨주세요.</h6></div>
+      &nbsp;<span style="color:rgb(244, 191, 79);">DIARY</span></strong></h4></div>
   <div>
     <img src="../../assets/images/dboardpic.png" style="width: 1200px; height: 160px; margin-bottom: 20px;">
   </div>

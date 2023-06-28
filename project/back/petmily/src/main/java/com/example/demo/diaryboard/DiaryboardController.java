@@ -23,9 +23,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
-import com.example.demo.member.Member;
-import com.example.demo.member.MemberDto;
-
 @RestController
 @CrossOrigin(origins="*")
 @RequestMapping("/dboard")
