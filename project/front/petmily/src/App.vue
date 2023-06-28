@@ -87,7 +87,7 @@
           <router-link to="/messagewrite" >쪽지보내기</router-link> |
           <router-link to="/messagesender" >보낸쪽지함</router-link> |
           <router-link to="/messagereciever">쪽지함</router-link>
-          <span v-show="cntcheck" @click="cntcheck">{{cnt}}</span> 
+          <span v-show="cntchecktf" @click="cntcheck">{{cnt}}</span> 
           <router-link to="/memedit">내정보 수정</router-link>
         </div>
         |
@@ -114,6 +114,7 @@ export default {
       isOpen: false,
       dto: {},
       cnt:0,
+      cntchecktf:true,
       notifyData: null
     }
   },
@@ -139,7 +140,7 @@ export default {
     }
   },
   mounted: function() {
-    this.notifyPolling();
+    //this.notifyPolling();
   },
   beforeUnmount: function() {
     clearInterval(this.notifyData);
@@ -305,11 +306,11 @@ export default {
          self.cnt = res.data.cnt
          alert('cnt' + self.cnt)
          if(self.cnt == 0){
-          this.cntcheck = false;
+          self.cntchecktf = false;
          }else{
           alert(self.cnt)
-          this.cntcheck = true;
-          this.cnt = self.cnt;
+          self.cntchecktf = true;
+          
          }
         
         }else{

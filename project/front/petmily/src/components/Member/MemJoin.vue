@@ -1,41 +1,86 @@
 <template>
     <div id="myjoin">
-        <h3>join form</h3>
-       <input type="file" id="profile"><br/> 
-        <input class="input-item" type="text" v-model="id" placeholder="ID" @blur="idcheck" ><br/>
-        {{msg}}<br/>
-     
-      
-        <input class="input-item" type="text" v-model="name" placeholder="NAME" @blur="checkName" ><br/>
-        <span class ="font_id_red" v-show="isNameCheck">한글 또는 영어만 허용합니다</span><br/>
-        
-        <input class="input-item" type="password"  v-model="pwd" placeholder="PWD" ><br/>
-         <span class ="font_id_red" v-show="isPwdCheck">영문, 숫자, 특수문자 8~16문자</span><br/>  
-        <input class="input-item" type="password" id="pwdcheck"  v-model="pwdcheck" placeholder="PWD 확인" @blur="checkPwdEqual" ><br/>
-        <span class ="font_id_red" v-show="isPwdCheckEqual">비밀번호 확인해주세요</span><br/>  
+      <div class="join_area">
+        <h2 class="join_title">회원가입</h2>
+        <input type="file" id="profile"><br/> 
 
-        EMAIL : <input class="input-item" type="text" id="email" v-model="email" placeholder="예)petmily@petmily.co.kr" ><button v-on:click="emailcheck">이메일 확인</button><br/>
-         <span class ="font_id_red" v-show="isEmailCheck">이메일 형식을 확인해주세요</span><br/> 
-         <input input class="input-item" type="text" id="emailCode" v-model="emailCode"><button v-on:click="emailCodeCheck">인증</button><br/> 
-         <span class ="font_id_red" v-show="isEmailCodeCheck">인증코드를 확인해주세요</span><br/> 
-       
-        
-        
-        BIRTH : <input  type="date" v-model="birth" ><br/>  
-        <input name="g" type="radio" v-model="gender" value="m" >남 / 
+          <!-- 아이디 -->
+          <div class="input_box">
+            <h6 class="input_title" :class="{ 'title_danger': idHasError}">아이디</h6><br/>
+              <input class="input_txt" :class="{ 'input_danger': idHasError}" type="text" v-model="id" placeholder="ID" @blur="idcheck" >
+              <p class="input_error">{{msg}}</p>
+          </div>
+
+          <!-- 이름   -->
+          <div class="input_box">
+            <h6 class="input_title" :class="{ 'title_danger': nameHasError}">이름</h6><br/>
+            <input class="input_txt" :class="{ 'input_danger': nameHasError}" type="text" v-model="name" placeholder="NAME" @blur="checkName" >
+            <p class ="input_error" v-show="isNameCheck">한글 또는 영어만 허용합니다</p>
+          </div>
+
+           <!-- 비밀번호  -->
+          <div class="input_box">
+            <h6 class="input_title" :class="{ 'title_danger': pwdHasError}">비밀번호</h6><br/>
+            <input class="input_txt" :class="{ 'input_danger': pwdHasError}" type="password"  v-model="pwd" placeholder="pwd">
+            <p class ="input_error" v-show="isPwdCheck">영문, 숫자, 특수문자 8~16문자</p><br/>  
+          </div>
+
+          <!-- 비밀번호확인  -->
+          <div class="input_box">
+            <h6 class="input_title" :class="{ 'title_danger': pwdcheckHasError}">비밀번호확인</h6><br/>
+            <input class="input_txt" :class="{ 'input_danger': pwdcheckHasError}"  type="password" id="pwdcheck"  v-model="pwdcheck" placeholder="PWD 확인" @blur="checkPwdEqual" >
+            <p class ="input_error" v-show="isPwdCheckEqual">비밀번호 확인해주세요</p><br/>  
+          </div>
+
+          <!-- 이메일확인  -->
+          <div class="input_box">
+            <h6 class="input_title" :class="{ 'title_danger': emailHasError}">이메일</h6><br/>
+            <input class="input_txt"  :class="{ 'input_danger': emailHasError}"  type="text" id="email" v-model="email" placeholder="예)petmily@petmily.co.kr" ><button v-on:click="emailcheck">이메일 확인</button>
+            <p class ="input_error" v-show="isEmailCheck">이메일 형식을 확인해주세요</p><br/> 
+          </div>
+
+          <!-- 이메일인증  -->
+          <div class="input_box">
+            <h6 class="input_title" :class="{ 'title_danger': emailCodeHasError}">인증번호</h6><br/>
+            <input input class="input_txt" :class="{ 'input_danger': emailCodeHasError}" type="text" id="emailCode" v-model="emailCode"><button v-on:click="emailCodeCheck">인증</button>
+            <p class ="input_error"  v-show="isEmailCodeCheck">인증코드를 확인해주세요</p><br/> 
+          </div>
+            
+
+          <!-- 생일  -->
+          <div class="input_box">  
+            <h6 class="input_title">생년월일</h6><br/>  
+            <input  type="date" v-model="birth" ><br/>  
+          </div>
+
+          
+          <!-- 성별  -->
+          <div class="input_box">  
+            <h6 class="input_title">성별</h6>
+            <input name="g" type="radio" v-model="gender" value="m" >남 / 
             <input name="g" type="radio" v-model="gender" value="f">여 <br/>
-        PHONE : <input class="input-item" type="text" v-model="phone" placeholder="예)010-1234-5678" @blur="checkPhone"><br/>
-         <span class ="font_id_red" v-show="isPhoneCheck">전화번호 형식을 확인해주세요</span><br/> 
-        
-        
-        <input  type="text" v-model="postcode" placeholder="우편번호" readonly>
-        <button id="postcode" @click="execDaumPostcode">검색</button><br/>
-        <input type="text" v-model="roadAddress" placeholder="주소" readonly><br/>
-        <input type="text" v-model="detailAddress" placeholder="상세주소"><br/>
-        <input type="text" v-model="extraAddress" placeholder="참고항목"><br/>
-       
-       
-        <button v-on:click="joincheck" >가입</button>
+          </div>
+
+          <!-- 전화번호  -->
+          <div class="input_box">  
+            <h6 class="input_title" :class="{ 'title_danger': phoneHasError}">전화번호</h6><br/>
+            <input class="input_txt" :class="{ 'input_danger': phoneHasError}" type="text" v-model="phone" placeholder="예)010-1234-5678" @blur="checkPhone"><br/>
+            <p class ="input_error" v-show="isPhoneCheck">전화번호 형식을 확인해주세요</p><br/> 
+          </div>
+
+          <!-- 주소  -->
+          <div class="input_box">   
+            <h6 class="input_title">주소</h6> 
+            <input class="input_txt" type="text" v-model="postcode" placeholder="우편번호" readonly>
+            <button id="postcode" @click="execDaumPostcode">검색</button><br/>
+            <input class="input_txt" type="text" v-model="roadAddress" placeholder="주소" readonly><br/>
+            <input class="input_txt" type="text" v-model="detailAddress" placeholder="상세주소"><br/>
+            <input class="input_txt" type="text" v-model="extraAddress" placeholder="참고항목"><br/>
+          </div>
+          
+            <button v-on:click="joincheck" >가입</button>
+          
+        </div>
     </div>
   </template>
  
@@ -69,7 +114,10 @@ export default {
       address:'',
       msg:'',
       tf:false,
-      profile:''
+      profile:'',
+      idHasError:false
+
+
       
      
    
@@ -227,11 +275,13 @@ export default {
             self.msg='영문과 숫자만 가능합니다'
             }else{
                 self.msg='사용가능한 아이디'
+                this.idHasError = false;
             }
           
           }else{
              self.msg='중복된 아이디'
              self.id=''
+             this.idHasError = true;
           }
         }else{
           alert('에러코드 :' + res.status)
@@ -384,3 +434,58 @@ export default {
 
 
 </script>
+
+<style scoped>
+
+.join_area {
+    margin: 0 auto;
+    padding: 58px 0 160px;
+    width: 400px
+}
+
+.join_title {
+    padding-bottom: 46px;
+    text-align: center;
+    font-size: 32px;
+    letter-spacing: -.48px;
+    color: #000
+}
+
+.input_box {
+  
+    padding: 0 0 30px;
+}
+
+
+.input_title {
+    position: relative;
+    display: inline-block;
+    padding-right: 6px
+}
+
+.input_txt{
+  width: 100%;
+  border:0px;
+  border-bottom : 1px solid
+}
+
+
+.input_error {
+  line-height: 16px;
+  font-size: 11px;
+  color: red;
+}
+
+.title_danger {
+    color: red;
+  }
+
+.input_danger {
+  color: red;
+}
+
+button{
+  background-color:rgb(255, 214, 91);
+
+}
+  </style>

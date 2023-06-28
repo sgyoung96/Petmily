@@ -137,9 +137,10 @@
         <router-link to="/messagewrite" >쪽지보내기</router-link> |
         <router-link to="/messagesender" >보낸쪽지함</router-link> |
         <router-link to="/messagereciever">쪽지함</router-link>
-        <span v-show="cntcheck" @click="cntcheck">{{cnt}}</span> 
+        <span v-show="cntchecktf" @click="cntcheck">sfdf{{cnt}}</span> 
         <router-link to="/memedit">내정보 수정</router-link>
       </div>
+      
       <span @click="exitService()" style="cursor: pointer;">회원탈퇴</span>
       <!-- //기존 링크 모음 (테스트용, 추후 삭제 예정) -->`
       <p>Copyright by Petmily, ... etc</p>
@@ -159,7 +160,8 @@ export default {
       loginId:null,
       isOpen: false,
       dto: {},
-      cnt:0,
+      cnt:'',
+      cntchecktf:false
       
     }
   },
@@ -252,6 +254,29 @@ export default {
         // });
       }
     },
+
+     cntcheck(){
+      alert('cntcheck 클릭')
+      this.loginId = sessionStorage.getItem('loginId')
+     const self = this;
+     self.$axios.get('http://localhost:8082/message/cnt/' + this.loginId)
+      .then((res) => {
+        if(res.status == 200){
+         self.cnt = res.data.cnt
+         alert('cnt : ' + self.cnt)
+         if(res.data.cnt == 0){
+          self.cntchecktf = true;
+         }else{
+          alert(res.data.cnt)
+          self.cntchecktf = false;
+          this.cnt = self.cnt;
+         }
+        }else{
+          alert('에러코드 :' + res.status)
+        }
+      });  
+    },
+
     exitService() {
       var result = confirm('회원탈퇴를 진행하시겠어요?');
       if (result) {
@@ -312,28 +337,8 @@ export default {
         }
       });
     },
-    cntcheck(){
-      alert('cntcheck 클릭')
-      this.loginId = sessionStorage.getItem('loginId')
-     const self = this;
-     self.$axios.get('http://localhost:8082/message/cnt/' + self.loginId)
-      .then(function(res){
-        if(res.status == 200){
-         self.cnt = res.data.cnt
-         alert('cnt' + self.cnt)
-         if(self.cnt == 0){
-          this.cntcheck = false;
-         }else{
-          alert(self.cnt)
-          this.cntcheck = true;
-          this.cnt = self.cnt;
-         }
-        
-        }else{
-          alert('에러코드 :' + res.status)
-        }
-      });  
-    },
+
+   
     send() {
       alert('send 클릭')
       if (this.loginId == null) {

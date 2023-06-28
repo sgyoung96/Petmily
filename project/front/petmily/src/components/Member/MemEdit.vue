@@ -6,7 +6,7 @@
         
 
         <span class="box-profile" style="background: #black;"> 
-            <img class="profile" :src="'http://localhost:8082/members/imgs/'+ id">
+            <img class="profile" @error="replaceImg" :src="'http://localhost:8082/members/imgs/'+ id">
         </span>
         <input type="file" id="profile"><br/> 
         ID : <input type="text" v-model="id" readonly><br/>
@@ -31,6 +31,7 @@
 </template>
 
  <script>
+import img from "@/assets/imgs/mypage_sample.jpg";
 
 export default {
   name: 'MemEdit',
@@ -309,6 +310,9 @@ export default {
         self.isPhoneCheck = false;
     }
   },
+    replaceImg(e) {
+            e.target.src = img;
+        },
 }
 }
 </script>
