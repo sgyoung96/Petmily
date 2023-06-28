@@ -39,7 +39,6 @@
                   <h3>성별</h3>
                   <span v-if="item.sexCd === 'M'">수컷</span>
                   <span v-else-if="item.sexCd === 'F'">암컷</span>
-                  <span v-else>몰루</span>
                 </div>
                 <div>
                   <h3>색상</h3>
@@ -48,7 +47,8 @@
                 <div>
                   <h3>중성화</h3>
                   <span v-if="item.neuterYn === 'Y'">네</span>
-                  <span v-else>아니요</span>
+                  <span v-else-if="item.neuterYn === 'N'">아니요</span>
+                  <span v-else>확인 X</span>
                 </div>
               </div>
             </div>
@@ -130,6 +130,25 @@ export default {
       careAddr: '',
       map: null,
       marker: null,
+      info: {
+        target: {
+          kindCd: '[개]믹스견',
+          sexCd: '암컷',
+          age: '2020(년생)',
+          colorCd: '갈색',
+          weight: '30(Kg)',
+          neuterYn: '네',
+          processState: '종료(반환)',
+          specialMark: '특별사항',
+          happenDt: '접수일시',
+          happenPlace: '발견장소',
+          careNm: '동물보호센터명',
+          careAddr: '보호장소',
+          orgNm: '담당자',
+          careTel: '보호소 전화번호',
+          officetel: '담당자 전화번호'
+        }
+      }
     };
   },
 
@@ -148,6 +167,11 @@ export default {
       if (!this.desertionNo) {
         return [];
       }
+
+      var self = this;
+      self.info = this.items.filter(item => item.desertionNo === this.desertionNo)[0];
+      
+      console.log(self.info);
       return this.items.filter(item => item.desertionNo === this.desertionNo);
     },
   },
@@ -239,7 +263,8 @@ export default {
     },
     apply() {
       const self = this;
-      self.$router.push({name:'ApplyForm', query:{applyPetCd: this.$data.desertionNo}});
+      console.log(self.info);
+      self.$router.push({name:'ApplyForm', query:{applyPetCd: this.$data.desertionNo, info: JSON.stringify(self.info)}});
     }
   },
 };

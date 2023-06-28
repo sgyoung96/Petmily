@@ -25,11 +25,33 @@
       reason:'',
       feeding:'',
       ischeck:0,
-      applyPetCd: this.$route.query.applyPetCd
+      applyPetCd: this.$route.query.applyPetCd,
+      info: {
+        target: {
+          kindCd: '[개]믹스견',
+          sexCd: '암컷',
+          age: '2020(년생)',
+          colorCd: '갈색',
+          weight: '30(Kg)',
+          neuterYn: '네',
+          processState: '종료(반환)',
+          specialMark: '특별사항',
+          happenDt: '접수일시',
+          happenPlace: '발견장소',
+          careNm: '동물보호센터명',
+          careAddr: '보호장소',
+          orgNm: '담당자',
+          careTel: '보호소 전화번호',
+          officetel: '담당자 전화번호'
+        }
+      }
     }
   },
   created: function() {
     this.nowTimes();
+    const self = this;
+    self.info = JSON.parse(this.$route.query.info);
+    console.log(self.info);
   },
   methods:{
     apply(){
@@ -54,9 +76,12 @@
       .then(function(res) {//요청 결과 받아옴. 파람 res에 결과저장됨. res.data가 백단에서 전송한 데이터
         if(res.status == 200){
           if(res.data.dto != null){
-            self.msg = '신청되었습니다'
+            self.msg = '입양 신청이 완료되었습니다.';
+            alert(self.msg);
+            self.$router.go(-1);
           } else {
-            self.msg = '신청을 보낸 상태입니다'
+            self.msg = '신청 양식을 보낸 상태입니다';
+            alert(self.msg);
           }
         }else{
           alert('에러코드:'+res.status)
