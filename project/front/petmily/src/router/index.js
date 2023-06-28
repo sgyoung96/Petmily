@@ -32,6 +32,7 @@ import MessageReciever from '@/components/Message/MessageReciever.vue'
 import NotifyList from '@/components/notify/NotifyList.vue'
 import ApiCat from '@/components/cdh/ApiCat.vue'
 import ApiDog from '@/components/cdh/ApiDog.vue'
+import AdminAppliedList from '@/components/admin/ApplyList.vue'
 
 const routes = [
   {
@@ -207,6 +208,11 @@ const routes = [
     path: '/apidog',
     name: 'ApiDog',
     component: ApiDog
+  },
+  {
+    path: '/admin/apply/list',
+    name: 'AdminAppliedList',
+    component: AdminAppliedList
   }
 ]
 

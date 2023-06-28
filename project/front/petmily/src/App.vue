@@ -10,14 +10,16 @@
             <span v-on:click="login" id="link-login" >로그인</span>
             <span @click="register()">회원가입</span>
           </div>
-          <div v-else>
+          <div v-else class="box-logined">
             <span v-on:click="logout" id="link-logout">로그아웃</span>
+            <span v-if="loginId == 'admin'" @click="admin()">관리자메인</span>
           </div>
           
         </div>
         <div class="box-logo">
           <img @click="gotoMain()" class="petmily-logo" src="./assets/logo_petmily.png" />
         </div>
+
         <div class="box-mypage">
           <img class="ico-bell" src="./assets/bell.png" />
           <img class="ico-mypage" src="./assets/profile-user.png" />
@@ -340,9 +342,12 @@ export default {
         this.$router.push('/messagereciever')
       }
     },
-          replaceImg(e) {
-            e.target.src = img;
-        },
+      replaceImg(e) {
+        e.target.src = img;
+    },
+    admin() { // 어드민페이지
+      this.$router.push('/adminhome');
+    }
   }
 }
 </script>
