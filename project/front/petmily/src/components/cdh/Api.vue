@@ -167,9 +167,10 @@ export default {
       this.showPlaceButtons = !this.showPlaceButtons; // showPlaceButtons 값을 토글
       this.showNeuteredButtons= false;
     },
-    handleItemClick(desertionNo) {
+    handleItemClick(desertionNo, careAddr) {
       console.log(desertionNo); // desertionNo 값 확인
-      this.desertionNo = desertionNo; // desertionNo 값을 설정
+      this.desertionNo = desertionNo;
+      this.careAddr = careAddr; // desertionNo 값을 설정
       this.$router.push({ name: 'Detail', query: { desertionNo: desertionNo, careAddr: this.careAddr } });
     },
     previousPage() {
