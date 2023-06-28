@@ -5,21 +5,12 @@
     style="border: solid #e5e7eb; border-radius: 20px; margin-top: 50px; position: relative; margin-left: 130px; text-align: left; background-color:white;">
     <div>
       <button v-on:click="PlacetoggleButtons" class="custom-button">시도조회</button>
-      <button v-on:click="NeuteredtoggleButtons" class="custom-button">중성화</button>
       <div v-if="showPlaceButtons">
         <div class="place-container">
-          <button v-on:click="onClickAll" class="custom-button" style="width:160px; height:40px">전체</button>
+          <button v-on:click="PlaceAll" class="custom-button" style="width:160px; height:40px">전체</button>
           <div v-for="button in placeButtons" :key="button.label">
             <button v-on:click="button.onClick" class="custom-button" style="width:160px; height:40px">{{ button.label }}</button>
           </div>
-        </div>
-      </div>
-      <div v-if="showNeuteredButtons">
-        <div class="Neutered-container">
-          <button v-on:click="onClickAll" class="custom-button" style="width:160px; height:40px">전체</button>
-          <button v-on:click="onClickAll" class="custom-button" style="width:160px; height:40px">예</button>
-          <button v-on:click="onClickAll" class="custom-button" style="width:160px; height:40px">아니요</button>
-          <button v-on:click="onClickAll" class="custom-button" style="width:160px; height:40px">미상</button>
         </div>
       </div>
     </div>
@@ -90,14 +81,23 @@ export default {
       endPage: 10, // 끝 페이지 번호
       careAddr: '',
       showPlaceButtons: false,
-      showNeuteredButtons: false,
-      orgCd: '',
+      orgCd: ''
     };
   },
 
   created() {
-    this.fetchData(); // 페이지가 생성될 때 데이터 가져오기
-  },
+    window.onpopstate = () => {
+    // 뒤로 가기 버튼 클릭 시에 실행될 코드를 여기에 작성합니다.
+    // 예를 들어, 이전 페이지로 이동하는 코드를 작성할 수 있습니다.
+    this.goBack();
+  };
+
+  const orgCd = this.$route.query.orgCd;
+  const pageNo = this.$route.query.pageNo || 1;
+  this.pageNo = parseInt(pageNo);
+  this.fetchData(orgCd);
+},
+
   methods: {
     fetchData(orgCd) {
       let apiUrl;
@@ -107,7 +107,7 @@ export default {
         apiUrl = `http://apis.data.go.kr/1543061/abandonmentPublicSrvc/abandonmentPublic?_type=json&pageNo=${this.pageNo}&numOfRows=${this.pageSize}&serviceKey=JkjPRne8oXZTCJTyLN9579FQZI6%2FkhepY9kJhsmdEpdiEjyDUj8HjiEo8ba4BAa8AOGXfQWZA7AAHiljNzoOBA%3D%3D`;
       }
 
-      axios.get(apiUrl)
+      axios.get(apiUrl )
         .then((response) => {
           const data = response.data.response.body;
           this.items = data.items.item;
@@ -118,10 +118,20 @@ export default {
         .catch((error) => {
           console.error(error);
         });
+      
 
-      // 장소 데이터 가져오기
-      this.place();
+      const routeParams = {
+        path: 'Api', 
+        query: {
+        orgCd: orgCd
+        }
+      };
+    this.$router.push(routeParams);
+
+    // 장소 데이터 가져오기
+    this.place();
     },
+    
     place() {
       const apiUrl = `http://apis.data.go.kr/1543061/abandonmentPublicSrvc/sido?_type=json&pageNo=1&numOfRows=100&serviceKey=JkjPRne8oXZTCJTyLN9579FQZI6%2FkhepY9kJhsmdEpdiEjyDUj8HjiEo8ba4BAa8AOGXfQWZA7AAHiljNzoOBA%3D%3D`;
       axios.get(apiUrl)
@@ -148,7 +158,7 @@ export default {
           console.error(error);
         });
     },
-    onClickAll() {
+    NoPlace() {
       this.orgCd = '';
       this.fetchData(this.orgCd);
       this.showPlaceButtons = false;
@@ -156,10 +166,6 @@ export default {
     PlacetoggleButtons() {
       this.showPlaceButtons = !this.showPlaceButtons; // showPlaceButtons 값을 토글
       this.showNeuteredButtons= false;
-    },
-    NeuteredtoggleButtons() {
-      this.showNeuteredButtons = !this.showNeuteredButtons; // showPlaceButtons 값을 토글
-      this.showPlaceButtons= false;
     },
     handleItemClick(desertionNo) {
       console.log(desertionNo); // desertionNo 값 확인
@@ -185,10 +191,6 @@ export default {
         alert("다음 페이지가 없습니다")
       }
 
-    },
-    goToPage(pageNumber) {
-      this.pageNo = pageNumber;
-      this.fetchData();
     },
 
     updateDisplayedPages() {
