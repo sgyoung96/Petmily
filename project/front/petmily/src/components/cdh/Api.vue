@@ -4,13 +4,12 @@
   <div class="col-10"
     style="border: solid #e5e7eb; border-radius: 20px; margin-top: 50px; position: relative; margin-left: 130px; text-align: left; background-color:white;">
     <div>
-      <button v-on:click="PlacetoggleButtons" class="custom-button">시도조회</button><br>
+      <button v-on:click="PlacetoggleButtons" class="custom-button">전체시도조회</button><br>
       <div v-if="showPlaceButtons">
         <div class="place-container">
-          <button v-on:click="PlaceAll" class="place-button" style="width:160px; height:40px">전체</button>
+          <button v-on:click="PlaceAll" class="place-button" style="width:160px; height:40px">전체시도조회</button>
           <div v-for="button in placeButtons" :key="button.label">
-            <button v-on:click="button.onClick" class="place-button" style="width:160px; height:40px">{{ button.label
-            }}</button>
+            <button v-on:click="button.onClick" class="place-button" style="width:160px; height:40px">{{ button.label }}</button>
           </div>
         </div>
       </div>
@@ -19,11 +18,11 @@
       <button v-on:click="NeutertoggleButtons" class="custom-button">중성화여부</button>
       <div v-if="showNeuterButtons">
         <div class="Neuter-container">
-    <button v-on:click="setNeuter('')" :class="{ active: neuter === '' }" class="Neuter-button" :style="{ backgroundColor: neuter === '' ? activeColor : defaultColor }" style="width:160px; height:40px">전체</button>
-    <button v-on:click="setNeuter('Y')" :class="{ active: neuter === 'Y' }" class="Neuter-button" :style="{ backgroundColor: neuter === 'Y' ? activeColor : defaultColor }" style="width:160px; height:40px">예</button>
-    <button v-on:click="setNeuter('N')" :class="{ active: neuter === 'N' }" class="Neuter-button" :style="{ backgroundColor: neuter === 'N' ? activeColor : defaultColor }" style="width:160px; height:40px">아니요</button>
-    <button v-on:click="setNeuter('U')" :class="{ active: neuter === 'U' }" class="Neuter-button" :style="{ backgroundColor: neuter === 'U' ? activeColor : defaultColor }" style="width:160px; height:40px">미상</button>
-  </div>
+          <button v-on:click="NeuterAll" class="Neuter-button" style="width:160px; height:40px">전체</button>
+          <button v-on:click="NeuterY" class="Neuter-button" style="width:160px; height:40px">중성화O</button>
+          <button v-on:click="NeuterN" class="Neuter-button" style="width:160px; height:40px">중성화X</button>
+          <button v-on:click="NeuterU" class="Neuter-button" style="width:160px; height:40px">중성화?</button>
+        </div>
       </div>
     </div>
     <button v-on:click="search" class="custom-button">검색</button>
@@ -96,10 +95,7 @@ export default {
       showPlaceButtons: false,
       showNeuterButtons: false,
       orgCd: '',
-      neuter_yn: '',
-      neuter: '', // Stores the active button value
-      defaultColor: '#e5e7eb', // Default button background color
-      activeColor: '#4caf50'
+      neuter_yn: 'null'
     };
   },
 
@@ -117,25 +113,28 @@ export default {
 
   methods: {
     fetchData(orgCd, neuter_yn) {
-      let apiUrl;
-      if (orgCd && neuter_yn) {
-        apiUrl = `http://apis.data.go.kr/1543061/abandonmentPublicSrvc/abandonmentPublic?_type=json&pageNo=${this.pageNo}&numOfRows=${this.pageSize}&upr_cd=${orgCd}&neuter_yn=${neuter_yn}&serviceKey=JkjPRne8oXZTCJTyLN9579FQZI6%2FkhepY9kJhsmdEpdiEjyDUj8HjiEo8ba4BAa8AOGXfQWZA7AAHiljNzoOBA%3D%3D`;
-      } else if (orgCd) {
-        apiUrl = `http://apis.data.go.kr/1543061/abandonmentPublicSrvc/abandonmentPublic?_type=json&pageNo=${this.pageNo}&numOfRows=${this.pageSize}&upr_cd=${orgCd}}&serviceKey=JkjPRne8oXZTCJTyLN9579FQZI6%2FkhepY9kJhsmdEpdiEjyDUj8HjiEo8ba4BAa8AOGXfQWZA7AAHiljNzoOBA%3D%3D`;
-      } else if (neuter_yn) {
-        apiUrl = `http://apis.data.go.kr/1543061/abandonmentPublicSrvc/abandonmentPublic?_type=json&pageNo=${this.pageNo}&numOfRows=${this.pageSize}&neuter_yn=${neuter_yn}&serviceKey=JkjPRne8oXZTCJTyLN9579FQZI6%2FkhepY9kJhsmdEpdiEjyDUj8HjiEo8ba4BAa8AOGXfQWZA7AAHiljNzoOBA%3D%3D`;
-      } else {
-        apiUrl = `http://apis.data.go.kr/1543061/abandonmentPublicSrvc/abandonmentPublic?_type=json&pageNo=${this.pageNo}&numOfRows=${this.pageSize}&serviceKey=JkjPRne8oXZTCJTyLN9579FQZI6%2FkhepY9kJhsmdEpdiEjyDUj8HjiEo8ba4BAa8AOGXfQWZA7AAHiljNzoOBA%3D%3D`;
-      }
+  let apiUrl;
+  if (orgCd && neuter_yn) {
+    apiUrl = `http://apis.data.go.kr/1543061/abandonmentPublicSrvc/abandonmentPublic?_type=json&pageNo=${this.pageNo}&numOfRows=${this.pageSize}&upr_cd=${orgCd}&neuter_yn=${neuter_yn}&serviceKey=JkjPRne8oXZTCJTyLN9579FQZI6%2FkhepY9kJhsmdEpdiEjyDUj8HjiEo8ba4BAa8AOGXfQWZA7AAHiljNzoOBA%3D%3D`;
+  } else if (orgCd) {
+    apiUrl = `http://apis.data.go.kr/1543061/abandonmentPublicSrvc/abandonmentPublic?_type=json&pageNo=${this.pageNo}&numOfRows=${this.pageSize}&upr_cd=${orgCd}&serviceKey=JkjPRne8oXZTCJTyLN9579FQZI6%2FkhepY9kJhsmdEpdiEjyDUj8HjiEo8ba4BAa8AOGXfQWZA7AAHiljNzoOBA%3D%3D`;
+  } else if (neuter_yn) {
+    apiUrl = `http://apis.data.go.kr/1543061/abandonmentPublicSrvc/abandonmentPublic?_type=json&pageNo=${this.pageNo}&numOfRows=${this.pageSize}&neuter_yn=${neuter_yn}&serviceKey=JkjPRne8oXZTCJTyLN9579FQZI6%2FkhepY9kJhsmdEpdiEjyDUj8HjiEo8ba4BAa8AOGXfQWZA7AAHiljNzoOBA%3D%3D`;
+  } else {
+    apiUrl = `http://apis.data.go.kr/1543061/abandonmentPublicSrvc/abandonmentPublic?_type=json&pageNo=${this.pageNo}&numOfRows=${this.pageSize}&serviceKey=JkjPRne8oXZTCJTyLN9579FQZI6%2FkhepY9kJhsmdEpdiEjyDUj8HjiEo8ba4BAa8AOGXfQWZA7AAHiljNzoOBA%3D%3D`;
+  }
 
-      axios.get(apiUrl)
-        .then((response) => {
-          const data = response.data.response.body;
-          this.items = data.items.item;
-          this.totalItems = data.totalCount;
-          this.totalPages = 20;
-          this.updateDisplayedPages();
-        })
+  axios.get(apiUrl)
+    .then((response) => {
+      const data = response.data.response.body;
+      this.items = data.items.item;
+      this.totalItems = data.totalCount;
+      this.totalPages = 20;
+      this.updateDisplayedPages();
+    })
+    .catch((error) => {
+      console.error(error);
+    })
         .catch((error) => {
           console.error(error);
         });
@@ -144,7 +143,8 @@ export default {
       const routeParams = {
         path: 'Api',
         query: {
-          orgCd: orgCd
+          orgCd: orgCd,
+          
         }
       };
       this.$router.push(routeParams);
@@ -177,9 +177,6 @@ export default {
         .catch((error) => {
           console.error(error);
         });
-    },
-    setNeuter(value) {
-      this.neuter = value;
     },
     NeuterAll() {
       this.neuter_yn = '';
@@ -270,19 +267,9 @@ export default {
   font-size: 16px;
   margin: 4px 2px;
   cursor: pointer;
-}
-.Neuter-button {
-  margin: 5px;
-  padding: 5px;
-  border-radius: 5px;
-  border: none;
-  color: black;
-  cursor: pointer;
+  border-radius: 4px;
 }
 
-.Neuter-button.active {
-  color: f0cf81;
-}
 .place-button {
   background-color: #f0cf81;
   border: none;
@@ -294,6 +281,7 @@ export default {
   font-size: 16px;
   margin: 4px 2px;
   cursor: pointer;
+  border-radius: 4px;
 }
 
 .Neuter-button {
@@ -307,14 +295,7 @@ export default {
   font-size: 16px;
   margin: 4px 2px;
   cursor: pointer;
-}
-.Neuter-button:active {
-  background-color: #4caf50;
-  color: white;
-}
-.custom-button:hover {
-  background-color: #f0cf81;
-  /* 마우스 호버시 배경색 변경 */
+  border-radius: 4px;
 }
 
 .card {
