@@ -45,8 +45,12 @@ public class Diaryboard {
 	@Column(nullable=true)
 	private String pic2;
 	
+	@Column(nullable=true)
+	private int likecnt;
+	
 	@PrePersist
 	   public void preprocess() {
 		w_date = new Date(); //현재 날짜 생성
+		likecnt = 0;
 	   }
 }

@@ -15,7 +15,7 @@ public class DiaryboardService {
 	// 추가, 수정
 	public int save(DiaryboardDto dto) {
 		Diaryboard d = dao.save(new Diaryboard(dto.getNum(), dto.getTitle(), dto.getContent(), dto.getW_date(),
-				dto.getId(), dto.getPic1(), dto.getPic2()));
+				dto.getId(), dto.getPic1(), dto.getPic2(), dto.getLikecnt()));
 		return d.getNum();
 	}
 
@@ -25,7 +25,7 @@ public class DiaryboardService {
 		ArrayList<DiaryboardDto> list2 = new ArrayList<DiaryboardDto>();
 		for (Diaryboard d : list) {
 			list2.add(new DiaryboardDto(d.getNum(), d.getTitle(), d.getContent(), d.getW_date(), d.getId(), d.getPic1(),
-					d.getPic2(), null));
+					d.getPic2(), d.getLikecnt(),null));
 		}
 		return list2;
 	}
@@ -37,7 +37,7 @@ public class DiaryboardService {
 			return null;
 		}
 		return new DiaryboardDto(d.getNum(), d.getTitle(), d.getContent(), d.getW_date(), d.getId(), d.getPic1(),
-					d.getPic2(), null);
+					d.getPic2(), d.getLikecnt(), null);
 	}
 	
 	//id로 검색
@@ -47,7 +47,7 @@ public class DiaryboardService {
 	    ArrayList<DiaryboardDto> list2 = new ArrayList<DiaryboardDto>();
 	    for (Diaryboard d : list) {
 	        list2.add(new DiaryboardDto(d.getNum(), d.getTitle(), d.getContent(), d.getW_date(), d.getId(), d.getPic1(),
-	                d.getPic2(), null));
+	                d.getPic2(), d.getLikecnt(), null));
 	    }
 	    return list2;
 	}
@@ -58,7 +58,7 @@ public class DiaryboardService {
 	    ArrayList<DiaryboardDto> list2 = new ArrayList<DiaryboardDto>();
 	    for (Diaryboard d : list) {
 	        list2.add(new DiaryboardDto(d.getNum(), d.getTitle(), d.getContent(), d.getW_date(), d.getId(), d.getPic1(),
-	                d.getPic2(), null));
+	                d.getPic2(), d.getLikecnt(),null));
 	    }
 	    return list2;
 	}
@@ -66,5 +66,15 @@ public class DiaryboardService {
 	//삭제
 	public void delDiaryboard(int num) {
 		dao.deleteById(num);
+	}
+	
+	//좋아요 수 올림
+	public void uplike(int num) {
+		dao.upCount(num);
+	}
+	
+	//좋아요 수 내림
+	public void downlike(int num) {
+		dao.downCount(num);
 	}
 }

@@ -2,7 +2,7 @@
   <div class="container text-center">
   <div class="row" style="margin-bottom: 40px;">
     <div class="col">
-      <h2>입양일지</h2>
+      <h2>입양일지{{ dto.likecnt }}</h2>
     </div>
     <div class="col">
     </div>
@@ -27,6 +27,7 @@
         {{ dto.content }}
       </div>  
       <div style="float:right">
+        <button @click="likebtn(dto.num)">조아요</button>
         <router-link to="/diaryboardedit">수정하기</router-link>
      <button v-on:click="boarddelete">삭제하기</button>
     </div><br/>
@@ -81,7 +82,15 @@ export default {
     formatDate(date) {
   const options = { year: '2-digit', month: '2-digit', day: '2-digit', hour12: false };
   return new Date(date).toLocaleString('ko-KR', options);
-},
+  },
+    likebtn(num){
+      this.$axios.get('http://localhost:8082/liketable/'+ self.id + '/' + num)
+      .then(response => {
+        if(response.status == 200){
+          alert(response.data.flag)
+        }
+      })
+    },
     boarddetail() {
       this.$axios
         .get(`http://localhost:8082/dboard/${this.num}`)

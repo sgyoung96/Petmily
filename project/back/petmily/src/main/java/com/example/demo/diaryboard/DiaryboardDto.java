@@ -25,5 +25,6 @@ public class DiaryboardDto {
 	private Member id;
 	private String pic1;
 	private String pic2;
+	private int likecnt;
 	private MultipartFile[] f = new MultipartFile[2];
 }
