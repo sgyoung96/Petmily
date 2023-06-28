@@ -6,11 +6,12 @@
   <div class="v-all">
     <div style="display: flex; justify-content: space-between;">
       <div>
-        <router-link to="/diaryboardhome" class="badge text-bg-secondary" style="font-size: 17px; text-decoration: none;">목록으로</router-link>
+        <router-link to="/diaryboardhome" class="badge text-bg-secondary"
+          style="font-size: 17px; text-decoration: none;">목록으로</router-link>
       </div>
       <div style="float:right">
         <span v-on:click="apply()" class="badge text-bg-danger" style="font-size: 17px;">신청하기</span>&nbsp;
-        <span class="badge text-bg-secondary" style="font-size: 17px;">♡관심목록담기</span>
+        <span v-on:click="addwatch(dto.num)" class="badge text-bg-secondary" style="font-size: 17px;">♡관심목록담기</span>
       </div>
     </div>
     <div class="vhead">
@@ -140,9 +141,36 @@ export default {
     window.scrollTo({ top: 0, behavior: 'auto' });
   },
   methods: {
-    detail(num) {
-      this.$router.push({ name: 'VolBoardDetail', params: { num: num } })
-    },
+    addwatch(num) {
+  let id = this.loginId;
+  let formData = new FormData();
+  formData.append('id', id);
+  formData.append('num', num);
+  axios.get('http://localhost:8082/watchlist/' + id + '/' + num)
+    .then((res) => {
+      if (res.status == 200) {
+        if (res.data.flag) {
+          axios.post('http://localhost:8082/watchlist', formData)
+            .then((res) => {
+              if (res.status == 200) {
+                alert('관심목록에 추가되었습니다.');
+              }
+            });
+        } else {
+          axios.delete('http://localhost:8082/watchlist', {data: formData})
+            .then((response) => {
+              if (response.status === 200) {
+                alert('관심목록에서 제거되었습니다.');
+              }
+            })
+            .catch(error => {
+              console.error(error);
+              alert('삭제 요청 중에 오류가 발생했습니다.');
+            });
+        }
+      }
+    });
+},
     apply() {
       const self = this
       if (self.dto.vol_number <= self.count) {
