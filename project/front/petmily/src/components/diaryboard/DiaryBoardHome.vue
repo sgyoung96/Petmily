@@ -32,7 +32,7 @@
       <a v-on:click="$event=>detail(dboard.num)"><img :src="'http://localhost:8082/dboard/imgs/' + dboard.num + '/1'"></a>
     </div>
     <div style="float:left">
-    {{ dboard.title }}
+    {{ dboard.title }}             좋아요 수:{{dboard.likecnt }}
     </div><br/>
     <div style="color: grey; float:left; font-size:small">
     작성자 : {{ dboard.id.id }}

@@ -9,4 +9,5 @@ import com.example.demo.member.Member;
 @Repository
 public interface LiketableDao extends JpaRepository<Liketable, Integer> {
 	Liketable findByIdAndNum(Member id, Diaryboard num);
+	void deleteByIdAndNum(Member id, Diaryboard num);
 }

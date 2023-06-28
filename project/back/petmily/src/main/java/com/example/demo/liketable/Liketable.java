@@ -27,8 +27,8 @@ import lombok.ToString;
 @ToString
 public class Liketable {
 	@Id
-	@SequenceGenerator(name="seq_like", sequenceName="seq_like", allocationSize=1)//시퀀스 생성. sequenceName:시퀀스 이름
-	@GeneratedValue(strategy=GenerationType.SEQUENCE, generator="seq_like")//값 자동생성설정
+	@SequenceGenerator(name="seq_like2", sequenceName="seq_like2", allocationSize=1)//시퀀스 생성. sequenceName:시퀀스 이름
+	@GeneratedValue(strategy=GenerationType.SEQUENCE, generator="seq_like2")//값 자동생성설정
 	private int db_num;
 	
 	@ManyToOne
