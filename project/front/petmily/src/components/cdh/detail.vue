@@ -111,10 +111,14 @@
               </div>
             </div>
           </div>
+          <div class="box-form"> <!-- 입양신청양식으로 이동 -->
+            <span @click="apply()" class="txt-form">입양 신청하기</span>
+          </div>
       </div>
     </div>
   </div>
-</div></template>
+</div>
+</template>
 <script>
 import axios from 'axios';
 
@@ -232,6 +236,10 @@ export default {
           console.error("Error:", error);
           alert("주소를 가져오는 도중 오류가 발생했습니다.");
         });
+    },
+    apply() {
+      const self = this;
+      self.$router.push({name:'ApplyForm', query:{applyPetCd: this.$data.desertionNo}});
     }
   },
 };
@@ -259,24 +267,22 @@ export default {
     width: 100%;
     height: 400px;
   }
-</style>
 
-<div class="container text-center">
-  <div class="row">
-    <div class="col-1">
-    </div>
-<div class="col-10" style="border: solid green">
-      <div v-if="dto.id" style="border-bottom:solid green">
-      {{dto.title}}{{ dto.id.id }}{{ dto.w_date }}
-      </div>
-<div style="border-bottom: solid green">
-      <img :src="'http://localhost:8082/dboard/imgs/' + dto.num + '/1'">
-      <img :src="'http://localhost:8082/dboard/imgs/' + dto.num + '/2'">
-      </div>
-<div style="padding:50px; border-bottom:solid green">
-        {{ dto.content }}
-      </div>  
-<div style="float:right">
-        <router-link to="/diaryboardedit">수정하기</router-link>
-     <button v-on:click="boarddelete">삭제하기</button>
-    </div><br/>
+/* 입양신청하는폼 */
+.box-form {
+  position: relative;
+  display: block;
+  width: 100%;
+}
+
+.txt-form {
+  width: 500px;
+  height: 50px;
+  font-family: 'IBMPlexSansKR-Bold';
+  font-size: 18px;
+  background-color: rgb(244, 191, 79);
+  border-radius: 30px;
+  color: white;
+  cursor: pointer;
+}
+</style>

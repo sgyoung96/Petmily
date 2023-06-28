@@ -2,14 +2,14 @@
     <div class="hello">
       <h1>입양 신청 양식폼</h1>
         <h3>Apply form</h3>
-        id:<input type="text" v-model="id"><br/>
-        wdate:<input type="text" v-model="wdate"><br/>
+        id:<input type="text" v-model="id" readonly><br/>
+        wdate:<input type="text" v-model="wdate" readonly><br/>
         agreement:<input name="age" type="radio" v-model="agreement" value="0">미동의 /
         <input name="ag" type="radio" v-model="agreement" value="1">동의<br/>
         another:<input type="text" v-model="another"><br/>
         reason:<input type="textarea" v-model="reason"><br/> 
         feeding:<input type="textarea" v-model="feeding"><br/>
-        <button v-on:click="apply">신청</button>
+        <button v-on:click="apply()">신청</button>
     </div>
   </template>
   
@@ -18,53 +18,69 @@
     name: 'ApplyForm',
     data () {
     return {
-      id:'',
-      wdate:'',
+      id: sessionStorage.getItem('loginId'),
+      wdate: '',
       agreement:0,
       another:'',
       reason:'',
       feeding:'',
-      ischeck:0
+      ischeck:0,
+      applyPetCd: this.$route.query.applyPetCd
     }
   },
+  created: function() {
+    this.nowTimes();
+  },
   methods:{
-    join(){
+    apply(){
       const self = this;
+
       let formdata = new FormData();
-      formdata.append('id', self.id)
-      formdata.append('wdate', self.wdate)
-      formdata.append('agreement', self.agreement)
-      formdata.append('another', self.another)
-      formdata.append('reason', self.reason)
-      formdata.append('feeding', self.feeding)
-      formdata.append('ischeck', self.ischeck)
-      
-      //self.$axios.post('http://localhost:8082/members', {id:self.id, pwd:self.pwd, name:self.name, email:self.email, type:self.type}, { headers: { 'Content-Type': 'application/json' } })
+
+      const moment = require('moment');
+      const today = moment(Date.now()).format('L');
+      console.log(today);
+
+      formdata.append('id', sessionStorage.getItem('loginId'));
+      formdata.append('wdate', today);
+      formdata.append('agreement', self.agreement);
+      formdata.append('another', self.another);
+      formdata.append('reason', self.reason);
+      formdata.append('feeding', self.feeding);
+      formdata.append('ischeck', self.ischeck);
+
       self.$axios.post('http://localhost:8082/Applyform', formdata)//비동기 요청
       .then(function(res) {//요청 결과 받아옴. 파람 res에 결과저장됨. res.data가 백단에서 전송한 데이터
         if(res.status == 200){
-          let dto = res.data.dto
-          alert(dto.id)
-        }else{
-          alert('에러코드:'+res.status)
-        }
-      });
-    },
-    apply(){
-      const self = this;
-      self.$axios.post('http://localhost:8082/Applyform')//비동기 요청
-      .then(function(res) {//요청 결과 받아옴. 파람 res에 결과저장됨. res.data가 백단에서 전송한 데이터
-        if(res.status == 200){
-          if(res.data.dto==null){
+          if(res.data.dto != null){
             self.msg = '신청되었습니다'
-          }else{
+          } else {
             self.msg = '신청을 보낸 상태입니다'
-            self.id = ''
           }
         }else{
           alert('에러코드:'+res.status)
         }
       });
+    },
+    setDate() {
+          let year = new Date().getFullYear();
+          let month =new Date().getMonth() + 1 < 10? "0" + (new Date().getMonth() + 1): new Date().getMonth() + 1;
+          let date =new Date().getDate() < 10? "0" + new Date().getDate(): new Date().getDate();
+          let hh =new Date().getHours() < 10? "0" + new Date().getHours(): new Date().getHours();
+          let mm =new Date().getMinutes() < 10? "0" + new Date().getMinutes(): new Date().getMinutes();
+          let ss =new Date().getSeconds() < 10? "0" + new Date().getSeconds(): new Date().getSeconds();
+      return {
+            'year' : year
+          , 'month' : month
+          , 'date' : date
+          , 'hh' : hh
+          , 'mm' : mm
+          , 'ss' : ss
+      }
+    },
+    nowTimes() {
+      this.wdate = this.setDate().year + "-" + this.setDate().month + "-" + this.setDate().date + " " +
+                   this.setDate().hh + ":" + this.setDate().mm + ":" + this.setDate().ss;
     }
   }
 }

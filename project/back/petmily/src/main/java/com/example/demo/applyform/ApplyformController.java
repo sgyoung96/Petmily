@@ -25,6 +25,7 @@ public class ApplyformController {
 	// 추가
 	@PostMapping("")
 	public Map add(ApplyformDto dto) {
+		System.out.println("id : " + dto.getId() + "num : " + dto.getNum());
 		ApplyformDto d = service.save(dto);
 		Map map = new HashMap();
 		map.put("dto", d);
