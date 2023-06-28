@@ -2,7 +2,6 @@
   <div class="d-title">
     <h4 style="text-align: center;"><strong><span style="color:rgb(156, 156, 39)">PETMILY</span>
         &nbsp;<span style="color:rgb(244, 191, 79);">DIARY</span></strong></h4>
-    <h6 style="text-align: center;">새로운 가족을 만나게 된 아이들의 소식을 남겨주세요.</h6>
   </div>
   <div>
     <img src="../../assets/images/dboardpic.png" style="width: 1200px; height: 160px; margin-bottom: 20px;">
@@ -27,8 +26,8 @@
       <div class="col-10">
         <div v-if="dto.id"
           style="border-top: 2px solid black; border-bottom: 2px solid lightgrey; display: flex; justify-content: space-between; padding: 10px;">
-          <div style="text-align: left;">{{ dto.title }}</div>
-          <div style="text-align: right;">{{ dto.id.id }}{{ formatDate(dto.w_date) }}</div>
+          <div>{{ dto.title }}</div>
+          <div>{{ dto.id.id }}{{ formatDate(dto.w_date) }}</div>
         </div>
         <div>
           <img :src="'http://localhost:8082/dboard/imgs/' + dto.num + '/1'">
@@ -37,22 +36,32 @@
         <div style="padding:50px; border-bottom:solid 2px lightgrey">
           {{ dto.content }}
         </div>
-        <div style="float:left">
+        <div class="d-btn">
+        <div>
           <span router-link to="/diaryboardhome" class="badge text-bg-secondary" style="font-size: 17px;">목록으로</span>
         </div>
-        <div style="float:right">
+        <div>
           <button @click="likebtn(dto.id.id, dto.num)">조아요</button>
-          <router-link to="/diaryboardedit">수정하기</router-link>
+          <span router-link to="/diaryboardedit" class="badge text-bg-secondary" style="font-size: 17px;">수정하기</span>
+
           <button v-on:click="boarddelete">삭제하기</button>
-        </div><br />
-        <div style="float:left; display:block;">
+        </div>
+      </div><br />
+        <div style="float:left; display:flex; flex-direction: column;">
+        <div>
+          <span class="box-profile" style="background: #black;"> 
+            <img class="profile" @error="replaceImg" :src="'http://localhost:8082/members/imgs/'+ id">
+        </span>
           <textarea style="width:800px;" v-model="content" id="content"></textarea>
           <button v-on:click="commentadd">등록하기</button>
+        </div>
           <div>
             <div v-for="comment in comment" :key="comment.db_num">
               <div style="display:flex; justify-content: space-between">
                 <div style="float:left">
-                  {{ comment.content }} {{ comment.w_date }} {{ comment.id.id }} {{ comment.db_num }}
+                  <span class="box-profile" style="background: #black;"> 
+            <img class="profile" @error="replaceImg" :src="'http://localhost:8082/members/imgs/'+ id">
+        </span>{{ comment.content }} {{ comment.w_date }} {{ comment.id.id }} {{ comment.db_num }}
                 </div>
                 <div>
                   <button @click="showEditForm(comment)">수정하기</button>
@@ -65,13 +74,13 @@
                 <button @click="cancelEdit(comment)">취소</button>
               </div>
             </div>
+          </div>
           </div><br />
         </div>
       </div>
       <div class="col-1">
       </div>
     </div>
-  </div>
   <div>
   </div>
 </template>
@@ -86,6 +95,27 @@
 img {
   width: 300px;
   height: 300px;
+}
+
+.box-profile {
+  display: block;
+  width: 40px;
+  height: 40px; 
+  border-radius: 70%;
+  overflow: hidden;
+}
+.profile {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  cursor: pointer;
+}
+.d-btn{
+  float:right;
+  margin-top:10px;
+  margin-bottom:10px;
+  display: flex;
+  justify-content: space-between;
 }
 </style>
 <script>

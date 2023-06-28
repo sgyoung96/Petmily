@@ -66,7 +66,7 @@ public class MemberController {
 		
 		Map map = new HashMap();
 		
-		File dir = new File(path+d.getId());
+		File dir = new File(path + "member/" + d.getId());
 		dir.mkdir();
 
 		f = dto.getF();
@@ -74,7 +74,7 @@ public class MemberController {
 		
 		if (fname != null && !fname.equals("")) { // 업로드된 파일이 있으면
 	
-			String newpath = path + d.getId() + "/" + fname;
+			String newpath = path + "member/" + d.getId() + "/" + fname;
 			File newfile = new File(newpath); // 복사할 새 파일 생성. c:/img/shop/번호/원본파일명
 			System.out.println(newpath);
 			try {
@@ -95,7 +95,7 @@ public class MemberController {
 	}
 	
 	//프로필 사진
-	@GetMapping("/imgs/{id}") 
+	@GetMapping("/imgs/{id}")  //imgs/id/
 	public ResponseEntity<byte[]> read_img(@PathVariable("id") String id) {
 		String fname = "";
 		MemberDto dto = service.getMember(id);
@@ -225,7 +225,7 @@ public class MemberController {
 		
 		if (fname != null && !fname.equals("")) { // 업로드된 파일이 있으면
 			//String fname = x.getOriginalFilename();//원본파일명
-			String newpath = path + old.getId() + "/" + fname;
+			String newpath = path + "member/" + old.getId() + "/" + fname;
 			File newfile = new File(newpath); // 복사할 새 파일 생성. c:/img/shop/번호/원본파일명
 			System.out.println(newpath);
 			try {
