@@ -1,11 +1,9 @@
 <template>
-  <div id="app">
-    <div class="container text-center">
-  <div class="row">
-    <div class="col-1">
-    </div>
-    <div class="col-10">
-      <h3>{{ dto.title }} 봉사모집게시판</h3>
+    <div class="v-title">
+    <h4 style="text-align: center;"><strong><span style="color:rgb(156, 156, 39)">PETMILY</span>
+      &nbsp;<span style="color:rgb(244, 191, 79);">VOLUNTEER</span></strong></h4>
+<h6 style="text-align: center;">유기동물에게 사랑의 손길을 나눠요.</h6></div>
+<div class="v-all">
       <div style="display: flex; justify-content: space-between;">
         <div>
       <span class="badge text-bg-danger" style="font-size: 17px;">목록</span>
@@ -65,17 +63,20 @@
       </tr>
     </table>
     {{ count }} / {{ dto.vol_number }} {{ address }}
-      
   </div>
-    </div>
-    <div class="col-1">
-    </div>
-  </div>
-  </div>
-    
 </template>
 
 <style scoped>
+.v-title{
+  flex-direction: column;
+  display:flex;
+  margin-top:120px;
+  margin-bottom:120px;
+ }
+ .v-all{
+  padding-left: 150px;
+  padding-right:150px
+ }
   #map {
     width: 100%;
     height: 400px;
