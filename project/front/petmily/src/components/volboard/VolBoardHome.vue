@@ -12,8 +12,8 @@
         <router-link to="/volboardadd">봉사게시판 작성</router-link>
       </div>
       <div>
-        <input type="text" placeholder="검색어를 입력하시오">
-        <button v-on:click="search(title)">검색</button>
+        <input type="text" v-model="searchKeyword" placeholder="주소를 입력해주세요">
+        <button v-on:click="search()">검색</button>
       </div>
     </div>
     <div style="border-top:2px solid black; padding-top:10px; margin-top:10px">
@@ -69,7 +69,8 @@ export default {
       state: '',
       sysdate: new Date(),
       currentPage: 1,
-      pageSize: 8
+      pageSize: 8,
+      searchKeyword: ''
     }
   },
   computed: {
@@ -83,6 +84,18 @@ export default {
     }
   },
   methods: {
+    search(){
+      const self = this
+      let address = self.searchKeyword
+      self.$axios.get('http://localhost:8082/volboard/address/' + address)
+      .then(function (response){
+        if(response.status == 200){
+          self.list = response.data.list
+        }else{
+          alert('에러')
+        }
+      })
+    },
     detail(num, address) {
       this.$router.push({
         name: 'VolBoardDetail',

@@ -1,11 +1,8 @@
-package com.example.demo.diarycomment;
-
-import java.util.Date;
-
-import org.springframework.web.multipart.MultipartFile;
+package com.example.demo.watchlist;
 
 import com.example.demo.diaryboard.Diaryboard;
 import com.example.demo.member.Member;
+import com.example.demo.volboard.Volboard;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -18,11 +15,8 @@ import lombok.ToString;
 @ToString
 @NoArgsConstructor
 @AllArgsConstructor
-public class DiarycommentDto {
+public class WatchlistDto {
 	private int db_num;
-	private String content;
-	private Date w_date;
 	private Member id;
-	private Diaryboard num;
-	
+	private Volboard num;
 }
