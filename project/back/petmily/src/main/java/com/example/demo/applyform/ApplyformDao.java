@@ -20,4 +20,9 @@ public interface ApplyformDao extends JpaRepository<Applyform, Integer> {
 	@Modifying
 	@Query(value="update applyform set ischeck=1 where num=:num", nativeQuery=true)
 	void updateApply(@Param("num") int num);
+	
+	@Transactional
+	@Modifying
+	@Query(value="update applyform set ischeck=2 where num=:num", nativeQuery=true)
+	void updateRefuse(@Param("num") int num);
 }
