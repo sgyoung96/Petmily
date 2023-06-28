@@ -36,6 +36,7 @@
         id: sessionStorage.getItem('loginId'),
         title: '',
         content: '',
+        likecnt:0
       }
     },
     methods: {
@@ -45,6 +46,7 @@
   formData.append('content', this.content);
   formData.append('id', this.id);
   formData.append('w_date', new Date());
+  formData.append('likent', 0);
   const file1 = document.getElementById('pic1');
   const file2 = document.getElementById('pic2');
   formData.append('f[0]', file1.files[0]);

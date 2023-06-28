@@ -1,4 +1,5 @@
 <template>
+
   <div class="d-title">
     <h4 style="text-align: center;"><strong><span style="color:rgb(156, 156, 39)">PETMILY</span>
       &nbsp;<span style="color:rgb(244, 191, 79);">DIARY</span></strong></h4>
@@ -6,6 +7,19 @@
   <div>
     <img src="../../assets/images/dboardpic.png" style="width: 1200px; height: 160px; margin-bottom: 20px;">
   </div>
+
+  <div class="container text-center">
+  <div class="row" style="margin-bottom: 40px;">
+    <div class="col">
+      <h2>입양일지{{ dto.likecnt }}</h2>
+    </div>
+    <div class="col">
+    </div>
+    <div class="col">
+</div>
+</div>
+</div>
+
 <div class="container text-center">
   <div class="row">
     <div class="col-1">
@@ -26,8 +40,9 @@
         <span router-link to="/diaryboardhome" class="badge text-bg-secondary" style="font-size: 17px;">목록으로</span>
       </div>
       <div style="float:right">
-      <span router-link to="/diaryboardedit" class="badge text-bg-secondary" style="font-size: 17px;">수정하기</span>
-     <span v-on:click="boarddelete" class="badge text-bg-secondary" style="font-size: 17px;">삭제하기</span>
+        <button @click="likebtn(dto.num)">조아요</button>
+        <router-link to="/diaryboardedit">수정하기</router-link>
+     <button v-on:click="boarddelete">삭제하기</button>
     </div><br/>
      <div style="float:left; display:block;">
 <textarea style="width:800px;" v-model="content" id="content"></textarea>
@@ -92,7 +107,15 @@ export default {
     formatDate(date) {
   const options = { year: '2-digit', month: '2-digit', day: '2-digit', hour12: false };
   return new Date(date).toLocaleString('ko-KR', options);
-},
+  },
+    likebtn(num){
+      this.$axios.get('http://localhost:8082/liketable/'+ self.id + '/' + num)
+      .then(response => {
+        if(response.status == 200){
+          alert(response.data.flag)
+        }
+      })
+    },
     boarddetail() {
       this.$axios
         .get(`http://localhost:8082/dboard/${this.num}`)

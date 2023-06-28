@@ -25,7 +25,7 @@ public class DiarycommentService {
 	
 	//댓글리스트
 	public ArrayList<DiarycommentDto> getByNum(int num){
-		Diaryboard db = new Diaryboard(num, "", "", null, null, "", "");
+		Diaryboard db = new Diaryboard(num, "", "", null, null, "", "",0);
 		ArrayList<Diarycomment> list = (ArrayList<Diarycomment>) dao.findByNum(db);
 		ArrayList<DiarycommentDto> list2 = new ArrayList<DiarycommentDto>();
 		for(Diarycomment c:list) {
