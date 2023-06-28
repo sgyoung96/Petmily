@@ -25,6 +25,7 @@ import PieChart from '@/components/kaka/PieChart.vue'
 import MemEdit from '@/components/Member/MemEdit.vue'
 import FindPwd from '@/components/Member/FindPwd.vue'
 import FindId from '@/components/Member/FindId.vue'
+
 import AddressConvert from '@/components/kaka/AddressConvert.vue' 
 import MessageWrite from '@/components/Message/MessageWrite.vue' 
 import MessageSender from '@/components/Message/MessageSender.vue' 
@@ -32,6 +33,7 @@ import MessageReciever from '@/components/Message/MessageReciever.vue'
 import NotifyList from '@/components/notify/NotifyList.vue'
 import ApiCat from '@/components/cdh/ApiCat.vue'
 import ApiDog from '@/components/cdh/ApiDog.vue'
+
 
 const routes = [
   {
@@ -208,6 +210,7 @@ const routes = [
     name: 'ApiDog',
     component: ApiDog
   }
+ 
 ]
 
 const router = createRouter({

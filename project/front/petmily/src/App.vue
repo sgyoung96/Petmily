@@ -15,10 +15,15 @@
           </div>
           
         </div>
+      
         <div class="box-logo">
+         
           <img @click="gotoMain()" class="petmily-logo" src="./assets/logo_petmily.png" />
         </div>
         <div class="box-mypage">
+           <div v-if="loginId == 'admin'">
+            <span @click="adminhome">관리자페이지</span>
+          </div>
           <img class="ico-bell" src="./assets/bell.png" />
           <img class="ico-mypage" src="./assets/profile-user.png" />
         </div>
@@ -123,9 +128,7 @@ export default {
       this.loginId = sessionStorage.getItem('loginId');
 
       if (this.loginId != null) {
-        if (this.loginId == 'admin') {
-          this.$router.push('/adminhome')
-        } else if (sessionStorage.getItem('loginFlag') == 'kakao') {
+         if (sessionStorage.getItem('loginFlag') == 'kakao') {
           const self = this;
 
           self.$axios.get('http://localhost:8082/members/' + this.loginId).then (function(rs) {
@@ -206,6 +209,7 @@ export default {
         this.$router.push('/member');
       }
     },
+   
     logout(){ // 로그아웃
       if (sessionStorage.getItem('loginFlag') != 'kakao') {
         sessionStorage.clear()
@@ -296,6 +300,11 @@ export default {
         }
       });
     },
+
+   adminhome(){
+    this.$router.push('/adminhome');
+   },
+
     cntcheck(){
       alert('cntcheck 클릭')
       this.loginId = sessionStorage.getItem('loginId')

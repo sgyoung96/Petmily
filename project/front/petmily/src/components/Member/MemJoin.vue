@@ -35,14 +35,14 @@
           <!-- 이메일확인  -->
           <div class="input_box">
             <h6 class="input_title" :class="{ 'title_danger': emailHasError}">이메일</h6><br/>
-            <input class="input_txt"  :class="{ 'input_danger': emailHasError}"  type="text" id="email" v-model="email" placeholder="예)petmily@petmily.co.kr" ><button v-on:click="emailcheck">이메일 확인</button>
+            <input class="input_txt"  :class="{ 'input_danger': emailHasError}"  type="text" id="email" v-model="email" placeholder="예)petmily@petmily.co.kr" style= "width : 68%" @blur="checkEmail"><button v-on:click="emailcheck" style="margin-left:23px">이메일 확인</button>
             <p class ="input_error" v-show="isEmailCheck">이메일 형식을 확인해주세요</p><br/> 
           </div>
 
           <!-- 이메일인증  -->
           <div class="input_box">
             <h6 class="input_title" :class="{ 'title_danger': emailCodeHasError}">인증번호</h6><br/>
-            <input input class="input_txt" :class="{ 'input_danger': emailCodeHasError}" type="text" id="emailCode" v-model="emailCode"><button v-on:click="emailCodeCheck">인증</button>
+            <input input class="input_txt" :class="{ 'input_danger': emailCodeHasError}" type="text" id="emailCode" v-model="emailCode" style= "width : 81%"><button v-on:click="emailCodeCheck" style="margin-left:23px">인증</button>
             <p class ="input_error"  v-show="isEmailCodeCheck">인증코드를 확인해주세요</p><br/> 
           </div>
             
@@ -57,8 +57,8 @@
           <!-- 성별  -->
           <div class="input_box">  
             <h6 class="input_title">성별</h6>
-            <input name="g" type="radio" v-model="gender" value="m" >남 / 
-            <input name="g" type="radio" v-model="gender" value="f">여 <br/>
+            <input name="g" type="radio" v-model="gender" id="m" value="m"><label for="m" style="margin-right:10px">남</label>
+            <input name="g" type="radio" v-model="gender" id="f" value="f"><label for="f">여</label><br/>
           </div>
 
           <!-- 전화번호  -->
@@ -70,15 +70,15 @@
 
           <!-- 주소  -->
           <div class="input_box">   
-            <h6 class="input_title">주소</h6> 
-            <input class="input_txt" type="text" v-model="postcode" placeholder="우편번호" readonly>
-            <button id="postcode" @click="execDaumPostcode">검색</button><br/>
+            <h6 class="input_title">주소</h6>
+            <input class="input_txt" type="text" v-model="postcode" placeholder="우편번호" style= "width : 83%" readonly>
+            <button id="postcode" @click="execDaumPostcode" style="margin-left:23px">검색</button><br/>
             <input class="input_txt" type="text" v-model="roadAddress" placeholder="주소" readonly><br/>
             <input class="input_txt" type="text" v-model="detailAddress" placeholder="상세주소"><br/>
             <input class="input_txt" type="text" v-model="extraAddress" placeholder="참고항목"><br/>
           </div>
           
-            <button v-on:click="joincheck" >가입</button>
+            <button v-on:click="joincheck" style ="padding:5px 20px 5px 20px; width:100%">가입</button>
           
         </div>
     </div>
@@ -115,11 +115,13 @@ export default {
       msg:'',
       tf:false,
       profile:'',
-      idHasError:false
-
-
-      
-     
+      idHasError:false,
+      nameHasError:false,
+      pwdHasError:false,
+      pwdcheckHasError:false,
+      emailHasError:false,
+      emailCodeHasError:false,
+      phoneHasError:false
    
     }
 
@@ -275,13 +277,13 @@ export default {
             self.msg='영문과 숫자만 가능합니다'
             }else{
                 self.msg='사용가능한 아이디'
-                this.idHasError = false;
+                self.idHasError = false;
             }
           
           }else{
              self.msg='중복된 아이디'
              self.id=''
-             this.idHasError = true;
+             self.idHasError = true;
           }
         }else{
           alert('에러코드 :' + res.status)
@@ -297,11 +299,15 @@ export default {
         if(res.status == 200){
         
           if(res.data.dto == null){
-           self.sendEmail()
+           
+         
           
+          self.sendEmail()
           }else{
              alert('중복된 이메일')
              self.email=''
+            
+             
           }
         }else{
           alert('에러코드 :' + res.status)
@@ -317,8 +323,10 @@ export default {
     
         this.isNameCheck = true;
         self.name='';
+        self.nameHasError=true;
     }else{
         this.isNameCheck = false;
+        self.nameHasError=false;
     }
     },
 
@@ -328,10 +336,11 @@ export default {
     
         this.isPwdCheck = true;
         document.getElementById("pwdcheck").readOnly = true;
+        self.pwdHasError = true;
     }else{
         this.isPwdCheck = false;
         document.getElementById("pwdcheck").readOnly = false;
-        
+        self.pwdHasError = false;
     }
   },
 
@@ -340,11 +349,13 @@ export default {
     console.log(this.pwd + "/" + this.pwdcheck)
     if(this.pwd === this.pwdcheck){
       this.isPwdCheckEqual = false;
+      self.pwdcheckHasError=false;
       
     }else{
       this.isPwdCheckEqual=true;
       console.log(self.pwdcheck)
       self.pwdcheck = '';
+      self.pwdcheckHasError = true;
       
     }
 
@@ -356,9 +367,11 @@ export default {
      
     if(!validateEmail.test(this.email)){
         this.isEmailCheck = true;
+        self.emailHasError=false;
        
     }else{
         this.isEmailCheck = false;
+        self.emailHasError=true;
         
     }
   
@@ -445,7 +458,7 @@ export default {
 
 .join_title {
     padding-bottom: 46px;
-    text-align: center;
+    text-align : center;
     font-size: 32px;
     letter-spacing: -.48px;
     color: #000
@@ -456,9 +469,36 @@ export default {
     padding: 0 0 30px;
 }
 
+.input_box input[type=radio]{
+    display: none;
+}
 
+.input_box input[type=radio]+label{
+    display: inline-block;
+    cursor: pointer;
+    height: 24px;
+    width: 90px;
+    border: 1px solid #a2a2a2;
+    line-height: 24px;
+    text-align: center;
+    font-weight:bold;
+    font-size:13px;
+}
+
+.input_box input[type=radio]+label{
+    background-color: #fff;
+    color: rgb(255, 214, 91);
+}
+.input_box input[type=radio]:checked+label{
+    background-color: rgb(255, 214, 91);
+    color: #fff;
+}
 .input_title {
+    width: 100%;
     position: relative;
+    font-weight: bold;
+    font-size:small;
+    text-align: left;
     display: inline-block;
     padding-right: 6px
 }
@@ -466,13 +506,15 @@ export default {
 .input_txt{
   width: 100%;
   border:0px;
-  border-bottom : 1px solid
+  border-bottom : 2px solid;
+  color:black;
 }
 
 
 .input_error {
+  text-align: left;
   line-height: 16px;
-  font-size: 11px;
+  font-size: 13px;
   color: red;
 }
 
@@ -485,7 +527,16 @@ export default {
 }
 
 button{
+  border-radius: 10px;
+  border:0px;
   background-color:rgb(255, 214, 91);
+  font-size:medium;
+ 
 
+}
+
+input::placeholder {
+  color: rgb(209, 209, 209);
+  
 }
   </style>
