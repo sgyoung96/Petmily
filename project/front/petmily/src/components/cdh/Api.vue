@@ -95,7 +95,7 @@ export default {
       showPlaceButtons: false,
       showNeuterButtons: false,
       orgCd: '',
-      neuter_yn: 'null'
+      neuter_yn: ''
     };
   },
 
