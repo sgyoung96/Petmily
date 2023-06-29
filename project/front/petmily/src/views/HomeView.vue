@@ -38,6 +38,27 @@
           </div>
         </div>
       </div>
+    
+    <div id="app">
+    <!-- ... Existing code ... -->
+
+    <div class="form-group">
+      <label for="volboard-video">유튜브 동영상</label>
+      <input type="text" class="form-control" v-model="videoUrl">
+    </div>
+
+    <!-- Display YouTube video -->
+    <div class="form-group">
+      <label for="volboard-video-preview">동영상 미리보기</label>
+      <div v-if="isValidVideoUrl">
+        <iframe :src="embeddedVideoUrl" width="560" height="315" frameborder="0" allowfullscreen></iframe>
+      </div>
+      <div v-else>
+        <p>유효한 YouTube 동영상 URL을 입력하세요.</p>
+      </div>
+    </div>
+    <!-- ... Existing code ... -->
+  </div>
       <div>
         <img src="../assets/images/dboardpic2.jpg" style="width: 40%; height: 200px; margin-bottom: 20px;">
       </div>
@@ -58,6 +79,7 @@
 <script>
 import Chart from 'chart.js/auto';
 import axios from 'axios';
+
 export default {
   name: 'HomeView',
   data() {
@@ -80,9 +102,22 @@ export default {
       D2: D2,
       D3: D3,
       D4: D4,
-      D5: D5
+      D5: D5,
+      videoUrl: 'https://www.youtube.com/watch?v=CseT4dvgTMU'
     };
   },
+  computed: {
+  embeddedVideoUrl() {
+    // Extract video ID from the URL
+    const videoId = this.extractVideoId(this.videoUrl);
+    // Create the embedded video URL
+    return `https://www.youtube.com/embed/${videoId}`;
+  },
+  isValidVideoUrl() {
+    // Validate the YouTube video URL
+    return this.extractVideoId(this.videoUrl) !== null;
+  }
+},
   mounted() {
     this.loadData();
     this.getKind(this.formatDate(this.sysdate), 417000)
@@ -124,6 +159,12 @@ export default {
       });
   },
   methods: {
+    extractVideoId(url) {
+    // Regular expression to extract the video ID from various YouTube URL formats
+    const regex = /(?:youtube(?:-nocookie)?\.com\/(?:[^/]+\/.+\/|(?:v|e(?:mbed)?)\/|.*[?&]v=|.*[?&]vi=))|youtu\.be\/([^"&?/ ]{11})/;
+    const match = url.match(regex);
+    return match ? match[1] : null;
+  },
     getKind(day, kindCd) {
       const apiUrl = `http://apis.data.go.kr/1543061/abandonmentPublicSrvc/abandonmentPublic?_type=json&bgnde=${day}&endde=${day}&pageNo=1&numOfRows=1000&upkind=${kindCd}&serviceKey=JkjPRne8oXZTCJTyLN9579FQZI6%2FkhepY9kJhsmdEpdiEjyDUj8HjiEo8ba4BAa8AOGXfQWZA7AAHiljNzoOBA%3D%3D`;
 

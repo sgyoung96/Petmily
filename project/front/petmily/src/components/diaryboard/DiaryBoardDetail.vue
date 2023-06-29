@@ -36,32 +36,55 @@
         <div style="padding:50px; border-bottom:solid 2px lightgrey">
           {{ dto.content }}
         </div>
+        <div v-if="showModal">
+          <div>
+            <table border="1">
+              <tr>
+                <th>사진1</th>
+                <td><input type="file" id="f1"></td>
+              </tr>
+              <tr>
+                <th>사진2</th>
+                <td><input type="file" id="f2"></td>
+              </tr>
+              <tr>
+                <th>title</th>
+                <td><input type="text" v-model="dto.title" id="editTitle"></td>
+              </tr>
+              <tr>
+                <th>content</th>
+                <td><input type="text" v-model="dto.content" id="editContent"></td>
+              </tr>
+              <button v-on:click="editfunc(dto.num)">수정</button>
+            </table>
+          </div>
+        </div>
         <div class="d-btn">
-        <div>
-          <span router-link to="/diaryboardhome" class="badge text-bg-secondary" style="font-size: 17px;">목록으로</span>
-        </div>
-        <div>
-          <button @click="likebtn(dto.id.id, dto.num)">조아요</button>
-          <span router-link to="/diaryboardedit" class="badge text-bg-secondary" style="font-size: 17px;">수정하기</span>
+          <div>
+            <span router-link to="/diaryboardhome" class="badge text-bg-secondary" style="font-size: 17px;">목록으로</span>
+          </div>
+          <div>
+            <button @click="likebtn(dto.id.id, dto.num)">조아요</button>
+            <span v-on:click="edit()" class="badge text-bg-secondary" style="font-size: 17px;">수정하기</span>
 
-          <button v-on:click="boarddelete">삭제하기</button>
-        </div>
-      </div><br />
+            <button v-on:click="boarddelete">삭제하기</button>
+          </div>
+        </div><br />
         <div style="float:left; display:flex; flex-direction: column;">
-        <div>
-          <span class="box-profile" style="background: #black;"> 
-            <img class="profile" @error="replaceImg" :src="'http://localhost:8082/members/imgs/'+ id">
-        </span>
-          <textarea style="width:800px;" v-model="content" id="content"></textarea>
-          <button v-on:click="commentadd">등록하기</button>
-        </div>
+          <div>
+            <span class="box-profile" style="background: #black;">
+              <img class="profile" @error="replaceImg" :src="'http://localhost:8082/members/imgs/' + id">
+            </span>
+            <textarea style="width:800px;" v-model="content" id="content"></textarea>
+            <button v-on:click="commentadd">등록하기</button>
+          </div>
           <div>
             <div v-for="comment in comment" :key="comment.db_num">
               <div style="display:flex; justify-content: space-between">
                 <div style="float:left">
-                  <span class="box-profile" style="background: #black;"> 
-            <img class="profile" @error="replaceImg" :src="'http://localhost:8082/members/imgs/'+ comment.id.id">
-        </span>{{ comment.content }} {{ formatDate(comment.w_date) }} {{ comment.id.id }}
+                  <span class="box-profile" style="background: #black;">
+                    <img class="profile" @error="replaceImg" :src="'http://localhost:8082/members/imgs/' + comment.id.id">
+                  </span>{{ comment.content }} {{ formatDate(comment.w_date) }} {{ comment.id.id }}
                 </div>
                 <div>
                   <button @click="showEditForm(comment)">수정하기</button>
@@ -75,12 +98,12 @@
               </div>
             </div>
           </div>
-          </div><br />
-        </div>
-      </div>
-      <div class="col-1">
+        </div><br />
       </div>
     </div>
+    <div class="col-1">
+    </div>
+  </div>
   <div>
   </div>
 </template>
@@ -100,20 +123,22 @@ img {
 .box-profile {
   display: block;
   width: 40px;
-  height: 40px; 
+  height: 40px;
   border-radius: 70%;
   overflow: hidden;
 }
+
 .profile {
   width: 100%;
   height: 100%;
   object-fit: cover;
   cursor: pointer;
 }
-.d-btn{
-  float:right;
-  margin-top:10px;
-  margin-bottom:10px;
+
+.d-btn {
+  float: right;
+  margin-top: 10px;
+  margin-bottom: 10px;
   display: flex;
   justify-content: space-between;
 }
@@ -128,7 +153,8 @@ export default {
       comment: [],
       content: '',
       id: sessionStorage.getItem('loginId'),
-      editContent: ''
+      editContent: '',
+      showModal: false,
     };
   },
   created() {
@@ -136,6 +162,34 @@ export default {
     this.commentlist();
   },
   methods: {
+    edit() {
+      this.showModal = true;
+    },
+    editfunc(num){
+      let formData = new FormData();
+      const self = this
+      const file1 = document.getElementById('f1').files[0];
+      const file2 = document.getElementById('f2').files[0]
+      const editTitle = document.getElementById('editTitle')
+      const editContent = document.getElementById('editContent')
+
+      formData.append('title', editTitle.value)
+      formData.append('content', editContent.value)
+      formData.append('num', num)
+      if(file1 != null && file2 != null){
+        formData.append('f[0]', file1)
+        formData.append('f[1]', file2)
+      }
+      self.$axios.put('http://localhost:8082/dboard', formData, {
+      headers: { "Content-Type": "multipart/form-data" },
+    })
+      .then(function(res){
+        if(res.status == 200){
+          alert('수정완료')
+          self.dto = res.data.dto
+        }
+      })
+    },
     formatDate(date) {
       const options = { year: '2-digit', month: '2-digit', day: '2-digit', hour12: false };
       return new Date(date).toLocaleString('ko-KR', options);
