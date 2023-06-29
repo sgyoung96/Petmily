@@ -1,4 +1,7 @@
 <template>
+  <div>
+    <img class="t-img" src="../../assets/images/배경.png">
+  </div>
   <div class="d-title">
     <h4 style="text-align: center;"><strong><span style="color:rgb(156, 156, 39)">PETMILY</span>
         &nbsp;<span style="color:rgb(244, 191, 79);">DIARY</span></strong></h4>
@@ -6,19 +9,6 @@
   <div>
     <img src="../../assets/images/dboardpic.png" style="width: 1200px; height: 160px; margin-bottom: 20px;">
   </div>
-
-  <div class="container text-center">
-    <div class="row" style="margin-bottom: 40px;">
-      <div class="col">
-        <h2>입양일지{{ dto.likecnt }}</h2>
-      </div>
-      <div class="col">
-      </div>
-      <div class="col">
-      </div>
-    </div>
-  </div>
-
   <div class="container text-center">
     <div class="row">
       <div class="col-1">
@@ -108,11 +98,26 @@
   </div>
 </template>
 <style scoped>
+.t-img{
+  width: 85%;
+  height: 500px;
+  margin-bottom: 20px;
+}
+.d-all{
+  padding-left:150px;
+  padding-right:150px;
+}
 .d-title {
   flex-direction: column;
   display: flex;
   margin-top: 120px;
   margin-bottom: 120px;
+}
+.m-img{
+  width: 1210px;
+  height: 160px;
+  margin-top:10px;
+  margin-bottom:10px;
 }
 
 img {
