@@ -7,16 +7,15 @@
 
     <div>
 
-
       <div class="box-places">
         <div class="chk-places">
           <input type="checkbox" id="chk-places" name="chk-01"  v-model="chk_title" ><div class="box-chk-01" v-on:click="PlacetoggleButtons"><label for="chk-places" ><span class="chk-01">전체시도조회</span></label></div>
         </div>
         <div v-if="showPlaceButtons">
           <div class="box-place-container">
-            <div class="radio-all-place box-radio"><input type="radio" v-model="place_picked" value="99" id="place_all" name="ipt-radio-place" v-on:click="PlaceAll" class="ipt-radio-place" ><label for="place_all" class="lbl-place-all"><span class="span-place-all">전체</span></label></div>
-            <div v-for="button in placeButtons" :key="button.label"  >
-              <div v-on:click="button.onClick" class="place"><input type="radio" id="index" v-model="place_picked" value="index" name="ipt-radio-place" class="ipt-radio-place"><label for="button.label" class="lbl-place"><span class="span-place">{{ button.label }} </span></label></div>
+            <div class="radio-all-place box-radio"><input type="radio" id="place_all" name="ipt-radio-place" v-on:click="PlaceAll" class="ipt-radio-place" ><label for="place_all" class="lbl-place-all"><span class="span-place-all">전체</span></label></div>
+            <div v-for="(button, index) in placeButtons" :key="index"  >
+              <div v-on:click="button.onClick" class="place"><input type="radio" :id="index"  :value="index" name="ipt-radio-place" class="ipt-radio-place"><label :for="index" class="lbl-place"><span class="span-place">{{ button.label }} </span></label></div>
             </div>
           </div>
         </div>
@@ -539,7 +538,7 @@ input[type="checkbox"] {
 }
 
 .ipt-radio-place {
-  /*appearance: none;*/
+  appearance: none;
   cursor: pointer;
 }
 
