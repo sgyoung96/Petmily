@@ -59,28 +59,6 @@
           </div>
           <div class="col-10"
             style="border: solid #e5e7eb; border-radius: 20px; margin-top: 50px; position: relative; margin-left: 110px; text-align: left; background-color:white;">
-            <h3>구조정보</h3>
-            <div style="display: flex;">
-              <div style="flex: 1;">
-                <div>
-                  <h3>접수일시</h3>
-                  <span>{{ item.happenDt }}</span>
-                </div>
-              </div>
-              <div style="flex: 1;">
-                <div>
-                  <h3>발견장소</h3>
-                  <span>{{ item.happenPlace }}</span>
-                </div>
-              </div>
-            </div>
-            <div id="map"></div>
-          </div>
-
-          <div class="col-1">
-          </div>
-          <div class="col-10"
-            style="border: solid #e5e7eb; border-radius: 20px; margin-top: 50px; position: relative; margin-left: 110px; text-align: left; background-color:white;">
             <h3>동물보호센터</h3>
             <div style="display: flex;">
               <div style="flex: 1;">
@@ -110,6 +88,7 @@
                 </div>
               </div>
             </div>
+            <div id="map"></div>
           </div>
           <div class="box-form"> <!-- 입양신청양식으로 이동 -->
             <span @click="apply()" class="txt-form">입양 신청하기</span>
@@ -187,7 +166,7 @@ export default {
   methods: {
     fetchItems() {
       axios
-        .get('http://apis.data.go.kr/1543061/abandonmentPublicSrvc/abandonmentPublic?_type=json&pageNo=1&numOfRows=500&serviceKey=JkjPRne8oXZTCJTyLN9579FQZI6%2FkhepY9kJhsmdEpdiEjyDUj8HjiEo8ba4BAa8AOGXfQWZA7AAHiljNzoOBA%3D%3D')
+        .get('http://apis.data.go.kr/1543061/abandonmentPublicSrvc/abandonmentPublic?_type=json&pageNo=1&numOfRows=1000&serviceKey=JkjPRne8oXZTCJTyLN9579FQZI6%2FkhepY9kJhsmdEpdiEjyDUj8HjiEo8ba4BAa8AOGXfQWZA7AAHiljNzoOBA%3D%3D')
         .then((response) => {
           const data = response.data;
           const items = data.response.body.items.item;
@@ -264,7 +243,7 @@ export default {
     apply() {
       const self = this;
       console.log(self.info);
-      self.$router.push({name:'ApplyForm', query:{applyPetCd: this.$data.desertionNo, info: JSON.stringify(self.info)}});
+      self.$router.push({name:'ApplyForm', query:{applyPetCd: this.$data.desertionNo, careAddr:this.$data.careAddr, info: JSON.stringify(self.info)}});
     }
   },
 };
