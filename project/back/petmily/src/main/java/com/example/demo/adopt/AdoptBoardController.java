@@ -171,13 +171,24 @@ public class AdoptBoardController {
 	 * @param num
 	 */
 	@DeleteMapping("/{num}")
-	public Map remove(@PathVariable("num") int num) {
-		Map map = new HashMap();
-		AdoptBoardDto dto2 = null;
+	public Map delBoard(@PathVariable("num") int num) {
 		boolean flag = true;
+		Map map = new HashMap();
+		AdoptBoardDto dto = service.getDetail(num);
+		File delf1 = new File(dto.getPic1());
+		File delf2 = new File(dto.getPic2());
+		File dir = new File(path + "adoptboard/" + num);
 		try {
-			service.remove(num);
-		} catch (Exception e) {
+			if(dto.getPic1() != null && dto.getPic2() != null) {
+				delf1.delete();
+				delf2.delete();
+				dir.delete();
+				service.remove(num);
+			}else {
+				service.remove(num);
+			}
+		}catch(Exception e){
+			e.printStackTrace();
 			flag = false;
 		}
 		map.put("flag", flag);

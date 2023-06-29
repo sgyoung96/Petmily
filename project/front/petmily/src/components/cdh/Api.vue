@@ -255,9 +255,10 @@ export default {
         document.getElementById('chk_neuter').check = false;
       }
     },
-    handleItemClick(desertionNo) {
+    handleItemClick(desertionNo, careAddr) {
       console.log(desertionNo); // desertionNo 값 확인
       this.desertionNo = desertionNo; // desertionNo 값을 설정
+      this.careAddr = careAddr;
       this.$router.push({ name: 'Detail', query: { desertionNo: desertionNo, careAddr: this.careAddr } });
     },
     previousPage() {

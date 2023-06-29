@@ -61,7 +61,7 @@ public class VolboardService {
 
 	//봉사모집게시판 삭제
 	public void delBoard(int num) {
-		dao.deleteById(null);
+		dao.deleteById(num);
 	}
 	
 	public void upCnt(int num) {
