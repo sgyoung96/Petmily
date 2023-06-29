@@ -1,6 +1,6 @@
 <template>
     <div>
-        <h3>{{ dto.name }} 상품 정보</h3>
+        <h3>{{ dto.name }}</h3>
         <table>
             <tr>
                 <td><img :src="'http://localhost:8082/dboard/imgs/' + dto.num + '/1'"></td>

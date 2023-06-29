@@ -23,6 +23,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.example.demo.adopt.AdoptBoardDto;
+import com.example.demo.volboard.VolboardDto;
+
 @RestController
 @CrossOrigin(origins="*")
 @RequestMapping("/dboard")
@@ -55,24 +58,78 @@ public class DiaryboardController {
 	
 	//글추가
 	@PostMapping("")
-	public Map addDiary(DiaryboardDto dto) {
-		System.out.println("TEST :: " +dto.toString());
-		boolean flag = true;//'flag'라는 boolean 변수를 'true'로 초기화
-		try {//에외 발생 가능성 있으므로 try블록 안에서 실행
-			int saveNum = service.save(dto);//service.save를 호출하여 dto매개변수로 저장한 후 반환된 정수값을 num변수에 할당(이미지폴더이름)
-			System.out.println("dtonumnumnumnum :: " +dto.getNum());
-			System.out.println("numnumnumnum :: " +saveNum);
-			File dir = new File(path + "diaryboard/" + saveNum);//디렉토리 경로
-			dir.mkdir();//mkdir()메서드를 호출하여 디렉토리 생성
-			MultipartFile[] f = dto.getF();//dto객체의 getF()를 호출하여 f생성
-			String[] imgs = new String[2];//imgs를 초기화
-			for (int i = 0; i < f.length; i++) {
-				MultipartFile x = f[i];//x라는 새 MultipartFile객체 생성
-				String fname = x.getOriginalFilename();//fname변수에 x의 원본 파일이름이 저장
-				if (fname != null && !fname.equals("")) {
-					String newpath = path + "diaryboard/" + saveNum + "/" + fname; //새 파일 경로인 newpath가 구성됨
-					File newfile = new File(newpath);//newpath를 사용하여 새File객체인 newfile이 생성됨
-					System.out.println(newpath);
+	public Map add(DiaryboardDto dto) {
+		boolean flag = true;
+		int saveNum = 0;
+		try {
+			int num = service.save(dto);
+			File dir = new File(path + "diaryboard/" + num); //c:/petmily/diaryboard/num
+			dir.mkdir();
+			MultipartFile[] f = dto.getF();
+			String[] imgs = new String[2];
+			for(int i = 0; i < f.length; i++) {
+				MultipartFile x = f[i];
+				String fname = x.getOriginalFilename();
+				if(fname != null && !fname.equals("")) {
+					String newpath = path + "diaryboard/" + num + "/" + fname;
+					File newfile = new File(newpath);
+					try {
+					x.transferTo(newfile);
+					imgs[i] = newpath;
+					} catch (IllegalStateException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					} catch (IOException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+				}
+			}
+		
+			dto.setPic1(imgs[0]);
+			dto.setPic2(imgs[1]);
+			dto.setNum(num);
+			saveNum = service.save(dto);// 수정
+		}catch (Exception e) {
+			flag = false;
+		}
+		DiaryboardDto dto2 = service.getByNum(saveNum);
+		Map map = new HashMap();
+		map.put("flag", flag);
+		map.put("dto", dto2);
+		return map;
+	}
+	
+	@PutMapping("")
+	public Map edit(DiaryboardDto dto) {
+		int saveNum = 0;
+		Map map = new HashMap();
+		DiaryboardDto dto2 = service.getByNum(dto.getNum());
+		System.out.println("#################################"+dto.getF()[0]+"#############################");
+		boolean flag = true;
+		if(dto.getF()[0] == null && dto.getF()[1] == null) {
+			dto2.setTitle(dto.getTitle());
+			dto2.setContent(dto.getContent());
+			saveNum = service.save(dto2);
+		}else {
+		try {
+			System.out.println("#@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@");
+			dto2.setTitle(dto.getTitle());
+			dto2.setContent(dto.getContent());
+			File delf1 = new File(dto2.getPic1());
+			delf1.delete();
+			File delf2 = new File(dto2.getPic2());
+			delf2.delete();
+			int num = service.save(dto2);
+			File dir = new File(path + "dirayboard/" + num);
+			MultipartFile[] f = dto.getF();
+			String[] imgs = new String[2];
+			for(int i=0; i < f.length; i++) {
+				MultipartFile x = f[i];
+				String fname = x.getOriginalFilename();
+				if(fname != null && !fname.equals("")) {
+					String newpath = path + "diaryboard/" + num + "/" + fname;
+					File newfile = new File(newpath);
 					try {
 						x.transferTo(newfile);
 						imgs[i] = newpath;
@@ -85,43 +142,40 @@ public class DiaryboardController {
 					}
 				}
 			}
-			dto.setPic1(imgs[0]);
-			dto.setPic2(imgs[1]);
-			dto.setNum(saveNum);
-			service.save(dto);// 수정
-		} catch (Exception e) {
-			flag = false;
-		}
-		Map map = new HashMap();
-		map.put("flag", flag);
-		map.put("dto", dto);
-		return map;
-}
-	
-	@PutMapping("")
-	public Map edit(DiaryboardDto dto) {
-		Map map = new HashMap();
-		DiaryboardDto dto2 = null;
-		boolean flag = true;
-		try {
-			int num = service.save(dto);
-			dto2 = service.getByNum(num);
+			dto2.setPic1(imgs[0]);
+			dto2.setPic2(imgs[1]);
+			dto2.setNum(num);
+			saveNum = service.save(dto2);
 		}catch(Exception e) {
 			flag = false;
 		}
+		}
+		DiaryboardDto dto3 = service.getByNum(saveNum);
 		map.put("flag", flag);
-		map.put("dto", dto2);
+		map.put("dto", dto3);
 		return map;
 	}
 	
+	
 	@DeleteMapping("/{num}")
-	public Map delete(@PathVariable("num") int num) {
-		Map map = new HashMap();
-		DiaryboardDto dto2 = null;
+	public Map delBoard(@PathVariable("num") int num) {
 		boolean flag = true;
+		Map map = new HashMap();
+		DiaryboardDto dto = service.getByNum(num);
+		File delf1 = new File(dto.getPic1());
+		File delf2 = new File(dto.getPic2());
+		File dir = new File(path + "diaryboard/" + num);
 		try {
-			service.delDiaryboard(num);
-		} catch (Exception e) {
+			if(dto.getPic1() != null && dto.getPic2() != null) {
+				delf1.delete();
+				delf2.delete();
+				dir.delete();
+				service.delDiaryboard(num);
+			}else {
+				service.delDiaryboard(num);
+			}
+		}catch(Exception e){
+			e.printStackTrace();
 			flag = false;
 		}
 		map.put("flag", flag);

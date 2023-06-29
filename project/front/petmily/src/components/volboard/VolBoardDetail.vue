@@ -11,7 +11,8 @@
       </div>
       <div style="float:right">
         <span v-on:click="apply()" class="badge text-bg-danger" style="font-size: 17px;">신청하기</span>&nbsp;
-        <span v-on:click="addwatch(dto.num)" class="badge text-bg-secondary" style="font-size: 17px;">♡관심목록담기</span>
+        <span v-on:click="addwatch(dto.num)" class="badge text-bg-secondary" style="font-size: 17px;">♡관심목록담기</span>&nbsp;
+        <span v-on:click="del(dto.num)" class="badge text-bg-danger" style="font-size: 17px;">삭제</span>
       </div>
     </div>
     <div class="vhead">
@@ -205,6 +206,22 @@ export default {
             }
           })
       }
+    },
+    del(num) {
+      const self = this
+      self.$axios.delete('http://localhost:8082/volboard/' + num)
+      .then(function (res) {
+        if(res.status == 200){
+          if(res.data.flag){
+            alert('삭제가 정상적으로 되었습니다')
+            this.$router.push({ name: 'VolBoardHome' });
+          }else{
+            alert('삭제 처리 에러')
+          }
+        }else{
+          alert('에러코드: '+ res.status)
+        }
+      })
     },
 
     loadScript() {

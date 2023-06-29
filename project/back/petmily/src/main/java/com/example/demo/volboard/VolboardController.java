@@ -148,8 +148,19 @@ public class VolboardController {
 	public Map delBoard(@PathVariable("num") int num) {
 		boolean flag = true;
 		Map map = new HashMap();
+		VolboardDto dto = service.getById(num);
+		File delf1 = new File(dto.getPic1());
+		File delf2 = new File(dto.getPic2());
+		File dir = new File(path + "volboard/" + num);
 		try {
-			service.delBoard(num);
+			if(dto.getPic1() != null && dto.getPic2() != null) {
+				delf1.delete();
+				delf2.delete();
+				dir.delete();
+				service.delBoard(num);
+			}else {
+				service.delBoard(num);
+			}
 		}catch(Exception e){
 			e.printStackTrace();
 			flag = false;
