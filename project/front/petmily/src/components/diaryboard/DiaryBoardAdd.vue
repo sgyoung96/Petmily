@@ -94,14 +94,14 @@ export default {
         .post('http://localhost:8082/dboard', formData, {
           headers: { "Content-Type": "multipart/form-data" },
         })
-        .then(function () {
-          self.$router.push('/diaryboardhome');
+        .then(function (response){
+          if(response.status == 200){
+            alert('추가성공')
+            self.$router.push('/diaryboardhome');
+          }
         })
-        .catch(function (e) {
-          console.log(e);
-          self.$router.push('/diaryboardhome');
-        });
     }
   }
 }
+
 </script>
