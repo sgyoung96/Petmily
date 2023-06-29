@@ -14,9 +14,9 @@
         </div>
         <div v-if="showPlaceButtons">
           <div class="box-place-container">
-            <input type="radio" v-model="picked" id="place_all" name="ipt-radio-place" v-on:click="PlaceAll" class="ipt-radio-place" ><label for="place_all"><span>전체</span></label>
-            <div v-for="button in placeButtons" :key="button.label" v-on:click="button.onClick" >
-              <input type="radio" v-model="picked" name="ipt-radio-place" class="ipt-radio-place"><label><span>{{ button.label }}</span></label>
+            <div class="radio-all-place box-radio"><input type="radio" v-model="place_picked" value="99" id="place_all" name="ipt-radio-place" v-on:click="PlaceAll" class="ipt-radio-place" ><label for="place_all" class="lbl-place-all"><span class="span-place-all">전체</span></label></div>
+            <div v-for="button in placeButtons" :key="button.label"  >
+              <div v-on:click="button.onClick" class="place"><input type="radio" id="index" v-model="place_picked" value="index" name="ipt-radio-place" class="ipt-radio-place"><label for="button.label" class="lbl-place"><span class="span-place">{{ button.label }} </span></label></div>
             </div>
           </div>
         </div>
@@ -31,10 +31,10 @@
           </div>
           <div v-if="showNeuterButtons">
             <div class="Neuter-container">
-              <input type="radio" id="neuter_all" v-model="picked" v-on:click="NeuterAll"  name="radio-neuter" class="Neuter-button" ><label for="neuter_all"><span>전체</span></label>
-              <input type="radio" id="neuter_y" v-model="picked" v-on:click="NeuterY" name="radio-neuter" class="Neuter-button" ><label for="neuter_y"><span>중성화O</span></label>
-              <input type="radio" id="neuter_n" v-model="picked" v-on:click="NeuterN" name="radio-neuter" class="Neuter-button" ><label for="neuter_n"><span>중성화X</span></label>
-              <input type="radio" id="neuter_x" v-model="picked" v-on:click="NeuterU" name="radio-neuter" class="Neuter-button" ><label for="neuter_x"><span>확인불가</span></label>
+              <input type="radio" id="neuter_all" v-model="picked" value="all" v-on:click="NeuterAll"  name="radio-neuter" class="Neuter-button" ><label for="neuter_all"><span>전체</span></label>
+              <input type="radio" id="neuter_y" v-model="picked" value="O" v-on:click="NeuterY" name="radio-neuter" class="Neuter-button" ><label for="neuter_y"><span>중성화O</span></label>
+              <input type="radio" id="neuter_n" v-model="picked" value="X" v-on:click="NeuterN" name="radio-neuter" class="Neuter-button" ><label for="neuter_n"><span>중성화X</span></label>
+              <input type="radio" id="neuter_x" v-model="picked" value="??" v-on:click="NeuterU" name="radio-neuter" class="Neuter-button" ><label for="neuter_x"><span>확인불가</span></label>
             </div>
           </div>
         </div>
@@ -117,7 +117,8 @@ export default {
 
       btn_place_chk: [],
       chk_title: [],
-      picked: []
+      picked: [],
+      place_picked: []
     };
   },
 
@@ -132,7 +133,13 @@ export default {
     this.pageNo = parseInt(pageNo);
     this.fetchData(orgCd);
   },
-
+  watch: {
+    picked: function() {
+      if (this.picked.length == 2) {
+        console.log('picked');
+      }
+    }
+  },
   methods: {
     fetchData(orgCd, neuter_yn) {
     let apiUrl;
@@ -153,15 +160,6 @@ export default {
       this.totalItems = data.totalCount;
       this.totalPages = 20;
       this.updateDisplayedPages();
-
-
-
-      for (var i = 0; i < document.getElementsByName('ipt-radio-place').length; i++) {
-        document.getElementsByName('ipt-radio-place')[i].check = false;
-        for (var j = 0; j < document.getElementsByName('radio-neuter').length; j++) {
-          document.getElementsByName('radio-neuter')[j].check = false;
-        }
-       }
 
     })
     .catch((error) => {
@@ -459,6 +457,7 @@ export default {
   display: grid;
   grid-template-columns: repeat(5, 1fr);
   justify-content: space-evenly;
+  padding-top: 10px;
 }
 
 .box-places {
@@ -493,8 +492,49 @@ input[type="checkbox"] {
   font-size: 15px;
 }
 
-input[type="radio"] {
-  /*appearance: none;*/
+#place_all {
+  width: 10px;
+  height: 10px;
+  appearance: none;
+}
+
+.radio-all-place {
+  width: 200px;
+  height: 50px;
+  background: #fff;
+  border: 2px solid #999999;
+  border-radius: 20px;
+  font-family: 'IBMPlexSansKR-Medium';
+  font-size: 14px;
+  margin-top: 10px;
+}
+
+.lbl-place {
+  width: 200px;
+  height: 50px;
+  background: #fff;
+  border: 2px solid #999999;
+  border-radius: 20px;
+  text-align: center;
+}
+
+.span-place {
+  display: flex;
+  font-family: 'IBMPlexSansKR-Medium';
+  font-size: 14px;
+  text-align: center;
+  justify-content: center;
+  margin-top: 10px;
+}
+
+.lbl-place-all {
+  width: 200px;
+  transform: translateX(85px) translateY(-10px);
+}
+
+.place {
+  appearance: none;
+  padding-top: 10px;
 }
 
 .ipt-radio-place {
