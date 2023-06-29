@@ -7,10 +7,10 @@
             <img src="../assets/images/배경.png" class="d-block w-100" alt="...">
           </div>
           <div class="carousel-item" data-bs-interval="2000">
-            <img src="../assets/images/dboardpic.png" class="d-block w-100" alt="...">
+            <img src="../assets/images/고양.png" class="d-block w-100" alt="...">
           </div>
           <div class="carousel-item" data-bs-interval="2000">
-            <img src="../assets/images/dboardpic2.png" class="d-block w-100" alt="...">
+            <img src="../assets/images/강고.png" class="d-block w-100" alt="...">
           </div>
         </div>
         <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleInterval"
