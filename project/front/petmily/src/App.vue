@@ -23,9 +23,6 @@
         </div>
 
         <div class="box-mypage">
-           <div v-if="loginId == 'admin'">
-            <span @click="adminhome">관리자페이지</span>
-          </div>
           <img class="ico-bell" src="./assets/bell.png" />
           <img class="ico-mypage" src="./assets/profile-user.png" />
         </div>
