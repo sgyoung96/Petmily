@@ -60,8 +60,8 @@
               <div style="display:flex; justify-content: space-between">
                 <div style="float:left">
                   <span class="box-profile" style="background: #black;"> 
-            <img class="profile" @error="replaceImg" :src="'http://localhost:8082/members/imgs/'+ id">
-        </span>{{ comment.content }} {{ comment.w_date }} {{ comment.id.id }} {{ comment.db_num }}
+            <img class="profile" @error="replaceImg" :src="'http://localhost:8082/members/imgs/'+ comment.id.id">
+        </span>{{ comment.content }} {{ formatDate(comment.w_date) }} {{ comment.id.id }}
                 </div>
                 <div>
                   <button @click="showEditForm(comment)">수정하기</button>
