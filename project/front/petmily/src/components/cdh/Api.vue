@@ -16,7 +16,7 @@
           <div class="box-place-container">
             <div class="radio-all-place box-radio"><input type="radio" v-model="place_picked" value="99" id="place_all" name="ipt-radio-place" v-on:click="PlaceAll" class="ipt-radio-place" ><label for="place_all" class="lbl-place-all"><span class="span-place-all">전체</span></label></div>
             <div v-for="button in placeButtons" :key="button.label"  >
-              <div v-on:click="button.onClick" class="place"><input type="radio" id="index" v-model="place_picked" value="index" name="ipt-radio-place" class="ipt-radio-place"><label for="button.label" class="lbl-place"><span class="span-place">{{ button.label }} </span></label></div>
+              <div v-on:click="button.onClick"  class="place"><input type="radio" id="index" v-model="place_picked" value="index" name="ipt-radio-place" class="ipt-radio-place"><label for="button.label" class="lbl-place"><span class="span-place">{{ button.label }} </span></label></div>
             </div>
           </div>
         </div>
@@ -201,6 +201,7 @@ export default {
             label: org.orgdownNm,
             onClick: () => {
               this.orgCd = org.orgCd;
+              
             }
           }));
         })
@@ -539,7 +540,7 @@ input[type="checkbox"] {
 }
 
 .ipt-radio-place {
-  /*appearance: none;*/
+  appearance: none;
   cursor: pointer;
 }
 

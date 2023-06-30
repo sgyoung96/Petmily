@@ -4,7 +4,7 @@
       <div>
         <p>입양하실 아가의 기본정보예요.</p>
         <div class="row">
-          <div class="col-3">
+          <div class="col-2">
           </div>
           <div class="col-8" >
             <div class="row" style="display: flex; text-align: left; align-items: center;">
@@ -44,11 +44,11 @@
       <div>
         <p>아가를 보호하고 있는 곳의 정보예요.</p>
         <div class="row">
-          <div class="col-3">
+          <div class="col-2">
           </div>
-          <div class="col-8" >
+          <div class="col-9" >
             <div class="row" style="display: flex; text-align: left; align-items: center;">
-              <div class="col-sm-4" id="map">
+              <div class="col-sm-1" id="map">
               </div>
               <div class="col-sm-2" style="text-align: left; align-items: center;">
                 <strong class="g-color-black" style="padding-left: 20px;">접수일시</strong><br/>
@@ -90,16 +90,16 @@
     </div>
 
     <p style="padding-top: 20px;">입양을 결심하신 이유를 알려주세요.</p>
-    <textarea style="width: 800px; height: 300px; padding-top:10px;" v-model="reason"></textarea><br />
+    <textarea style="width: 1000px; height: 300px; padding-top:10px;" v-model="reason"></textarea><br />
 
     <p style="padding-top: 20px;">반려 동물로 맞이한 후에 아가와 함께할 시간들을 생각하며, 입양 후 다짐을 자유롭게 기술해 주세요.</p>
-    <textarea style="width: 800px; height: 300px;" v-model="feeding"></textarea><br />
+    <textarea style="width: 1000px; height: 300px;" v-model="feeding"></textarea><br />
 
     <p style="padding-top: 20px;">개인정보 취급 동의서</p>
     <div>
       <div>
 
-        <textarea style="width: 800px; height: 300px;" readonly>
+        <textarea style="width: 1000px; height: 300px;" readonly>
 개인정보 취급방침
 
 펫밀리 (이하 '단체'는) 입양신청자의 개인정보를 중요시하며, "정보통신망 이용촉진 및 정보보호"에 관한 법률을 준수하고 있습니다.
@@ -148,7 +148,7 @@
     <strong class="g-color-black" style="padding-right:20px; padding-left:20px">입양신청일</strong>
     <strong class="g-color-black" style="padding-right:20px; padding-left:20px">{{ wdate }}</strong>
 
-    <button v-on:click="apply()" style="background-color:#FFD65B; border-radius:10px border-;">신청</button>
+    <button v-on:click="apply()" style="background-color:#FFD65B; border-radius:10px;">신청</button>
   </div>
 </template>
   
@@ -211,6 +211,7 @@ export default {
   },
   methods: {
     apply() {
+     
       const self = this;
 
       let formdata = new FormData();
@@ -227,22 +228,27 @@ export default {
       formdata.append('feeding', self.feeding);
       formdata.append('ischeck', self.ischeck);
       formdata.append('petCd', self.applyPetCd);
-
+      if(self.agreement==0){
+              alert("개인정보 동의서에 동의를 해야합니다")
+              return;
+            } else {
       self.$axios.post('http://localhost:8082/Applyform', formdata)//비동기 요청
         .then(function (res) {//요청 결과 받아옴. 파람 res에 결과저장됨. res.data가 백단에서 전송한 데이터
           if (res.status == 200) {
-            if (res.data.dto != null) {
-              self.msg = '입양 신청이 완료되었습니다.';
-              alert(self.msg);
-              self.$router.go(-1);
-            } else {
-              self.msg = '신청 양식을 보낸 상태입니다';
-              alert(self.msg);
-            }
+              if (res.data.dto != null) {
+                self.msg = '입양 신청이 완료되었습니다.';
+                alert(self.msg);
+                self.$router.go(-1);
+              } else {
+                self.msg = '신청 양식을 보낸 상태입니다';
+                alert(self.msg);
+              }
+            
           } else {
             alert('에러코드:' + res.status)
           }
         });
+      }
     },
     setDate() {
       let year = new Date().getFullYear();

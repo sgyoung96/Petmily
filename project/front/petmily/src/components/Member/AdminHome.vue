@@ -2,7 +2,7 @@
   <div>
       <h1>관리자 메인 페이지</h1>
 
-      <a href="../../admin/ApplyList.vue">입양신청서 승인 페이지</a>
+      <a href="../../admin/ApplyList">입양신청서 승인 페이지</a>
       <br><br><br><br>
 
   </div>
