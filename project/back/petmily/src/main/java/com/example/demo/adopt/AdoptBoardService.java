@@ -72,4 +72,8 @@ public class AdoptBoardService {
 		}
 		return dtolist;
 	}
+	
+	public int getCount() {
+		return dao.countByAll();
+	}
 }

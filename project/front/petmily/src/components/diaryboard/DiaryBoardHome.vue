@@ -1,148 +1,155 @@
 <template>
-  <div>
-    <img class="t-img" src="../../assets/images/배경.png">
-  </div>
+  <img class="t-img" src="../../assets/images/배경.png">
   <div class="d-title">
     <h4 style="text-align: center;"><strong><span style="color:rgb(156, 156, 39)">PETMILY</span>
-      &nbsp;<span style="color:rgb(244, 191, 79);">DIARY</span></strong></h4></div>
-  <div>
-    <img class="m-img" src="../../assets/images/dboardpic.png">
+        &nbsp;<span style="color:rgb(244, 191, 79);">DIARY</span></strong></h4>
   </div>
+  <img class="m-img" src="../../assets/images/dboardpic.png">
   <div class="d-all">
-      <div id="slider">
-        <div
-            v-for="(dboard, index) in paginatedList"
-            :key="dboard.num"
-            class="slider-item"
-            :class="{ 'new-row': index % itemsPerRow === 0 }"
-          >
-          <div class="img-box" v-on:click="$event=>detail(dboard.num)">
-      <a ><img class="b-img" :src="'http://localhost:8082/dboard/imgs/' + dboard.num + '/1'"></a>
-    <div class="b-txt">
-    <div class="b-title">
-    {{ dboard.title }}
-    </div>         
-    <div class="b-id">
-      <span>
-    작성자 : {{ dboard.id.id }}
-  </span>
-  <span>
-    <img class=l-img src="../../assets/images/heart.png" style="width: 15px; height: 15px;">{{dboard.likecnt }}
-  </span>
-  </div> 
-  </div>
+    <div id="slider">
+      <div v-for="(dboard, index) in paginatedList" :key="dboard.num" class="slider-item"
+        :class="{ 'new-row': index % itemsPerRow === 0 }">
+        <div class="img-box" v-on:click="$event => detail(dboard.num)">
+          <a><img class="b-img" :src="'http://localhost:8082/dboard/imgs/' + dboard.num + '/1'"></a>
+          <div class="b-txt">
+            <div class="b-title">
+              {{ dboard.title }}
+            </div>
+            <div class="b-id">
+              <span>
+                작성자 : {{ dboard.id.id }}
+              </span>
+              <span>
+                <img class=l-img src="../../assets/images/heart.png" style="width: 15px; height: 15px;">{{ dboard.likecnt
+                }}
+              </span>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
-  </div>
-</div>
     <div class="list-box">
-    <span>
-    <button @click="goToFullList">전체목록</button>
-  </span>
-  <span>
-      <button @click="$router.push('/diaryboardadd')">글쓰기</button>
-    </span>
-</div>
-<div>
-  <ul class="pagination" style="display: inline-block">
-    <li class="page-item">
-      <a class="page-link" href="#" aria-label="Previous" @click="previousPage">
-        <span aria-hidden="true">&laquo;</span>
-      </a>
-    </li>
-    <li class="page-item" v-for="pageNumber in totalPages" :key="pageNumber" :class="{ active: pageNumber === currentPage }">
-      <a class="page-link" href="#" @click="goToPage(pageNumber)">{{ pageNumber }}</a>
-    </li>
-    <!-- 다음 페이지 버튼 -->
-    <li class="page-item">
-      <a class="page-link" href="#" aria-label="Next" @click="nextPage">
-        <span aria-hidden="true">&raquo;</span>
-      </a>
-    </li>
-  </ul>
-</div>
-<div class="search-box">
-  <input type="text" id="searchKeyword" v-model="searchKeyword" placeholder="제목을 입력해주세요">
+      <span>
+        <button @click="goToFullList">전체목록</button>
+      </span>
+      <span>
+        <button @click="$router.push('/diaryboardadd')">글쓰기</button>
+      </span>
+    </div>
+    <div>
+      <ul class="pagination" style="display: inline-block">
+        <li class="page-item">
+          <a class="page-link" href="#" aria-label="Previous" @click="previousPage">
+            <span aria-hidden="true">&laquo;</span>
+          </a>
+        </li>
+        <li class="page-item" v-for="pageNumber in totalPages" :key="pageNumber"
+          :class="{ active: pageNumber === currentPage }">
+          <a class="page-link" href="#" @click="goToPage(pageNumber)">{{ pageNumber }}</a>
+        </li>
+        <li class="page-item">
+          <a class="page-link" href="#" aria-label="Next" @click="nextPage">
+            <span aria-hidden="true">&raquo;</span>
+          </a>
+        </li>
+      </ul>
+    </div>
+    <div class="search-box">
+      <input type="text" id="searchKeyword" v-model="searchKeyword" placeholder="제목을 입력해주세요">
       <button id="search_btn" @click="searchByTitle()">검색</button>
     </div>
-</div>
+  </div>
 </template>
 <style scoped>
-.t-img{
+.t-img {
   width: 85%;
   height: 500px;
   margin-bottom: 20px;
 }
-.d-all{
-  padding-left:150px;
-  padding-right:150px;
+
+.d-title {
+  flex-direction: column;
+  display: flex;
+  margin-top: 120px;
+  margin-bottom: 120px;
 }
-.d-title{
-  flex-direction:column;
-  display:flex;
-  margin-top:120px;
-  margin-bottom:120px;
- }
- .m-img{
+.m-img {
   width: 1210px;
   height: 160px;
-  margin-top:10px;
-  margin-bottom:10px;
+  margin-top: 10px;
+  margin-bottom: 10px;
 }
-.img-box{
+
+.d-all {
+  padding-left: 150px;
+  padding-right: 150px;
+}
+
+.img-box {
   border: 1px solid silver;
   cursor: pointer;
 }
-.b-img{
+
+.b-img {
   width: 293px;
 }
-.b-txt{
+
+.b-txt {
   text-align: left;
-  display:flex;
+  display: flex;
   flex-direction: column;
 }
-.b-title{
-  font-size:large;
+
+.b-title {
+  font-size: large;
 }
-.b-id{
-  font-size:medium;
-  display:flex;
+
+.b-id {
+  font-size: medium;
+  display: flex;
   justify-content: space-between;
 }
-.l-img{
-  width:15px;
-  height:15px;
+
+.l-img {
+  width: 15px;
+  height: 15px;
 }
-.list-box{
-  display:flex;
+
+.list-box {
+  display: flex;
   justify-content: space-between;
-  margin-top:10px;
-  margin-bottom:10px;
- }
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+
 #slider {
   display: flex;
   flex-wrap: wrap;
 }
+
 .slider-item {
   flex: 0 0 calc(25% - 10px);
   margin-right: 10px;
   margin-bottom: 10px;
 }
+
 .new-row {
   clear: both;
 }
-.search-box{
- margin-bottom: 30px;
- text-align: center;
+
+.search-box {
+  margin-bottom: 30px;
+  text-align: center;
 }
 </style>
 
 <script>
 export default {
   name: 'DiaryboardHome',
-  data () {
+  data() {
     return {
-      loginId:null,
-      list:[],
+      loginId: null,
+      list: [],
       itemsPerRow: 4,
       searchKeyword: '',
       currentPage: 1,
@@ -159,22 +166,22 @@ export default {
       return this.list.slice(startIndex, endIndex);
     }
   },
-  created:function(){
-      this.loginId = sessionStorage.getItem('loginId')
-      const self = this;
-      self.$axios.get('http://localhost:8082/dboard')//+self.loginId
-      .then(function(res){
-          if(res.status == 200){
-              self.list = res.data.list
-          }else{
-              alert('에러코드'+res.status)
-          }
+  created: function () {
+    this.loginId = sessionStorage.getItem('loginId')
+    const self = this;
+    self.$axios.get('http://localhost:8082/dboard')//+self.loginId
+      .then(function (res) {
+        if (res.status == 200) {
+          self.list = res.data.list
+        } else {
+          alert('에러코드' + res.status)
+        }
       });
   },
-  methods:{
-    detail(num){
+  methods: {
+    detail(num) {
       // alert(num)
-      this.$router.push({name:'DiaryBoardDetail', query:{num:num}})
+      this.$router.push({ name: 'DiaryBoardDetail', query: { num: num } })
     },
     goToFullList() {
       this.$router.push('/diaryboardhome');
@@ -184,14 +191,14 @@ export default {
       alert(self.searchKeyword)
       self.$axios
         .get('http://localhost:8082/dboard/getByTitle/' + self.searchKeyword)
-        .then(function(res) {
+        .then(function (res) {
           if (res.status === 200) {
             self.list = res.data;
           } else {
             alert('에러코드' + res.status);
           }
         })
-        .catch(function(error) {
+        .catch(function (error) {
           console.log(error);
         });
     },
@@ -214,14 +221,16 @@ export default {
   <!-- Add "scoped" attribute to limit CSS to this component only -->
 
 <style scoped>
-img{
-  width:256px;
-  height:200px;
+img {
+  width: 256px;
+  height: 200px;
 }
+
 #slider {
   display: flex;
   flex-wrap: wrap;
 }
+
 .slider-item {
   flex: 0 0 calc(25% - 10px);
   margin-right: 10px;
@@ -230,6 +239,5 @@ img{
 
 .new-row {
   clear: both;
-}
-</style>
+}</style>
 

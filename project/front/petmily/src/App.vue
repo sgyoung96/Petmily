@@ -85,10 +85,11 @@
         <router-link to="/addressmap">주소로 지도</router-link> |
         <router-link to="/barchart">막대그래프</router-link> |
         <router-link to="/piechart">파이차트</router-link> |
+        <router-link to="/animalhospital">동물병원</router-link> |
         <div v-if="loginId != null">
           <router-link to="/messagewrite" >쪽지보내기</router-link> |
           <router-link to="/messagesender" >보낸쪽지함</router-link> |
-          <router-link to="/messagereciever">쪽지함</router-link>
+          <router-link to="/messagereciever">쪽지함</router-link> |
           <span v-show="cntchecktf" @click="cntcheck">{{cnt}}</span> 
           <router-link to="/memedit">내정보 수정</router-link>
         </div>
@@ -165,7 +166,7 @@ export default {
       alert('페이지 추가하고 작업해야함');
     },
     groups() { // (카테고리) 동물보호소
-      alert('경로 추가 및 페이지 작업 필요');
+      this.$router.push('/groups');
     },
     all_pets() { // 모든 동물
       this.$router.push('/api');
