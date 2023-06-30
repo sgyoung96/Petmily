@@ -1,154 +1,222 @@
 <template>
-  <div>
+  <div class="box-container">
     <img class="t-img" src="../../assets/images/배경.png">
-  </div>
-  <div class="d-title">
-    <h4 style="text-align: center;"><strong><span style="color:rgb(156, 156, 39)">PETMILY</span>
-        &nbsp;<span style="color:rgb(244, 191, 79);">DIARY</span></strong></h4>
-  </div>
-  <div>
-    <img src="../../assets/images/dboardpic.png" style="width: 1200px; height: 160px; margin-bottom: 20px;">
-  </div>
-  <div class="container text-center">
-    <div class="row">
-      <div class="col-1">
+    <div class="d-title">
+      <h4 style="text-align: center;"><strong><span style="color:rgb(156, 156, 39)">PETMILY</span>
+          &nbsp;<span style="color:rgb(244, 191, 79);">DIARY</span></strong></h4>
+    </div>
+    <img class="m-img" src="../../assets/images/dboardpic.png">
+    <div class="d-all">
+      <div class="box-title" v-if="dto.id">
+        <span>{{ dto.title }}</span>
+        <span>{{ dto.id.id }}{{ formatDate(dto.w_date) }}</span>
       </div>
-      <div class="col-10">
-        <div v-if="dto.id"
-          style="border-top: 2px solid black; border-bottom: 2px solid lightgrey; display: flex; justify-content: space-between; padding: 10px;">
-          <div>{{ dto.title }}</div>
-          <div>{{ dto.id.id }}{{ formatDate(dto.w_date) }}</div>
+      <img class="box-img" :src="'http://localhost:8082/dboard/imgs/' + dto.num + '/1'">
+      <img class="box-img" :src="'http://localhost:8082/dboard/imgs/' + dto.num + '/2'">
+      <div class="box-content">
+        {{ dto.content }}
+      </div>
+      <div v-if="showModal" class="edit-form">
+  <div>
+    <table>
+      <tr>
+        <th>사진1</th>
+        <td><input type="file" id="f1"></td>
+      </tr>
+      <tr>
+        <th>사진2</th>
+        <td><input type="file" id="f2"></td>
+      </tr>
+      <tr>
+        <th>Title</th>
+        <td><input type="text" v-model="dto.title" id="editTitle"></td>
+      </tr>
+      <tr>
+        <th>Content</th>
+        <td><input type="text" v-model="dto.content" id="editContent"></td>
+      </tr>
+    </table>
+    <div class="edit-buttons">
+      <button v-on:click="editfunc(dto.num)">수정</button>
+      <button v-on:click="editcancle()">취소</button>
+    </div>
+  </div>
+</div>
+      <div class="d-btn">
+        <div>
+          <router-link to="/diaryboardhome" class="badge text-bg-secondary" style="font-size: 17px;">목록으로</router-link>
         </div>
         <div>
-          <img :src="'http://localhost:8082/dboard/imgs/' + dto.num + '/1'">
-          <img :src="'http://localhost:8082/dboard/imgs/' + dto.num + '/2'">
+          <button @click="likebtn(dto.id.id, dto.num)">좋아요</button>
+          <span v-on:click="edit()" class="badge text-bg-secondary" style="font-size: 17px;">수정하기</span>
+          <button v-on:click="boarddelete">삭제하기</button>
         </div>
-        <div style="padding:50px; border-bottom:solid 2px lightgrey">
-          {{ dto.content }}
+     </div><br />
+      <div class="cbox-add">
+        <span class="comment-profile">
+          <img class="profile" @error="replaceImg" :src="'http://localhost:8082/members/imgs/' + id">
+        </span>
+        <textarea style="width:900px;" v-model="content" id="content"></textarea>
+        <button v-on:click="commentadd">등록하기</button>
+      </div>
+      <div v-for="comment in comment" :key="comment.id">
+  <div class="comment-list">
+    <div class="list-content">
+      <div class="comment-profile">
+        <img class="profile" @error="replaceImg" :src="'http://localhost:8082/members/imgs/' + comment.id.id">
+      </div>
+      <div style="width:900px">
+        <span>{{ comment.id.id }}</span>&nbsp;<span style="font-size: small; color:grey">{{ formatDate(comment.w_date) }}</span><br />
+        <div v-if="!comment.editMode">{{ comment.content }}</div>
+        <div v-if="comment.editMode" class="c-editForm">
+          <textarea style="width:900px;" v-model="comment.editContent" :cols="comment.editContent.length"></textarea>
+          <button @click="saveComment(comment)">저장</button>
+          <button @click="cancelEdit(comment)">취소</button>
         </div>
-        <div v-if="showModal">
-          <div>
-            <table border="1">
-              <tr>
-                <th>사진1</th>
-                <td><input type="file" id="f1"></td>
-              </tr>
-              <tr>
-                <th>사진2</th>
-                <td><input type="file" id="f2"></td>
-              </tr>
-              <tr>
-                <th>title</th>
-                <td><input type="text" v-model="dto.title" id="editTitle"></td>
-              </tr>
-              <tr>
-                <th>content</th>
-                <td><input type="text" v-model="dto.content" id="editContent"></td>
-              </tr>
-              <button v-on:click="editfunc(dto.num)">수정</button>
-            </table>
-          </div>
-        </div>
-        <div class="d-btn">
-          <div>
-            <span router-link to="/diaryboardhome" class="badge text-bg-secondary" style="font-size: 17px;">목록으로</span>
-          </div>
-          <div>
-            <button @click="likebtn(dto.id.id, dto.num)">조아요</button>
-            <span v-on:click="edit()" class="badge text-bg-secondary" style="font-size: 17px;">수정하기</span>
-
-            <button v-on:click="boarddelete">삭제하기</button>
-          </div>
-        </div><br />
-        <div style="float:left; display:flex; flex-direction: column;">
-          <div>
-            <span class="box-profile" style="background: #black;">
-              <img class="profile" @error="replaceImg" :src="'http://localhost:8082/members/imgs/' + id">
-            </span>
-            <textarea style="width:800px;" v-model="content" id="content"></textarea>
-            <button v-on:click="commentadd">등록하기</button>
-          </div>
-          <div>
-            <div v-for="comment in comment" :key="comment.db_num">
-              <div style="display:flex; justify-content: space-between">
-                <div style="float:left">
-                  <span class="box-profile" style="background: #black;">
-                    <img class="profile" @error="replaceImg" :src="'http://localhost:8082/members/imgs/' + comment.id.id">
-                  </span>{{ comment.content }} {{ formatDate(comment.w_date) }} {{ comment.id.id }}
-                </div>
-                <div>
-                  <button @click="showEditForm(comment)">수정하기</button>
-                  <button @click="commentdelete(comment.db_num)">삭제하기</button>
-                </div>
-              </div>
-              <div v-if="comment.editMode" style="float:left">
-                <textarea v-model="comment.editContent"></textarea>
-                <button @click="saveComment(comment)">저장</button>
-                <button @click="cancelEdit(comment)">취소</button>
-              </div>
-            </div>
-          </div>
-        </div><br />
       </div>
     </div>
-    <div class="col-1">
+    <div style="float:right;">
+      <button @click="showEditForm(comment)">수정하기</button>
+      <button @click="commentdelete(comment.db_num)">삭제하기</button>
     </div>
   </div>
-  <div>
-  </div>
+</div>
+</div>
+</div>
 </template>
 <style scoped>
-.t-img{
+.edit-form {
+  background-color: #f9f9f9;
+  padding: 20px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  max-width: 500px;
+  margin: 0 auto;
+}
+
+.edit-form table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.edit-form th,
+.edit-form td {
+  padding: 10px;
+  text-align: left;
+}
+
+.edit-buttons {
+  margin-top: 20px;
+  text-align: right;
+}
+
+.edit-buttons button {
+  padding: 8px 16px;
+  background-color: #4caf50;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.edit-buttons button + button {
+  margin-left: 10px;
+}
+.box-container {
+  position: relative;
+  padding-bottom: 100px;
+}
+
+.t-img {
   width: 85%;
   height: 500px;
   margin-bottom: 20px;
 }
-.d-all{
-  padding-left:150px;
-  padding-right:150px;
-}
+
 .d-title {
   flex-direction: column;
   display: flex;
   margin-top: 120px;
   margin-bottom: 120px;
 }
-.m-img{
+
+.m-img {
   width: 1210px;
   height: 160px;
-  margin-top:10px;
-  margin-bottom:10px;
+  margin-top: 10px;
+  margin-bottom: 10px;
 }
 
-img {
-  width: 300px;
-  height: 300px;
+.d-all {
+  padding-left: 150px;
+  padding-right: 150px;
 }
 
-.box-profile {
-  display: block;
-  width: 40px;
-  height: 40px;
-  border-radius: 70%;
-  overflow: hidden;
+.box-title {
+  border-top: 2px solid black;
+  border-bottom: 2px solid lightgrey;
+  display: flex;
+  justify-content: space-between;
+  padding: 10px;
 }
 
-.profile {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  cursor: pointer;
+.box-img {
+  padding: 20px;
+  width: 400px;
+  height: 400px;
+  margin-top: 20px;
+}
+
+.box-content {
+  padding: 50px;
+  border-bottom: solid 2px lightgrey;
+  text-align: left;
 }
 
 .d-btn {
-  float: right;
   margin-top: 10px;
   margin-bottom: 10px;
   display: flex;
   justify-content: space-between;
 }
+
+.cbox-add {
+  display: flex;
+}
+
+.comment-profile {
+  width: 50px;
+  height: 50px;
+  border-radius: 70%;
+  overflow: hidden;
+  margin-right:10px;
+}
+
+.comment-profile img{
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+
+}
+
+.comment-list {
+  display:flex;
+  margin-top:10px;
+  margin-bottom:10px;
+}
+
+.list-content {
+  display: flex;
+  text-align: left;
+}
+.c-editForm{
+  display:block;
+  float:left;
+}
+
 </style>
 <script>
+  import img from "@/assets/imgs/mypage_sample.jpg";
 export default {
   name: 'DiaryBoardDetail',
   data() {
@@ -167,10 +235,16 @@ export default {
     this.commentlist();
   },
   methods: {
+    editcancle() {
+  this.showModal = false;
+},
     edit() {
       this.showModal = true;
     },
-    editfunc(num){
+    replaceImg(e) {
+            e.target.src = img;
+        },
+    editfunc(num) {
       let formData = new FormData();
       const self = this
       const file1 = document.getElementById('f1').files[0];
@@ -181,19 +255,19 @@ export default {
       formData.append('title', editTitle.value)
       formData.append('content', editContent.value)
       formData.append('num', num)
-      if(file1 != null && file2 != null){
+      if (file1 != null && file2 != null) {
         formData.append('f[0]', file1)
         formData.append('f[1]', file2)
       }
       self.$axios.put('http://localhost:8082/dboard', formData, {
-      headers: { "Content-Type": "multipart/form-data" },
-    })
-      .then(function(res){
-        if(res.status == 200){
-          alert('수정완료')
-          self.dto = res.data.dto
-        }
+        headers: { "Content-Type": "multipart/form-data" },
       })
+        .then(function (res) {
+          if (res.status == 200) {
+            alert('수정완료')
+            self.dto = res.data.dto
+          }
+        })
     },
     formatDate(date) {
       const options = { year: '2-digit', month: '2-digit', day: '2-digit', hour12: false };

@@ -165,7 +165,7 @@ export default {
       alert('페이지 추가하고 작업해야함');
     },
     groups() { // (카테고리) 동물보호소
-      alert('경로 추가 및 페이지 작업 필요');
+      this.$router.push('/groups');
     },
     all_pets() { // 모든 동물
       this.$router.push('/api');

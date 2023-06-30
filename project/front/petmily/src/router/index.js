@@ -3,13 +3,13 @@ import HomeView from '../views/HomeView.vue'
 import MemberHome from '../views/MemberView.vue'
 import KakaoAdditionalForm from '@/components/Member/AdditionalForm.vue'
 import MyPageHome from '../views/MypageView.vue'
+import Groups from '../views/Groups.vue'
 import DiaryBoardHome from '@/components/diaryboard/DiaryBoardHome.vue'
 import AdoptBoardHome from '../views/adopt/AdoptBoardView.vue'
 import AdoptForm from '@/components/adopt/AdoptForm.vue'
 import AdoptDetail from '@/components/adopt/AdoptDetail.vue'
 import DiaryBoardAdd from '@/components/diaryboard/DiaryBoardAdd.vue'
 import DiaryBoardDetail from '@/components/diaryboard/DiaryBoardDetail.vue'
-import DiaryBoardEdit from '@/components/diaryboard/DiaryBoardEdit.vue'
 import Kaka from '@/components/kaka/KakaoMapHome.vue'
 import VolBoardAdd from '@/components/volboard/VolBoardAdd.vue'
 import VolBoardHome from '@/components/volboard/VolBoardHome.vue'
@@ -26,6 +26,7 @@ import MemEdit from '@/components/Member/MemEdit.vue'
 import FindPwd from '@/components/Member/FindPwd.vue'
 import FindId from '@/components/Member/FindId.vue'
 
+
 import AddressConvert from '@/components/kaka/AddressConvert.vue' 
 import MessageWrite from '@/components/Message/MessageWrite.vue' 
 import MessageSender from '@/components/Message/MessageSender.vue' 
@@ -41,6 +42,11 @@ const routes = [
     path: '/',
     name: 'home',
     component: HomeView
+  },
+  { 
+    path: '/groups',
+    name: 'Groups',
+    component: Groups
   },
   { 
     path: '/member',
@@ -71,11 +77,6 @@ const routes = [
     path: '/diaryboarddetail',
     name: 'DiaryBoardDetail',
     component: DiaryBoardDetail
-  },
-  {
-    path: '/diaryboardedit',
-    name: 'DiaryBoardEdit',
-    component: DiaryBoardEdit
   },
   {
     path: '/kaka',
