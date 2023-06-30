@@ -25,4 +25,11 @@ public interface DiaryboardDao extends JpaRepository<Diaryboard, Integer> {
 	@Modifying
 	@Query(value="update diaryboard set likecnt=likecnt-1 where num=:num", nativeQuery = true)
 	void downCount(@Param("num") int num);
+	
+	@Transactional
+	@Query(value= "SELECT COUNT(*) FROM Diaryboard")
+	int countByAll();
+	
+	
+	
 }

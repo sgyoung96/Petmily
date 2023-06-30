@@ -77,4 +77,8 @@ public class DiaryboardService {
 	public void downlike(int num) {
 		dao.downCount(num);
 	}
+	
+	public int getCount() {
+		return dao.countByAll();
+	}
 }

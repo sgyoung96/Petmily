@@ -48,15 +48,17 @@
     </div>
 
     <!-- Display YouTube video -->
-    <div class="form-group">
-      <label for="volboard-video-preview">동영상 미리보기</label>
-      <div v-if="isValidVideoUrl">
-        <iframe :src="embeddedVideoUrl" width="560" height="315" frameborder="0" allowfullscreen></iframe>
-      </div>
-      <div v-else>
-        <p>유효한 YouTube 동영상 URL을 입력하세요.</p>
-      </div>
-    </div>
+    <!-- Display YouTube video -->
+<div class="form-group">
+  <label for="volboard-video-preview">동영상 미리보기</label>
+  <div v-if="isValidVideoUrl">
+    <iframe :src="embeddedVideoUrl" width="560" height="315" frameborder="0" allowfullscreen></iframe>
+  </div>
+  <div v-else>
+    <p>유효한 YouTube 동영상 URL을 입력하세요.</p>
+  </div>
+</div>
+
     <!-- ... Existing code ... -->
   </div>
       <div>
@@ -103,7 +105,7 @@ export default {
       D3: D3,
       D4: D4,
       D5: D5,
-      videoUrl: 'https://www.youtube.com/watch?v=CseT4dvgTMU'
+      videoUrl: 'https://www.youtube.com/watch?v=3AV35NdBZOI'
     };
   },
   computed: {
@@ -160,11 +162,13 @@ export default {
   },
   methods: {
     extractVideoId(url) {
-    // Regular expression to extract the video ID from various YouTube URL formats
-    const regex = /(?:youtube(?:-nocookie)?\.com\/(?:[^/]+\/.+\/|(?:v|e(?:mbed)?)\/|.*[?&]v=|.*[?&]vi=))|youtu\.be\/([^"&?/ ]{11})/;
-    const match = url.match(regex);
-    return match ? match[1] : null;
-  },
+  // Regular expression to extract the video ID from YouTube URL
+  const regex = /[?&]v=([^&#]+)/;
+  const match = url.match(regex);
+  
+  return match ? match[1] : null;
+},
+
     getKind(day, kindCd) {
       const apiUrl = `http://apis.data.go.kr/1543061/abandonmentPublicSrvc/abandonmentPublic?_type=json&bgnde=${day}&endde=${day}&pageNo=1&numOfRows=1000&upkind=${kindCd}&serviceKey=JkjPRne8oXZTCJTyLN9579FQZI6%2FkhepY9kJhsmdEpdiEjyDUj8HjiEo8ba4BAa8AOGXfQWZA7AAHiljNzoOBA%3D%3D`;
 

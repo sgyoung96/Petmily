@@ -72,4 +72,8 @@ public class VolboardService {
 		dao.updateCount2(num);
 	}
 	
+	public int getCount() {
+		return dao.countByAll();
+	}
+	
 }

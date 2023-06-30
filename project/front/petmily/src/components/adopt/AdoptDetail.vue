@@ -29,6 +29,8 @@
         <div style="float:right">
           <router-link to="/diaryboardedit">수정하기</router-link>
        <button v-on:click="boarddelete">삭제하기</button>
+       <button v-on:click="next(dto.num)">다음글</button>
+       <button v-on:click="previous(dto.num)">이전글</button>
       </div><br/>
        <div>
           <table border="1">
@@ -70,22 +72,66 @@
         comment: [],
         content: '',
         id: sessionStorage.getItem('loginId'),
-        editContent:''
+        editContent:'',
+        cnt:0,
+        arrcnt:[]
       };
     },
     created() {
-      this.boarddetail();
+      this.boarddetail(this.num);
       this.commentlist();
+      const self = this
+      self.$axios.get('http://localhost:8082/adopt/count').then(function(res){
+          if(res.status == 200){
+            self.cnt = res.data.count
+            
+            self.$axios.get('http://localhost:8082/adopt').then(function(res){
+              if(res.status == 200){
+                for (let i = 0; i < self.cnt; i++) {
+                  self.arrcnt[i] = res.data.list[i].num;
+                }
+              }
+            })
+          }
+        })
     },
     methods: {
+      next(num){
+        let a = 0
+       
+        for(let i=0; i< this.cnt; i++){
+          if(this.arrcnt[i] == num){
+            a = i
+          }
+        }
+        if(a+1 == this.cnt){
+          alert('다음글이 없습니다')
+        }else{
+          this.boarddetail(this.arrcnt[a+1])
+        }
+      },
+      previous(num){
+        let a = 0
+       
+        for(let i=0; i< this.cnt; i++){
+          if(this.arrcnt[i] == num){
+            a = i
+          }
+        }
+        if(a == 0){
+          alert('이전글이 없습니다')
+        }else{
+          this.boarddetail(this.arrcnt[a-1])
+        }
+      },
       formatDate(date) {
     const options = { year: '2-digit', month: '2-digit', day: '2-digit', hour12: false };
     return new Date(date).toLocaleString('ko-KR', options);
-  },
-      boarddetail() {
+    },
+      boarddetail(num) {
         
         this.$axios
-          .get('http://localhost:8082/adopt/' +  this.num)
+          .get('http://localhost:8082/adopt/' +  num)
           .then(response => {
             if (response.status == 200) {
               this.dto = response.data.dto;
