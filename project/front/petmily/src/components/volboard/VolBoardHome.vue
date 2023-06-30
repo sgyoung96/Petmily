@@ -7,15 +7,10 @@
         &nbsp;<span style="color:rgb(244, 191, 79);">VOLUNTEER</span></strong></h4>
   </div>
   <div style="padding-left: 150px;padding-right:150px">
-    <div style="display: flex;justify-content: space-between;">
-      <div>
-        <router-link to="/volboardadd">봉사게시판 작성</router-link>
-      </div>
       <div>
         <input type="text" v-model="searchKeyword" placeholder="주소를 입력해주세요">
         <button v-on:click="search()">검색</button>
       </div>
-    </div>
     <div style="border-top:2px solid black; padding-top:10px; margin-top:10px">
       <div class="vbody" v-for="vboard in list" :key="vboard.num" @click="detail(vboard.num, vboard.address)">
         <div style="text-align: left;">

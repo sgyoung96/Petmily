@@ -6,11 +6,12 @@
   <div class="v-all">
     <div style="display: flex; justify-content: space-between;">
       <div>
-        <router-link to="/diaryboardhome" class="badge text-bg-secondary"
+        <router-link to="/volboardhome" class="badge text-bg-secondary"
           style="font-size: 17px; text-decoration: none;">목록으로</router-link>
       </div>
       <div style="float:right">
-        <span v-on:click="apply()" class="badge text-bg-danger" style="font-size: 17px;">신청하기</span>&nbsp;
+        <span v-if="!isApplied" v-on:click="apply" class="badge text-bg-danger" style="font-size: 17px;">신청하기</span>&nbsp;
+        <span v-else v-on:click="cancelApply" class="badge text-bg-danger" style="font-size: 17px;">신청취소</span>&nbsp;
         <span v-on:click="addwatch(dto.num)" class="badge text-bg-secondary" style="font-size: 17px;">♡관심목록담기</span>&nbsp;
         <span v-on:click="del(dto.num)" class="badge text-bg-danger" style="font-size: 17px;">삭제</span>
       </div>
@@ -172,41 +173,45 @@ export default {
       }
     });
 },
-    apply() {
-      const self = this
-      if (self.dto.vol_number <= self.count) {
-        alert("봉사신청인원이 초과하였습니다.")
-      } else {
-        self.$axios.get('http://localhost:8082/participants/' + self.loginId + '/' + self.num)
-          .then(function (res) {
-            if (res.status == 200) {
-              if (res.data.list.length === 0) {
-                let formData = new FormData();
-                formData.append('boardnum', self.num)
-                formData.append('id', self.loginId)
-                self.$axios.post('http://localhost:8082/participants', formData)
-                  .then(function (res) {
-                    if (res.status == 200) {
-                      alert(res.data.member.id + "님이 신청되셨습니다.")
-                    } else {
-                      alert("에러코드:" + res.status)
-                    }
-                  })
-              } else {
-                alert('이미 신청되었습니다.')
-                self.$axios.delete('http://localhost:8082/participants?boardnum=' + self.num + '&id=' + self.loginId)
-                  .then(function (res) {
-                    if (res.status == 200) {
-                      alert("신청이 취소되었습니다.");
-                    } else {
-                      alert("신청 취소 처리 에러");
-                    }
-                  });
-              }
+apply() {
+const self = this;
+    if (self.dto.vol_number <= self.count) {
+      alert("봉사신청인원이 초과하였습니다.");
+    } else {
+      self.$axios.get('http://localhost:8082/participants/' + self.loginId + '/' + self.num)
+        .then(function(res) {
+          if (res.status == 200) {
+            if (res.data.list.length === 0) {
+              let formData = new FormData();
+              formData.append('boardnum', self.num);
+              formData.append('id', self.loginId);
+              self.$axios.post('http://localhost:8082/participants', formData)
+                .then(function(res) {
+                  if (res.status == 200) {
+                    alert(res.data.member.id + "님이 신청되셨습니다.");
+                    // 신청 성공 시 아이콘 변경
+                    self.isApplied = true;
+                  } else {
+                    alert("에러코드:" + res.status);
+                  }
+                });
+            } else {
+              alert('이미 신청되었습니다.');
+              self.$axios.delete('http://localhost:8082/participants?boardnum=' + self.num + '&id=' + self.loginId)
+                .then(function(res) {
+                  if (res.status == 200) {
+                    alert("신청이 취소되었습니다.");
+                    // 신청 취소 성공 시 아이콘 변경
+                    self.isApplied = false;
+                  } else {
+                    alert("신청 취소 처리 에러");
+                  }
+                });
             }
-          })
-      }
-    },
+          }
+        });
+    }
+  },
     del(num) {
       const self = this
       self.$axios.delete('http://localhost:8082/volboard/' + num)
