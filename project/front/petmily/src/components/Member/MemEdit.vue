@@ -2,31 +2,94 @@
 
 
     <div id="memedit">
+      <div class="edit_area">
+        <h2 class="edit_title">내정보 수정</h2>
 
-        
+          <!-- 프로필사진 -->
+          <div class="input_box">
+            <span class="box-profile" style="background: #black;"> 
+              <img class="profile" @error="replaceImg" :src="'http://localhost:8082/members/imgs/'+ id">
+            </span>
+            <input type="file" id="profile"><br/> 
+          </div>
 
-        <span class="box-profile" style="background: #black;"> 
-            <img class="profile" @error="replaceImg" :src="'http://localhost:8082/members/imgs/'+ id">
-        </span>
-        <input type="file" id="profile"><br/> 
-        ID : <input type="text" v-model="id" readonly><br/>
-        NAME : <input type="text" v-model="name" readonly><br/>
-        PWD : <input type="password" v-model="oldpwd1" ><button @click="pwdcheck">비밀번호 확인</button><br/>
-        new pwd : <input type="password" v-show = "newpwdchecktrue" v-model="pwd" ><br/>
-         <span class ="font_id_red" v-show="isPwdCheck">영문, 숫자, 특수문자 8~16문자</span><br/>  
-        pwd check : <input class="input-item" type="password"  v-show = "newpwdchecktrue" id="newpwdcheck" v-model="newpwdcheck"  @blur="checkNewPwdEqual"><br/>
-        <span class ="font_id_red" v-show="isPwdCheckEqual">비밀번호 확인해주세요</span><br/>  
-        EMAIL : <input type="text" id="email" v-model="email"><button v-on:click="emailcheck" >이메일 확인</button><br/>
-        <span class ="font_id_red" v-show="isEmailCheck">이메일 형식을 확인해주세요</span><br/> 
-         <input input class="input-item" type="text" id="emailCode" v-model="emailCode"><button v-on:click="emailCodeCheck">인증</button><br/> 
-         <span class ="font_id_red" v-show="isEmailCodeCheck">인증코드를 확인해주세요</span><br/> 
-        BIRTH : <input type="text" v-model="birth" readonly><br/>
-        GENDER : <input type="text" v-model="gender" readonly><br/>
-        PHONE : <input type="text" v-model="phone" @blur="checkPhone"><br/>
-         <span class ="font_id_red" v-show="isPhoneCheck">전화번호 형식을 확인해주세요</span><br/> 
-        ADDRESS : <input type="text" v-model="address" readonly><br/>
-        <button v-on:click="editcheck" >내정보 수정</button>
-     
+          <!-- 아이디 -->
+          <div class="input_box">
+            <h6 class="input_title">아이디</h6><br/>
+             <input class="input_txt" type="text" v-model="id" readonly><br/>
+          </div>
+
+          <!-- 이름   -->
+          <div class="input_box">
+            <h6 class="input_title">이름</h6><br/>
+            <input class="input_txt" type="text" v-model="name" readonly><br/>
+          </div>
+
+          <!-- 비밀번호  -->
+          <div class="input_box">
+            <h6 class="input_title">비밀번호</h6><br/>
+            <input class="input_txt" type="password" id="oldpwd1" v-model="oldpwd1" style= "width : 68%" ><button @click="pwdcheck"  style="margin-left:15px">비밀번호 확인</button><br/>
+          </div>
+
+          <div  v-show = "newpwdchecktrue">
+          <!-- 새 비밀번호  -->
+          <div class="input_box">
+            <h6 class="input_title" :class="{ 'title_danger': newpwdHasError}">새 비밀번호</h6><br/>
+            <input class="input_txt" :class="{ 'input_danger': newpwdHasError}"  type="password" v-model="pwd" ><br/>
+            <p class ="input_error" v-show="isPwdCheck">영문, 숫자, 특수문자 8~16문자</p><br/>  
+          </div>
+
+          <!--새 비밀번호확인  -->
+          <div class="input_box">
+            <h6 class="input_title" :class="{ 'title_danger': newpwdcheckHasError}">비밀번호확인</h6><br/>
+            <input class="input_txt" :class="{ 'input_danger': newpwdcheckHasError}" type="password" id="newpwdcheck" v-model="newpwdcheck"  @blur="checkNewPwdEqual"><br/>
+            <p class ="input_error" v-show="isPwdCheckEqual">비밀번호 확인해주세요</p><br/> 
+          </div> 
+          </div>
+
+          <!-- 이메일확인  -->
+          <div class="input_box">
+            <h6 class="input_title" :class="{ 'title_danger': newemailHasError}">이메일</h6><br/>
+            <input input class="input_txt" :class="{ 'input_danger': newemailHasError}"  type="text" id="email" v-model="email" style= "width : 70%"><button v-on:click="emailcheck" style="margin-left:23px">이메일 확인</button><br/>
+            <p class ="input_error" v-show="isEmailCheck">이메일 형식을 확인해주세요</p><br/> 
+          </div>
+
+          <!-- 이메일인증  -->
+          <div class="input_box">
+            <h6 class="input_title" :class="{ 'title_danger': newemailCodeHasError}">인증번호</h6><br/>
+            <input input class="input_txt" :class="{ 'input_danger': newemailCodeHasError}"  type="text" id="emailCode" v-model="emailCode" style= "width : 83%"><button v-on:click="emailCodeCheck" style="margin-left:23px">인증</button><br/> 
+            <p class ="input_error" v-show="isEmailCodeCheck">인증코드를 확인해주세요</p><br/> 
+           </div>
+
+          <!-- 생일  -->
+          <div class="input_box">   
+            <h6 class="input_title">생년월일</h6><br/> 
+            <input class="input_txt" type="text" v-model="birth" readonly><br/>
+          </div>
+
+           <!-- 성별  -->
+          <div class="input_box">  
+            <h6 class="input_title">성별</h6>
+            <input class="input_txt" type="text" v-model="gender" readonly><br/>
+          </div>
+
+           <!-- 전화번호  -->
+          <div class="input_box">  
+            <h6 class="input_title" :class="{ 'title_danger': newphoneHasError}">전화번호</h6><br/>
+            <input class="input_txt" :class="{ 'input_danger': newphoneHasError}" type="text" v-model="phone" @blur="checkPhone"><br/>
+            <p class ="input_error" v-show="isPhoneCheck">전화번호 형식을 확인해주세요</p><br/> 
+          </div>
+
+          <!-- 주소  -->
+          <div class="input_box">
+            <h6 class="input_title">주소</h6>    
+            <input class="input_txt" type="text" v-model="address" readonly><br/>
+
+          </div>
+
+          <button v-on:click="editcheck" style ="padding:5px 20px 5px 20px; width:100%; margin-top:60px">내정보 수정</button>
+
+      </div>
   </div>
 </template>
 
@@ -37,6 +100,7 @@ export default {
   name: 'MemEdit',
   data () {
     return {
+      
         id:'',
         name:'',
         oldpwd1:'',
@@ -55,7 +119,13 @@ export default {
         isPhoneCheck:false,
         address:'',
         edittf:false,
-        editemailtf:false
+        editemailtf:false,
+        newpwdHasError:false,
+        newpwdcheckHasError:false,
+        newemailHasError:false,
+        newemailCodeHasError:false,
+        newphoneHasError:false,
+        changepwd:false
       
     }
   },
@@ -111,13 +181,18 @@ export default {
     editcheck(){
       const self = this;
       this.editcheckEmail()
-      alert(self.editemailtf)
+      alert('email' + self.editemailtf)
       
       if(self.edittf == true){
       
-      if(this.isEmpty(self.pwd)&&this.isEmpty(self.pwdcheck)&&self.editemailtf
+      //if(this.isEmpty(self.pwd)&&this.isEmpty(self.pwdcheck)&&self.editemailtf
+      //&&this.isEmpty(self.phone)){
+      const changepwd = this.changepwdtf()
+      alert('pwd' + changepwd)
+      if(changepwd&&self.editemailtf
       &&this.isEmpty(self.phone)){
- 
+        alert(self.pwd)
+        alert('여기')
        this.edit()
    
       }else{
@@ -156,9 +231,12 @@ export default {
       formdata.append('email',self.email)
       formdata.append('phone',self.phone)
 
-      const file = document.getElementById('profile')
-      formdata.append('f', file.files[0]);
-  
+      
+        if(document.getElementById('profile').value !== ''){
+        const file = document.getElementById('profile').files[0]
+       
+        formdata.append('f', file)}
+   
       
      
       self.$axios.put('http://localhost:8082/members', formdata,
@@ -181,6 +259,7 @@ export default {
         if(self.oldpwd1 === self.oldpwd2){
             self.newpwdchecktrue=true;
             self.edittf = true;
+            document.getElementById("oldpwd1").readOnly = true;
         }else{
             alert('비밀번호 재확인 필요')
             self.edittf = false;
@@ -192,9 +271,11 @@ export default {
     
         this.isPwdCheck = true;
         document.getElementById("newpwdcheck").readOnly = true;
+        this.newpwdHasError=true;
     }else{
         this.isPwdCheck = false;
         document.getElementById("newpwdcheck").readOnly = false;
+        this.newpwdHasError=false;
     }
   },
    checkNewPwdEqual(){
@@ -202,14 +283,34 @@ export default {
     console.log(this.pwd + "/" + this.newpwdcheck)
     if(this.pwd === this.newpwdcheck){
       this.isPwdCheckEqual = false;
+      this.newpwdcheckHasError=false;
+     
       
     }else{
       this.isPwdCheckEqual=true;
       console.log(self.newpwdcheck)
       self.newpwdcheck = '';
+      this.newpwdcheckHasError=true;
+      this.changepwdtf=false;
       
     }
 
+  },
+
+  changepwdtf(){
+    const self = this;
+    if(!this.isEmpty(self.pwd)){
+      self.pwd = self.oldpwd1;
+      alert('비밀번호 공백')
+      return true;
+    }else if(this.isPwdCheckEqual === false){
+      alert('비밀번호 공백이 아니면서 pwd체크 받음')
+      return true;
+
+    }else {
+      alert('비밀번호 공백이 아니면서 pwd체크 안받음')
+      return false;
+    }
   },
   sendEmail(){
         const self = this;
@@ -239,10 +340,12 @@ export default {
         if(res.status == 200){
         
           if(res.data.dto == null){
+          
            self.sendEmail()
           
           }else{
              alert('중복된 이메일')
+             
              self.email=''
           }
         }else{
@@ -261,6 +364,7 @@ export default {
         if(self.confirm === self.emailCode){
             alert('인증완료')
             this.isEmailCodeCheck=false;
+            this.newemailCodeHasError=false;
             self.emailtf=true;
             
             document.getElementById("email").readOnly = true;
@@ -268,6 +372,7 @@ export default {
       
         }else{
             this.isEmailCodeCheck=true;
+            this.newemailCodeHasError=true;
             self.emailtf=false;
             self.emailCode='';
             
@@ -280,8 +385,10 @@ export default {
      
     if(!validateEmail.test(this.email)){
         this.isEmailCheck = true;
+        this.newemailHasError=true;
     }else{
         this.isEmailCheck = false;
+        this.newemailHasError=false;
     }
   },
   editcheckEmail(){
@@ -331,4 +438,65 @@ export default {
   object-fit: cover;
   cursor: pointer;
 }
+
+.edit_area {
+    margin: 0 auto;
+    padding: 58px 0 160px;
+    width: 400px
+}
+
+.eidt_title {
+    padding-bottom: 46px;
+    text-align : center;
+    font-size: 32px;
+    letter-spacing: -.48px;
+    color: #000
+}
+
+.input_box {
+    padding: 0 0 40px;
+    position: relative;
+}
+
+.input_title {
+    width: 100%;
+    position: relative;
+    font-weight: bold;
+    font-size:small;
+    text-align: left;
+    display: inline-block;
+    padding-right: 6px
+}
+
+.input_txt{
+  width: 100%;
+  border:0px;
+  border-bottom : 2px solid;
+  color:black;
+}
+.input_error {
+  text-align: left;
+  line-height: 16px;
+  font-size: 13px;
+  color: red;
+  position: absolute;
+}
+
+.title_danger {
+    color: red;
+  }
+
+.input_danger {
+  color: red;
+}
+
+button{
+  border-radius: 10px;
+  border:0px;
+  background-color:rgb(255, 214, 91);
+  font-size:medium;
+ 
+
+}  
+
  </style>
