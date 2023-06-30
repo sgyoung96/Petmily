@@ -28,4 +28,8 @@ public interface VolboardDao extends JpaRepository<Volboard, Integer> {
 	@Modifying
 	@Query(value="update volboard set count=count-1 where num=:num", nativeQuery = true)
 	void updateCount2(@Param("num") int num);
+	
+	@Transactional
+	@Query(value = "SELECT COUNT(*) FROM Volboard")
+	int countByAll();
 }

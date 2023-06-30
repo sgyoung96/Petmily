@@ -263,4 +263,19 @@ public class DiaryboardController {
     	map.put("flag", flag);
     	return map;
     }
+    
+    @GetMapping("/count")
+	public Map getAllCount() {
+		boolean flag = true;
+		Map map = new HashMap<>();
+		int count = 0;
+		try {
+			count = service.getCount();
+		} catch(Exception e) {
+			flag = false;
+		}
+		map.put("flag", flag);
+		map.put("count", count);
+		return map;
+	}
 }
