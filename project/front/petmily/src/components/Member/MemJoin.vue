@@ -1,14 +1,20 @@
 <template>
     <div id="myjoin">
+      
+            
       <div class="join_area">
         <h2 class="join_title">회원가입</h2>
-        <input type="file" id="profile"><br/> 
+          
 
+          <!-- 프로필사진 -->
+           <input type="file" id="profile"><br/> 
+    
+          
           <!-- 아이디 -->
           <div class="input_box">
             <h6 class="input_title" :class="{ 'title_danger': idHasError}">아이디</h6><br/>
-              <input class="input_txt" :class="{ 'input_danger': idHasError}" type="text" v-model="id" placeholder="ID" @blur="idcheck" >
-              <p class="input_error">{{msg}}</p>
+            <input class="input_txt" :class="{ 'input_danger': idHasError}" type="text" v-model="id" placeholder="ID" @blur="idcheck" >
+            <p class="input_error">{{msg}}</p>
           </div>
 
           <!-- 이름   -->
@@ -35,14 +41,14 @@
           <!-- 이메일확인  -->
           <div class="input_box">
             <h6 class="input_title" :class="{ 'title_danger': emailHasError}">이메일</h6><br/>
-            <input class="input_txt"  :class="{ 'input_danger': emailHasError}"  type="text" id="email" v-model="email" placeholder="예)petmily@petmily.co.kr" style= "width : 68%" @blur="checkEmail"><button v-on:click="emailcheck" style="margin-left:23px">이메일 확인</button>
+            <input class="input_txt"  :class="{ 'input_danger': emailHasError}"  type="text" id="email" v-model="email" placeholder="예)petmily@petmily.co.kr" style= "width : 70%" @blur="checkEmail"><button v-on:click="emailcheck" style="margin-left:23px">이메일 확인</button>
             <p class ="input_error" v-show="isEmailCheck">이메일 형식을 확인해주세요</p><br/> 
           </div>
 
           <!-- 이메일인증  -->
           <div class="input_box">
             <h6 class="input_title" :class="{ 'title_danger': emailCodeHasError}">인증번호</h6><br/>
-            <input input class="input_txt" :class="{ 'input_danger': emailCodeHasError}" type="text" id="emailCode" v-model="emailCode" style= "width : 81%"><button v-on:click="emailCodeCheck" style="margin-left:23px">인증</button>
+            <input input class="input_txt" :class="{ 'input_danger': emailCodeHasError}" type="text" id="emailCode" v-model="emailCode" style= "width : 83%"><button v-on:click="emailCodeCheck" style="margin-left:23px">인증</button>
             <p class ="input_error"  v-show="isEmailCodeCheck">인증코드를 확인해주세요</p><br/> 
           </div>
             
@@ -50,7 +56,7 @@
           <!-- 생일  -->
           <div class="input_box">  
             <h6 class="input_title">생년월일</h6><br/>  
-            <input  type="date" v-model="birth" ><br/>  
+            <input  type="date" v-model="birth" data-placeholder='생일입력' required aria-required="true"><br/>  
           </div>
 
           
@@ -78,7 +84,7 @@
             <input class="input_txt" type="text" v-model="extraAddress" placeholder="참고항목"><br/>
           </div>
           
-            <button v-on:click="joincheck" style ="padding:5px 20px 5px 20px; width:100%">가입</button>
+            <button v-on:click="joincheck" style ="padding:5px 20px 5px 20px; width:100%; margin-top:60px">가입</button>
           
         </div>
     </div>
@@ -114,7 +120,7 @@ export default {
       address:'',
       msg:'',
       tf:false,
-      profile:'',
+      
       idHasError:false,
       nameHasError:false,
       pwdHasError:false,
@@ -181,6 +187,7 @@ export default {
         if(self.confirm === self.emailCode){
             alert('인증완료')
             this.isEmailCodeCheck=false;
+            self.emailCodeHasError=false;
             self.emailtf=true;
             
             document.getElementById("email").readOnly = true;
@@ -188,6 +195,7 @@ export default {
       
         }else{
             this.isEmailCodeCheck=true;
+            self.emailCodeHasError=true;
             self.emailtf=false;
             
         }
@@ -242,14 +250,14 @@ export default {
       formdata.append('birth',mybirth)
       formdata.append('phone',self.phone)
       formdata.append('address', address)
-     
-      if(self.profile != ''){
-        const file = document.getElementById('profile')
-        formdata.append('f', file.files[0])
-      }
-      
-      
-      
+
+      alert('파일' + document.getElementById('profile').value)
+     if(document.getElementById('profile').value !== ''){
+        const file = document.getElementById('profile').files[0]
+       
+        formdata.append('f', file)}
+        console.log(this.f)
+        
   
      
       self.$axios.post('http://localhost:8082/members', formdata,
@@ -275,6 +283,7 @@ export default {
           if(res.data.dto == null){
             if(!validateId.test(self.id)){
             self.msg='영문과 숫자만 가능합니다'
+            self.idHasError = true;
             }else{
                 self.msg='사용가능한 아이디'
                 self.idHasError = false;
@@ -336,11 +345,11 @@ export default {
     
         this.isPwdCheck = true;
         document.getElementById("pwdcheck").readOnly = true;
-        self.pwdHasError = true;
+        this.pwdHasError = true;
     }else{
         this.isPwdCheck = false;
         document.getElementById("pwdcheck").readOnly = false;
-        self.pwdHasError = false;
+        this.pwdHasError = false;
     }
   },
 
@@ -367,11 +376,11 @@ export default {
      
     if(!validateEmail.test(this.email)){
         this.isEmailCheck = true;
-        self.emailHasError=false;
+        this.emailHasError=true;
        
     }else{
         this.isEmailCheck = false;
-        self.emailHasError=true;
+        this.emailHasError=false;
         
     }
   
@@ -383,8 +392,10 @@ export default {
     if(!validatePhone.test(this.phone)){
         self.isPhoneCheck = true;
         self.phone='';
+        self.phoneHasError=true;
     }else{
         self.isPhoneCheck = false;
+        self.phoneHasError = false;
     }
   },
 
@@ -466,7 +477,8 @@ export default {
 
 .input_box {
   
-    padding: 0 0 30px;
+    padding: 0 0 40px;
+    position: relative;
 }
 
 .input_box input[type=radio]{
@@ -516,6 +528,7 @@ export default {
   line-height: 16px;
   font-size: 13px;
   color: red;
+  position: absolute;
 }
 
 .title_danger {
@@ -539,4 +552,39 @@ input::placeholder {
   color: rgb(209, 209, 209);
   
 }
+
+input[type='date']::before {
+  content: attr(data-placeholder);
+  width: 100%;
+}
+
+input[type='date']:focus::before,
+input[type='date']:valid::before {display: none;}
+input[data-placeholder]::before{
+  color:rgb(209, 209, 209);
+  font-size:15px;
+  padding-left:33px;
+}
+input[type='date']{
+  position:relative;
+  width:160px;
+  height:37px;
+  padding-left:12px;
+  border:1px solid #e1e1e1;
+  border-radius:10px;
+}
+input[type='date']::-webkit-clear-button,
+input[type='date']::-webkit-inner-spin-button{display:none;}
+input[type='date']::-webkit-calendar-picker-indicator{
+  position:absolute;
+  left:0;
+  top:0;
+  width:100%;
+  height:100%;
+  background: transparent;
+  color:transparent;
+  cursor:pointer;
+}
+   
+
   </style>

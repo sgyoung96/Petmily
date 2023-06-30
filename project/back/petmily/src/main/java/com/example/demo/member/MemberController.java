@@ -60,23 +60,31 @@ public class MemberController {
 		System.out.println(dto);
 		System.out.println("가입해야지");
 		
-		boolean flag = true;
+		System.out.println("f : " + f);
+	
 		MemberDto d = service.save(dto);
-
+		System.out.println("dto.getF : " + dto.getF());
 		
 		Map map = new HashMap();
 		
 		File dir = new File(path + "member/" + d.getId());
 		dir.mkdir();
 
-		f = dto.getF();
-		String fname = f.getOriginalFilename();
+		String fname = null;
 		
-		if (fname != null && !fname.equals("")) { // 업로드된 파일이 있으면
+		
+//		if(f != null ) {
+//		f = dto.getF();
+//		fname = f.getOriginalFilename();
+//		}
+		
+		if (f != null && !f.isEmpty()) { // 업로드된 파일이 있으면
+			
+			fname = f.getOriginalFilename();
 	
 			String newpath = path + "member/" + d.getId() + "/" + fname;
 			File newfile = new File(newpath); // 복사할 새 파일 생성. c:/img/shop/번호/원본파일명
-			System.out.println(newpath);
+			System.out.println("newpath : " + newpath);
 			try {
 				f.transferTo(newfile);//파일 업로드 
 				dto.setProfile(newpath);
@@ -216,15 +224,20 @@ public class MemberController {
 	
 	//내정보 수정
 	@PutMapping("")
-	public Map edit(MemberDto dto) {
+	public Map edit(@RequestParam(required=false) MultipartFile f, MemberDto dto) {
+		System.out.println("내정보 수정");
 		MemberDto old = service.getMember(dto.getId());
 		
-		MultipartFile f = dto.getF();
-		System.out.println("getF : " + dto.getF());
-		String fname = f.getOriginalFilename();
+		String fname = null;
+		System.out.println("dto.getF : " + dto.getF());
+
 		
-		if (fname != null && !fname.equals("")) { // 업로드된 파일이 있으면
+		
+		if (f != null && !f.isEmpty()) { // 업로드된 파일이 있으면
 			//String fname = x.getOriginalFilename();//원본파일명
+
+			fname = f.getOriginalFilename();
+
 			String newpath = path + "member/" + old.getId() + "/" + fname;
 			File newfile = new File(newpath); // 복사할 새 파일 생성. c:/img/shop/번호/원본파일명
 			System.out.println(newpath);

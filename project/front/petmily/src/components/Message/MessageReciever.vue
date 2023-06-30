@@ -1,59 +1,79 @@
+
 <template>
-  <link
-    rel="stylesheet"
-    href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200"/>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200"/>
 
-  <div id="messagereciever">
-    <h2>{{ loginId }}가 받은 쪽지 목록</h2>
-    <div v-for="message in list" :key="message.num">
-      <span class="box-profile" style="background: #black">
-        <img
-          class="profile" @error="replaceImg"
-          :src="'http://localhost:8082/members/imgs/' + message.sender.id"/>
-      </span>
-      보낸사람 : {{ message.sender.id }}<br />
-      보낸날짜 : {{ message.send_dt }}<br />
-      제목 :
-      <a v-on:click="($event) =>detail(
-              message.num,
-              message.sender.id,
-              message.send_dt,
-              message.title,
-              message.content
-            )">{{ message.title }}</a><br />
-      <div v-if="message.check == 0">
-        <span class="material-symbols-outlined">mail</span><br />
-      </div>
-      <div v-else>
-        <span class="material-symbols-outlined">drafts</span>
-      </div>
-      <span class="material-symbols-outlined" @click="del(message.num)"
-        >delete</span>
-    </div>
+    <div id="messagereciever">
+      <h2>{{ loginId }}가 받은 쪽지 목록</h2>
+        <div v-for="message in list" :key="message.num">
+          <!-- 쪽지 보내기 모달창(보낸사람 아이디 클릭하면) -->
+          <!-- <ModalView v-if="isModalViewed" @close-modal="isModalViewed=false">
+             
+          </ModalView>  -->
 
-    <!-- 모달창 -->
-    <div class="black-bg" v-if="modalOpen === true">
-      <div class="white-bg">
-        <h3>{{ num }} title : {{ title }}</h3>
-        <span class="box-profile" style="background: #black">
-          <img
-            class="profile" @error="replaceImg"
-            :src="'http://localhost:8082/members/imgs/' + sender"/>
-        </span>
-        <p>보낸사람 : {{ sender }}</p>
-        <p>받은날짜 : {{ senddt }}</p>
-        <p>내용 : {{ content }}</p>
-        <button v-on:click="read(num)" class="modal-exit-btn">확인</button>
+          <MessageModal :resender="message.sender.id" v-if="displayDetail" @close="displayDetail=false"/>
+          
+          
+
+          <span class="box-profile" style="background: #black">
+            <img class="profile" 
+            @error="replaceImg" :src="'http://localhost:8082/members/imgs/' + message.sender.id"
+            v-on:click="displayDetail=true">
+          </span>
+            <p> 보낸사람 : {{ message.sender.id }}</p>
+            보낸날짜 : {{ message.send_dt }}<br />
+            제목 :
+            <a v-on:click="($event) =>detail(
+                    message.num,
+                    message.sender.id,
+                    message.send_dt,
+                    message.title,
+                    message.content
+                  )">{{ message.title }}</a><br />
+          <div v-if="message.check == 0">
+            <span class="material-symbols-outlined">mail</span><br />
+          </div>
+          <div v-else>
+            <span class="material-symbols-outlined">drafts</span>
+          </div>
+             <span class="material-symbols-outlined" @click="del(message.num)">delete</span>
+        </div>
+
+      <!-- 쪽지 내용 읽기 모달창 -->
+      <div class="black-bg" v-if="modalOpen === true">
+        <div class="white-bg">
+          <h3>{{ num }} title : {{ title }}</h3>
+            <span class="box-profile" style="background: #black">
+              <img
+                class="profile" @error="replaceImg"
+                :src="'http://localhost:8082/members/imgs/' + sender"/>
+            </span>
+          <p>보낸사람 : {{ sender }}</p>
+          <p>받은날짜 : {{ senddt }}</p>
+          <p>내용 : {{ content }}</p>
+          <button v-on:click="read(num)" class="modal-exit-btn">확인</button>
+        </div>
       </div>
     </div>
-  </div>
 </template>
+
 
 <script>
 import img from "@/assets/imgs/mypage_sample.jpg";
+//import MessageContent from "@/components/Message/MessageContentModal"; 
+//import ModalView from "@/components/Message/MessageSendModal";
+import MessageModal from "@/components/Message/MessageModal";
 
 export default {
   name: "MessageReciever",
+  props:{
+    message:Array
+   
+  },
+  components:{
+    //MessageContent,
+    //ModalView,
+    MessageModal
+  },
   data() {
     return {
       loginId: null,
@@ -64,6 +84,12 @@ export default {
       sender: "",
       senddt: "",
       content: "",
+      isModalViewed:false,
+      MessageModal:false,
+      displayDetail:false,
+      
+      
+      
     };
   },
 
@@ -140,6 +166,8 @@ export default {
     replaceImg(e) {
             e.target.src = img;
         },
+  
+   
   },
 };
 </script>
