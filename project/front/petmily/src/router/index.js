@@ -36,6 +36,7 @@ import ApiDog from '@/components/cdh/ApiDog.vue'
 import AdminAppliedList from '@/components/admin/ApplyList.vue'
 
 
+
 const routes = [
   {
     path: '/',
@@ -215,7 +216,8 @@ const routes = [
     path: '/admin/ApplyList',
     name: 'AdminAppliedList',
     component: AdminAppliedList
-  }
+  },
+  
  
 ]
 
