@@ -3,9 +3,7 @@
       <div class="grid-container">
         <div v-for="item in items" :key="item.desertionNo" class="grid-item">
           <div class="card">
-            <div>
-              <img :src="item.popfile" :alt="item.careNm" @click="handleItemClick(item.desertionNo, item.careAddr)"
-                style="cursor: pointer; width:300px; height: 200px;">
+            <div @click="handleItemClick(item.desertionNo, item.careAddr)">병원이름
             </div>
             <div class="item-info-space-between">
               <div class="info-item info-left">{{ item.kindCd }}</div>
