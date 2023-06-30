@@ -212,7 +212,7 @@ const routes = [
     component: ApiDog
   },
   {
-    path: '/admin/apply/list',
+    path: '/admin/ApplyList',
     name: 'AdminAppliedList',
     component: AdminAppliedList
   }

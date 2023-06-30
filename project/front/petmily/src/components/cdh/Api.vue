@@ -200,6 +200,7 @@ export default {
             label: org.orgdownNm,
             onClick: () => {
               this.orgCd = org.orgCd;
+              
             }
           }));
         })
@@ -576,6 +577,11 @@ input[type="checkbox"] {
   font-family: 'IBMPlexSansKR-Bold';
   font-size: 15px;
   color: white;
+  cursor: pointer;
+}
+
+.lbl-place-all, .lbl-place, .chk-places, .chk_neuter {
+  cursor: pointer;
 }
 
 </style>
