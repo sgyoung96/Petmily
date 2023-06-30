@@ -14,7 +14,7 @@
         <div class="cont_area">
           <div class="line"></div>
           <div id="tab1" class="cont">
-            <div class="tab1-content content"><LoginForm /></div>
+            <div class="tab1-content content"><VolList /></div>
           </div>
           <div id="tab2" class="cont cont2">
             <div class="tab2-content content"><ApplyListVue /></div>
@@ -29,7 +29,7 @@
 </template>
 
 <script>
-import LoginForm from '../Member/MemLogin.vue';
+import VolList from '../admin/VolList.vue';
 import ApplyListVue from '../admin/ApplyList.vue';
 
 export default {
@@ -73,7 +73,7 @@ export default {
   },
   components: {
     ApplyListVue,
-    LoginForm
+    VolList
   }
 }
 </script>
