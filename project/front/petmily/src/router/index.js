@@ -62,7 +62,7 @@ const routes = [
     component: MyPageHome
   },
   {
-    path: '/animalhospital',
+    path: '/animalhospital/:name/:addr',
     name: 'AnimalHospital',
     component: AnimalHospital
   },

@@ -1,29 +1,43 @@
 <template>
     <div id="app" style="margin-top:50px;">
       <div class="grid-container">
-        <div v-for="item in items" :key="item.desertionNo" class="grid-item">
+        <div v-for="item in items" :key="item.careNm" class="grid-item">
           <div class="card">
-            <div @click="handleItemClick(item.desertionNo, item.careAddr)">병원이름
+            <div @click="handleItemClick(item.careAddr, item.careNm)">
+              병원이름: {{ item.careNm }}
             </div>
-            <div class="item-info-space-between">
-              <div class="info-item info-left">{{ item.kindCd }}</div>
-              <div class="info-item info-right">{{ item.happenDt }}</div>
+            <div>
+              병원유형: {{ item.divisionNm }}
             </div>
-            <div class="item-info">
-              <div id="processState">
-                {{ item.processState }}
-              </div>
-              <div id="age">
-                {{ item.age }}
-              </div>
+            <div>
+              대상동물: {{ item.saveTrgtAnimal }}
             </div>
-            <div class="item-info">
-              <div id="colorCd">
-                {{ item.colorCd }}
-              </div>
-              <div id="weight">
-                {{ item.weight }}
-              </div>
+            <div>
+              주소: {{ item.careAddr }}
+            </div>
+            <div>
+              평일운영시작: {{ item.weekOprStime }} 
+            </div>
+            <div>
+              평일운영종료: {{ item.weekOprEtime }}
+            </div>
+            <div>
+              주말운영시작: {{ item.weekendOprStime }}
+            </div>
+            <div>
+              주말운영종료: {{ item.weekendOprEtime }}
+            </div>
+            <div>
+              휴무일: {{ item.closeDay }}
+            </div>
+            <div>
+              수의사수: {{ item.vetPersonCnt }}
+            </div>
+            <div>
+              전화번호: {{ item.careTel }}
+            </div>
+            <div>
+              진료실수: {{ item.medicalCnt }}
             </div>
           </div>
         </div>
@@ -39,7 +53,6 @@
   </template>
   
   <script>
-  import axios from 'axios';
   
   export default {
     name: 'App',
@@ -54,6 +67,7 @@
         displayedPages: [], // 현재 표시되는 페이지 버튼
         startPage: 1, // 시작 페이지 번호
         endPage: 10, // 끝 페이지 번호
+        addr:''
       };
     },
     created() {
@@ -61,72 +75,22 @@
     },
     methods: {
       fetchData() {
-        const apiUrl = `http://apis.data.go.kr/1543061/abandonmentPublicSrvc/abandonmentPublic?_type=json&upkind=417000&pageNo=${this.pageNo}&numOfRows=${this.pageSize}&serviceKey=JkjPRne8oXZTCJTyLN9579FQZI6%2FkhepY9kJhsmdEpdiEjyDUj8HjiEo8ba4BAa8AOGXfQWZA7AAHiljNzoOBA%3D%3D`;
-        axios.get(apiUrl)
-          .then((response) => {
-            const data = response.data.response.body;
-            this.items = data.items.item;
-            this.totalItems = data.totalCount;
-            this.totalPages = 20;
-            this.updateDisplayedPages();
-          })
-          .catch((error) => {
-            console.error(error);
-          });
+        const self = this;
+        self.$axios.get('https://apis.data.go.kr/1543061/animalShelterSrvc/shelterInfo?_type=json&numOfRows=1000&pageNo=1&serviceKey=hqbUzbZx%2BbQR6OgVCNvZDXGGWIVTWAIawDhN2Y9fbW6Pndu%2BrU9e1NaR9UpW7%2BPotKdwoD9cXlkHbSS7tzFRJQ%3D%3D')
+        .then(function(res){
+            if(res.status==200){
+                const data = res.data.response.body
+                self.items = data.items.item;
+            }else{
+                alert(res.status)
+            }
+        })
       },
-      handleItemClick(desertionNo, careAddr) {
-        console.log(desertionNo); // desertionNo 값 확인
-        this.desertionNo = desertionNo; // desertionNo 값을 설정
-        this.careAddr = careAddr
-        this.$router.push({ name: 'Detail', query: { desertionNo: desertionNo,  careAddr: careAddr} });
-      },
-      previousPage() {
-        if (this.pageNo > 1) {
-          this.pageNo--;
-          this.fetchData();
-        } 
-        else {
-            alert("이전 페이지가 없습니다")
-          }
-      },
-      nextPage() {
-        const totalPages = Math.ceil(this.totalItems / this.pageSize);
-        if (this.pageNo < totalPages && this.pageNo < 20) {
-          this.pageNo++;
-          this.fetchData();
-        }
-        else{
-            alert("다음 페이지가 없습니다")
-          }
-          
-      },
-      goToPage(pageNumber) {
-        this.pageNo = pageNumber;
-        this.fetchData();
-      },
-  
-      updateDisplayedPages() {
-        const maxDisplayedPages = 10; // 한 번에 표시할 페이지 버튼의 최대 개수
-        const halfMaxDisplayedPages = Math.floor(maxDisplayedPages / 2);
-        let startPage = this.pageNo - halfMaxDisplayedPages;
-        let endPage = this.pageNo + halfMaxDisplayedPages;
-  
-        if (startPage < 1) {
-          startPage = 1;
-          endPage = Math.min(maxDisplayedPages, this.totalPages);
-        }
-        if (endPage > this.totalPages) {
-          endPage = this.totalPages;
-          startPage = Math.max(1, endPage - maxDisplayedPages + 1);
-        }
-  
-        this.startPage = startPage;
-        this.endPage = endPage;
-        this.displayedPages = Array.from(
-          { length: endPage - startPage + 1 },
-          (_, i) => startPage + i
-        );
-      },
+      handleItemClick(addr, name){
+        this.addr = addr;
+        this.name = name;
+        this.$router.push({ name: 'AnimalHospital', params: {addr: this.addr, name: this.name} });
+      }
     },
   
   
