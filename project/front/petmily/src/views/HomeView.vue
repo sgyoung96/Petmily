@@ -105,7 +105,7 @@ export default {
       D3: D3,
       D4: D4,
       D5: D5,
-      videoUrl: 'https://www.youtube.com/watch?v=qglffq44cbc&t=1068s'
+      videoUrl: 'https://www.youtube.com/watch?v=3AV35NdBZOI'
     };
   },
   computed: {

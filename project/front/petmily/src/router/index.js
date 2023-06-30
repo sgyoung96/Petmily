@@ -34,6 +34,7 @@ import NotifyList from '@/components/notify/NotifyList.vue'
 import ApiCat from '@/components/cdh/ApiCat.vue'
 import ApiDog from '@/components/cdh/ApiDog.vue'
 import AdminAppliedList from '@/components/admin/ApplyList.vue'
+import AnimalHospital from '@/components/kaka/AnimalHospital.vue'
 
 
 const routes = [
@@ -51,6 +52,11 @@ const routes = [
     path: '/mypage',
     name: 'MyPageHome',
     component: MyPageHome
+  },
+  {
+    path: '/animalhospital',
+    name: 'AnimalHospital',
+    component: AnimalHospital
   },
   {
     path: '/member/kakaoform',
