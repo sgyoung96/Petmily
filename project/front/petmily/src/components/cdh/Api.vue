@@ -7,16 +7,15 @@
 
     <div>
 
-
       <div class="box-places">
         <div class="chk-places">
           <input type="checkbox" id="chk-places" name="chk-01"  v-model="chk_title" ><div class="box-chk-01" v-on:click="PlacetoggleButtons"><label for="chk-places" ><span class="chk-01">전체시도조회</span></label></div>
         </div>
         <div v-if="showPlaceButtons">
           <div class="box-place-container">
-            <div class="radio-all-place box-radio"><input type="radio" v-model="place_picked" value="99" id="place_all" name="ipt-radio-place" v-on:click="PlaceAll" class="ipt-radio-place" ><label for="place_all" class="lbl-place-all"><span class="span-place-all">전체</span></label></div>
-            <div v-for="button in placeButtons" :key="button.label"  >
-              <div v-on:click="button.onClick"  class="place"><input type="radio" id="index" v-model="place_picked" value="index" name="ipt-radio-place" class="ipt-radio-place"><label for="button.label" class="lbl-place"><span class="span-place">{{ button.label }} </span></label></div>
+            <div class="radio-all-place box-radio chk-all"  v-on:click="chkRadiobtn(99)"><input type="radio" id="place_all" name="ipt-radio-place" v-on:click="PlaceAll" class="ipt-radio-place" ><label for="place_all" class="lbl-place-all"><span class="span-place-all">전체</span></label></div>
+            <div v-for="(button, index) in placeButtons" :key="index"  >
+              <div v-on:click="button.onClick" class="place" ><input type="radio" :id="index"  :value="index" name="ipt-radio-place" class="ipt-radio-place"><label v-on:click="chkRadiobtn(index)" :for="index" class="lbl-place chk-lbl"><span class="span-place">{{ button.label }} </span></label></div>
             </div>
           </div>
         </div>
@@ -31,16 +30,16 @@
           </div>
           <div v-if="showNeuterButtons">
             <div class="Neuter-container">
-              <input type="radio" id="neuter_all" v-model="picked" value="all" v-on:click="NeuterAll"  name="radio-neuter" class="Neuter-button" ><label for="neuter_all"><span>전체</span></label>
-              <input type="radio" id="neuter_y" v-model="picked" value="O" v-on:click="NeuterY" name="radio-neuter" class="Neuter-button" ><label for="neuter_y"><span>중성화O</span></label>
-              <input type="radio" id="neuter_n" v-model="picked" value="X" v-on:click="NeuterN" name="radio-neuter" class="Neuter-button" ><label for="neuter_n"><span>중성화X</span></label>
-              <input type="radio" id="neuter_x" v-model="picked" value="??" v-on:click="NeuterU" name="radio-neuter" class="Neuter-button" ><label for="neuter_x"><span>확인불가</span></label>
+              <div class="place yn"><input type="radio" id="neuter_all" v-model="picked" value="all"  name="radio-neuter" class="Neuter-button" ><label v-on:click="NeuterAll, chkRadiobtn('all')" class="lbl-place lbl-yn" for="neuter_all"><span class="span-place">전체</span></label></div>
+              <div class="place yn"><input type="radio" id="neuter_y" v-model="picked" value="O" name="radio-neuter" class="Neuter-button" ><label v-on:click="NeuterAll, chkRadiobtn('y')" class="lbl-place lbl-yn" for="neuter_y"><span class="span-place">중성화O</span></label></div>
+              <div class="place yn"><input type="radio" id="neuter_n" v-model="picked" value="X"  name="radio-neuter" class="Neuter-button" ><label v-on:click="NeuterAll, chkRadiobtn('n')" class="lbl-place lbl-yn" for="neuter_n"><span class="span-place">중성화X</span></label></div>
+              <div class="place yn"><input type="radio" id="neuter_x" v-model="picked" value="??" name="radio-neuter" class="Neuter-button" ><label v-on:click="NeuterAll, chkRadiobtn('x')" class="lbl-place lbl-yn" for="neuter_x"><span class="span-place">확인불가</span></label></div>
             </div>
           </div>
         </div>
       </div>
 
-      <button v-on:click="search" class="custom-button">검색</button>
+      <label v-on:click="search" class="btn-search"><span>검색</span></label>
       
     </div>
 
@@ -305,7 +304,51 @@ export default {
         (_, i) => startPage + i
       );
     },
-    
+    chkRadiobtn(value) { // 박스 영역 클릭시 라디오 버튼 체크 이벤트
+      let places = document.getElementsByClassName('ipt-radio-place');
+      let chkPlace = document.getElementsByClassName('chk-lbl');
+      let chkAll = document.getElementsByClassName('chk-all');
+      if (value == 99) {
+        places[0].checked = true;
+        chkAll[0].style = "border: 2px solid rgb(244, 191, 79);";
+        for (let i = 0; i < chkPlace.length; i++) {
+          chkPlace[i].style = "border: 2px solid #999999;";
+        }
+       } else if (value < 18) {
+        chkAll[0].style = "border: 2px solid #999999;";
+        for (let i = 0; i < chkPlace.length; i++) {
+          chkPlace[i].style = "border: 2px solid #999999;";
+          if (i == value) {
+            chkPlace[i].checked = true;
+            chkPlace[i].style = "border: 2px solid rgb(244, 191, 79);";
+          }
+        }
+      } else if (value == 'all') {
+        document.getElementsByClassName('Neuter-button')[0].checked = true;
+        document.getElementsByClassName('lbl-yn')[0].style = "border: 2px solid rgb(244, 191, 79);";
+        document.getElementsByClassName('lbl-yn')[1].style = "border: 2px solid #999999;";
+        document.getElementsByClassName('lbl-yn')[2].style = "border: 2px solid #999999;";
+        document.getElementsByClassName('lbl-yn')[3].style = "border: 2px solid r#999999;";
+      } else if (value == 'y') {
+        document.getElementsByClassName('Neuter-button')[1].checked = true;
+        document.getElementsByClassName('lbl-yn')[1].style = "border: 2px solid rgb(244, 191, 79);";
+        document.getElementsByClassName('lbl-yn')[0].style = "border: 2px solid #999999;";
+        document.getElementsByClassName('lbl-yn')[2].style = "border: 2px solid #999999;";
+        document.getElementsByClassName('lbl-yn')[3].style = "border: 2px solid r#999999;";
+      } else if (value == 'n') {
+        document.getElementsByClassName('Neuter-button')[2].checked = true;
+        document.getElementsByClassName('lbl-yn')[2].style = "border: 2px solid rgb(244, 191, 79);";
+        document.getElementsByClassName('lbl-yn')[0].style = "border: 2px solid #999999;";
+        document.getElementsByClassName('lbl-yn')[1].style = "border: 2px solid #999999;";
+        document.getElementsByClassName('lbl-yn')[3].style = "border: 2px solid r#999999;";
+      } else if (value == 'x') {
+        document.getElementsByClassName('Neuter-button')[3].checked = true;
+        document.getElementsByClassName('lbl-yn')[3].style = "border: 2px solid rgb(244, 191, 79);";
+        document.getElementsByClassName('lbl-yn')[0].style = "border: 2px solid #999999;";
+        document.getElementsByClassName('lbl-yn')[1].style = "border: 2px solid #999999;";
+        document.getElementsByClassName('lbl-yn')[2].style = "border: 2px solid r#999999;";
+      }
+    }
 
   },
 };
@@ -313,52 +356,12 @@ export default {
 
 
 <style>
-.custom-button {
-  /* background-color: #f0cf81;
-  border: none;
-  color: white;
-  padding: 10px 20px;
-  text-align: center;
-  text-decoration: none;
-  display: inline-block;
-  font-size: 16px;
-  margin: 4px 2px;
-  cursor: pointer;
-  border-radius: 4px; */
-}
-
-.place-button {
-  /* background-color: #f0cf81;
-  border: none;
-  color: white;
-  padding: 10px 20px;
-  text-align: center;
-  text-decoration: none;
-  display: inline-block;
-  font-size: 16px;
-  margin: 4px 2px;
-  cursor: pointer;
-  border-radius: 4px; */
-}
-
-.Neuter-button {
-  /* background-color: #f0cf81;
-  border: none;
-  color: white;
-  padding: 10px 20px;
-  text-align: center;
-  text-decoration: none;
-  display: inline-block;
-  font-size: 16px;
-  margin: 4px 2px;
-  cursor: pointer;
-  border-radius: 4px; */
-}
 
 .card {
   border-radius: 10px;
   /* 모서리를 둥글게 만듭니다 */
   /* 다른 스타일을 추가로 적용할 수 있습니다 */
+  position: relative;
 }
 
 .place-container {
@@ -530,8 +533,8 @@ input[type="checkbox"] {
 }
 
 .lbl-place-all {
-  width: 200px;
-  transform: translateX(85px) translateY(-10px);
+  width: 50px;
+  transform: translateX(75px) translateY(10px);
 }
 
 .place {
@@ -542,6 +545,39 @@ input[type="checkbox"] {
 .ipt-radio-place {
   appearance: none;
   cursor: pointer;
+}
+
+.Neuter-button {
+  appearance: none;
+}
+
+.Neuter-container {
+  display: flex;
+}
+
+.yn {
+  margin-top: 10px;
+  margin-right: 33px;
+}
+
+.btn-search {
+  width: 200px;
+  height: 50px;
+  margin-left: 10px;
+  margin-top: 30px;
+  background-color: rgb(244, 191, 79);
+  border: 2px solid rgb(244, 191, 79);
+  border-radius: 20px;
+  display: flex;
+  justify-content: center;
+  margin-bottom: 30px;
+}
+
+.btn-search span {
+  margin-top: 10px;
+  font-family: 'IBMPlexSansKR-Bold';
+  font-size: 15px;
+  color: white;
 }
 
 </style>
