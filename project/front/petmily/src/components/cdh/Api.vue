@@ -544,6 +544,7 @@ input[type="checkbox"] {
 
 .ipt-radio-place {
   appearance: none;
+  cursor: pointer;
 }
 
 .Neuter-button {
