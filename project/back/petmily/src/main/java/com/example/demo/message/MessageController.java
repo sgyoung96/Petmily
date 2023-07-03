@@ -2,6 +2,7 @@ package com.example.demo.message;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -47,16 +48,26 @@ public class MessageController {
 //		return map;
 //	}
 //	
-	//읽은 메세지, 안읽은 메세지 목록
-	@GetMapping("/{loginId}/{check}")
+	// 내가 받은 메세지 중 읽은 메세지, 안읽은 메세지 검색(삭제메세지 제외)
+	@GetMapping("/sendcheck/{loginId}/{check}")
 	public Map getByRecieverAndM_check(@PathVariable("loginId") String loginId, @PathVariable("check") int check) {
-		ArrayList<MessageDto> list = service.getByRecieverAndCheck(loginId, check);
+		ArrayList<MessageDto> list = service.getByRecieverAndCheckAndAvailablereciever(loginId, check);
 		Map map = new HashMap();
 		map.put("list", list);
 		return map;
 	}
 	
-	//sender로 검색
+	
+	// 내가 보낸 메세지 중 수신자가 읽은 메세지, 안읽은 메세지 검색(삭제메세지 제외)
+		@GetMapping("/recievecheck/{loginId}/{check}")
+		public Map getBySenderAndCheckAndAvailablesender(@PathVariable("loginId") String loginId, @PathVariable("check") int check) {
+			ArrayList<MessageDto> list = service.getBySenderAndCheckAndAvailablesender(loginId, check);
+			Map map = new HashMap();
+			map.put("list", list);
+			return map;
+		}
+		
+	//내가 보낸 메세지 or 보낸이로 검색
 	@GetMapping("/sender/{sender}")
 	public Map getBySender(@PathVariable("sender") String sender) {
 		ArrayList<MessageDto> list = service.getBySender(sender);
@@ -66,7 +77,7 @@ public class MessageController {
 		return map;
 	}
 	
-	//받은메세지 전체 목록
+	//내가 받은메세지 전체 목록
 	@GetMapping("/reciever/{loginId}")
 	public Map getByReciever(@PathVariable("loginId") String loginId) {
 		ArrayList<MessageDto> list = service.getByReciever(loginId);
@@ -75,6 +86,30 @@ public class MessageController {
 		map.put("list", list);
 		return map;
 	}
+	
+	//받은 메세지 제목으로 검색
+	@GetMapping("/r_title/{title}/{loginId}")
+	public Map getByTitleRecieve(@PathVariable("title") String title,@PathVariable("loginId") String loginId) {
+		System.out.println("제목으로 검색");
+		System.out.println("loginId:" + loginId);
+		List<MessageDto> list = service.getByTitleRecieve(loginId,title);
+		Map map = new HashMap();
+		map.put("list", list);
+		return map;
+	}
+	
+	//보낸 메세지 제목으로 검색
+	@GetMapping("/s_title/{title}/{loginId}")
+	public Map getByTitleSend(@PathVariable("title") String title,@PathVariable("loginId") String loginId) {
+		System.out.println("제목으로 검색");
+		System.out.println("loginId:" + loginId);
+		List<MessageDto> list = service.getByTitleSend(loginId,title);
+		Map map = new HashMap();
+		map.put("list", list);
+		return map;
+	}
+	
+	
 	
 	//메세지 읽었을 때
 	@PatchMapping("/{num}") //patch: 일부 컬럼 수정
@@ -91,11 +126,11 @@ public class MessageController {
 		return map;
 	}
 	
-	//안읽은 메세지 cnt
+	//내가 안읽은 메세지 cnt
 	@GetMapping("/cnt/{loginId}")
 	public Map getcntcheck(@PathVariable("loginId") String loginId){
 		System.out.println("controller : 안읽은 메세지");
-		ArrayList<MessageDto> list = service.getByRecieverAndCheck(loginId, 0);
+		ArrayList<MessageDto> list = service.getByRecieverAndCheckAndAvailablereciever(loginId, 0);
 		System.out.println("list size : " + list.size());
 		Map map = new HashMap();
 		map.put("cnt", list.size());

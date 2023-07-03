@@ -7,8 +7,11 @@
           
 
           <!-- 프로필사진 -->
-           <input type="file" id="profile"><br/> 
-    
+          
+           <div class="box-profile">
+            <div class="profile" id="preview"></div>
+           </div>
+           <input type="file" id="profile" @change="previewFile"><br/> 
           
           <!-- 아이디 -->
           <div class="input_box">
@@ -120,7 +123,6 @@ export default {
       address:'',
       msg:'',
       tf:false,
-      
       idHasError:false,
       nameHasError:false,
       pwdHasError:false,
@@ -155,6 +157,42 @@ export default {
 
  
   methods:{
+    previewFile(){
+      const fileInput = document.getElementById('profile');
+      const previewDiv = document.getElementById('preview');
+
+      // 파일이 선택되지 않았을 경우 미리보기를 초기화합니다.
+      if (!fileInput.files || fileInput.files.length === 0) {
+      previewDiv.innerHTML = '';
+      return;
+      }
+
+      // 첫 번째 파일을 가져옵니다.
+      const file = fileInput.files[0];
+  
+      // 이미지 파일인지 확인합니다.
+      if (file.type.startsWith('image/')) {
+      const reader = new FileReader();
+    
+      // 파일 로드 완료 시 미리보기를 생성합니다.
+      reader.onload = function(event) {
+      const img = document.createElement('img');
+      img.src = event.target.result;
+
+  img.classList.add('profile');
+      previewDiv.innerHTML = '';
+      previewDiv.appendChild(img);
+    };
+      
+
+      // 파일을 읽어옵니다.
+      reader.readAsDataURL(file);
+      } else {
+    
+      // 이미지 파일이 아닌 경우 미리보기를 초기화합니다.
+      previewDiv.innerHTML = '';
+      }
+    },
 
      sendEmail(){
         const self = this;
@@ -307,16 +345,12 @@ export default {
     .then(function(res){ //
         if(res.status == 200){
         
-          if(res.data.dto == null){
-           
-         
-          
+          if(res.data.dto == null){        
           self.sendEmail()
           }else{
              alert('중복된 이메일')
              self.email=''
-            
-             
+       
           }
         }else{
           alert('에러코드 :' + res.status)
@@ -460,7 +494,19 @@ export default {
 </script>
 
 <style scoped>
-
+.box-profile {
+    display: block;
+  width: 150px;
+  height: 150px; 
+  border-radius: 70%;
+  overflow: hidden;
+}
+.profile {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  cursor: pointer;
+}
 .join_area {
     margin: 0 auto;
     padding: 58px 0 160px;
@@ -517,8 +563,10 @@ export default {
 
 .input_txt{
   width: 100%;
-  border:0px;
+  border:none;border-right:0px; border-top:0px; border-left:0px; 
   border-bottom : 2px solid;
+  outline-offset: 0;
+  outline: none;
   color:black;
 }
 

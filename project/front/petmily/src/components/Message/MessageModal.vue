@@ -4,7 +4,7 @@
         <div class="container">
           
         
-                <h4> {{resender}}에게 답장 쪽지 보내기</h4>
+                <h4> {{reciever}}에게 답장 쪽지 보내기</h4>
                 보내는이 : <input type="text" v-model="sender">
                 받는이:<input type="text" v-model="reciever">
                 제목:<input type="text" v-model="title">

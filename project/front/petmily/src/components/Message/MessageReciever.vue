@@ -4,20 +4,26 @@
 
     <div id="messagereciever">
       <h2>{{ loginId }}가 받은 쪽지 목록</h2>
-        <div v-for="message in list" :key="message.num">
-          <!-- 쪽지 보내기 모달창(보낸사람 아이디 클릭하면) -->
-          <!-- <ModalView v-if="isModalViewed" @close-modal="isModalViewed=false">
-             
-          </ModalView>  -->
 
-          <MessageModal :resender="message.sender.id" v-if="displayDetail" @close="displayDetail=false"/>
+      <button @click="read">읽은 메일</button>
+      <button @click="unread">읽지 않은 메일</button>
+      <button @click="all">전체</button>
+      <select v-model="select" >
+        <option value = "title">제목</option>
+        <option value = "sender">보낸이</option>
+      </select>
+
+      <input type="text" v-model="find"><button @click="findbtn">검색</button>
+       
+          <!-- 쪽지 보내기 모달창(보낸사람 프로필 클릭하면) -->
+          <MessageModal :resender=resender v-if="displayDetail" @close="displayDetail=false"/>
           
-          
+           <div v-for="message in list" :key="message.num">
 
           <span class="box-profile" style="background: #black">
             <img class="profile" 
             @error="replaceImg" :src="'http://localhost:8082/members/imgs/' + message.sender.id"
-            v-on:click="displayDetail=true">
+            v-on:click="modal(message.sender.id)">
           </span>
             <p> 보낸사람 : {{ message.sender.id }}</p>
             보낸날짜 : {{ message.send_dt }}<br />
@@ -50,7 +56,7 @@
           <p>보낸사람 : {{ sender }}</p>
           <p>받은날짜 : {{ senddt }}</p>
           <p>내용 : {{ content }}</p>
-          <button v-on:click="read(num)" class="modal-exit-btn">확인</button>
+          <button v-on:click="readcheck(num)" class="modal-exit-btn">확인</button>
         </div>
       </div>
     </div>
@@ -59,8 +65,7 @@
 
 <script>
 import img from "@/assets/imgs/mypage_sample.jpg";
-//import MessageContent from "@/components/Message/MessageContentModal"; 
-//import ModalView from "@/components/Message/MessageSendModal";
+
 import MessageModal from "@/components/Message/MessageModal";
 
 export default {
@@ -70,8 +75,7 @@ export default {
    
   },
   components:{
-    //MessageContent,
-    //ModalView,
+  
     MessageModal
   },
   data() {
@@ -87,6 +91,11 @@ export default {
       isModalViewed:false,
       MessageModal:false,
       displayDetail:false,
+      resender:'',
+      value:'',
+     select:'title',
+      find:'',
+     
       
       
       
@@ -139,7 +148,7 @@ export default {
       this.content = content;
       this.modalOpen = true;
     },
-    read(num) {
+    readcheck(num) {
       const self = this;
       alert(num);
       self.$axios
@@ -163,9 +172,82 @@ export default {
       this.modalOpen = false;
     },
 
+     read(){
+      const self = this;
+      self.$axios
+      .get("http://localhost:8082/message/sendcheck/" + self.loginId + "/" + 1)
+      .then(function (res) {
+        if (res.status == 200) {
+          self.list = res.data.list;
+        } else {
+          alert("에러코드 :" + res.status);
+        }
+      });
+    },
+
+    unread(){
+       const self = this;
+      self.$axios
+      .get("http://localhost:8082/message/sendcheck/" + self.loginId + "/" + 0)
+      .then(function (res) {
+        if (res.status == 200) {
+          self.list = res.data.list;
+        } else {
+          alert("에러코드 :" + res.status);
+        }
+      });
+
+    },
+
+
+    findbtn(){
+      const self = this;
+      alert(self.loginId)
+      if(self.find==''){
+        alert('검색어를 입력하세요')
+      }else{
+       if(self.select=="title"){
+        self.$axios
+      .get("http://localhost:8082/message/r_title/" + self.find + "/" + self.loginId)
+      .then(function (res) {
+        if (res.status == 200) {
+          self.list = res.data.list;
+        } else {
+          alert("에러코드 :" + res.status);
+        }
+      });
+
+      }else{
+        self.$axios
+      .get("http://localhost:8082/message/sender/" + self.find)
+      .then(function (res) {
+        if (res.status == 200) {
+          self.list = res.data.list;
+        } else {
+          alert("에러코드 :" + res.status);
+        }
+      });
+        
+
+      }
+      }
+
+    },
+
+    all(){
+       this.$router.go();
+    },
     replaceImg(e) {
             e.target.src = img;
         },
+
+    modal(sender){
+      const self = this;
+      this.resender = sender
+      
+      self.displayDetail=true
+
+    }
   
    
   },

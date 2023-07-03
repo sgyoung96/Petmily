@@ -8,5 +8,5 @@ import org.springframework.stereotype.Repository;
 public interface MemberDao extends JpaRepository<Member, String> {
 	ArrayList<Member> findByEmail(String email);
 	
-
+	
 }

@@ -5,6 +5,17 @@
 
   <div id="messagesender">
     <h2>{{ loginId }}가 보낸 쪽지 목록</h2>
+
+    <button @click="read">읽은 메일</button>
+    <button @click="unread">읽지 않은 메일</button>
+    <button @click="all">전체</button>
+      <select v-model="select" >
+        <option value = "title">제목</option>
+        <option value = "reciever">받는이</option>
+      </select>
+
+      <input type="text" v-model="find"><button @click="findbtn">검색</button>
+       
     <div class="message-bg" v-for="message in list" :key="message.num">
       <span class="box-profile" style="background: #black">
        
@@ -64,6 +75,9 @@ export default {
       reciever: "",
       senddt: "",
       content: "",
+      value:'',
+      select:'title',
+      find:'',
     };
   },
 
@@ -114,9 +128,74 @@ export default {
       this.content = content;
       this.modalOpen = true;
     },
-      replaceImg(e) {
-            e.target.src = img;
-        },
+    read(){
+      const self = this;
+      self.$axios
+      .get("http://localhost:8082/message/recievecheck/" + self.loginId + "/" + 1)
+      .then(function (res) {
+        if (res.status == 200) {
+          self.list = res.data.list;
+        } else {
+          alert("에러코드 :" + res.status);
+        }
+      });
+    },
+
+    unread(){
+       const self = this;
+      self.$axios
+      .get("http://localhost:8082/message/recievecheck/" + self.loginId + "/" + 0)
+      .then(function (res) {
+        if (res.status == 200) {
+          self.list = res.data.list;
+        } else {
+          alert("에러코드 :" + res.status);
+        }
+      });
+
+    },
+
+    findbtn(){
+      const self = this;
+      alert(self.loginId)
+      if(self.find==''){
+        alert('검색어를 입력하세요')
+      }else{
+       if(self.select=="title"){
+        self.$axios
+      .get("http://localhost:8082/message/s_title/" + self.find + "/" + self.loginId)
+      .then(function (res) {
+        if (res.status == 200) {
+          self.list = res.data.list;
+        } else {
+          alert("에러코드 :" + res.status);
+        }
+      });
+
+      }else{
+        self.$axios
+      .get("http://localhost:8082/message/reciever/" + self.find)
+      .then(function (res) {
+        if (res.status == 200) {
+          self.list = res.data.list;
+        } else {
+          alert("에러코드 :" + res.status);
+        }
+      });
+        
+
+      }
+      }
+
+    },
+
+    all(){
+       this.$router.go();
+    },
+
+    replaceImg(e) {
+      e.target.src = img;
+    },
   },
 };
 </script>
