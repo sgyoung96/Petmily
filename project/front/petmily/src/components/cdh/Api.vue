@@ -356,7 +356,20 @@ export default {
 
 
 <style>
-
+ .custom-button {
+    background-color: #f0cf81; /* 배경색 설정 */
+    border: none; /* 테두리 제거 */
+    color: white; /* 텍스트 색상 설정 */
+    padding: 10px 20px; /* 안쪽 여백 설정 */
+    text-align: center; /* 텍스트 가운데 정렬 */
+    text-decoration: none; /* 밑줄 제거 */
+    display: inline-block; /* 인라인 요소로 표시 */
+    font-size: 16px; /* 폰트 크기 설정 */
+    margin: 4px 2px; /* 외부 여백 설정 */
+    cursor: pointer; /* 커서 포인터로 변경 */
+    border-radius: 4px; /* 모서리를 둥글게 설정 */
+  }
+  
 .card {
   border-radius: 10px;
   /* 모서리를 둥글게 만듭니다 */
