@@ -1,7 +1,7 @@
 <template>
   <div id="app" style="margin-top:50px;">
     <div class="grid-container">
-      <div v-for="item in items" :key="item.careNm" class="grid-item">
+      <div v-for="item in displayedItems" :key="item.careNm" class="grid-item">
         <div class="card" style="  height: 186px;
   width:280px;">
           <div class="cardName">
@@ -43,12 +43,12 @@
     </div>
   </div>
   <div style="margin-top: 2%;">
-    <button v-on:click="previousPage" class="custom-button">이전</button>
-    <button v-for="pageNumber in displayedPages" :key="pageNumber" v-on:click="goToPage(pageNumber)"
-      class="custom-button">
+    <button v-on:click="previousPage" class="custom-button" :disabled="pageNo === 1">이전</button>
+    <button v-for="pageNumber in currentPageNumbers" :key="pageNumber" v-on:click="goToPage(pageNumber)"
+      class="custom-button" :class="{ 'active-button': pageNo === pageNumber }">
       {{ pageNumber }}
     </button>
-    <button v-on:click="nextPage" class="custom-button">다음</button>
+    <button v-on:click="nextPage" class="custom-button" :disabled="pageNo === totalPages">다음</button>
   </div>
 </template>
   
@@ -60,7 +60,7 @@ export default {
     return {
       items: [],
       pageNo: 1, // 현재 페이지 번호
-      pageSize: 24, // 한 페이지에 표시할 항목 수
+      pageSize: 16, // 한 페이지에 표시할 항목 수
       totalItems: 0, // 전체 항목 수
       totalPages: 0, // 전체 페이지 수
       kindCd: '',
@@ -70,30 +70,92 @@ export default {
       addr: ''
     };
   },
+  computed: {
+  displayedItems() {
+    const startIndex = (this.pageNo - 1) * this.pageSize;
+    const endIndex = startIndex + this.pageSize;
+    console.log(this.itmes)
+    return this.items.filter((item, index) => index >= startIndex && index < endIndex);
+  },
+  currentPageNumbers() {
+      const MAX_DISPLAYED_PAGES = 10; // 표시되는 최대 페이지 버튼 수
+      let startPage = Math.max(1, this.pageNo - Math.floor(MAX_DISPLAYED_PAGES / 2));
+      let endPage = Math.min(startPage + MAX_DISPLAYED_PAGES - 1, this.totalPages);
+
+      const pageNumbers = [];
+      for (let i = startPage; i <= endPage; i++) {
+        pageNumbers.push(i);
+      }
+      return pageNumbers;
+    },
+  },
+
+
   created() {
     this.fetchData(); // 페이지가 생성될 때 데이터 가져오기
   },
   methods: {
     fetchData() {
-      const self = this;
-      self.$axios.get('https://apis.data.go.kr/1543061/animalShelterSrvc/shelterInfo?_type=json&numOfRows=1000&pageNo=1&serviceKey=hqbUzbZx%2BbQR6OgVCNvZDXGGWIVTWAIawDhN2Y9fbW6Pndu%2BrU9e1NaR9UpW7%2BPotKdwoD9cXlkHbSS7tzFRJQ%3D%3D')
-        .then(function (res) {
-          if (res.status == 200) {
-            const data = res.data.response.body
-            self.items = data.items.item;
-          } else {
-            alert(res.status)
-          }
-        })
-    },
+  const self = this;
+  const url = 'https://apis.data.go.kr/1543061/animalShelterSrvc/shelterInfo?_type=json&numOfRows=1000&pageNo=' + this.pageNo + '&serviceKey=hqbUzbZx%2BbQR6OgVCNvZDXGGWIVTWAIawDhN2Y9fbW6Pndu%2BrU9e1NaR9UpW7%2BPotKdwoD9cXlkHbSS7tzFRJQ%3D%3D';
+  self.$axios.get(url)
+    .then(function (res) {
+      if (res.status == 200) {
+        const data = res.data.response.body;
+        console.log(data.items.item); // 데이터 확인
+        self.items = data.items.item;
+        self.totalItems = parseInt(data.numOfRows);
+        self.totalPages = Math.ceil(self.totalItems / self.pageSize);
+        self.updateDisplayedPages();
+      } else {
+        alert(res.status);
+      }
+    })
+    .catch(function (error) {
+      console.log(error);
+    });
+},
+
     handleItemClick(addr, name) {
       this.addr = addr;
       this.name = name;
       this.$router.push({ name: 'AnimalHospital', params: { addr: this.addr, name: this.name } });
+    },
+    previousPage() {
+      if (this.pageNo > 1) {
+        this.pageNo--;
+        this.fetchData();
+      }
+    },
+    nextPage() {
+      if (this.pageNo < this.totalPages) {
+        this.pageNo++;
+        this.fetchData();
+      }
+    },
+    goToPage(pageNumber) {
+      this.pageNo = pageNumber;
+      this.fetchData();
+    },
+    updateDisplayedPages() {
+      const MAX_DISPLAYED_PAGES = 10; // 표시되는 최대 페이지 버튼 수
+      let startPage = Math.max(1, this.pageNo - Math.floor(MAX_DISPLAYED_PAGES / 2));
+      let endPage = startPage + MAX_DISPLAYED_PAGES - 1;
+
+      if (endPage > this.totalPages) {
+        endPage = this.totalPages;
+        startPage = Math.max(1, endPage - MAX_DISPLAYED_PAGES + 1);
+      }
+
+      this.displayedPages = [];
+      for (let i = startPage; i <= endPage; i++) {
+        this.displayedPages.push(i);
+      }
+
+      this.startPage = startPage;
+      this.endPage = endPage;
     }
-  },
-
-
+  }
 };
 </script>
   
