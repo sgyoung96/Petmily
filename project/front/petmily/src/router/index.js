@@ -4,6 +4,7 @@ import MemberHome from '../views/MemberView.vue'
 import KakaoAdditionalForm from '@/components/Member/AdditionalForm.vue'
 import MyPageHome from '../views/MypageView.vue'
 import Groups from '../views/Groups.vue'
+import Guide from '../views/Guide.vue'
 import DiaryBoardHome from '@/components/diaryboard/DiaryBoardHome.vue'
 import AdoptBoardHome from '../views/adopt/AdoptBoardView.vue'
 import AdoptForm from '@/components/adopt/AdoptForm.vue'
@@ -36,6 +37,8 @@ import ApiCat from '@/components/cdh/ApiCat.vue'
 import ApiDog from '@/components/cdh/ApiDog.vue'
 import AdminAppliedList from '@/components/admin/ApplyList.vue'
 import VolList from '@/components/admin/VolList.vue'
+import AddressMap from '@/components/kaka/AddressMap.vue'
+import Weather from '@/components/kaka/Weather.vue'
 
 import AnimalHospital from '@/components/kaka/AnimalHospital.vue'
 
@@ -50,6 +53,11 @@ const routes = [
     path: '/groups',
     name: 'Groups',
     component: Groups
+  },
+  {
+    path: '/guide',
+    name: 'Guide',
+    component: Guide
   },
   { 
     path: '/member',
@@ -90,6 +98,16 @@ const routes = [
     path: '/kaka',
     name: 'Kaka',
     component: Kaka
+  },
+  {
+    path: '/weather',
+    name: 'Weather',
+    component: Weather
+  },
+  {
+    path: '/addressmap',
+    name: 'AddressMap',
+    component: AddressMap
   },
   {
     path: '/barchart',
