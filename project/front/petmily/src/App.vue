@@ -86,6 +86,7 @@
         <router-link to="/barchart">막대그래프</router-link> |
         <router-link to="/piechart">파이차트</router-link> |
         <router-link to="/animalhospital">동물병원</router-link> |
+        <router-link to="/weather">날씨</router-link> |
         <div v-if="loginId != null">
           <router-link to="/messagewrite" >쪽지보내기</router-link> |
           <router-link to="/messagesender" >보낸쪽지함</router-link> |
@@ -190,8 +191,7 @@ export default {
       this.$router.push('/applyform');
     },
     guide() { // (카테고리) 입양가이드
-      this.$router.push('/'); // TODO : 수정해야함
-      alert('경로 추가 및 페이지 작업 필요');
+      this.$router.push('/guide'); // TODO : 수정해야함
     },
     contact_us() { // 고객센터 ; 메일 발송 및 FAQ
       alert('경로 추가 및 페이지 작업 필요');
