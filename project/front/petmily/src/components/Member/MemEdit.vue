@@ -472,6 +472,8 @@ export default {
   width: 100%;
   border:0px;
   border-bottom : 2px solid;
+  outline-offset: 0;
+  outline: none;
   color:black;
 }
 .input_error {
