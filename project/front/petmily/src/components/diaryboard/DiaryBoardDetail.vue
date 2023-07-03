@@ -37,18 +37,20 @@
             </tr>
           </table>
           <div class="edit-buttons">
-            <button v-on:click="editfunc(dto.num)">수정</button>
+            <button v-on:click="editfunc(dto.num, showModal)">수정</button>
             <button v-on:click="editcancle()">취소</button>
           </div>
         </div>
       </div>
       <div class="d-btn">
         <div>
-          <router-link to="/diaryboardhome" class="badge text-bg-secondary" style="font-size: 17px;">목록으로</router-link>
+          <router-link to="/diaryboardhome" class="badge text-bg-secondary" style="font-size: 17px; text-decoration: none;">
+  목록으로
+</router-link>
         </div>
         <div>
           <button @click="likebtn(dto.id.id, dto.num)">좋아요</button>
-          <span v-on:click="edit(dto.id.id)" class="badge text-bg-secondary" style="font-size: 17px;">수정하기</span>
+          <button v-on:click="edit(dto.id.id)" class="badge text-bg-secondary" style="font-size: 17px;">수정하기</button>
           <button v-on:click="boarddelete(dto.id.id)">삭제하기</button>
         </div>
       </div><br />
@@ -59,11 +61,14 @@
         <textarea style="width:900px;" v-model="content" id="content"></textarea>
         <button v-on:click="commentadd">등록하기</button>
       </div>
+      <MessageModal :resender=resender v-if="displayDetail" @close="displayDetail=false"/>
       <div v-for="comment in comment" :key="comment.id">
         <div class="comment-list">
           <div class="list-content">
             <div class="comment-profile">
-              <img class="profile" @error="replaceImg" :src="'http://localhost:8082/members/imgs/' + comment.id.id">
+            <img class="profile" 
+            @error="replaceImg" :src="'http://localhost:8082/members/imgs/' + comment.id.id"
+            v-on:click="modal(comment.id.id)">
             </div>
             <div style="width:900px">
               <span>{{ comment.id.id }}</span>&nbsp;<span style="font-size: small; color:grey">{{
@@ -220,8 +225,12 @@
 </style>
 <script>
 import img from "@/assets/imgs/mypage_sample.jpg";
+import MessageModal from "@/components/Message/MessageModal";
 export default {
   name: 'DiaryBoardDetail',
+  components:{
+  MessageModal
+},
   data() {
     return {
       num: this.$route.query.num,
@@ -231,6 +240,16 @@ export default {
       id: sessionStorage.getItem('loginId'),
       editContent: '',
       showModal: false,
+      loginId: null,
+      list: [],
+      modalOpen: false,
+      isModalViewed:false,
+      MessageModal:false,
+      displayDetail:false,
+      resender:'',
+      value:'',
+      select:'title',
+      find:'',
     };
   },
   created() {
@@ -252,6 +271,7 @@ export default {
       e.target.src = img;
     },
     editfunc(num) {
+      this.showModal = false;
       let formData = new FormData();
       const self = this
       const file1 = document.getElementById('f1').files[0];
@@ -273,6 +293,7 @@ export default {
           if (res.status == 200) {
             alert('수정완료')
             self.dto = res.data.dto
+            
           }
         })
     },
@@ -450,6 +471,13 @@ export default {
           console.error(error);
           alert('삭제오류.');
         });
+    },
+    modal(sender){
+      const self = this;
+      this.resender = sender
+      
+      self.displayDetail=true
+
     }
   }
 };

@@ -1,4 +1,58 @@
 <template>
+  <div>
+    <div>
+
+      <div class="form-container">
+
+        <div class="list-container">
+          <p><label class="section01" >SECTION 1</label></p>
+          <p><label class="section01-title"><u><span>봉사신청명단영역</span></u></label></p>
+          <div class="section01-content">
+            <div class="data-header">
+              <table>
+                <tr aria-colspan="12">
+                  <th colspan="1">
+                    <label><span>모집상태</span></label>
+                  </th>
+                  <th colspan="1">
+                    <label><span>모집기관</span></label>
+                  </th>
+                  <th colspan="1">
+                    <label><span>신청인원</span></label>
+                  </th>
+                  <th colspan="5">
+                    <label><span>신청명단</span></label>
+                  </th>
+                  <th colspan="2"> 
+                    <label><span>봉사날짜</span></label>
+                  </th>
+                  <th colspan="1">
+                    <label><span>STATE</span></label>
+                  </th>
+                  <th colspan="1"> 
+                    <label><span>모집기간</span></label>
+                  </th>
+                </tr>
+                <tr v-for="vboard in list" :key="vboard.num" @click="detail(vboard.num, vboard.address)">
+                  <td colspan="1"><label><span class="badge text-bg-danger" style="font-size: 17px;" v-if="calculateDateDifference(vboard.deadline).difference < 0">모집마감</span>
+            <span class="badge text-bg-primary" style="font-size: 17px;" v-else >마감 D-{{ calculateDateDifference(vboard.deadline).days }}</span>&nbsp;</label></td>
+                  <td colspan="1"><label><span>{{ vboard.place }}</span></label></td>
+                  <td colspan="1"><label><span>({{ vboard.count }} / {{ vboard.vol_number }})</span></label></td>
+                  <td colspan="5" width="300px"><label><span>
+                    <tr v-for="person in list2" :key="person.num">
+        <td>{{ person.id.id }}</td>
+      </tr></span></label></td>
+                  <td colspan="2"><label><span></span></label></td>
+                  <td colspan="1"><label><span></span></label></td>
+                  <td colspan="1"><label><span>{{ formatDate(vboard.deadline) }}까지</span></label></td>
+                </tr>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
   <div style="padding-left: 150px;padding-right:150px">
     <div style="display: flex;justify-content: space-between;">
       <div>
@@ -64,7 +118,9 @@ export default {
       sysdate: new Date(),
       currentPage: 1,
       pageSize: 8,
-      searchKeyword: ''
+      searchKeyword: '',
+      list2:[]
+      
     }
   },
   computed: {
@@ -135,11 +191,96 @@ export default {
         alert('에러')
       }
     })
-  },
-}
+  self.$axios.get('http://localhost:8082/participants/' + this.num)
+      .then(function (res) {
+        if (res.status == 200) {
+          self.list2 = res.data.list
+        } else {
+          alert('에러')
+        }
+      })
+  }}
 </script>
 
 <style scoped>
+.form-container {
+  display: block;
+  position: relative;
+}
+
+.list-container {
+  display: block;
+  position: relative;
+  margin-left: 50px;
+  margin-right: 50px;
+  padding-top: 40px;
+  padding-bottom: 100px;
+  border: 5px solid #efefef;
+  border-radius: 10px;
+  height: auto;
+}
+
+.section01 {
+  font-family: 'IBMPlexSansKR-Bold';
+  font-size: 15px;
+  text-align: center;
+  vertical-align: center;
+  width: 120px;
+  height: 25px;
+  background: rgb(244, 191, 79);
+  color: white;
+  border-radius: 10px;
+}
+
+.section01-content {
+  border: 1px solid #efefef;
+  border-radius: 20px;
+  margin-left: 20px;
+  margin-right: 20px;
+}
+
+.section01-title u span {
+  font-family: 'IBMPlexSansKR-Bold';
+  font-size: 18px;
+  color: black;
+}
+
+.section01-title u {
+  text-decoration-color: rgb(244, 191, 79);
+  text-decoration-thickness: 3px;
+}
+
+.data-header {
+  display: flex;
+  justify-content: space-between;
+  padding-left: 80px;
+  padding-right: 80px;
+}
+
+table {
+  width: 100%;
+}
+
+.data-header table tr th {
+  font-family: 'IBMPlexSansKR-Bold';
+  font-size: 14px;
+  color: black;
+  text-align: center;
+}
+
+.data-header table tr td {
+  font-family: 'IBMPlexSansKR-Regular';
+  font-size: 14px;
+  color: black;
+  text-align: center;
+} 
+
+.data-contents {
+  display: flex;
+  justify-content: space-between;
+  padding-left: 60px;
+  padding-right: 80px;
+}
 .v-title {
   margin-top: 120px;
   margin-bottom: 120px;
