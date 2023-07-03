@@ -44,7 +44,7 @@
               <span @click="all_dogs()">ALL DOGS</span>
             </li>
             <li>
-              <span @clicl="all_cats()">ALL CATS</span>
+              <span @click="all_cats()">ALL CATS</span>
             </li>
             <li>
               <span @click="adopt()">ADOPT PETS</span>
