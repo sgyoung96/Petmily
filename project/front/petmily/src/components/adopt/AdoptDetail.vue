@@ -247,6 +247,61 @@ export default {
     replaceImg(e) {
       e.target.src = img;
     },
+    likebtn(id, num) {
+      if(this.id == null){
+        alert('로그인 후 이용가능합니다.')
+      }else{
+      this.$axios.get('http://localhost:8082/adoptliketable/' + id + '/' + num)
+        .then(response => {
+          if (response.status == 200) {
+            if (response.data.flag) {
+              let formData = new FormData();
+              formData.append('id', id)
+              formData.append('num', num)
+              this.$axios.post('http://localhost:8082/adoptliketable', formData)
+                .then(response => {
+                  if (response.status == 200) {
+                    this.$axios.get('http://localhost:8082/adopt/likeup/' + num)
+                      .then(response => {
+                        if (response.status == 200) {
+                          alert('좋아요 수 1 추가')
+                        }
+                      })
+                  } else {
+                    alert('에러페이지')
+                  }
+                })
+            } else {
+              let formData = new FormData();
+              formData.append('id', id)
+              formData.append('num', num)
+              this.$axios.delete('http://localhost:8082/adoptliketable', {
+                data: formData
+              })
+                .then(response => {
+                  if (response.status === 200) {
+                    this.$axios.get('http://localhost:8082/adopt/likedown/' + num)
+                      .then(response => {
+                        if (response.status === 200) {
+                          alert('좋아요 수 1 감소');
+                        }
+                      })
+                      .catch(error => {
+                        console.error(error);
+                        alert('좋아요 수 감소 중에 오류가 발생했습니다.');
+                      });
+                  }
+                })
+                .catch(error => {
+                  console.error(error);
+                  alert('삭제 요청 중에 오류가 발생했습니다.');
+                });
+
+            }
+          }
+        })
+      }
+    },
     editfunc(num) {
       let formData = new FormData();
       const self = this

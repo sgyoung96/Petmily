@@ -22,9 +22,12 @@ public class AdoptBoardDto {
 	private Member id;		// 작성자 (Member 의 id FK)
 	private String title;	// 제목
 	private String content;	// 내용
+	private String Category;// 종
+	private String gender;	// 성별
 	private Date w_date;	// 날짜
 	private String address;	// 주소
 	private String pic1;	// 첫번째 사진 파일 경로
 	private String pic2;	// 두번째 사진 파일 경로
+	private int likecnt;
 	private MultipartFile[] f = new MultipartFile[2];
 }
