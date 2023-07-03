@@ -17,41 +17,41 @@
         {{ dto.content }}
       </div>
       <div v-if="showModal" class="edit-form">
-  <div>
-    <table>
-      <tr>
-        <th>사진1</th>
-        <td><input type="file" id="f1"></td>
-      </tr>
-      <tr>
-        <th>사진2</th>
-        <td><input type="file" id="f2"></td>
-      </tr>
-      <tr>
-        <th>Title</th>
-        <td><input type="text" v-model="dto.title" id="editTitle"></td>
-      </tr>
-      <tr>
-        <th>Content</th>
-        <td><input type="text" v-model="dto.content" id="editContent"></td>
-      </tr>
-    </table>
-    <div class="edit-buttons">
-      <button v-on:click="editfunc(dto.num)">수정</button>
-      <button v-on:click="editcancle()">취소</button>
-    </div>
-  </div>
-</div>
+        <div>
+          <table>
+            <tr>
+              <th>사진1</th>
+              <td><input type="file" id="f1"></td>
+            </tr>
+            <tr>
+              <th>사진2</th>
+              <td><input type="file" id="f2"></td>
+            </tr>
+            <tr>
+              <th>Title</th>
+              <td><input type="text" v-model="dto.title" id="editTitle"></td>
+            </tr>
+            <tr>
+              <th>Content</th>
+              <td><input type="text" v-model="dto.content" id="editContent"></td>
+            </tr>
+          </table>
+          <div class="edit-buttons">
+            <button v-on:click="editfunc(dto.num)">수정</button>
+            <button v-on:click="editcancle()">취소</button>
+          </div>
+        </div>
+      </div>
       <div class="d-btn">
         <div>
           <router-link to="/diaryboardhome" class="badge text-bg-secondary" style="font-size: 17px;">목록으로</router-link>
         </div>
         <div>
           <button @click="likebtn(dto.id.id, dto.num)">좋아요</button>
-          <span v-on:click="edit()" class="badge text-bg-secondary" style="font-size: 17px;">수정하기</span>
-          <button v-on:click="boarddelete">삭제하기</button>
+          <span v-on:click="edit(dto.id.id)" class="badge text-bg-secondary" style="font-size: 17px;">수정하기</span>
+          <button v-on:click="boarddelete(dto.id.id)">삭제하기</button>
         </div>
-     </div><br />
+      </div><br />
       <div class="cbox-add">
         <span class="comment-profile">
           <img class="profile" @error="replaceImg" :src="'http://localhost:8082/members/imgs/' + id">
@@ -60,29 +60,31 @@
         <button v-on:click="commentadd">등록하기</button>
       </div>
       <div v-for="comment in comment" :key="comment.id">
-  <div class="comment-list">
-    <div class="list-content">
-      <div class="comment-profile">
-        <img class="profile" @error="replaceImg" :src="'http://localhost:8082/members/imgs/' + comment.id.id">
-      </div>
-      <div style="width:900px">
-        <span>{{ comment.id.id }}</span>&nbsp;<span style="font-size: small; color:grey">{{ formatDate(comment.w_date) }}</span><br />
-        <div v-if="!comment.editMode">{{ comment.content }}</div>
-        <div v-if="comment.editMode" class="c-editForm">
-          <textarea style="width:900px;" v-model="comment.editContent" :cols="comment.editContent.length"></textarea>
-          <button @click="saveComment(comment)">저장</button>
-          <button @click="cancelEdit(comment)">취소</button>
+        <div class="comment-list">
+          <div class="list-content">
+            <div class="comment-profile">
+              <img class="profile" @error="replaceImg" :src="'http://localhost:8082/members/imgs/' + comment.id.id">
+            </div>
+            <div style="width:900px">
+              <span>{{ comment.id.id }}</span>&nbsp;<span style="font-size: small; color:grey">{{
+                formatDate(comment.w_date) }}</span><br />
+              <div v-if="!comment.editMode">{{ comment.content }}</div>
+              <div v-if="comment.editMode" class="c-editForm">
+                <textarea style="width:900px;" v-model="comment.editContent"
+                  :cols="comment.editContent.length"></textarea>
+                <button @click="saveComment(comment)">저장</button>
+                <button @click="cancelEdit(comment)">취소</button>
+              </div>
+            </div>
+          </div>
+          <div style="float:right;">
+            <button @click="showEditForm(comment)">수정하기</button>
+            <button @click="commentdelete(comment.db_num)">삭제하기</button>
+          </div>
         </div>
       </div>
     </div>
-    <div style="float:right;">
-      <button @click="showEditForm(comment)">수정하기</button>
-      <button @click="commentdelete(comment.db_num)">삭제하기</button>
-    </div>
   </div>
-</div>
-</div>
-</div>
 </template>
 <style scoped>
 .edit-form {
@@ -119,9 +121,10 @@
   cursor: pointer;
 }
 
-.edit-buttons button + button {
+.edit-buttons button+button {
   margin-left: 10px;
 }
+
 .box-container {
   position: relative;
   padding-bottom: 100px;
@@ -189,10 +192,10 @@
   height: 50px;
   border-radius: 70%;
   overflow: hidden;
-  margin-right:10px;
+  margin-right: 10px;
 }
 
-.comment-profile img{
+.comment-profile img {
   width: 100%;
   height: 100%;
   object-fit: cover;
@@ -200,23 +203,23 @@
 }
 
 .comment-list {
-  display:flex;
-  margin-top:10px;
-  margin-bottom:10px;
+  display: flex;
+  margin-top: 10px;
+  margin-bottom: 10px;
 }
 
 .list-content {
   display: flex;
   text-align: left;
 }
-.c-editForm{
-  display:block;
-  float:left;
-}
 
+.c-editForm {
+  display: block;
+  float: left;
+}
 </style>
 <script>
-  import img from "@/assets/imgs/mypage_sample.jpg";
+import img from "@/assets/imgs/mypage_sample.jpg";
 export default {
   name: 'DiaryBoardDetail',
   data() {
@@ -236,14 +239,18 @@ export default {
   },
   methods: {
     editcancle() {
-  this.showModal = false;
-},
-    edit() {
+      this.showModal = false;
+    },
+    edit(id) {
+      if(this.id != id){
+        alert('자신의 글만 수정이 가능합니다')
+      }else{
       this.showModal = true;
+      }
     },
     replaceImg(e) {
-            e.target.src = img;
-        },
+      e.target.src = img;
+    },
     editfunc(num) {
       let formData = new FormData();
       const self = this
@@ -274,6 +281,9 @@ export default {
       return new Date(date).toLocaleString('ko-KR', options);
     },
     likebtn(id, num) {
+      if(this.id == null){
+        alert('로그인 후 이용가능합니다.')
+      }else{
       this.$axios.get('http://localhost:8082/liketable/' + id + '/' + num)
         .then(response => {
           if (response.status == 200) {
@@ -323,6 +333,7 @@ export default {
             }
           }
         })
+      }
     },
     boarddetail() {
       this.$axios
@@ -339,7 +350,10 @@ export default {
           alert('게시글을 불러오는 중에 오류가 발생했습니다.');
         });
     },
-    boarddelete() {
+    boarddelete(id) {
+      if(this.id != id){
+        alert('글 작성자만 삭제할 수 있습니다.')
+      }else{
       this.$axios
         .delete(`http://localhost:8082/dboard/${this.num}`)
         .then(response => {
@@ -354,6 +368,7 @@ export default {
           console.error(error);
           alert('삭제오류.');
         });
+      }
     },
     commentlist() {
       this.$axios
@@ -371,6 +386,9 @@ export default {
         });
     },
     commentadd() {
+      if(this.id == null){
+        alert('로그인 후 댓글작성이 가능합니다')
+      }else{
       const formData = new FormData();
       formData.append('num', this.num);
       formData.append('id', this.id);
@@ -390,6 +408,7 @@ export default {
             alert('에러코드:' + response.status);
           }
         });
+      }
     },
     showEditForm(comment) {
       comment.editMode = !comment.editMode;
