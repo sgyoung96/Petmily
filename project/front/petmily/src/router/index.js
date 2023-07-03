@@ -36,6 +36,7 @@ import NotifyList from '@/components/notify/NotifyList.vue'
 import ApiCat from '@/components/cdh/ApiCat.vue'
 import ApiDog from '@/components/cdh/ApiDog.vue'
 import AdminAppliedList from '@/components/admin/ApplyList.vue'
+import ApplyDetail from '@/components/admin/ApplyDetail.vue'
 import VolList from '@/components/admin/VolList.vue'
 import AddressMap from '@/components/kaka/AddressMap.vue'
 import Weather from '@/components/kaka/Weather.vue'
@@ -242,6 +243,11 @@ const routes = [
     path: '/admin/ApplyList',
     name: 'AdminAppliedList',
     component: AdminAppliedList
+  },
+  {
+    path: '/admin/ApplyDetail',
+    name: 'ApplyDetail',
+    component: ApplyDetail
   },
   {
     path: '/admin/VolList',

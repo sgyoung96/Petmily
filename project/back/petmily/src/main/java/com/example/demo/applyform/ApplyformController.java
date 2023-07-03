@@ -40,7 +40,16 @@ public class ApplyformController {
 		map.put("list", list);
 		return map;
 	}
-		
+	
+	//num로 검색
+			@GetMapping("/getbynum/{num}")
+			public Map getbynum(@PathVariable("num") int num) {
+				ArrayList<ApplyformDto> list = service.findById(num);
+				Map map = new HashMap();
+				map.put("list", list);
+				return map;
+			}
+	
 	//id로 검색
 	@GetMapping("/getbyid")
 	public Map getbyid(String id) {
@@ -51,8 +60,8 @@ public class ApplyformController {
 	}
 	
 	//check로 검색
-		@GetMapping("/getbycheck")
-		public Map getbycheck(int check) {
+		@GetMapping("/getbycheck/{check}")
+		public Map getbycheck(@PathVariable("check") int check) {
 			ArrayList<ApplyformDto> list = service.findByCheck(check);
 			Map map = new HashMap();
 			map.put("list", list);
