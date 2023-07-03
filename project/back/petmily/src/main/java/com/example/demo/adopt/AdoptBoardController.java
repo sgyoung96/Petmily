@@ -230,6 +230,34 @@ public class AdoptBoardController {
 		return map;
 	}
 	
+	//좋아요 수 올림
+    @GetMapping("/likeup/{num}")
+    public Map likeup(@PathVariable int num) {
+    	Map map = new HashMap<>();
+    	boolean flag = true;
+    	try {
+    		service.uplike(num);
+    	} catch(Exception e) {
+    		flag = false;
+    	}
+    	map.put("flag", flag);
+    	return map;
+    }
+	
+    //좋아요 수 내림
+    @GetMapping("/likedown/{num}")
+    public Map likedown(@PathVariable int num) {
+    	Map map = new HashMap<>();
+    	boolean flag = true;
+    	try {
+    		service.downlike(num);
+    	} catch(Exception e) {
+    		flag = false;
+    	}
+    	map.put("flag", flag);
+    	return map;
+    }
+	
 	@GetMapping("/count")
 	public Map getAllCount() {
 		boolean flag = true;
