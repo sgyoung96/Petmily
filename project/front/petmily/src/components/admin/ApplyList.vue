@@ -5,8 +5,8 @@
       <div class="form-container">
 
         <div class="list-container">
-          <p><label class="section01" >SECTION 1</label></p>
-          <p><label class="section01-title"><u><span>간편 승인/반려 영역</span></u></label></p>
+          <!-- <p><label class="section01" >SECTION 1</label></p>
+          <p><label class="section01-title"><u><span>간편 승인/반려 영역</span></u></label></p> -->
           <div class="section01-content">
             <div class="data-header">
               <table>
@@ -23,27 +23,37 @@
                   <th colspan="5">
                     <label><span>REASON</span></label>
                   </th>
-                  <th colspan="2"> 
+                  <th colspan="2">
                     <label><span>DATE</span></label>
                   </th>
                   <th colspan="1">
                     <label><span>STATE</span></label>
                   </th>
-                  <th colspan="1"> 
+                  <th colspan="1">
                     <label><span>APPROVE</span></label> |
                     <label><span>REFUSE</span></label>
                   </th>
                 </tr>
-                <tr v-for="(apply, index) in list" :key="index" aria-colspan="12" @click="goDetail(index, apply.num)">
+                <tr class="clickable-row" v-for="(apply, index) in list" :key="index" aria-colspan="12" @click="goDetail(apply.num, apply.petCd)"
+                  style="cursor: pointer;">
                   <td colspan="1" :id="index"><label><span>{{ index + 1 }}</span></label></td>
                   <td colspan="1"><label><span>{{ apply.id.id }}</span></label></td>
                   <td colspan="1"><label><span>{{ apply.id.name }}</span></label></td>
-                  <td colspan="5" width="300px"><label><span>{{ apply.reason }}</span></label></td>
-                  <td colspan="2"><label><span>{{apply.wdate.split('T')[0]}}</span></label></td>
-                  <td colspan="1"><label><span v-if="apply.ischeck == 0">요청</span><span v-else-if="apply.ischeck == 1">승인</span><span v-else-if="apply.ischeck==2">반려</span><span v-else>오류</span></label></td>
+                  <td colspan="5" width="450px"><label><span>{{ apply.reason }}</span></label></td>
+                  <td colspan="2"><label><span>{{ apply.wdate.split('T')[0] }}</span></label></td>
                   <td colspan="1">
-                    <button @click="apply_form(apply.num)" style="background-color:#FFD65B; border-radius:10px;">승인</button>
-                    <button @click="refuse_form(apply.num)" style="background-color:#FFD65B; border-radius:10px;">거부</button>
+                    <label>
+                      <span v-if="apply.ischeck == 0">요청</span>
+                      <span v-else-if="apply.ischeck == 1">승인</span>
+                      <span v-else-if="apply.ischeck == 2">반려</span>
+                      <span v-else>오류</span>
+                    </label>
+                  </td>
+                  <td colspan="1">
+                    <button @click="apply_form(apply.num)"
+                      style="background-color:#FFD65B; border-radius:10px;">승인</button>
+                    <button @click="refuse_form(apply.num)"
+                      style="background-color:#FFD65B; border-radius:10px;">거부</button>
                   </td>
                 </tr>
               </table>
@@ -100,7 +110,16 @@ export default {
             alert('에러코드' + res.status);
           }
         });
+        const routeParams = {
+          path: 'Api',
+          query: {
+        
+         }
+        };
+        this.$router.push(routeParams);
     },
+
+    
     refuse_form(num) {
       console.log(num);
       const self = this;
@@ -115,10 +134,12 @@ export default {
         });
     },
     setData() { // 데이터 가공
-   
+
     },
-    goDetail(rowIndex, formNum) {
-      console.log(rowIndex, formNum);
+    goDetail(num, petCd) {
+      console.log(num);
+      console.log(petCd);
+      this.$router.push({ name: 'ApplyDetail', query: {num: num, petCd : petCd } });
     }
   },
   components: {
@@ -128,7 +149,6 @@ export default {
 </script>
   <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
-
 .form-container {
   display: block;
   position: relative;
@@ -199,7 +219,7 @@ table {
   font-size: 14px;
   color: black;
   text-align: center;
-} 
+}
 
 .data-contents {
   display: flex;
@@ -208,5 +228,12 @@ table {
   padding-right: 80px;
 }
 
+.rows {
+  cursor: pointer;
+}
+
+.clickable-row {
+  cursor: pointer;
+}
 </style>
 

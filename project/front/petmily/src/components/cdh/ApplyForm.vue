@@ -22,7 +22,7 @@
                 <strong class="g-color-black" style="padding-left: 20px;">특별사항</strong><br />
               </div>
               <div class="col-sm-4" style="text-align: left; align-items: center;">
-                <strong class="g-color-black" >{{ info.kindCd }}</strong><br/>
+              <strong class="g-color-black" >{{ info.kindCd }}</strong><br/>
               <strong class="g-color-black" v-if="info.sexCd === 'M'">수컷</strong>
               <Strong class="g-color-black" v-else-if="info.sexCd === 'F'">암컷</strong>
               <Strong class="g-color-black" v-else>미상</strong><br/>
