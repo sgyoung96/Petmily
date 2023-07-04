@@ -5,8 +5,6 @@ import java.util.ArrayList;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.example.demo.message.MessageDto;
-
 @Service
 public class MemberService {
 	@Autowired
@@ -45,6 +43,18 @@ public class MemberService {
 		return list2;
 		
 	}
+	
+	//멤버 전체 목록
+	public ArrayList<MemberDto> getAll(){
+		System.out.println("멤버 전체 목록 service");
+		ArrayList<Member> list=(ArrayList<Member>)dao.findAll();
+		ArrayList<MemberDto> list2 = new ArrayList<MemberDto>();
+		for(Member m:list) {
+			list2.add(new MemberDto(m.getId(), m.getToken(),m.getPwd(),m.getName(),m.getEmail(),m.getBirth(),m.getGender(),m.getPhone(),m.getAddress(),m.getProfile(),null));
+		}
+		return list2;
+	}
+	
 		
 	//탈퇴
 	public void delMember(String id) {

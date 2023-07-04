@@ -2,55 +2,81 @@
 <template>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200"/>
 
+  <!-- 쪽지 보내기 모달창(보낸사람 프로필 클릭하면) -->
+  <MessageModal :resender=resender v-if="displayDetail" @close="displayDetail=false"/>
+
     <div id="messagereciever">
-      <h2>{{ loginId }}가 받은 쪽지 목록</h2>
 
-      <button @click="read">읽은 메일</button>
-      <button @click="unread">읽지 않은 메일</button>
-      <button @click="all">전체</button>
-      <select v-model="select" >
-        <option value = "title">제목</option>
-        <option value = "sender">보낸이</option>
-      </select>
+      <div class="message-list">
+        <h2>{{ loginId }}가 받은 쪽지 목록</h2>
 
-      <input type="text" v-model="find"><button @click="findbtn">검색</button>
+        <button @click="read">읽은 메일</button>
+        <button @click="unread">읽지 않은 메일</button>
+        <button @click="all">전체</button>
+        <select v-model="select" >
+          <option value = "title">제목</option>
+          <option value = "sender">보낸이</option>
+        </select>
+
+        <input type="text" v-model="find"><button @click="findbtn">검색</button>
+      </div>
        
-          <!-- 쪽지 보내기 모달창(보낸사람 프로필 클릭하면) -->
-          <MessageModal :resender=resender v-if="displayDetail" @close="displayDetail=false"/>
+        
           
-           <div v-for="message in list" :key="message.num">
 
-          <span class="box-profile" style="background: #black">
-            <img class="profile" 
-            @error="replaceImg" :src="'http://localhost:8082/members/imgs/' + message.sender.id"
-            v-on:click="modal(message.sender.id)">
-          </span>
-            <p> 보낸사람 : {{ message.sender.id }}</p>
-            보낸날짜 : {{ message.send_dt }}<br />
-            제목 :
-            <a v-on:click="($event) =>detail(
-                    message.num,
-                    message.sender.id,
-                    message.send_dt,
-                    message.title,
-                    message.content
-                  )">{{ message.title }}</a><br />
-          <div v-if="message.check == 0">
-            <span class="material-symbols-outlined">mail</span><br />
-          </div>
-          <div v-else>
-            <span class="material-symbols-outlined">drafts</span>
-          </div>
-             <span class="material-symbols-outlined" @click="del(message.num)">delete</span>
+          <!-- 쪽지목록 -->
+           <div class="message" v-for="message in list" :key="message.num">
+
+            <div class="message-header">
+              <div class="message-profile">
+                <div class="box-profile" style="background: #black">
+                  <img class="profile" 
+                  @error="replaceImg" :src="'http://localhost:8082/members/imgs/' + message.sender.id"
+                  v-on:click="modal(message.sender.id)">
+                </div>
+               
+                <div class="message-id">{{ message.sender.id }}</div>
+              </div>  
+
+                <div class="readcheck" v-if="message.check == 0">
+                  <span class="material-symbols-outlined">mail</span>
+                </div>
+                <div v-else class="readcheck">
+                  <span class="material-symbols-outlined">drafts</span>
+                </div>
+            </div>
+
+            <div class="message-body">  
+              <div class="message-body-top">  
+                <div class="message-title">   
+                    
+                  <a v-on:click="($event) =>detail(
+                              message.num,
+                              message.sender.id,
+                              message.send_dt,
+                              message.title,
+                              message.content
+                      )">{{ message.title }}</a>
+                </div> 
+                <div class="message-date">         
+                      {{ message.send_dt }}<br />      
+                </div> 
+              </div>
+              <div class="message-body-bottom">
+                  <button class="message-delete" @click="del(message.num)">delete</button>
+              </div>    
+            </div>
         </div>
+
+
 
       <!-- 쪽지 내용 읽기 모달창 -->
       <div class="black-bg" v-if="modalOpen === true">
         <div class="white-bg">
           <h3>{{ num }} title : {{ title }}</h3>
-            <span class="box-profile" style="background: #black">
+            <span class="modal-box-profile" style="background: #black">
               <img
-                class="profile" @error="replaceImg"
+                class="modal-profile" @error="replaceImg"
                 :src="'http://localhost:8082/members/imgs/' + sender"/>
             </span>
           <p>보낸사람 : {{ sender }}</p>
@@ -266,13 +292,17 @@ export default {
   top: 0;
   left: 0;
   padding: 20px;
+  z-index: 9999;
+ 
+ 
 }
 
 .white-bg {
-  width: 50%;
-  background-color: white;
+  width: 40%;
+  background-color: #fbf8f4;
   padding: 20px;
-  border-radius: 8px;
+  border-radius: 40px;
+
 }
 
 .modal-exit-btn {
@@ -281,5 +311,124 @@ export default {
 
 .modal-exit-btn:hover {
   cursor: pointer;
+}
+
+ .box-profile {
+  display: block;
+  width: 35px;
+  height: 35px; 
+  border-radius: 70%;
+  overflow: hidden;
+  float: left
+}
+.profile {
+  width: 100%;
+  height: 100%;
+  background-color: white;
+  object-fit: cover;
+  cursor: pointer;
+}
+
+.modal-box-profile {
+  display: block;
+  width: 180px;
+  height: 180px; 
+  border-radius: 70%;
+  overflow: hidden;
+  float: left
+}
+.modal-profile {
+  width: 100%;
+  height: 100%;
+  background-color: white;
+  object-fit: cover;
+  cursor: pointer;
+}
+
+.message-list{
+  margin-bottom: 40px;
+}
+.message{
+  width:30%;
+  display: block;
+  margin:auto;
+  border:2px solid  rgb(244, 191, 79);
+  margin-bottom: 30px;
+  border-radius: 20px;
+
+}
+.message:hover {
+  transform: scale( 1.01 )
+}
+.message-header{
+  /* position:relative; */
+  display: flex;
+  width: 100%;
+  background-color: rgb(244, 191, 79);
+  justify-content: space-between;
+  padding:5px;
+   border-radius: 20px 20px 0px 0px;
+
+}
+.message-profile{
+  display:flex;
+  justify-content: left;
+  margin-left:10px;
+
+}
+.message-id{
+  display:flex;
+  justify-content: left;
+  float:left; 
+  margin-left:10px;
+  align-items : center;
+  font-size: 1.3em;
+  
+
+}
+
+.readcheck{
+  display:flex;
+  text-align:right;
+  float:right;
+  justify-content: right;
+  margin-right:10px;
+  align-items : center;
+  color:white
+
+}
+
+.message-body-top{
+  display:flex;
+  padding:15px 15px 5px 15px;
+  
+  justify-content: space-between;
+}
+.message-title{
+  font-size: 1.2em;
+  cursor: pointer;
+  margin-left:10px;
+}
+.message-date{
+ 
+  float:right;
+  display:flex;
+  /* text-align:right; */
+  /* justify-content: right; */
+}
+.message-body-bottom{
+  display:flex;
+
+  justify-content: right;
+}
+
+.message-delete{
+  display:flex;
+  float:right;
+  justify-content: right;
+  margin-right:10px;
+  margin-bottom:10px;
+  border:0px;
+  border-radius: 10px;
 }
 </style>

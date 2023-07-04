@@ -287,6 +287,16 @@ public class MemberController {
 		return map;
 	}
 	
+	//멤버 전체 목록
+	@GetMapping("/all")
+	public Map all() {
+		System.out.println("멤버 전체 목록 service");
+		ArrayList<MemberDto> dto = service.getAll();
+		Map map = new HashMap();
+		map.put("dto", dto);
+		return map;
+	}
+	
 	//탈퇴
 	@DeleteMapping("/{id}")
 	public Map del(@PathVariable("id") String id) {
