@@ -44,7 +44,14 @@ public class Applyform {
 	private String reason;
 	private String feeding;
 	private int ischeck;
-	private String petCd;
+	private String kindCd;
+	private String sexCd;
+	private String age;
+	private String colorCd;
+	private String neuterYn;
+	private String careNm;
+	private String careAddr;
+	private String popfile;
 	
 	
 	@PrePersist

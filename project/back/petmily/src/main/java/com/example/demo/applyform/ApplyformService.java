@@ -15,9 +15,11 @@ public class ApplyformService {
 	//추가, 수정
 	public ApplyformDto save(ApplyformDto dto) {
 		Applyform a = dao.save(new Applyform(dto.getNum(), dto.getId(), dto.getWdate(), dto.getAgreement(), 
-				dto.getAnother(), dto.getReason(), dto.getFeeding(), dto.getIscheck(), dto.getPetCd()));
+				dto.getAnother(), dto.getReason(), dto.getFeeding(), dto.getIscheck(), dto.getKindCd(), dto.getSexCd(),
+				dto.getAge(), dto.getColorCd(), dto.getNeuterYn(), dto.getCareNm(), dto.getCareAddr(), dto.getPopfile()));
 		return new ApplyformDto(a.getNum(), a.getId(), a.getWdate(), a.getAgreement(), a.getAnother(),
-				a.getReason(), a.getFeeding(),a.getIscheck(), a.getPetCd());
+				a.getReason(), a.getFeeding(),a.getIscheck(), a.getKindCd(), a.getSexCd(),
+				a.getAge(), a.getColorCd(), a.getNeuterYn(), a.getCareNm(), a.getCareAddr(), a.getPopfile());
 	}
 	
 	//전체 검색
@@ -26,7 +28,8 @@ public class ApplyformService {
 		ArrayList<ApplyformDto> list2 = new ArrayList<ApplyformDto>();
 		for (Applyform a : list) {
 			list2.add(new ApplyformDto(a.getNum(), a.getId(), a.getWdate(), a.getAgreement(),
-					a.getAnother(), a.getReason(), a.getFeeding(), a.getIscheck(), a.getPetCd()));
+					a.getAnother(), a.getReason(), a.getFeeding(), a.getIscheck(), a.getKindCd(), a.getSexCd(),
+					a.getAge(), a.getColorCd(), a.getNeuterYn(), a.getCareNm(), a.getCareAddr(), a.getPopfile()));
 		}
 		return list2;
 	}
@@ -37,19 +40,21 @@ public class ApplyformService {
 			ArrayList<ApplyformDto> list2 = new ArrayList<ApplyformDto>();
 			for (Applyform a : list) {
 				list2.add(new ApplyformDto(a.getNum(), a.getId(), a.getWdate(), a.getAgreement(),
-						a.getAnother(), a.getReason(), a.getFeeding(), a.getIscheck(), a.getPetCd()));
+						a.getAnother(), a.getReason(), a.getFeeding(), a.getIscheck(), a.getKindCd(), a.getSexCd(),
+						a.getAge(), a.getColorCd(), a.getNeuterYn(), a.getCareNm(), a.getCareAddr(), a.getPopfile()));
 			}
 			return list2;
 		}
 	
 	//Id로 검색
 	public ArrayList<ApplyformDto> findByMemberId(String id){
-		Member m = new Member("", id, "", "", "", null, "", "", "",null);
+		Member m = new Member(id, "", "", "", "", null, "", "", "",null);
 		ArrayList<Applyform> list = (ArrayList<Applyform>) dao.findAllById(m);
 		ArrayList<ApplyformDto> list2 = new ArrayList<ApplyformDto>();
 		for (Applyform a : list) {
 			list2.add(new ApplyformDto(a.getNum(), a.getId(), a.getWdate(), a.getAgreement(),
-					a.getAnother(), a.getReason(), a.getFeeding(), a.getIscheck(), a.getPetCd()));
+					a.getAnother(), a.getReason(), a.getFeeding(), a.getIscheck(), a.getKindCd(), a.getSexCd(),
+					a.getAge(), a.getColorCd(), a.getNeuterYn(), a.getCareNm(), a.getCareAddr(), a.getPopfile()));
 		}
 		return list2;
 	}
@@ -60,7 +65,8 @@ public class ApplyformService {
 		ArrayList<ApplyformDto> list2 = new ArrayList<ApplyformDto>();
 		for (Applyform a : list) {
 			list2.add(new ApplyformDto(a.getNum(), a.getId(), a.getWdate(), a.getAgreement(),
-					a.getAnother(), a.getReason(), a.getFeeding(), a.getIscheck(), a.getPetCd()));
+					a.getAnother(), a.getReason(), a.getFeeding(), a.getIscheck(), a.getKindCd(), a.getSexCd(),
+					a.getAge(), a.getColorCd(), a.getNeuterYn(), a.getCareNm(), a.getCareAddr(), a.getPopfile()));
 		}
 		return list2;
 	}
