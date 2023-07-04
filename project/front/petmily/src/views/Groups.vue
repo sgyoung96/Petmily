@@ -2,7 +2,7 @@
   <div id="app" style="margin-top:50px;">
     <div class="grid-container">
       <div v-for="item in displayedItems" :key="item.careNm" class="grid-item">
-        <div class="card" style="  height: 186px;
+        <div class="card" style="  height:186px;
   width:280px;">
           <div class="cardName">
             <div @click="handleItemClick(item.careAddr, item.careNm)">
@@ -160,7 +160,7 @@ export default {
 </script>
   
   
-<style>
+<style scoped>
 .cardName {
   display: flex;
   justify-content: space-between;
