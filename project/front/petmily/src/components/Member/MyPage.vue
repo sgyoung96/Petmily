@@ -1,17 +1,20 @@
 <template>
   <div>
     <div class="base-info-container">
-        <p><label class="lbl-name"><span class="span-name">이름</span></label>님의 마이페이지</p>
+        <p><label class="lbl-name"><span id="login_name" class="span-name">이름</span></label>님의 마이페이지</p>
 
         <div class="box-profile">
             <div class="box-border">
-                <img class="img-profile" src="../../assets/profile-user.png" />
+                <img class="img-profile" @error="replaceImg" :src="'http://localhost:8082/members/imgs/'+ id">
                 <div class="box-txt-profile">
-                    <span>기본정보1</span><br>
-                    <span>기본정보2</span><br>
-                    <span>기본정보3</span><br>
-                    <span>기본정보4</span><br>
-                    <span>기본정보5</span><br>
+                    <p><span id="name">이름</span>님이 그동안 활동한 내역이에요.</p>
+                    <br>
+                    <p class="history"><span class="history-header">관심 목록 : </span><span class="history-num"> {갯수} 개</span></p>
+                    <p class="history"><span class="history-header">좋아요 갯수 : </span><span class="history-num"> {갯수} 개</span> </p>
+                    <p class="history"><span class="history-header">글 작성 수 : </span><span class="history-num"> {갯수} 개</span></p>
+                    <p class="history"><span class="history-header">댓글 작성 수 : </span><span class="history-num"> {갯수} 개</span></p>
+                    <p class="history"><span class="history-header">입양 신청 횟수 : </span><span class="history-num"> {갯수} 개</span></p>
+                    <p class="history"><span class="history-header">받은 쪽지 : </span><span class="history-num"> {갯수} 개</span></p>
                 </div>
             </div>
         </div>
@@ -82,11 +85,19 @@ export default {
   name: 'MyPageHome',
   data () {
     return {
-        
+        id: sessionStorage.getItem('loginId'),
+        name: '',
+        email: '',
+        birth: '',
+        gender: '',
+        phone: '',
+        address: '',
+        token: '',
     }
   },
   created: function () {
     this.initTabs();
+    this.getUserInfo();
   },
   methods: {
     initTabs() {
@@ -115,6 +126,37 @@ export default {
         });
       }
     },
+    getUserInfo() {
+        const moment = require('moment');
+        //let token = sessionStorage.getItem('token');
+        const self = this;
+        this.$axios.get('http://localhost:8082/members/' + this.id)
+        .then(function(res){
+            if (res.status == 200) {
+                let dto = res.data.dto
+                if (dto != null) { 
+                    console.log(dto);
+                    //this.id = dto.id
+                    self.name = dto.name
+                    self.email = dto.email
+                    self.birth = moment(dto.birth).format('L');
+                    self.gender = dto.gender
+                    self.phone = dto.phone
+                    self.address = dto.address
+
+                    self.setBaseInfo();
+                } else {
+                    alert('없는 아이디 이거나 만료된 토큰')
+                }
+            } else {
+                alert('에러코드 :' + res.status)
+            }
+        });
+    },
+    setBaseInfo() {
+        document.getElementById('login_name').innerText = this.name;
+        document.getElementById('name').innerText = this.name;
+    }
 
   },
   components: {
@@ -131,7 +173,7 @@ export default {
 <style scoped>
 
 p {
-    font-family: 'IBMPlexSansKR-Bold';
+    font-family: 'IBMPlexSansKR-Medium';
     font-size: 15px;    
 }
 
@@ -142,6 +184,31 @@ p {
     justify-content: center;
     border-radius: 0;
     margin-top: 20px;
+}
+
+
+.lbl-name {
+    width: 100px;
+    color: white;
+    height: 30px;
+    border: 1px solid rgb(244, 191, 79);
+    border-radius: 20px;
+    background-color: rgb(244, 191, 79);
+    font-family: 'IBMPlexSansKR-Bold';
+    font-size: 15px;
+    padding-top: 2px;
+    margin-right: 5px;
+}
+.span-name {
+    color: white;
+}
+
+.img-profile {
+  display: block;
+  width: 200px;
+  height: 200px; 
+  border-radius: 70%;
+  overflow: hidden;
 }
 
 .box-border {
@@ -157,29 +224,36 @@ p {
 }
 
 .box-txt-profile {
-    padding-top: 50px;
+    padding-top: 20px;
     margin-left: 50px;
     display: block;
     justify-content: space-evenly;
     width: 400px;
     height: 200px;
     text-align: left;
+    padding-bottom: 20px;
 }
 
-.lbl-name {
-    width: 100px;
-    color: white;
-    height: 30px;
-    border: 1px solid rgb(244, 191, 79);
-    border-radius: 20px;
-    background-color: rgb(244, 191, 79);
+.box-txt-profile p {
+    font-family: 'IBMPlexSansKR-Regular';
+    font-size: 15px;    
+}
+
+#name {
+    font-family: 'IBMPlexSansKR-Bold';
+    font-size: 15px;   
+}
+
+.history > .history-num {
     font-family: 'IBMPlexSansKR-Medium';
-    font-size: 15px;
-    padding-top: 2px;
+    font-size: 11px;
 }
-.span-name {
-    color: white;
+
+.history-header {
+    font-family: 'IBMPlexSansKR-SemiBold';
+    font-size: 13px;
 }
+
 
 
 .li-tab01, .li-tab02 {
