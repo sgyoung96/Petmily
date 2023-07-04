@@ -24,7 +24,7 @@
 
         <div class="box-mypage">
           <img class="ico-bell" src="./assets/bell.png" />
-          <img class="ico-mypage" src="./assets/profile-user.png" />
+          <img @click="goMyPage()" class="ico-mypage" src="./assets/profile-user.png" />
         </div>
       </div>
 
@@ -164,7 +164,7 @@ export default {
       location.href = '/';
     }, 
     about_petmily() {
-      alert('페이지 추가하고 작업해야함');
+      this.$router.push('/aboutpetmily')
     },
     groups() { // (카테고리) 동물보호소
       this.$router.push('/groups');
@@ -349,6 +349,9 @@ export default {
     },
     admin() { // 어드민페이지
       this.$router.push('/adminhome');
+    },
+    goMyPage() {
+      this.$router.push('/member/mypage/home');
     }
   }
 }
