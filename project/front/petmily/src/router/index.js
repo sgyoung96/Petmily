@@ -3,6 +3,7 @@ import HomeView from '../views/HomeView.vue'
 import MemberHome from '../views/MemberView.vue'
 import KakaoAdditionalForm from '@/components/Member/AdditionalForm.vue'
 import MyPageHome from '../views/MypageView.vue'
+import AboutPetmily from '../views/AboutPetmily.vue'
 import Groups from '../views/Groups.vue'
 import Guide from '../views/Guide.vue'
 import DiaryBoardHome from '@/components/diaryboard/DiaryBoardHome.vue'
@@ -49,6 +50,11 @@ const routes = [
     path: '/',
     name: 'home',
     component: HomeView
+  },
+  { 
+    path: '/aboutpetmily',
+    name: 'AboutPetmily',
+    component: AboutPetmily
   },
   { 
     path: '/groups',
