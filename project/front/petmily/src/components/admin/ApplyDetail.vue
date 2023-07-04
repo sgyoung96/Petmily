@@ -46,7 +46,7 @@
     
     <table style="text-align: left; margin-bottom:50px; margin-left: 280px; width: 910px" border="1px" >
             <tr>
-                <th style="padding-top: 5px;padding-left: 5px; background-color:#bab9b9;">이름</th>
+                <th style="padding-top: 5px;padding-left: 5px; width: 130px; background-color:#bab9b9;">이름</th>
                 <th style="padding-top: 5px;padding-left: 5px;">{{ list.id.name }}</th>
                 <th style="padding-top: 5px;padding-left: 5px; background-color:#bab9b9">입양신청일</th>
                 <th style="padding-top: 5px;padding-left: 5px;"> {{ list.wdate }}</th>

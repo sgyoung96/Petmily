@@ -361,7 +361,7 @@ export default {
 </script>
 
 
-<style>
+<style scoped>
  .custom-button {
     background-color: #f0cf81; /* 배경색 설정 */
     border: none; /* 테두리 제거 */

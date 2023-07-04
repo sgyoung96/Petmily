@@ -7,84 +7,100 @@
           </div>
           <div class="col-10" style="border: solid #e5e7eb; margin-top: 100px; border-radius: 20px;">
             <div style="margin-left: -12px;">
-              <img :src="item.popfile" :alt="item.careNm" style="width: 1095px; height: 400px; border-radius: 20px;">
+              <img :src="item.popfile" :alt="item.careNm" style="width: 400px; height: 400px; border-radius: 20px;">
             </div>
           </div>
           <div class="col-1">
           </div>
           <div class="col-10"
             style="border: solid #e5e7eb; border-radius: 20px; margin-top: 50px; position: relative; margin-left: 110px; text-align: left; background-color:white;">
-            <h3>유기동물정보</h3>
+            <h4>유기동물정보</h4>
             <div style="display: flex;">
               <div style="flex: 1;">
                 <div>
-                  <h3>품종</h3>
-                  <span>{{ item.kindCd }}</span>
+                  <img src="@/assets/images/kindCd.png" alt="성별 코드 이미지" >
+                  <h5 style="display: inline;">품종 : <span>{{ item.kindCd }}</span></h5>
                 </div>
+                <div class="padd"></div>
                 <div>
-                  <h3>나이</h3>
-                  <span>{{ item.age }}</span>
+                  <img src="@/assets/images/age.png" alt="성별 코드 이미지" >
+                  <h5 style="display: inline;">나이 : <span>{{ item.age }}</span></h5>
                 </div>
+                <div class="padd"></div>
                 <div>
-                  <h3>체중</h3>
-                  <span>{{ item.weight }}</span>
+                  <img src="@/assets/images/weight.png" alt="성별 코드 이미지" >
+                  <h5 style="display: inline;">체중 : <span>{{ item.weight }}</span></h5>
                 </div>
+                <div class="padd"></div>
                 <div>
-                  <h3>상태</h3>
-                  <span>{{ item.processState }}</span>
+                  <img src="@/assets/images/processState.png" alt="성별 코드 이미지" >
+                  <h5 style="display: inline;">상태 : <span>{{ item.processState }}</span></h5>
                 </div>
+                <div class="padd"></div>
               </div>
               <div style="flex: 1;">
                 <div>
-                  <h3>성별</h3>
-                  <span v-if="item.sexCd === 'M'">수컷</span>
-                  <span v-else-if="item.sexCd === 'F'">암컷</span>
+                  <img src="@/assets/images/sexCd.png" alt="성별 코드 이미지" >
+                  <h5 style="display: inline;">성별 : <span v-if="item.sexCd === 'M'">수컷</span>
+                  <span v-else-if="item.sexCd === 'F'">암컷</span></h5>
                 </div>
+                <div class="padd"></div>
                 <div>
-                  <h3>색상</h3>
-                  <span>{{ item.colorCd }}</span>
+                  <img src="@/assets/images/color.png" alt="성별 코드 이미지" >
+                  <h5 style="display: inline;">색상 : <span>{{ item.colorCd }}</span></h5>
                 </div>
+                <div class="padd"></div>
                 <div>
-                  <h3>중성화</h3>
-                  <span v-if="item.neuterYn === 'Y'">네</span>
+                  <img src="@/assets/images/neuterYn.png" alt="성별 코드 이미지" >
+                  <h5 style="display: inline;">중성화 : <span v-if="item.neuterYn === 'Y'">네</span>
                   <span v-else-if="item.neuterYn === 'N'">아니요</span>
-                  <span v-else>확인 X</span>
+                  <span v-else>확인 X</span></h5> 
                 </div>
+                <div class="padd"></div>
               </div>
             </div>
-            <span>특별사항 : {{ item.specialMark }}</span>
+            <img src="@/assets/images/점.png" alt="성별 코드 이미지" >
+                  <h5 style="display: inline;"><span>특별사항 : {{ item.specialMark }}</span></h5>
           </div>
 
           <div class="col-1">
           </div>
           <div class="col-10"
             style="border: solid #e5e7eb; border-radius: 20px; margin-top: 50px; position: relative; margin-left: 110px; text-align: left; background-color:white;">
-            <h3>동물보호센터</h3>
+            <h4>동물보호센터</h4>
             <div style="display: flex;">
               <div style="flex: 1;">
                 <div>
-                  <h3>보호센터명</h3>
-                  <span>{{ item.careNm }}</span>
+                  <img src="@/assets/images/careNm.png" alt="성별 코드 이미지" >
+                  <h5 style="display: inline;">보호센터명 : <span>{{ item.careNm }}</span></h5>
+                  
                 </div>
+                <div class="padd"></div>
                 <div>
-                  <h3>보호장소</h3>
-                  <span>{{ item.careAddr }}</span>
+                  <img src="@/assets/images/careAddr.png" alt="성별 코드 이미지" >
+                  <h5 style="display: inline;">보호장소 : <span>{{ item.careAddr }}</span></h5>
+                  
                 </div>
+                <div class="padd"></div>
                 <div>
-                  <h3>담당자</h3>
-                  <span>{{ item.orgNm }}</span>
+                  <img src="@/assets/images/orgNm.png" alt="성별 코드 이미지" >
+                  <h5 style="display: inline;">담당자 : <span>{{ item.orgNm }}</span></h5>
+                  
                 </div>
               </div>
               <div style="flex: 1;">
                 <div>
-                  <h3>보호소전화번호</h3>
-                  <span>{{ item.careTel }}</span>
+                  <img src="@/assets/images/careTel.png" alt="성별 코드 이미지" >
+                  <h5 style="display: inline;">보호소전화번호 : <span>{{ item.careTel }}</span></h5>
+                  
                 </div>
-                <div style="margin-top: 65px;"> <!-- 간격을 띄우는 div 요소 -->
+                <div class="padd"></div>
+                <div style="margin-top: 55px;"> <!-- 간격을 띄우는 div 요소 -->
                 </div>
                 <div>
-                  <h3>담당자전화번호</h3>
-                  <span>{{ item.officetel }}</span>
+                  <img src="@/assets/images/officetel.png" alt="성별 코드 이미지" >
+                  <h5 style="display: inline;">담당자전화번호 : <span>{{ item.officetel }}</span></h5>
+                  
                 </div>
               </div>
             </div>
@@ -249,7 +265,22 @@ export default {
 };
 </script>
 
-<style>
+<style scoped>
+.padd{
+  padding-top: 10px;
+}
+img{
+  width: 20px;
+  height: 20px;
+}
+h4{
+  font-family: 'IBMPlexSansKR-Bold';
+}
+
+h5{
+  font-family: 'IBMPlexSansKR-Bold';
+  padding-left: 10px;
+}
 .grid-container {
   display: grid;
   margin-left: 150px;

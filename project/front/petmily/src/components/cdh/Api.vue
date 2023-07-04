@@ -283,10 +283,10 @@ export default {
     },
 
     goToPage(pageNumber){
-  this.pageNo = pageNumber;
-  this.pageNumber = this.pageNo;
-  this.fetchData();
-},
+      this.pageNo = pageNumber;
+      this.pageNumber = this.pageNo;
+      this.fetchData();
+    },
 
     updateDisplayedPages() {
       const maxDisplayedPages = 10; // 한 번에 표시할 페이지 버튼의 최대 개수
@@ -361,7 +361,7 @@ export default {
 </script>
 
 
-<style>
+<style scoped>
  .custom-button {
     background-color: #f0cf81; /* 배경색 설정 */
     border: none; /* 테두리 제거 */
