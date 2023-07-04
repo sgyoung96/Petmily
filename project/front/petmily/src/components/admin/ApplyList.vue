@@ -5,8 +5,8 @@
       <div class="form-container">
 
         <div class="list-container">
-          <p><label class="section01" >SECTION 1</label></p>
-          <p><label class="section01-title"><u><span>간편 승인/반려 영역</span></u></label></p>
+          <!-- <p><label class="section01" >SECTION 1</label></p>
+          <p><label class="section01-title"><u><span>간편 승인/반려 영역</span></u></label></p> -->
           <div class="section01-content">
             <div class="data-header">
               <table>
@@ -38,7 +38,7 @@
                   <td colspan="1" :id="index"><label><span>{{ index + 1 }}</span></label></td>
                   <td colspan="1"><label><span>{{ apply.id.id }}</span></label></td>
                   <td colspan="1"><label><span>{{ apply.id.name }}</span></label></td>
-                  <td colspan="5" width="300px"><label><span>{{ apply.reason }}</span></label></td>
+                  <td colspan="5" width="450px"><label><span>{{ apply.reason }}</span></label></td>
                   <td colspan="2"><label><span>{{apply.wdate.split('T')[0]}}</span></label></td>
                   <td colspan="1"><label><span v-if="apply.ischeck == 0">요청</span><span v-else-if="apply.ischeck == 1">승인</span><span v-else-if="apply.ischeck==2">반려</span><span v-else>오류</span></label></td>
                   <td colspan="1">
@@ -206,6 +206,10 @@ table {
   justify-content: space-between;
   padding-left: 60px;
   padding-right: 80px;
+}
+
+.rows {
+  cursor: pointer;
 }
 
 </style>
