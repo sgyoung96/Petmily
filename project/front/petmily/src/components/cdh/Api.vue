@@ -282,6 +282,12 @@ export default {
 
     },
 
+    goToPage(pageNumber){
+  this.pageNo = pageNumber;
+  this.pageNumber = this.pageNo;
+  this.fetchData();
+},
+
     updateDisplayedPages() {
       const maxDisplayedPages = 10; // 한 번에 표시할 페이지 버튼의 최대 개수
       const halfMaxDisplayedPages = Math.floor(maxDisplayedPages / 2);

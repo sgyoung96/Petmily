@@ -164,7 +164,7 @@ export default {
       location.href = '/';
     }, 
     about_petmily() {
-      alert('페이지 추가하고 작업해야함');
+      this.$router.push('/aboutpetmily')
     },
     groups() { // (카테고리) 동물보호소
       this.$router.push('/groups');

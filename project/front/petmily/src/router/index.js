@@ -3,6 +3,7 @@ import HomeView from '../views/HomeView.vue'
 import MemberHome from '../views/MemberView.vue'
 import KakaoAdditionalForm from '@/components/Member/AdditionalForm.vue'
 import MyPageHome from '../views/MypageView.vue'
+import AboutPetmily from '../views/AboutPetmily.vue'
 import Groups from '../views/Groups.vue'
 import Guide from '../views/Guide.vue'
 import DiaryBoardHome from '@/components/diaryboard/DiaryBoardHome.vue'
@@ -36,6 +37,7 @@ import NotifyList from '@/components/notify/NotifyList.vue'
 import ApiCat from '@/components/cdh/ApiCat.vue'
 import ApiDog from '@/components/cdh/ApiDog.vue'
 import AdminAppliedList from '@/components/admin/ApplyList.vue'
+import ApplyDetail from '@/components/admin/ApplyDetail.vue'
 import VolList from '@/components/admin/VolList.vue'
 import AddressMap from '@/components/kaka/AddressMap.vue'
 import Weather from '@/components/kaka/Weather.vue'
@@ -48,6 +50,11 @@ const routes = [
     path: '/',
     name: 'home',
     component: HomeView
+  },
+  { 
+    path: '/aboutpetmily',
+    name: 'AboutPetmily',
+    component: AboutPetmily
   },
   { 
     path: '/groups',
@@ -242,6 +249,11 @@ const routes = [
     path: '/admin/ApplyList',
     name: 'AdminAppliedList',
     component: AdminAppliedList
+  },
+  {
+    path: '/admin/ApplyDetail',
+    name: 'ApplyDetail',
+    component: ApplyDetail
   },
   {
     path: '/admin/VolList',

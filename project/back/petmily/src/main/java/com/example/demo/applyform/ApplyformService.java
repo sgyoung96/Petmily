@@ -32,9 +32,20 @@ public class ApplyformService {
 	}
 	
 	//Id로 검색
+		public ArrayList<ApplyformDto> findById(int num){
+			ArrayList<Applyform> list = (ArrayList<Applyform>) dao.findById(num);
+			ArrayList<ApplyformDto> list2 = new ArrayList<ApplyformDto>();
+			for (Applyform a : list) {
+				list2.add(new ApplyformDto(a.getNum(), a.getId(), a.getWdate(), a.getAgreement(),
+						a.getAnother(), a.getReason(), a.getFeeding(), a.getIscheck(), a.getPetCd()));
+			}
+			return list2;
+		}
+	
+	//Id로 검색
 	public ArrayList<ApplyformDto> findByMemberId(String id){
-		Member m = new Member(id, "", "", "", "", null, "", "", "",null);
-		ArrayList<Applyform> list = (ArrayList<Applyform>) dao.findById(m);
+		Member m = new Member("", id, "", "", "", null, "", "", "",null);
+		ArrayList<Applyform> list = (ArrayList<Applyform>) dao.findAllById(m);
 		ArrayList<ApplyformDto> list2 = new ArrayList<ApplyformDto>();
 		for (Applyform a : list) {
 			list2.add(new ApplyformDto(a.getNum(), a.getId(), a.getWdate(), a.getAgreement(),
