@@ -1,97 +1,236 @@
 <template>
     <div id="DetailsItem" style="background-color:#e5e7eb;">
-    <div>
-      <div class="container text-center">
-        <div class="row" v-for="item in item" :key="item.careNm">
-          <div class="col-1">
-          </div>
-          <div class="col-1">
-          </div>
-          <div class="col-10"
-            style="border: solid #e5e7eb; border-radius: 20px; margin-top: 50px; position: relative; margin-left: 110px; text-align: left; background-color:white;">
-            <h3>동물병원정보</h3>
-            <div style="display: flex;">
-              <div style="flex: 1;">
-                <div>
-                  <h3>병원명</h3>
+
+      <div class="banner">
+        <img style="height:100px; width: 900px;" src="../../assets/images/배너.png">&nbsp;
+      </div>
+        <div v-for="item in item" :key="item.careNm">
+            <div class="d-card">
+              <div style=" margin-bottom:10px;">
+              <strong style="font-size:26px;">보호센터정보</strong>
+            </div>
+            <div style="display:inline-block">
+                <div class="a-card">
+                  <div class="e-card">
+                  <img src="../../assets/images/동물보호센터명.png">&nbsp;
+                  <h3>동물보호센터명</h3>
+                </div>
                   <span>{{ item.careNm }}</span>
                 </div>
-                <div>
-                  <h3>병원유형</h3>
+                <div class="a-card">
+                  <div class="e-card">
+                  <img src="../../assets/images/phone.png">&nbsp;
+                  <h3>전화번호</h3>
+                  </div>
+                  <span>{{ item.careTel }}</span>
+                </div>
+                <div class="a-card">
+                  <div class="e-card">
+                  <img src="../../assets/images/관리기간명.png">&nbsp;
+                <h3>관리기관명</h3>
+              </div>
+                  <span>{{ item.orgNm }}</span>
+                </div>
+                <div class="a-card">
+                  <div class="e-card">
+                  <img src="../../assets/images/동물보호센터명.png">&nbsp;
+                  <h3>동물보호센터유형</h3>
+                  </div>
                   <span>{{ item.divisionNm }}</span>
                 </div>
-                <div>
-                  <h3>대상동물</h3>
+                <div class="a-card">
+                  <div class="e-card">
+                  <img src="../../assets/images/구조대상동물.png">&nbsp;
+                  <h3>구조대상동물</h3>
+                </div>
                   <span>{{ item.saveTrgtAnimal }}</span>
                 </div>
-                <div>
-                  <h3>휴무일</h3>
-                  <span>{{ item.closeDay }}</span>
+                <div class="a-card">
+                  <div class="e-card">
+                  <img src="../../assets/images/센터지정일자.png">&nbsp;
+                  <h3>동물보호센터지정일자</h3>
+                  </div>
+                  <span>{{ item.dsignationDate }}</span>
                 </div>
-              </div>
-              <div style="flex: 1;">
-                <div>
+                <div class="a-card">
+                  <div class="e-card">
+                  <img src="../../assets/images/수의사.png">&nbsp;
+                  <h3>수의사수</h3>
+                </div>
+                  <span>{{ item.vetPersonCnt }}명</span>
+                </div>
+                <div class="a-card">
+                  <div class="e-card">
+                  <img src="../../assets/images/사양관리사.png">&nbsp;
                   <h3>사양관리사인원수</h3>
-                  <span>{{ item.specsPersonCnt }}</span>
+                  </div>
+                  <span>{{ item.specsPersonCnt }}명</span>
                 </div>
-                <div>
+                <div class="a-card">
+                  <div class="e-card">
+                    <img src="../../assets/images/점.png">&nbsp;
                   <h3>진료실수</h3>
-                  <span>{{ item.medicalCnt }}</span>
                 </div>
-                <div>
+                  <span>{{ item.medicalCnt }}실</span>
+                </div>
+                <div class="a-card">
+                  <div class="e-card">
+                    <img src="../../assets/images/점.png">&nbsp;
                   <h3>사육실수</h3>
-                  <span>{{ item.breedCnt }}</span>
+                  </div>
+                  <span>{{ item.breedCnt }}실</span>
+                </div>
+                <div class="a-card">
+                  <div class="e-card">
+                    <img src="../../assets/images/점.png">&nbsp;
+                  <h3>격리실수</h3>
+                </div>
+                  <span>{{ item.quarabtineCnt }}실</span>
+                </div>
+                <div class="a-card">
+                  <div class="e-card">
+                    <img src="../../assets/images/점.png">&nbsp;
+                  <h3>사료보관실수</h3>
+                  </div>
+                  <span>{{ item.feedCnt }}실</span>
+                </div>
+                <div class="a-card">
+                  <div class="e-card">
+                    <img src="../../assets/images/구급차.png">&nbsp;
+                  <h3>구조운반용차량보유대수</h3>
+                  </div>
+                  <span>{{ item.transCarCnt }}대</span>
                 </div>
               </div>
             </div>
-            <span>특별사항 : {{ item.specialMark }}</span>
-          </div>
-
-          <div class="col-1">
-          </div>
-          <div class="col-10"
-            style="border: solid #e5e7eb; border-radius: 20px; margin-top: 50px; position: relative; margin-left: 110px; text-align: left; background-color:white;">
-            <h3>위치정보</h3>
-            <div style="display: flex;">
-              <div style="flex: 1;">
-                <div>
-                  <h3>위도</h3>
-                  <span>{{ item.lat }}</span>
+            <div class="d-card">
+              <div style=" margin-bottom:10px;">
+              <strong style="font-size:26px;">운영시간</strong>
+            </div>
+            <div style="display:inline-block">
+                <div class="a-card">
+                  <div class="e-card">
+                  <img src="../../assets/images/점.png">&nbsp;
+                  <h3>평일운영시간</h3>
                 </div>
-                <div>
-                  <h3>경도</h3>
-                  <span>{{ item.lng }}</span>
-                </div>
-                <div>
-                  <h3>동물보호센터지정일자</h3>
-                  <span>{{ item.dsignationDate }}</span>
-                </div>
+                  <span>{{ item.weekOprStime }}~{{ item.weekOprEtime }}</span>
               </div>
-              <div style="flex: 1;">
-                <div>
-                  <h3>전화번호</h3>
-                  <span>{{ item.careTel }}</span>
+                <div class="a-card">
+                  <div class="e-card">
+                  <img src="../../assets/images/점.png">&nbsp;
+                  <h3>평일분양시간</h3>
                 </div>
-                <div>
-                  <h3>주소</h3>
+                  <span>{{ item.weekCellStime }}~{{ item.weekCellEtime }}</span>
+              </div>
+              <div class="a-card">
+                  <div class="e-card">
+                  <img src="../../assets/images/점.png">&nbsp;
+                  <h3>주말운영시간</h3>
+                </div>
+                  <span>{{ item.weekendOprStime }}~{{ item.weekendOprEtime }}</span>
+              </div>
+              <div class="a-card">
+                  <div class="e-card">
+                  <img src="../../assets/images/점.png">&nbsp;
+                  <h3>주말분양시간</h3>
+                </div>
+                  <span>{{ item.weekendCellStime }}~{{ item.weekendCellEtime }}</span>
+              </div>
+              <div class="a-card">
+                  <div class="e-card">
+                  <img src="../../assets/images/휴무일.png">&nbsp;
+                  <h3>휴무일</h3>
+                </div>
+                  <span>{{ item.closeDay }}</span>
+              </div>
+            </div>
+            </div>
+            <div class="d-card">
+              <div style=" margin-bottom:10px;">
+              <strong style="font-size:26px;">운영시간</strong>
+            </div>
+            <div style="display:inline-block">
+              <div class="a-card">
+                  <div class="e-card">
+                  <img src="../../assets/images/점.png">&nbsp;
+                  <h3>보호센터주소</h3>
+                </div>
                   <span>{{ item.careAddr }}</span>
+              </div>
+              <div class="a-card">
+                  <div class="e-card">
+                  <img src="../../assets/images/점.png">&nbsp;
+                  <h3>위도</h3>
                 </div>
-                <div style="margin-top: 65px;"> <!-- 간격을 띄우는 div 요소 -->
+                  <span>{{ item.lat }}</span>
+              </div>
+              <div class="a-card">
+                  <div class="e-card">
+                  <img src="../../assets/images/점.png">&nbsp;
+                  <h3>경도</h3>
                 </div>
-                <div>
-                  <h3>데이터기준일자</h3>
-                  <span>{{ item.dataStdDt }}</span>
-                </div>
+                  <span>{{ item.lng }}</span>
+              </div>
+            <div style="display: flex;">
               </div>
             </div>
             <div id="map"></div>
           </div>
-      </div>
-    </div>
+        </div>
+
   </div>
-</div>
+
 </template>
-  
+<style scoped>
+.banner{
+  border: solid #e5e7eb;
+  border-radius: 20px;
+  margin-bottom: 50px;
+  text-align: center;
+  background-color:white;
+  padding:24px 63px;
+  display:flex;
+  margin-left:250px;
+  margin-right:250px;
+}
+.d-card{
+  border: solid #e5e7eb;
+  border-radius: 20px;
+  margin-bottom: 50px;
+  position: relative;
+  text-align: left;
+  background-color:white;
+  padding:24px;
+  display:flex;
+  margin-left:250px;
+  margin-right:250px;
+  flex-direction: column;
+  display: flex;
+}
+.a-card{
+  margin-bottom:10px;
+  float: left;
+  width: 50%;
+}
+.e-card{
+  display: flex;
+}
+.d-card img{
+  width:20px;
+  height:20px;
+}
+.d-card h3{
+  font-size:16px;
+  margin-bottom:0px;
+  font-weight: bold;
+}
+
+.d-card span{
+  margin-left:25px;
+  color:grey;
+  font-size:15px;
+  }
+</style> 
   <script>
   import axios from 'axios';
   
@@ -201,7 +340,4 @@
     }
     },
   };
-  </script>
-  
-  <style>
-  </style>  
+  </script> 
