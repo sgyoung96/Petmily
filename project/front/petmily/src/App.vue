@@ -351,7 +351,13 @@ export default {
       this.$router.push('/adminhome');
     },
     goMyPage() {
-      this.$router.push('/member/mypage/home');
+      if (sessionStorage.getItem('loginId') != null) {
+        this.$router.push('/member/mypage/home');
+      } else {
+        alert('로그인 후 이용 가능한 페이지입니다.');
+        this.login();
+      }
+
     }
   }
 }

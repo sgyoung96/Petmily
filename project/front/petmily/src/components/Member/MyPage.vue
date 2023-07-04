@@ -25,22 +25,19 @@
             <div class="tab01"><a href="#tab1" class="btn"><span class="tab-a">MY INFO</span></a></div>
           </li>
           <li @click="initTabs()" class="li-tab02">
-            <div class="tab02"><a href="#tab2" class="btn"><span class="tab-a">VOTE GOOD</span></a></div>
+            <div class="tab02"><a href="#tab2" class="btn"><span class="tab-a">COLLECTED</span></a></div>
           </li>
           <li @click="initTabs()" class="li-tab03">
-            <div class="tab03"><a href="#tab3" class="btn"><span class="tab-a">COLLECTED</span></a></div>
+            <div class="tab03"><a href="#tab3" class="btn"><span class="tab-a">APPLY PET</span></a></div>
           </li>
-          <li @click="initTabs()" class="li-tab04">
-            <div class="tab04"><a href="#tab4" class="btn"><span class="tab-a">APPLY PET</span></a></div>
+          <li @click="initTabs()" class=" li-tab04">
+            <div class="tab04"><a href="#tab4" class="btn"><span class="tab-a">APPROVAL STATE</span></a></div>
           </li>
-          <li @click="initTabs()" class=" li-tab05">
-            <div class="tab05"><a href="#tab5" class="btn"><span class="tab-a">APPROVAL STATE</span></a></div>
+          <li @click="initTabs()" class="li-tab05">
+            <div class="tab05"><a href="#tab5" class="btn"><span class="tab-a">MESSAGE BOX</span></a></div>
           </li>
           <li @click="initTabs()" class="li-tab06">
-            <div class="tab06"><a href="#tab6" class="btn"><span class="tab-a">MESSAGE BOX</span></a></div>
-          </li>
-          <li @click="initTabs()" class="li-tab07">
-            <div class="tab07"><a href="#tab7" class="btn"><span class="tab-a">EXIT</span></a></div>
+            <div class="tab06"><a href="#tab6" class="btn"><span class="tab-a">EXIT</span></a></div>
           </li>
         </ul>
         
@@ -50,21 +47,18 @@
             <div class="tab1-content content"><MyInfo /></div>
           </div>
           <div id="tab2" class="cont cont2">
-            <div class="tab2-content content"><GoodList /></div>
-          </div>
-          <div id="tab3" class="cont cont3">
             <div class="tab2-content content"><CollectedList /></div>
           </div>
-          <div id="tab4" class="cont cont4">
+          <div id="tab3" class="cont cont3">
             <div class="tab2-content content"><AppliedList /></div>
           </div>
-          <div id="tab5" class="cont cont5">
+          <div id="tab4" class="cont cont4">
             <div class="tab2-content content"><StateList /></div>
           </div>
-          <div id="tab6" class="cont cont6">
+          <div id="tab5" class="cont cont5">
             <div class="tab2-content content"><MessageBox /></div>
           </div>
-          <div id="tab7" class="cont cont7">
+          <div id="tab6" class="cont cont6">
             <div class="tab2-content content"><ExitService /></div>
           </div>
         </div>
@@ -77,7 +71,6 @@
 
 <script>
 import MyInfo from '../mypage/MyInfo.vue'
-import GoodList from '../mypage/GoodList.vue'
 import CollectedList from '../mypage/SavedList.vue'
 import AppliedList from '../mypage/AppliedList.vue'
 import StateList from '../mypage/StateList.vue'
@@ -126,7 +119,6 @@ export default {
   },
   components: {
       MyInfo, 
-      GoodList,
       CollectedList,
       AppliedList,
       StateList,
