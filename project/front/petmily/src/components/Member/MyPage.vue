@@ -194,7 +194,7 @@ p {
   list-style-type: none;
 }
 
-.tab01, .tab02 {
+.tab01, .tab02, .tab03, .tab04, .tab05, .tab06, .tab07 {
   border: 2px solid #eee;
   border-radius: 15px;
   border-bottom-color: #fff;
@@ -230,6 +230,21 @@ a{text-decoration:none; color:#333;}
 .tab_menu .list .btn{font-size:13px;}
 .tab_menu .cont_area{margin-top:10px;}
 .tab_menu .cont_area .cont2{
+  display: none;
+}
+.tab_menu .cont_area .cont3{
+  display: none;
+}
+.tab_menu .cont_area .cont4{
+  display: none;
+}
+.tab_menu .cont_area .cont5{
+  display: none;
+}
+.tab_menu .cont_area .cont6{
+  display: none;
+}
+.tab_menu .cont_area .cont7{
   display: none;
 }
 
