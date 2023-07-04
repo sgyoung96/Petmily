@@ -7,15 +7,17 @@
         &nbsp;<span style="color:rgb(244, 191, 79);">VOLUNTEER</span></strong></h4>
   </div>
   <div style="padding-left: 150px;padding-right:150px">
-      <div>
-        <input type="text" v-model="searchKeyword" placeholder="주소를 입력해주세요">
-        <button v-on:click="search()">검색</button>
-      </div>
+    <div>
+      <input type="text" v-model="searchKeyword" placeholder="주소를 입력해주세요">
+      <button v-on:click="search()">검색</button>
+    </div>
     <div style="border-top:2px solid black; padding-top:10px; margin-top:10px">
       <div class="vbody" v-for="vboard in list" :key="vboard.num" @click="detail(vboard.num, vboard.address)">
         <div style="text-align: left;">
-            <span class="badge text-bg-danger" style="font-size: 17px;" v-if="calculateDateDifference(vboard.deadline).difference < 0">모집마감</span>
-            <span class="badge text-bg-primary" style="font-size: 17px;" v-else >마감 D-{{ calculateDateDifference(vboard.deadline).days }}</span>&nbsp;
+          <span class="badge text-bg-danger" style="font-size: 17px;"
+            v-if="calculateDateDifference(vboard.deadline).difference < 0">모집마감</span>
+          <span class="badge text-bg-primary" style="font-size: 17px;" v-else>마감 D-{{
+            calculateDateDifference(vboard.deadline).days }}</span>&nbsp;
           <strong>모집기간</strong> {{ formatDate(vboard.deadline) }}까지
           <br />
           <div class=vtitle>{{ vboard.title }}</div>
@@ -79,23 +81,31 @@ export default {
     }
   },
   methods: {
-    search(){
+    search() {
       const self = this
       let address = self.searchKeyword
       self.$axios.get('http://localhost:8082/volboard/address/' + address)
-      .then(function (response){
-        if(response.status == 200){
-          self.list = response.data.list
-        }else{
-          alert('에러')
-        }
-      })
+        .then(function (response) {
+          if (response.status == 200) {
+            self.list = response.data.list
+          } else {
+            alert('에러')
+          }
+        })
     },
     detail(num, address) {
-      this.$router.push({
-        name: 'VolBoardDetail',
-        query: { num: num, address: address },
-      })
+      const self = this
+      self.$axios.get('http://localhost:8082/volboard/cnt/' + num)
+        .then(function (res) {
+          if (res.status == 200) {
+            self.$router.push({
+              name: 'VolBoardDetail',
+              query: { num: num, address: address },
+            })
+          }else{
+            alert('디테일에러')
+          }
+        })
     },
     calculateDateDifference(deadline) {
       const deadlineDate = new Date(deadline)

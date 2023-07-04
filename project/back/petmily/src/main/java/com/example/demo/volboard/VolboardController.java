@@ -42,6 +42,15 @@ public class VolboardController {
 		return map;
 	}
 	
+	//조회수순으로 봉사모집게시판 전체리스트 검색
+		@GetMapping("/ol")
+		public Map getAllOl() {
+			ArrayList<VolboardDto> list = service.getAllByol();
+			Map map = new HashMap();
+			map.put("list", list);
+			return map;
+		}
+	
 	//봉사모집게시판 디테일 페이지
 	@GetMapping("/{num}")
 	public Map getByNum(@PathVariable("num") int num) {
@@ -169,6 +178,7 @@ public class VolboardController {
 		return map;
 	}
 	
+	//전체 행수 출력
 	@GetMapping("/count")
 	public Map getAllCount() {
 		boolean flag = true;
@@ -184,4 +194,17 @@ public class VolboardController {
 		return map;
 	}
 	
+	//조회수 올림
+	@GetMapping("/cnt/{num}")
+	public Map upCnt(@PathVariable("num") int num) {
+		boolean flag = true;
+		Map map = new HashMap<>();
+		try {
+			service.upCnt2(num);
+		}catch(Exception e) {
+			flag = false;
+		}
+		map.put("flag", flag);
+		return map;
+	}
 }

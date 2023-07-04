@@ -63,6 +63,17 @@ public class DiaryboardService {
 	    return list2;
 	}
 	
+	//좋아요 순으로 정렬
+	public ArrayList<DiaryboardDto> getAllByLikecnt() {
+		ArrayList<Diaryboard> list = (ArrayList<Diaryboard>) dao.findAllByOrderByLikecnt();
+		ArrayList<DiaryboardDto> list2 = new ArrayList<DiaryboardDto>();
+		for (Diaryboard d : list) {
+			list2.add(new DiaryboardDto(d.getNum(), d.getTitle(), d.getContent(), d.getW_date(), d.getId(), d.getPic1(),
+					d.getPic2(), d.getLikecnt(),null));
+		}
+		return list2;
+	}
+	
 	//삭제
 	public void delDiaryboard(int num) {
 		dao.deleteById(num);

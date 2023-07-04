@@ -13,7 +13,7 @@ public class WatchlistService {
 	
 	WatchlistDto getDuplicate(String id, int num) {
 		Member m = new Member(id,"","","","",null,"","","",null);
-		Volboard b = new Volboard(num,null,"","",null,0,null,"",null,"","","",0);
+		Volboard b = new Volboard(num,null,"","",null,0,null,"",null,"","","",0,0);
 		Watchlist dto = dao.findByIdAndNum(m, b);
 		if(dto == null) {
 			return null;

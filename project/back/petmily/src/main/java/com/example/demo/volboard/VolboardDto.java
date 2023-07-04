@@ -37,6 +37,7 @@ public class VolboardDto {
 	private String pic1;
 	private String pic2;
 	private int count;
+	private int cnt;
 	
 	private MultipartFile[] f = new MultipartFile[2];
 }

@@ -56,6 +56,18 @@ public class AdoptBoardController {
 	}
 	
 	/**
+	 * 좋아요 순으로 전체 목록 검색
+	 * @return
+	 */
+	@GetMapping("/ol")
+	public Map getAllOl() {
+		ArrayList<AdoptBoardDto> list = service.getAllOl();
+		Map map = new HashMap();
+		map.put("list",  list);
+		return map;
+	}
+	
+	/**
 	 * 디테일 조회
 	 * @param num
 	 * @return

@@ -18,6 +18,7 @@ public interface VolboardDao extends JpaRepository<Volboard, Integer> {
 	ArrayList<Volboard> findByTitle(String title);
 	ArrayList<Volboard> findByWriter(Member writer);
 	List<Volboard> findByAddressContaining(String address);
+	ArrayList<Volboard> findAllByOrderByCnt();
 	
 	@Transactional
 	@Modifying
@@ -28,6 +29,11 @@ public interface VolboardDao extends JpaRepository<Volboard, Integer> {
 	@Modifying
 	@Query(value="update volboard set count=count-1 where num=:num", nativeQuery = true)
 	void updateCount2(@Param("num") int num);
+	
+	@Transactional
+	@Modifying
+	@Query(value="update volboard set cnt=cnt+1 where num=:num", nativeQuery = true)
+	void updateCnt(@Param("num") int num);
 	
 	@Transactional
 	@Query(value = "SELECT COUNT(*) FROM Volboard")

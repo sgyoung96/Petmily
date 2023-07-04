@@ -94,36 +94,36 @@
       <th scope="row">갱얼쥐 산책</th>
       <td>
         <span v-if="items[0].fcstValue <= '18'">양호🐾</span>
-        <span v-else-if="items[0].fcstValue <= '21'">조금 주의💦</span>
-        <span v-else-if="items[0].fcstValue >= '26' && items[0].fcstValue < '32'">주의🚨</span>
+        <span v-else-if="items[0].fcstValue >= '21' && items[0].fcstValue < '26'">약간주의💦</span>
+        <span v-else-if="items[0].fcstValue >= '26' && items[0].fcstValue < '29'">주의🚨</span>
         <span v-else-if="items[0].fcstValue >= '29' && items[0].fcstValue < '32'">위험🔥</span>
         <span v-else-if="items[0].fcstValue >= '32'">매우위험🚷</span>
       </td>
       <td>
         <span v-if="items[12].fcstValue <= '18'">양호🐾</span>
-        <span v-else-if="items[12].fcstValue <= '21'">조금 주의💦</span>
-        <span v-else-if="items[12].fcstValue >= '26' && items[12].fcstValue < '32'">주의🚨</span>
+        <span v-else-if="items[12].fcstValue >= '21' && items[12].fcstValue < '26'">약간주의💦</span>
+        <span v-else-if="items[12].fcstValue >= '26' && items[12].fcstValue < '29'">주의🚨</span>
         <span v-else-if="items[12].fcstValue >= '29' && items[12].fcstValue < '32'">위험🔥</span>
         <span v-else-if="items[12].fcstValue >= '32'">매우위험🚷</span>
       </td>
       <td>
         <span v-if="items[24].fcstValue <= '18'">양호🐾</span>
-        <span v-else-if="items[24].fcstValue <= '21'">조금 주의💦</span>
-        <span v-else-if="items[24].fcstValue >= '26' && items[24].fcstValue < '32'">주의🚨</span>
+        <span v-else-if="items[24].fcstValue >= '21' && items[48].fcstValue < '26'">약간주의💦</span>
+        <span v-else-if="items[24].fcstValue >= '26' && items[24].fcstValue < '29'">주의🚨</span>
         <span v-else-if="items[24].fcstValue >= '29' && items[24].fcstValue < '32'">위험🔥</span>
         <span v-else-if="items[24].fcstValue >= '32'">매우위험🚷</span>
       </td>
       <td>
         <span v-if="items[36].fcstValue <= '18'">양호🐾</span>
-        <span v-else-if="items[36].fcstValue <= '21'">조금 주의💦</span>
-        <span v-else-if="items[36].fcstValue >= '26' && items[36].fcstValue < '32'">주의🚨</span>
+        <span v-else-if="items[36].fcstValue >= '21' && items[36].fcstValue < '26'">약간주의💦</span>
+        <span v-else-if="items[36].fcstValue >= '26' && items[36].fcstValue < '29'">주의🚨</span>
         <span v-else-if="items[36].fcstValue >= '29' && items[36].fcstValue < '32'">위험🔥</span>
         <span v-else-if="items[36].fcstValue >= '32'">매우위험🚷</span>
       </td>
       <td>
         <span v-if="items[48].fcstValue <= '18'">양호🐾</span>
-        <span v-else-if="items[48].fcstValue <= '21'">조금 주의💦</span>
-        <span v-else-if="items[48].fcstValue >= '26' && items[48].fcstValue < '32'">주의🚨</span>
+        <span v-else-if="items[48].fcstValue >= '21' && items[48].fcstValue < '26'">약간주의💦</span>
+        <span v-else-if="items[48].fcstValue >= '26' && items[48].fcstValue < '29'">주의🚨</span>
         <span v-else-if="items[48].fcstValue >= '29' && items[48].fcstValue < '32'">위험🔥</span>
         <span v-else-if="items[48].fcstValue >= '32'">매우위험🚷</span>
       </td>
@@ -182,7 +182,7 @@ export default {
       console.log(this.time);
       console.log(this.date);
       const self = this;
-      self.$axios.get(`https://apis.data.go.kr/1360000/VilageFcstInfoService_2.0/getVilageFcst?dataType=json&serviceKey=hqbUzbZx%2BbQR6OgVCNvZDXGGWIVTWAIawDhN2Y9fbW6Pndu%2BrU9e1NaR9UpW7%2BPotKdwoD9cXlkHbSS7tzFRJQ%3D%3D&numOfRows=50&pageNo=1&base_date=${self.date}&base_time=${self.time}&nx=55&ny=127`)
+      self.$axios.get(`https://apis.data.go.kr/1360000/VilageFcstInfoService_2.0/getVilageFcst?dataType=json&serviceKey=hqbUzbZx%2BbQR6OgVCNvZDXGGWIVTWAIawDhN2Y9fbW6Pndu%2BrU9e1NaR9UpW7%2BPotKdwoD9cXlkHbSS7tzFRJQ%3D%3D&numOfRows=50&pageNo=1&base_date=${self.date}&base_time=${self.time}&nx=62&ny=122`)
         .then(function (res) {
           if (res.status == 200) {
             const data = res.data.response.body

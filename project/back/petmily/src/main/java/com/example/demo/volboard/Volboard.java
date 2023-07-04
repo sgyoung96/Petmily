@@ -57,11 +57,15 @@ public class Volboard {
 	@Column(nullable=true)
 	private String pic2; //게시판 사진2
 	
-	private int count; 
+	private int count; //봉사참가자 수
+	
+	@Column(nullable=true)
+	private int cnt; // 조회수
 	
 	@PrePersist
 	public void preprocess() {
 		w_date = new Date(); //현재 날짜 생성
 		count = 0;
+		cnt = 0;
 	}
 }

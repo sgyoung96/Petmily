@@ -29,6 +29,19 @@ public class AdoptBoardService {
 	}
 	
 	/**
+	 * 좋아요 순으로 전체 목록 조회
+	 * @return
+	 */
+	public ArrayList<AdoptBoardDto> getAllOl() {
+		ArrayList<Adoptboard> list = (ArrayList<Adoptboard>) dao.findAllByOrderByLikecnt();
+		ArrayList<AdoptBoardDto> list2 = new ArrayList<AdoptBoardDto>();
+		for (Adoptboard adoptBoard : list) {
+			list2.add(new AdoptBoardDto(adoptBoard.getNum(), adoptBoard.getId(), adoptBoard.getTitle(), adoptBoard.getContent(), adoptBoard.getCategory(), adoptBoard.getGender(), adoptBoard.getW_date(), adoptBoard.getAddress(), adoptBoard.getPic1(), adoptBoard.getPic2(), adoptBoard.getLikecnt(),null));
+		}
+		return list2;
+	}
+	
+	/**
 	 * 디테일 조회
 	 * @param num
 	 * @return
