@@ -24,7 +24,7 @@
 
         <div class="box-mypage">
           <img class="ico-bell" src="./assets/bell.png" />
-          <img class="ico-mypage" src="./assets/profile-user.png" />
+          <img @click="goMyPage()" class="ico-mypage" src="./assets/profile-user.png" />
         </div>
       </div>
 
@@ -349,6 +349,9 @@ export default {
     },
     admin() { // 어드민페이지
       this.$router.push('/adminhome');
+    },
+    goMyPage() {
+      this.$router.push('/member/mypage/home');
     }
   }
 }

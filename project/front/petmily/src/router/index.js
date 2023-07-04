@@ -43,6 +43,15 @@ import AddressMap from '@/components/kaka/AddressMap.vue'
 import Weather from '@/components/kaka/Weather.vue'
 
 import AnimalHospital from '@/components/kaka/AnimalHospital.vue'
+import MyPageMain from '@/components/Member/MyPage.vue'
+
+import MyInfo from '@/components/mypage/MyInfo.vue'
+import GoodList from '@/components/mypage/GoodList.vue'
+import SavedList from '@/components/mypage/SavedList.vue'
+import AppliedList from '@/components/mypage/AppliedList.vue'
+import StateList from '@/components/mypage/StateList.vue'
+import MessageBox from '@/components/mypage/MessageBox.vue'
+import ExitService from '@/components/mypage/ExitService.vue'
 
 
 const routes = [
@@ -259,9 +268,47 @@ const routes = [
     path: '/admin/VolList',
     name: 'VolList',
     component: VolList
-  }
-  
- 
+  },
+  {
+    path: '/member/mypage/home',
+    name: 'MyPageMain',
+    component: MyPageMain
+  },
+  {
+    path: '/mypage/info',
+    name: 'MyInfo',
+    component: MyInfo
+  }, 
+  {
+    path: '/mypage/good',
+    name: 'GoodList',
+    component: GoodList
+  },
+  {
+    path: '/mypage/saved',
+    name: 'SavedList',
+    component: SavedList
+  },
+  {
+    path: '/mypage/apply',
+    name: 'AppliedList',
+    component: AppliedList
+  },
+  {
+    path: '/mypage/state',
+    name: 'StateList',
+    component: StateList
+  }, 
+  {
+    path: '/mypage/message',
+    name: 'MessageBox',
+    component: MessageBox
+  }, 
+  {
+    path: '/mypage/exit',
+    name: 'ExitService',
+    component: ExitService
+  } 
 ]
 
 const router = createRouter({
