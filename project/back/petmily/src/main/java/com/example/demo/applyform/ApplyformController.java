@@ -51,8 +51,8 @@ public class ApplyformController {
 			}
 	
 	//id로 검색
-	@GetMapping("/getbyid")
-	public Map getbyid(String id) {
+	@GetMapping("/getbyid/{id}")
+	public Map getbyid(@PathVariable("id")String id) {
 		ArrayList<ApplyformDto> list = service.findByMemberId(id);
 		Map map = new HashMap();
 		map.put("list", list);

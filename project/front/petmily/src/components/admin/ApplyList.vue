@@ -34,7 +34,7 @@
                     <label><span>REFUSE</span></label>
                   </th>
                 </tr>
-                <tr class="clickable-row" v-for="(apply, index) in list" :key="index" aria-colspan="12" @click="goDetail(apply.num, apply.petCd)"
+                <tr class="clickable-row" v-for="(apply, index) in list" :key="index" aria-colspan="12" @click="goDetail(apply.num,)"
                   style="cursor: pointer;">
                   <td colspan="1" :id="index"><label><span>{{ index + 1 }}</span></label></td>
                   <td colspan="1"><label><span>{{ apply.id.id }}</span></label></td>
@@ -136,10 +136,9 @@ export default {
     setData() { // 데이터 가공
 
     },
-    goDetail(num, petCd) {
+    goDetail(num) {
       console.log(num);
-      console.log(petCd);
-      this.$router.push({ name: 'ApplyDetail', query: {num: num, petCd : petCd } });
+      this.$router.push({ name: 'ApplyDetail', query: {num: num} });
     }
   },
   components: {

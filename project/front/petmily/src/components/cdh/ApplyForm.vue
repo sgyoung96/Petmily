@@ -227,7 +227,14 @@ export default {
       formdata.append('reason', self.reason);
       formdata.append('feeding', self.feeding);
       formdata.append('ischeck', self.ischeck);
-      formdata.append('petCd', self.applyPetCd);
+      formdata.append('kindCd', self.info.kindCd);
+      formdata.append('sexCd', self.info.sexCd);
+      formdata.append('age', self.info.age);
+      formdata.append('colorCd', self.info.colorCd);
+      formdata.append('neuterYn', self.info.neuterYn);
+      formdata.append('careNm', self.info.careNm);
+      formdata.append('careAddr', self.info.careAddr);
+      formdata.append('popfile', self.info.popfile);
       if(self.agreement==0){
               alert("개인정보 동의서에 동의를 해야합니다")
               return;

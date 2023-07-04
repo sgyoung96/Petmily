@@ -83,7 +83,7 @@
                 <div style="margin-top: 65px;"> <!-- 간격을 띄우는 div 요소 -->
                 </div>
                 <div>
-                  <h3>담담자전화번호</h3>
+                  <h3>담당자전화번호</h3>
                   <span>{{ item.officetel }}</span>
                 </div>
               </div>
