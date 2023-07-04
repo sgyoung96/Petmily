@@ -13,7 +13,7 @@
         <span v-if="!isApplied" v-on:click="apply" class="badge text-bg-danger" style="font-size: 17px;">신청하기</span>&nbsp;
         <span v-else v-on:click="cancelApply" class="badge text-bg-danger" style="font-size: 17px;">신청취소</span>&nbsp;
         <span v-on:click="addwatch(dto.num)" class="badge text-bg-secondary" style="font-size: 17px;">♡관심목록담기</span>&nbsp;
-        <span v-on:click="del(dto.num)" class="badge text-bg-danger" style="font-size: 17px;">삭제</span>
+        <span v-if="this.loginId==='admin'" v-on:click="del(dto.num)" class="badge text-bg-danger" style="font-size: 17px;">삭제</span>
       </div>
     </div>
     <div class="vhead">
