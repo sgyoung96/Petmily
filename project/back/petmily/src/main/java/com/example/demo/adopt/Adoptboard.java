@@ -7,6 +7,7 @@ import org.hibernate.annotations.OnDeleteAction;
 
 import com.example.demo.member.Member;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -41,13 +42,20 @@ public class Adoptboard {
 	
 	private String title;	// 제목
 	private String content;	// 내용
+	private String Category;
+	private String gender;
+	
 	private Date w_date;	// 날짜
 	private String address;	// 주소
 	private String pic1;	// 첫번째 사진 파일 경로
 	private String pic2;	// 두번째 사진 파일 경로
 	
+	@Column(nullable=true)
+	private int likecnt; //좋아요 수
+	
 	@PrePersist
 	public void preprocess() {
 		w_date = new Date();	// 현재 날짜 생성
+		likecnt = 0;
 	}
 }

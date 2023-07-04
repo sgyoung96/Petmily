@@ -45,6 +45,15 @@ public class DiaryboardController {
 		return map;
 	}
 	
+	//좋아요 순으로 검색
+	@GetMapping("/ol")
+	public Map getAllByol() {
+		ArrayList<DiaryboardDto> list = service.getAllByLikecnt();
+		Map map = new HashMap();
+		map.put("list", list);
+		return map;
+	}
+	
 	//글 번호로 검색 디테일페이지
 	@GetMapping("/{num}")
 	public Map getByNum(@PathVariable("num") int num) {

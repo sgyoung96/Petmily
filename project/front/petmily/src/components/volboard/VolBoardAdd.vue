@@ -76,7 +76,8 @@
         address: '',
         deadline: '',
         place: '',
-        count: 0
+        count: 0,
+        cnt: 0
       }
     },
     methods:{
@@ -103,6 +104,7 @@
         formData.append('place', this.place)
         formData.append('address', address)
         formData.append('count', 0)
+        formData.append('cnt', 0)
         const file1 = document.getElementById('f1')
         const file2 = document.getElementById('f2')
         

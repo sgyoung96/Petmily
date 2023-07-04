@@ -3,7 +3,9 @@ package com.example.demo.adopt;
 import java.util.ArrayList;
 
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -13,8 +15,19 @@ import com.example.demo.member.Member;
 public interface AdoptBoardDao extends JpaRepository<Adoptboard, Integer> {
     ArrayList<Adoptboard> findById(Member id);
     ArrayList<Adoptboard> findByTitle(String title);
+    ArrayList<Adoptboard> findAllByOrderByLikecnt();
 
     @Transactional
     @Query(value = "SELECT COUNT(*) FROM Adoptboard")
     int countByAll();
+    
+    @Transactional
+	@Modifying
+	@Query(value="update adoptboard set likecnt=likecnt+1 where num=:num", nativeQuery = true)
+	void upCount(@Param("num") int num);
+	
+	@Transactional
+	@Modifying
+	@Query(value="update adoptboard set likecnt=likecnt-1 where num=:num", nativeQuery = true)
+	void downCount(@Param("num") int num);
 }

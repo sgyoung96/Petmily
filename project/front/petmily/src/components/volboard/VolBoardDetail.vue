@@ -13,7 +13,7 @@
         <span v-if="!isApplied" v-on:click="apply" class="badge text-bg-danger" style="font-size: 17px;">신청하기</span>&nbsp;
         <span v-else v-on:click="cancelApply" class="badge text-bg-danger" style="font-size: 17px;">신청취소</span>&nbsp;
         <span v-on:click="addwatch(dto.num)" class="badge text-bg-secondary" style="font-size: 17px;">♡관심목록담기</span>&nbsp;
-        <span v-on:click="del(dto.num)" class="badge text-bg-danger" style="font-size: 17px;">삭제</span>
+        <span v-if="this.loginId==='admin'" v-on:click="del(dto.num)" class="badge text-bg-danger" style="font-size: 17px;">삭제</span>
       </div>
     </div>
     <div class="vhead">
@@ -56,9 +56,7 @@
       <img :src="'http://localhost:8082/volboard/imgs/' + dto.num + '/2'">
     </div>
     <div>
-      <label>주소:</label>
-      <input type="text" v-model="address" placeholder="주소를 입력하세요" />
-      <button @click="showLocation">위치 보기</button>
+
     </div>
     <div id="map" ref="map"></div>
     <div>참여자 리스트 ID</div>
@@ -67,7 +65,6 @@
         <td>{{ person.id.id }}</td>
       </tr>
     </table>
-    {{ count }} / {{ dto.vol_number }} {{ address }}
   </div>
 </template>
 
@@ -144,89 +141,97 @@ export default {
   },
   methods: {
     addwatch(num) {
-  let id = this.loginId;
-  let formData = new FormData();
-  formData.append('id', id);
-  formData.append('num', num);
-  axios.get('http://localhost:8082/watchlist/' + id + '/' + num)
-    .then((res) => {
-      if (res.status == 200) {
-        if (res.data.flag) {
-          axios.post('http://localhost:8082/watchlist', formData)
-            .then((res) => {
-              if (res.status == 200) {
-                alert('관심목록에 추가되었습니다.');
+      let id = this.loginId;
+      if (id == null) {
+        alert("로그인 후 등록가능합니다.")
+      } else {
+        let formData = new FormData();
+        formData.append('id', id);
+        formData.append('num', num);
+        axios.get('http://localhost:8082/watchlist/' + id + '/' + num)
+          .then((res) => {
+            if (res.status == 200) {
+              if (res.data.flag) {
+                axios.post('http://localhost:8082/watchlist', formData)
+                  .then((res) => {
+                    if (res.status == 200) {
+                      alert('관심목록에 추가되었습니다.');
+                    }
+                  });
+              } else {
+                axios.delete('http://localhost:8082/watchlist', { data: formData })
+                  .then((response) => {
+                    if (response.status === 200) {
+                      alert('관심목록에서 제거되었습니다.');
+                    }
+                  })
+                  .catch(error => {
+                    console.error(error);
+                    alert('삭제 요청 중에 오류가 발생했습니다.');
+                  });
               }
-            });
+            }
+          });
+      }
+    },
+    apply() {
+      const self = this;
+      if (self.loginId == null) {
+        alert("로그인 후 신청가능합니다.")
+      } else {
+        if (self.dto.vol_number <= self.count) {
+          alert("봉사신청인원이 초과하였습니다.");
         } else {
-          axios.delete('http://localhost:8082/watchlist', {data: formData})
-            .then((response) => {
-              if (response.status === 200) {
-                alert('관심목록에서 제거되었습니다.');
+          self.$axios.get('http://localhost:8082/participants/' + self.loginId + '/' + self.num)
+            .then(function (res) {
+              if (res.status == 200) {
+                if (res.data.list.length === 0) {
+                  let formData = new FormData();
+                  formData.append('boardnum', self.num);
+                  formData.append('id', self.loginId);
+                  self.$axios.post('http://localhost:8082/participants', formData)
+                    .then(function (res) {
+                      if (res.status == 200) {
+                        alert(res.data.member.id + "님이 신청되셨습니다.");
+                        // 신청 성공 시 아이콘 변경
+                        self.isApplied = true;
+                      } else {
+                        alert("에러코드:" + res.status);
+                      }
+                    });
+                } else {
+                  alert('이미 신청되었습니다.');
+                  self.$axios.delete('http://localhost:8082/participants?boardnum=' + self.num + '&id=' + self.loginId)
+                    .then(function (res) {
+                      if (res.status == 200) {
+                        alert("신청이 취소되었습니다.");
+                        // 신청 취소 성공 시 아이콘 변경
+                        self.isApplied = false;
+                      } else {
+                        alert("신청 취소 처리 에러");
+                      }
+                    });
+                }
               }
-            })
-            .catch(error => {
-              console.error(error);
-              alert('삭제 요청 중에 오류가 발생했습니다.');
             });
         }
       }
-    });
-},
-apply() {
-const self = this;
-    if (self.dto.vol_number <= self.count) {
-      alert("봉사신청인원이 초과하였습니다.");
-    } else {
-      self.$axios.get('http://localhost:8082/participants/' + self.loginId + '/' + self.num)
-        .then(function(res) {
-          if (res.status == 200) {
-            if (res.data.list.length === 0) {
-              let formData = new FormData();
-              formData.append('boardnum', self.num);
-              formData.append('id', self.loginId);
-              self.$axios.post('http://localhost:8082/participants', formData)
-                .then(function(res) {
-                  if (res.status == 200) {
-                    alert(res.data.member.id + "님이 신청되셨습니다.");
-                    // 신청 성공 시 아이콘 변경
-                    self.isApplied = true;
-                  } else {
-                    alert("에러코드:" + res.status);
-                  }
-                });
-            } else {
-              alert('이미 신청되었습니다.');
-              self.$axios.delete('http://localhost:8082/participants?boardnum=' + self.num + '&id=' + self.loginId)
-                .then(function(res) {
-                  if (res.status == 200) {
-                    alert("신청이 취소되었습니다.");
-                    // 신청 취소 성공 시 아이콘 변경
-                    self.isApplied = false;
-                  } else {
-                    alert("신청 취소 처리 에러");
-                  }
-                });
-            }
-          }
-        });
-    }
-  },
+    },
     del(num) {
       const self = this
       self.$axios.delete('http://localhost:8082/volboard/' + num)
-      .then(function (res) {
-        if(res.status == 200){
-          if(res.data.flag){
-            alert('삭제가 정상적으로 되었습니다')
-            this.$router.push({ name: 'VolBoardHome' });
-          }else{
-            alert('삭제 처리 에러')
+        .then(function (res) {
+          if (res.status == 200) {
+            if (res.data.flag) {
+              alert('삭제가 정상적으로 되었습니다')
+              this.$router.push({ name: 'VolBoardHome' });
+            } else {
+              alert('삭제 처리 에러')
+            }
+          } else {
+            alert('에러코드: ' + res.status)
           }
-        }else{
-          alert('에러코드: '+ res.status)
-        }
-      })
+        })
     },
 
     loadScript() {

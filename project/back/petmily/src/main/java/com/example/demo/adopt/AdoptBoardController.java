@@ -1,6 +1,7 @@
 package com.example.demo.adopt;
 
 import java.io.File;
+
 import java.io.IOException;
 import java.nio.file.Files;
 import java.util.ArrayList;
@@ -23,8 +24,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
-import com.example.demo.diaryboard.DiaryboardDto;
-import com.example.demo.volboard.VolboardDto;
 
 /**
  * 1. 전체 목록 검색
@@ -51,6 +50,18 @@ public class AdoptBoardController {
 	@GetMapping("")
 	public Map getAll() {
 		ArrayList<AdoptBoardDto> list = service.getAll();
+		Map map = new HashMap();
+		map.put("list",  list);
+		return map;
+	}
+	
+	/**
+	 * 좋아요 순으로 전체 목록 검색
+	 * @return
+	 */
+	@GetMapping("/ol")
+	public Map getAllOl() {
+		ArrayList<AdoptBoardDto> list = service.getAllOl();
 		Map map = new HashMap();
 		map.put("list",  list);
 		return map;
@@ -150,17 +161,53 @@ public class AdoptBoardController {
 	
 	@PutMapping("")
 	public Map edit(AdoptBoardDto dto) {
+		int saveNum = 0;
 		Map map = new HashMap();
-		AdoptBoardDto dto3 = null;
 		AdoptBoardDto dto2 = service.getDetail(dto.getNum());
 		boolean flag = true;
-		try {
+		if(dto.getF()[0] == null && dto.getF()[1] == null) {
+			dto2.setTitle(dto.getTitle());
 			dto2.setContent(dto.getContent());
+			saveNum = service.add(dto2);
+		}else {
+		try {
+			dto2.setTitle(dto.getTitle());
+			dto2.setContent(dto.getContent());
+			File delf1 = new File(dto2.getPic1());
+			delf1.delete();
+			File delf2 = new File(dto2.getPic2());
+			delf2.delete();
 			int num = service.add(dto2);
-			dto3 = service.getDetail(num);
+			File dir = new File(path + "adoptboard/" + num);
+			MultipartFile[] f = dto.getF();
+			String[] imgs = new String[2];
+			for(int i=0; i < f.length; i++) {
+				MultipartFile x = f[i];
+				String fname = x.getOriginalFilename();
+				if(fname != null && !fname.equals("")) {
+					String newpath = path + "adoptboard/" + num + "/" + fname;
+					File newfile = new File(newpath);
+					try {
+						x.transferTo(newfile);
+						imgs[i] = newpath;
+					} catch (IllegalStateException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					} catch (IOException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+				}
+			}
+			dto2.setPic1(imgs[0]);
+			dto2.setPic2(imgs[1]);
+			dto2.setNum(num);
+			saveNum = service.add(dto2);
 		}catch(Exception e) {
 			flag = false;
 		}
+		}
+		AdoptBoardDto dto3 = service.getDetail(saveNum);
 		map.put("flag", flag);
 		map.put("dto", dto3);
 		return map;
@@ -194,6 +241,34 @@ public class AdoptBoardController {
 		map.put("flag", flag);
 		return map;
 	}
+	
+	//좋아요 수 올림
+    @GetMapping("/likeup/{num}")
+    public Map likeup(@PathVariable int num) {
+    	Map map = new HashMap<>();
+    	boolean flag = true;
+    	try {
+    		service.uplike(num);
+    	} catch(Exception e) {
+    		flag = false;
+    	}
+    	map.put("flag", flag);
+    	return map;
+    }
+	
+    //좋아요 수 내림
+    @GetMapping("/likedown/{num}")
+    public Map likedown(@PathVariable int num) {
+    	Map map = new HashMap<>();
+    	boolean flag = true;
+    	try {
+    		service.downlike(num);
+    	} catch(Exception e) {
+    		flag = false;
+    	}
+    	map.put("flag", flag);
+    	return map;
+    }
 	
 	@GetMapping("/count")
 	public Map getAllCount() {
