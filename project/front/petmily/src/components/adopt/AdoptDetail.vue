@@ -5,8 +5,36 @@
       <h4 style="text-align: center;"><strong><span style="color:rgb(156, 156, 39)">PETMILY</span>
           &nbsp;<span style="color:rgb(244, 191, 79);">ADOPT</span></strong></h4>
     </div>
-    <img class="m-img" src="../../assets/images/dboardpic.png">
     <div class="d-all">
+      <table class="table table-bordered" style="margin-bottom:50px">
+      <tbody div class="tbody"  v-if="dto.id">
+        <tr>
+          <th>제목</th>
+          <td colspan="3">{{ dto.title }}</td>
+        </tr>
+        <tr>
+          <th>등록인</th>
+          <td colspan="3">{{ dto.id.id }}</td>
+        </tr>
+        <tr>
+          <th>분양동물</th>
+          <td colspan="3">{{ dto.category }}</td>
+        </tr>
+        <tr>
+          <th>분양지역</th>
+          <td>{{ dto.address }}</td>
+          <th>암수구분</th>
+          <td>{{ dto.gender }}</td>
+        </tr>
+        <tr>
+          <th>연락처</th>
+          <td>{{ dto.id.phone }}</td>
+          <th>E-mail</th>
+          <td>{{ dto.id.email }}</td>
+        </tr>
+      </tbody>
+    </table>
+    <img class="a-img" src="../../assets/images/jinjin.png">
       <div class="box-title" v-if="dto.id">
         <span>{{ dto.title }}</span>
         <span>{{ dto.id.id }}{{ formatDate(dto.w_date) }}</span>
@@ -143,9 +171,11 @@
   margin-bottom: 120px;
 }
 
-.m-img {
-  width: 1210px;
-  height: 160px;
+.table th {
+  background-color: rgb(156 133 109);
+}
+.a-img {
+ text-align: left;
   margin-top: 10px;
   margin-bottom: 10px;
 }

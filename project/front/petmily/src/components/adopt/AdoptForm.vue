@@ -1,22 +1,46 @@
 <template>
-  <div>
-      <h3>분양게시판 글쓰기</h3>
-  
-      <br>작성자 : <input id="id" v-model="id" type="text" >
-      <br>제목 : <input id="title" v-model="title" type="text" >
-      <br>내용 : <textarea id="content" v-model="content" ></textarea>
-      <br>Pet 종류: <input id="category" v-model="category" type="text" >
-      <div>
-            <input type="radio" name="radioBtn" id="r1" value="첫번째 버튼" v-model="gender">
+  <div class="d-all">
+    <div class="d-title">
+      <h4 style="text-align: center;"><strong><span style="color:rgb(156, 156, 39)">PETMILY</span>
+          &nbsp;<span style="color:rgb(244, 191, 79);">ADOPT</span></strong></h4>
+    </div>
+    <div class="d-box">
+      <div class="box-title">
+        <input type="text" id="id" v-model="id" readonly style="margin-bottom:5px"><br/>
+        <input type="text" id="title" v-model="title" size="80" maxlength="20" placeholder="제목을 입력해 주세요."><br/>
+        <div>
+        <select id="category" v-model="category">
+  <option value="" disabled selected hidden>동물종류</option>
+  <option value="강아지">강아지</option>
+  <option value="고양이">고양이</option>
+  <option value="기타동물">기타동물</option>
+        </select>&nbsp;
+            <input type="radio" name="radioBtn" id="r1" value="암컷" v-model="gender">
             <label for="r1">암컷</label>
-            <input type="radio" name="radioBtn" id="r2" value="두번째 버튼" v-model="gender">
+            <input type="radio" name="radioBtn" id="r2" value="수컷" v-model="gender">
             <label for="r2">수컷</label>
       </div>
-      <br>주소 : <input id="address" v-model="address" type="text" >
-      <br>첫번째 사진 경로 : <input id="f1" type="file" >
-      <br>두번째 사진 경로 : <input id="f2" type="file" >
-      <br><br>
-      <button type="button" v-on:click="addform">추가</button>
+      </div>
+      <div class="box-warning">
+      ※ 양식에 맞지 않거나 게시판과 관계없는 글일 경우 작성자의 동의 없이 삭제될 수 있습니다.<br />
+      ※ 음란물, 차별, 비하, 혐오 및 초상권, 저작권 침해 게시물은 민, 형사상의 책임을 질 수 있습니다.<br/>
+    </div>
+      <div class="box-content">
+        <textarea id="content" rows="25" cols="130" v-model="content" style="resize: none;" placeholder="내용을 입력해 주세요."></textarea>
+      </div>
+      <tr>
+        <th>이미지1</th>
+        <td><input id="f1" type="file" ></td>
+      </tr>
+      <tr>
+        <th>이미지2</th>
+        <td><input id="f2" type="file" ></td>
+      </tr>
+      <tr>
+        <th>등록</th>
+        <td><button v-on:click="addform">등록</button></td>
+      </tr>
+    </div>
   </div>
 </template>
 
@@ -83,4 +107,37 @@ export default {
     div {
         text-align: left;
     }
+    .d-all {
+  margin-left: 150px;
+  margin-right: 150px;
+  margin-bottom: 150px;
+}
+
+.d-title {
+  flex-direction: column;
+  display: flex;
+  margin-top: 120px;
+  margin-bottom: 120px;
+}
+
+.d-box {
+  border: 1px solid grey;
+  border-top: 2px solid black;
+  padding: 80px;
+  text-align: left;
+}
+
+.box-title{
+  text-align: left;
+}
+
+.box-warning{
+  margin-top:10px;
+  margin-bottom:10px;
+  font-size:small;
+}
+
+.box-content{
+  resize: none;
+}
 </style>
