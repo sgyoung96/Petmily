@@ -46,12 +46,12 @@ import AnimalHospital from '@/components/kaka/AnimalHospital.vue'
 import MyPageMain from '@/components/Member/MyPage.vue'
 
 import MyInfo from '@/components/mypage/MyInfo.vue'
-import GoodList from '@/components/mypage/GoodList.vue'
 import SavedList from '@/components/mypage/SavedList.vue'
 import AppliedList from '@/components/mypage/AppliedList.vue'
-import StateList from '@/components/mypage/StateList.vue'
 import MessageBox from '@/components/mypage/MessageBox.vue'
 import ExitService from '@/components/mypage/ExitService.vue'
+import MyInfoIntro from '@/components/mypage/MyInfoIntro'
+import MyInfoEdit from '@/components/mypage/MyInfoEdit.vue'
 
 
 const routes = [
@@ -280,11 +280,6 @@ const routes = [
     component: MyInfo
   }, 
   {
-    path: '/mypage/good',
-    name: 'GoodList',
-    component: GoodList
-  },
-  {
     path: '/mypage/saved',
     name: 'SavedList',
     component: SavedList
@@ -295,11 +290,6 @@ const routes = [
     component: AppliedList
   },
   {
-    path: '/mypage/state',
-    name: 'StateList',
-    component: StateList
-  }, 
-  {
     path: '/mypage/message',
     name: 'MessageBox',
     component: MessageBox
@@ -308,7 +298,17 @@ const routes = [
     path: '/mypage/exit',
     name: 'ExitService',
     component: ExitService
-  } 
+  },
+  {
+    path: '/mypage/chkpw',
+    name: 'MyInfoIntro',
+    component: MyInfoIntro
+  },
+  {
+    path: '/mypage/infomain',
+    name: 'MyInfoEdit',
+    component: MyInfoEdit
+  }
 ]
 
 const router = createRouter({

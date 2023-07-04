@@ -1,7 +1,7 @@
 <template>
   <div>
     <div class="container">
-        <h1>state list</h1>
+       
     </div>
   </div>
 </template>
@@ -9,7 +9,7 @@
 <script>
 
 export default {
-  name: 'StateList',
+  name: 'MyInfoIntro',
   data () {
     return {
         
