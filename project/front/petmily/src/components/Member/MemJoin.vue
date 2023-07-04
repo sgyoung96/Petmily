@@ -133,8 +133,6 @@ export default {
    
     }
 
-    
-   
   },
 
  
@@ -161,7 +159,7 @@ export default {
       const fileInput = document.getElementById('profile');
       const previewDiv = document.getElementById('preview');
 
-      // 파일이 선택되지 않았을 경우 미리보기를 초기화합니다.
+      // 파일이 선택되지 않았을 경우 미리보기를 초기화
       if (!fileInput.files || fileInput.files.length === 0) {
       previewDiv.innerHTML = '';
       return;
@@ -170,16 +168,16 @@ export default {
       // 첫 번째 파일을 가져옵니다.
       const file = fileInput.files[0];
   
-      // 이미지 파일인지 확인합니다.
+      // 이미지 파일인지 확인
       if (file.type.startsWith('image/')) {
       const reader = new FileReader();
     
-      // 파일 로드 완료 시 미리보기를 생성합니다.
+      // 파일 로드 완료 시 미리보기를 생성
       reader.onload = function(event) {
       const img = document.createElement('img');
       img.src = event.target.result;
 
-  img.classList.add('profile');
+      img.classList.add('profile');
       previewDiv.innerHTML = '';
       previewDiv.appendChild(img);
     };

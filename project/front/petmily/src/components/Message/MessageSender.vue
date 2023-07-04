@@ -4,59 +4,83 @@
     href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200"/>
 
   <div id="messagesender">
-    <h2>{{ loginId }}가 보낸 쪽지 목록</h2>
 
-    <button @click="read">읽은 메일</button>
-    <button @click="unread">읽지 않은 메일</button>
-    <button @click="all">전체</button>
-      <select v-model="select" >
-        <option value = "title">제목</option>
-        <option value = "reciever">받는이</option>
-      </select>
+    <div class="message-list">
+      <h2>{{ loginId }}가 보낸 쪽지 목록</h2>
 
-      <input type="text" v-model="find"><button @click="findbtn">검색</button>
-       
-    <div class="message-bg" v-for="message in list" :key="message.num">
-      <span class="box-profile" style="background: #black">
-       
-        <img class="profile" @error="replaceImg" :src="'http://localhost:8082/members/imgs/' + message.reciever.id" />
-      </span>
-      받는사람 : {{ message.reciever.id }}<br />
-      보낸날짜 : {{ message.send_dt }}<br />
-      제목 :
-      <a v-on:click="($event) => detail(
-              message.num,
-              message.reciever.id,
-              message.send_dt,
-              message.title,
-              message.content
-            )">{{ message.title }}</a><br />
-      <div v-if="message.check == 0">
-        <span class="material-symbols-outlined">mail</span><br />
+      <button @click="read">읽은 메일</button>
+      <button @click="unread">읽지 않은 메일</button>
+      <button @click="all">전체</button>
+        <select v-model="select" >
+          <option value = "title">제목</option>
+          <option value = "reciever">받는이</option>
+        </select>
+
+        <input type="text" v-model="find"><button @click="findbtn">검색</button>
+    </div> 
+
+    <!-- 쪽지목록 -->
+    <div class="message" v-for="message in list" :key="message.num">
+
+      <div class="message-header">
+        <div class="message-profile">
+          <div class="box-profile" style="background: #black">
+            <img class="profile" @error="replaceImg" :src="'http://localhost:8082/members/imgs/' + message.reciever.id" />
+          </div>
+          
+          <div class="message-id">{{ message.reciever.id }}</div>
+        </div>
+
+        <div class="readcheck" v-if="message.check == 0">
+          <span class="material-symbols-outlined">mail</span><br />
+        </div>
+        <div v-else  class="readcheck">
+          <span class="material-symbols-outlined">drafts</span>
+        </div>
+        
+        
       </div>
-      <div v-else>
-        <span class="material-symbols-outlined">drafts</span>
+
+      <div class="message-body">
+        <div class="message-body-top">
+          <div class="message-title">   
+    
+            <a v-on:click="($event) => detail(
+                    message.num,
+                    message.reciever.id,
+                    message.send_dt,
+                    message.title,
+                    message.content
+                  )">{{ message.title }}</a><br />
+          </div> 
+          <div class="message-date">  
+            {{ message.send_dt }}<br />
+          </div>   
+        </div>     
+
+        <div class="message-body-bottom">
+          <button class="message-delete" @click="del(message.num)">delete</button> 
+        </div>   
       </div>
-      <span class="material-symbols-outlined" @click="del(message.num)"
-        >delete</span
->
+             
     </div>
+  
+  
 
-    <!-- 모달창 -->
+   <!-- 쪽지 내용 읽기 모달창 -->
     <div class="black-bg" v-if="modalOpen === true">
       <div class="white-bg">
-        <h3>{{ num }} title : {{ title }}</h3>
-        <span class="box-profile" style="background: #black">
-          <img class="profile" @error="replaceImg" :src="'http://localhost:8082/members/imgs/' + reciever"/>
-        </span>
+        <h3>{{ title }}</h3>
+        <div class="modal-box-profile" style="background: #black">
+          <img class="modal-profile" @error="replaceImg" :src="'http://localhost:8082/members/imgs/' + reciever"/>
+        </div>
         <p>받는사람 : {{ reciever }}</p>
-        <p>보낸날짜 : {{ senddt }}</p>
         <p>내용 : {{ content }}</p>
-        <button v-on:click="modalOpen = false" class="modal-exit-btn">
-          확인
-        </button>
+        <p>보낸날짜 : {{ senddt }}</p>
+       
+        <button v-on:click="modalOpen = false" class="modal-exit-btn">확인</button>
       </div>
-    </div>
+    </div>  
   </div>
 </template>
 
@@ -202,11 +226,11 @@ export default {
 
 
 <style scoped>
-.message-bg {
+/* .message-bg {
   background-color: white;
   align-items: center;
   margin: 20px;
-}
+} */
 .black-bg {
   display: flex;
   justify-content: center;
@@ -221,10 +245,10 @@ export default {
 }
 
 .white-bg {
-  width: 50%;
-  background-color: white;
+  width: 40%;
+  background-color: #fbf8f4;
   padding: 20px;
-  border-radius: 8px;
+  border-radius: 40px;
 }
 
 .modal-exit-btn {
@@ -235,22 +259,130 @@ export default {
   cursor: pointer;
 }
 
-
-
-</style>
-<style>
  .box-profile {
   display: block;
   width: 35px;
   height: 35px; 
   border-radius: 70%;
   overflow: hidden;
+  float: left
 }
 .profile {
   width: 100%;
   height: 100%;
+  background-color: white;
   object-fit: cover;
   cursor: pointer;
 }
+
+.modal-box-profile {
+  display: block;
+  width: 150px;
+  height: 150px; 
+  border-radius: 70%;
+  overflow: hidden;
+  float: left;
+  margin-left:10px ;
+}
+.modal-profile {
+  width: 100%;
+  height: 100%;
+  background-color: white;
+  object-fit: cover;
+  cursor: pointer;
+}
+
+.message-list{
+  margin-bottom: 40px;
+}
+.message{
+  width:30%;
+  display: block;
+  margin:auto;
+  border:2px solid #F0F0F0;
+  margin-bottom: 30px;
+  border-radius: 20px;
+
+}
+.message:hover {
+  transform: scale( 1.01 )
+}
+.message-header{
+  /* position:relative; */
+  display: flex;
+  width: 100%;
+  background-color: #F0F0F0;
+  justify-content: space-between;
+  padding:5px;
+   border-radius: 20px 20px 0px 0px;
+
+}
+.message-profile{
+  display:flex;
+  justify-content: left;
+  margin-left:10px;
+
+}
+.message-id{
+  display:flex;
+  justify-content: left;
+  float:left; 
+  margin-left:10px;
+  align-items : center;
+  font-size: 1.3em;
+
+
+}
+
+.readcheck{
+  display:flex;
+  text-align:right;
+  float:right;
+  justify-content: right;
+  margin-right:10px;
+  align-items : center;
+  color:rgb(244, 191, 79)
+  
+
+}
+
+.message-body-top{
+  display:flex;
+  padding:15px 15px 5px 15px;
+  
+  justify-content: space-between;
+}
+.message-title{
+  font-size: 1.2em;
+  cursor: pointer;
+  margin-left:10px;
+}
+.message-date{
+ 
+  float:right;
+  display:flex;
+  /* text-align:right; */
+  /* justify-content: right; */
+}
+.message-body-bottom{
+  display:flex;
+
+  justify-content: right;
+}
+
+.message-delete{
+  display:flex;
+  float:right;
+  justify-content: right;
+  margin-right:10px;
+  margin-bottom:10px;
+  border:0px;
+  border-radius: 10px;
+  background-color:rgb(244, 191, 79)
+}
+
+
+
 </style>
+
 
