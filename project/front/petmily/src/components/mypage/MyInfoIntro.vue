@@ -21,7 +21,7 @@ export default {
     return {
         id: sessionStorage.getItem('loginId'),
         chkpw: '',
-        pw: 'flwlsk2860@',
+        pw: '',
         flag: false,
     }
   },

@@ -10,7 +10,7 @@
 </template>
 
  <script>
-import img from "@/assets/imgs/mypage_sample.jpg";
+import img from "@/assets/imgs/mypage_sample.jpg"
 import MyInfoIntro from '@/components/mypage/MyInfoIntro.vue'
 import MyInfoEdit from '@/components/mypage/MyInfoEdit.vue'
 

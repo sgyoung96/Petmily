@@ -96,9 +96,9 @@
                                 </th>
                                 <td>
                                     <div>
-                                        <input id="new_email" type="text" placeholder="변경할 이메일" /><label class="btn-email">인증</label>
+                                        <input id="new_email" type="text" placeholder="변경할 이메일" /><label @click="emailcheck" class="btn-email">인증</label>
                                         <br>
-                                        <input id="email-auth" type="text" placeholder="인증번호" /><label class="btn-email">확인</label>
+                                        <input id="email-auth" type="text" placeholder="인증번호" /><label @click="emailCodeCheck" class="btn-email">확인</label>
                                     </div>
                                 </td>
                             </tr>
@@ -116,10 +116,10 @@
                                 <td>
                                     <div class="box-password">
                                         <p>비밀번호 변경</p>
-                                        <input class="ipt-pw" type="password" placeholder="새 비밀번호" /><br>
-                                        <label class ="ipt-error" v-show="isPwdCheck">영문, 숫자, 특수문자 8~16문자</label><br>  
-                                        <input class="ipt-pw" type="password" placeholder="새 비밀번호 확인" /><br>
-                                        <label class ="ipt-error" v-show="isPwdCheckEqual">비밀번호가 일치하지 않아요</label><br> 
+                                        <input class="ipt-pw" v-model="pw" type="password" placeholder="새 비밀번호" /><br>
+                                        <label id="warn_pw" class ="ipt-error" >영문, 숫자, 특수문자 8~16문자</label><br>  
+                                        <input id="newpwdcheck" v-model="new_pw" class="ipt-pw" type="password" placeholder="새 비밀번호 확인" /><br>
+                                        <label id="warn_pw_chk" class ="ipt-error" >비밀번호가 일치하지 않아요</label><br> 
                                     </div>
                                 </td>
                             </tr>
@@ -153,8 +153,20 @@ export default {
         phone: '',
         address: '',
 
+        pw: '',
+        rawpw: '',
+        new_pw: '',
+
         isPwdCheck: true,
         isPwdCheckEqual: true
+    }
+  },
+  watch:{
+    'pw' : function(){
+        this.checkNewPwd()
+    },
+    'new_pw' : function () {
+        this.isCheckNewPwd()
     }
   },
   created: function () {
@@ -172,6 +184,7 @@ export default {
                 if (dto != null) { 
                     console.log(dto);
                     //this.id = dto.id
+                    self.rawpw = dto.pw
                     self.name = dto.name
                     self.email = dto.email
                     self.birth = moment(dto.birth).format('L');
@@ -189,8 +202,9 @@ export default {
         });
     },
     setBaseInfo() {
-        // 변수 할당된거 화면에 뿌리는 함수
         console.log(this.name);
+        document.getElementById('warn_pw').style = 'display: none;';
+        document.getElementById('warn_pw_chk').style = 'display: none;';
     },
     changeProfileImg() {
         const ipt_file_upload = document.getElementById('profile');
@@ -229,6 +243,69 @@ export default {
         }
     },
 
+    checkNewPwd(){
+        const validatePassword = /^(?=.*[a-zA-z])(?=.*[0-9])(?=.*[$`~!@$!%*#^?&\\(\\)\-_=+]).{8,16}$/
+        if(!validatePassword.test(this.pw)){
+            document.getElementById('warn_pw').style = "display: block;";
+            document.getElementById("newpwdcheck").readOnly = true;
+            document.getElementById('warn_pw_chk').style = 'display: none;';
+        } else {
+            document.getElementById("newpwdcheck").readOnly = false;
+            document.getElementById('warn_pw').style = 'display: none;';
+            document.getElementById('warn_pw_chk').style = 'display: none;';
+        }
+    },
+    isCheckNewPwd() {
+        if (this.pw == this.new_pw) {
+            document.getElementById('warn_pw_chk').style = 'display: none;';
+        } else {
+            document.getElementById('warn_pw_chk').style = 'display: block;';
+        }
+    },
+    
+    emailcheck(){
+        const self = this;
+
+        self.$axios.get('http://localhost:8082/members/email/'+ document.getElementById('new_email').value)
+        .then(function(res){ 
+            if(res.status == 200){
+                if(res.data.dto == null){
+                    self.sendEmail()
+                } else {
+                    alert('중복된 이메일')
+                }
+            } else {
+                alert('에러코드 :' + res.status)
+            }
+        });
+    },
+    sendEmail(){
+        const self = this;
+
+        let formdata = new FormData();
+        formdata.append('email', document.getElementById('new_email').value)
+        self.$axios.post('http://localhost:8082/emailConfirm', formdata)
+        .then(function(res){ 
+        if(res.status == 200){
+            let confirm = res.data.confirm
+            alert(confirm);
+            alert('메일 전송 완료');
+        } else {
+            alert('오류')
+        }
+      });
+
+     },
+    emailCodeCheck(){
+        const self = this;
+      
+        if (self.confirm === self.emailCode){
+            alert('인증완료')
+        } else{
+            alert('인증을 다시 시도해주세요');
+        }
+
+    },
   },
   components: {
      
