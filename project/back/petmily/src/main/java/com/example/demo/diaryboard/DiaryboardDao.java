@@ -15,7 +15,7 @@ public interface DiaryboardDao extends JpaRepository<Diaryboard, Integer> {
 	ArrayList<Diaryboard> findByIdContaining(Member id);
 	ArrayList<Diaryboard> findByTitleContaining(String title);
 	ArrayList<Diaryboard> findAllByOrderByNumDesc();
-	ArrayList<Diaryboard> findAllByOrderByLikecnt();
+	ArrayList<Diaryboard> findAllByOrderByLikecntDesc();
 	
 	@Transactional
 	@Modifying
@@ -30,6 +30,11 @@ public interface DiaryboardDao extends JpaRepository<Diaryboard, Integer> {
 	@Transactional
 	@Query(value= "SELECT COUNT(*) FROM Diaryboard")
 	int countByAll();
+	
+	// id를 받아와서 그 id의 작성한게시판 개수 출력
+    @Transactional
+    @Query(value = "SELECT COUNT(*) FROM Diaryboard WHERE id = :id")
+    int countById(@Param("id") Member id);
 	
 	
 	

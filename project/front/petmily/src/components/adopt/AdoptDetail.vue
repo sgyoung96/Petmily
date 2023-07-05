@@ -6,7 +6,7 @@
           &nbsp;<span style="color:rgb(244, 191, 79);">ADOPT</span></strong></h4>
     </div>
     <div class="d-all">
-      <table class="table table-bordered" style="margin-bottom:50px">
+      <table class="table table-bordered" style="margin-bottom:0px">
       <tbody div class="tbody"  v-if="dto.id">
         <tr>
           <th>제목</th>
@@ -75,7 +75,7 @@
           <router-link to="/diaryboardhome" class="badge text-bg-secondary" style="font-size: 17px;">목록으로</router-link>
         </div>
         <div>
-          <button @click="likebtn(dto.id.id, dto.num)">좋아요</button>
+          <button @click="likebtn(dto.num)">좋아요</button>
           <span v-on:click="edit()" class="badge text-bg-secondary" style="font-size: 17px;">수정하기</span>
           <button v-on:click="boarddelete">삭제하기</button>
         </div>
@@ -172,12 +172,13 @@
 }
 
 .table th {
-  background-color: rgb(156 133 109);
+  background-color: rgb(156, 156, 39);
 }
 .a-img {
  text-align: left;
   margin-top: 10px;
   margin-bottom: 10px;
+  width:1000px;
 }
 
 .d-all {
@@ -277,16 +278,17 @@ export default {
     replaceImg(e) {
       e.target.src = img;
     },
-    likebtn(id, num) {
+    likebtn(num) {
+      alert(this.id)
       if(this.id == null){
         alert('로그인 후 이용가능합니다.')
       }else{
-      this.$axios.get('http://localhost:8082/adoptliketable/' + id + '/' + num)
+      this.$axios.get('http://localhost:8082/adoptliketable/' + this.id + '/' + num)
         .then(response => {
           if (response.status == 200) {
             if (response.data.flag) {
               let formData = new FormData();
-              formData.append('id', id)
+              formData.append('id', this.id)
               formData.append('num', num)
               this.$axios.post('http://localhost:8082/adoptliketable', formData)
                 .then(response => {
@@ -303,7 +305,7 @@ export default {
                 })
             } else {
               let formData = new FormData();
-              formData.append('id', id)
+              formData.append('id', this.id)
               formData.append('num', num)
               this.$axios.delete('http://localhost:8082/adoptliketable', {
                 data: formData

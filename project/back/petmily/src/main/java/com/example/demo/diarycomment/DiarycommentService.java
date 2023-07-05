@@ -1,9 +1,11 @@
 package com.example.demo.diarycomment;
 
 import java.util.ArrayList;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.example.demo.diaryboard.Diaryboard;
+import com.example.demo.member.Member;
 
 @Service
 public class DiarycommentService {
@@ -38,5 +40,11 @@ public class DiarycommentService {
 	
 	public void delDiarycomment(int db_num) {
 		dao.deleteById(db_num);
+	}
+	
+	//작성한 댓글수 출력
+	public int printPerson(String id) {
+		Member m = new Member(id,"","","","",null,"","","",null);
+		return dao.countById(m);
 	}
 }

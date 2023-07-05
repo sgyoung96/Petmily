@@ -1,5 +1,5 @@
 <template>
-  <div class="v-title">
+  <div class="v-title" @click="goHome" style="cursor: pointer;">
     <h4 style="text-align: center;"><strong><span style="color:rgb(156, 156, 39)">PETMILY</span>
         &nbsp;<span style="color:rgb(244, 191, 79);">VOLUNTEER</span></strong></h4>
   </div>
@@ -10,10 +10,10 @@
           style="font-size: 17px; text-decoration: none;">목록으로</router-link>
       </div>
       <div style="float:right">
-        <span v-if="!isApplied" v-on:click="apply" class="badge text-bg-danger" style="font-size: 17px;">신청하기</span>&nbsp;
-        <span v-else v-on:click="cancelApply" class="badge text-bg-danger" style="font-size: 17px;">신청취소</span>&nbsp;
-        <span v-on:click="addwatch(dto.num)" class="badge text-bg-secondary" style="font-size: 17px;">♡관심목록담기</span>&nbsp;
-        <span v-if="this.loginId==='admin'" v-on:click="del(dto.num)" class="badge text-bg-danger" style="font-size: 17px;">삭제</span>
+        <span v-if="!isApplied" v-on:click="apply" class="badge text-bg-danger" style="font-size: 17px; cursor: pointer;">신청하기</span>&nbsp;
+         <span v-else v-on:click="cancelApply" class="badge text-bg-danger" style="font-size: 17px; cursor: pointer;">신청취소</span>&nbsp;
+        <span v-on:click="addwatch(dto.num)" class="badge text-bg-secondary" style="font-size: 17px; cursor: pointer;">♡관심목록담기</span>&nbsp;
+        <span v-if="this.loginId==='admin'" v-on:click="del(dto.num)" class="badge text-bg-danger" style="font-size: 17px; cursor: pointer;">삭제</span>
       </div>
     </div>
     <div class="vhead">
@@ -29,15 +29,15 @@
       <tbody div class="tbody">
         <tr>
           <th>봉사날짜</th>
-          <td>{{ dto.vol_date }}</td>
+          <td>{{ formatDateTime(volunteerDate) }}</td>
           <th>모집기간</th>
           <td>{{ formatDate(dto.deadline) }}까지</td>
         </tr>
         <tr>
           <th>모집인원</th>
-          <td>{{ dto.vol_number }}</td>
+          <td>{{ dto.vol_number }}명</td>
           <th>신청인원</th>
-          <td>{{ dto.count }}</td>
+          <td>{{ dto.count }}명</td>
         </tr>
         <tr>
           <th>모집기관</th>
@@ -129,7 +129,8 @@ export default {
       marker: null,
       list2: [],
       state: '',
-      sysdate: new Date()
+      sysdate: new Date(),
+      volunteerDate: '2023-07-11T15:00:00.000+00:00'
     }
   },
   mounted() {
@@ -143,6 +144,18 @@ export default {
     window.scrollTo({ top: 0, behavior: 'auto' });
   },
   methods: {
+    formatDateTime(dateTime) {
+  const dateObj = new Date(dateTime);
+  const year = dateObj.getFullYear();
+  const month = ("0" + (dateObj.getMonth() + 1)).slice(-2);
+  const day = ("0" + dateObj.getDate()).slice(-2);
+
+  return `${year}년 ${month}월 ${day}일`;
+},
+
+    goHome() {
+      location.href = '/volboardhome';
+    }, 
     addwatch(num) {
   let id = this.loginId;
   let formData = new FormData();
@@ -308,7 +321,12 @@ const self = this;
         day: '2-digit'
       };
 
-      return new Date(date).toLocaleString('ko-KR', options).replace(/\D/g, '');
+      const formattedDate = new Date(date).toLocaleString('ko-KR', options).replace(/\D/g, '');
+  const year = formattedDate.slice(0, 4);
+  const month = formattedDate.slice(4, 6);
+  const day = formattedDate.slice(6, 8);
+
+  return `${year}년 ${month}월 ${day}일`;
     },
     scrollToMap() {
       this.$refs.map.scrollIntoView({ behavior: 'smooth' });

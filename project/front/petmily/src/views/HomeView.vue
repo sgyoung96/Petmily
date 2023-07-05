@@ -9,7 +9,7 @@
           <div class="carousel-item" data-bs-interval="3000">
             <img src="../assets/images/top_banner_dog_01.jpg" class="d-block w-100" alt="...">
           </div>
-          
+
           <div class="carousel-item" data-bs-interval="2000">
             <img src="../assets/images/배경.png" class="d-block w-100" alt="...">
           </div>
@@ -31,6 +31,50 @@
           <span class="visually-hidden">Next</span>
         </button>
       </div>
+      <div style="display:flex">
+        <div v-for="dboard in arr" :key="dboard.num">
+          <div class="img-box" v-on:click="$event => detail(dboard.num)">
+            <a><img class="b-img" :src="'http://localhost:8082/dboard/imgs/' + dboard.num + '/1'"></a>
+            <div class="b-txt">
+              <div class="b-title">
+                {{ dboard.title }}
+              </div>
+              <div class="b-id">
+                <span>
+                  작성자: {{ dboard.id.id }}
+                </span>
+                <span>
+                  <img class="l-img" src="../assets/images/heart.png" style="width: 15px; height: 15px;">{{ dboard.likecnt
+                  }}
+                </span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div style="display:flex">
+        <div v-for="dboard in arr2" :key="dboard.num">
+          <div class="img-box" v-on:click="$event => detail2(dboard.num)">
+            <a><img class="b-img" :src="'http://localhost:8082/adopt/imgs/' + dboard.num + '/1'"></a>
+            <div class="b-txt">
+              <div class="b-title">
+                {{ dboard.title }}
+              </div>
+              <div class="b-id">
+                <span>
+                  작성자: {{ dboard.id.id }}
+                </span>
+                <span>
+                  <img class="l-img" src="../assets/images/heart.png" style="width: 15px; height: 15px;">{{ dboard.likecnt
+                  }}
+                </span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
       <div class="container text-center">
         <div class="row">
           <div class="col">
@@ -45,29 +89,27 @@
           </div>
         </div>
       </div>
-    
-    <div id="app">
-    <!-- ... Existing code ... -->
 
-    <div class="form-group">
-      <label for="volboard-video">유튜브 동영상</label>
-      <input type="text" class="form-control" v-model="videoUrl">
-    </div>
+      <div id="app">
+        <!-- ... Existing code ... -->
 
-    <!-- Display YouTube video -->
-    <!-- Display YouTube video -->
-<div class="form-group">
-  <label for="volboard-video-preview">동영상 미리보기</label>
-  <div v-if="isValidVideoUrl">
-    <iframe :src="embeddedVideoUrl" width="560" height="315" frameborder="0" allowfullscreen></iframe>
-  </div>
-  <div v-else>
-    <p>유효한 YouTube 동영상 URL을 입력하세요.</p>
-  </div>
-</div>
+        <div class="form-group">
+          <input type="hidden" class="form-control" v-model="videoUrl">
+        </div>
 
-    <!-- ... Existing code ... -->
-  </div>
+        <!-- Display YouTube video -->
+        <!-- Display YouTube video -->
+        <div class="form-group">
+          <div v-if="isValidVideoUrl">
+            <iframe :src="embeddedVideoUrl" width="560" height="315" frameborder="0" allowfullscreen></iframe>
+          </div>
+          <div v-else>
+            <p>유효한 YouTube 동영상 URL을 입력하세요.</p>
+          </div>
+        </div>
+
+        <!-- ... Existing code ... -->
+      </div>
       <div>
         <img src="../assets/images/dboardpic2.jpg" style="width: 40%; height: 200px; margin-bottom: 20px;">
       </div>
@@ -104,6 +146,8 @@ export default {
     D4.setDate(D4.getDate() - 4);
     D5.setDate(D5.getDate() - 5);
     return {
+      loginId: null,
+      list: [],
       items: [],
       totalItems: 0, // 전체 항목 수
       sysdate: sysdate,
@@ -112,21 +156,63 @@ export default {
       D3: D3,
       D4: D4,
       D5: D5,
-      videoUrl: 'https://www.youtube.com/watch?v=3AV35NdBZOI'
+      videoUrl: 'https://www.youtube.com/watch?v=3AV35NdBZOI',
+      arr: [],
+      arr2: [] 
     };
   },
   computed: {
-  embeddedVideoUrl() {
-    // Extract video ID from the URL
-    const videoId = this.extractVideoId(this.videoUrl);
-    // Create the embedded video URL
-    return `https://www.youtube.com/embed/${videoId}`;
+    embeddedVideoUrl() {
+      // Extract video ID from the URL
+      const videoId = this.extractVideoId(this.videoUrl);
+      // Create the embedded video URL
+      return `https://www.youtube.com/embed/${videoId}`;
+    },
+    isValidVideoUrl() {
+      // Validate the YouTube video URL
+      return this.extractVideoId(this.videoUrl) !== null;
+    }
   },
-  isValidVideoUrl() {
-    // Validate the YouTube video URL
-    return this.extractVideoId(this.videoUrl) !== null;
-  }
-},
+  created: function () {
+    this.loginId = sessionStorage.getItem('loginId')
+    const self = this;
+    self.$axios.get('http://localhost:8082/dboard/ol')//+self.loginId
+      .then(function (res) {
+        if (res.status == 200) {
+          self.list = res.data.list
+          let list = res.data.list
+          if (list.length < 4) {
+            for (let i = 0; i < list.length; i++) {
+              self.arr[i] = list[i]
+            }
+          } else {
+            for (let i = 0; i < 4; i++) {
+              self.arr[i] = list[i]
+            }
+          }
+        } else {
+          alert('에러코드' + res.status)
+        }
+      });
+
+    self.$axios.get('http://localhost:8082/adopt/ol').then(function (res) {
+      if (res.status == 200) {
+        self.list = res.data.list;
+        let list = res.data.list
+          if (list.length < 4) {
+            for (let i = 0; i < list.length; i++) {
+              self.arr2[i] = list[i]
+            }
+          } else {
+            for (let i = 0; i < 4; i++) {
+              self.arr2[i] = list[i]
+            }
+          }
+      } else {
+        alert('에러');
+      }
+    });
+  },
   mounted() {
     this.loadData();
     this.getKind(this.formatDate(this.sysdate), 417000)
@@ -168,13 +254,20 @@ export default {
       });
   },
   methods: {
+    detail(num) {
+      // alert(num)
+      this.$router.push({ name: 'DiaryBoardDetail', query: { num: num } })
+    },
+    detail2(num) {
+      this.$router.push({name: 'AdoptDetail', query: {num: num}})
+    },
     extractVideoId(url) {
-  // Regular expression to extract the video ID from YouTube URL
-  const regex = /[?&]v=([^&#]+)/;
-  const match = url.match(regex);
-  
-  return match ? match[1] : null;
-},
+      // Regular expression to extract the video ID from YouTube URL
+      const regex = /[?&]v=([^&#]+)/;
+      const match = url.match(regex);
+
+      return match ? match[1] : null;
+    },
 
     getKind(day, kindCd) {
       const apiUrl = `http://apis.data.go.kr/1543061/abandonmentPublicSrvc/abandonmentPublic?_type=json&bgnde=${day}&endde=${day}&pageNo=1&numOfRows=1000&upkind=${kindCd}&serviceKey=JkjPRne8oXZTCJTyLN9579FQZI6%2FkhepY9kJhsmdEpdiEjyDUj8HjiEo8ba4BAa8AOGXfQWZA7AAHiljNzoOBA%3D%3D`;
@@ -295,6 +388,39 @@ export default {
 </script>
 
 <style scoped>
+.img-box {
+  border: 1px solid silver;
+  cursor: pointer;
+  width: 293px;
+  height: 260px;
+}
+
+.b-img {
+  width: 293px;
+  height: 200px;
+}
+
+.b-txt {
+  text-align: left;
+  display: flex;
+  flex-direction: column;
+}
+
+.b-title {
+  font-size: large;
+}
+
+.b-id {
+  font-size: medium;
+  display: flex;
+  justify-content: space-between;
+}
+
+.l-img {
+  width: 15px;
+  height: 15px;
+}
+
 .container {
   height: auto;
 }

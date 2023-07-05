@@ -2,13 +2,13 @@
   <div>
     <img src="../../assets/images/vboard2.jpg" style="width: 85%; height: 500px; margin-bottom: 20px;">
   </div>
-  <div class="v-title">
+  <div class="v-title" @click="goHome" style="cursor: pointer;">
     <h4 style="text-align: center;"><strong><span style="color:rgb(156, 156, 39)">PETMILY</span>
         &nbsp;<span style="color:rgb(244, 191, 79);">VOLUNTEER</span></strong></h4>
   </div>
   <div style="padding-left: 150px;padding-right:150px">
     <div>
-      <input type="text" v-model="searchKeyword" placeholder="주소를 입력해주세요">
+      <input type="text" @keyup.enter="search()" v-model="searchKeyword" placeholder="주소를 입력해주세요">
       <button v-on:click="search()">검색</button>
     </div>
     <div style="border-top:2px solid black; padding-top:10px; margin-top:10px">
@@ -81,6 +81,9 @@ export default {
     }
   },
   methods: {
+    goHome() {
+      location.href = '/volboardhome';
+    }, 
     search() {
       const self = this
       let address = self.searchKeyword

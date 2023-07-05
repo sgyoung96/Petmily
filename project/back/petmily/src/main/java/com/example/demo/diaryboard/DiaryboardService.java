@@ -65,7 +65,7 @@ public class DiaryboardService {
 	
 	//좋아요 순으로 정렬
 	public ArrayList<DiaryboardDto> getAllByLikecnt() {
-		ArrayList<Diaryboard> list = (ArrayList<Diaryboard>) dao.findAllByOrderByLikecnt();
+		ArrayList<Diaryboard> list = (ArrayList<Diaryboard>) dao.findAllByOrderByLikecntDesc();
 		ArrayList<DiaryboardDto> list2 = new ArrayList<DiaryboardDto>();
 		for (Diaryboard d : list) {
 			list2.add(new DiaryboardDto(d.getNum(), d.getTitle(), d.getContent(), d.getW_date(), d.getId(), d.getPic1(),
@@ -92,4 +92,9 @@ public class DiaryboardService {
 	public int getCount() {
 		return dao.countByAll();
 	}
+	//작성한 게시판수 출력
+		public int printPerson(String id) {
+			Member m = new Member(id,"","","","",null,"","","",null);
+			return dao.countById(m);
+		}
 }

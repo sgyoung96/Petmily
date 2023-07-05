@@ -83,16 +83,20 @@
 .d-all {
   padding-left: 150px;
   padding-right: 150px;
+  text-align: center;
 }
 
 .img-box {
   border: 1px solid silver;
   cursor: pointer;
+  width:293px;
+  height:260px;
 }
 
 .b-img {
-  width: 293px;
+  width: 290px;
   height:200px;
+  border-bottom:1px solid silver;
 }
 
 .b-txt {

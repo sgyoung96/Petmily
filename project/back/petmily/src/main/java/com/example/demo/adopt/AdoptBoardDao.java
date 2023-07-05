@@ -15,7 +15,7 @@ import com.example.demo.member.Member;
 public interface AdoptBoardDao extends JpaRepository<Adoptboard, Integer> {
     ArrayList<Adoptboard> findById(Member id);
     ArrayList<Adoptboard> findByTitle(String title);
-    ArrayList<Adoptboard> findAllByOrderByLikecnt();
+    ArrayList<Adoptboard> findAllByOrderByLikecntDesc();
 
     @Transactional
     @Query(value = "SELECT COUNT(*) FROM Adoptboard")
@@ -30,4 +30,9 @@ public interface AdoptBoardDao extends JpaRepository<Adoptboard, Integer> {
 	@Modifying
 	@Query(value="update adoptboard set likecnt=likecnt-1 where num=:num", nativeQuery = true)
 	void downCount(@Param("num") int num);
+	
+	// id를 받아와서 그 id의 작성한게시판 개수 출력
+    @Transactional
+    @Query(value = "SELECT COUNT(*) FROM Adoptboard WHERE id = :id")
+    int countById(@Param("id") Member id);
 }

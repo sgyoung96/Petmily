@@ -38,4 +38,9 @@ public interface VolboardDao extends JpaRepository<Volboard, Integer> {
 	@Transactional
 	@Query(value = "SELECT COUNT(*) FROM Volboard")
 	int countByAll();
+	
+	// id를 받아와서 그 id의 작성한게시판 개수 출력
+    @Transactional
+    @Query(value = "SELECT COUNT(*) FROM Volboard WHERE writer = :writer")
+    int countById(@Param("writer") Member writer);
 }

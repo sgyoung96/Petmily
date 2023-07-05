@@ -5,7 +5,7 @@
       <div class="form-container">
 
         <div class="list-container">
-          <p><label class="section01" >SECTION 1</label></p>
+          <p><label class="section01">SECTION 1</label></p>
           <p><label class="section01-title"><u><span>봉사신청명단영역</span></u></label></p>
           <div class="section01-content">
             <div class="data-header">
@@ -23,26 +23,29 @@
                   <th colspan="5">
                     <label><span>신청명단</span></label>
                   </th>
-                  <th colspan="2"> 
+                  <th colspan="2">
                     <label><span>봉사날짜</span></label>
                   </th>
                   <th colspan="1">
                     <label><span>STATE</span></label>
                   </th>
-                  <th colspan="1"> 
+                  <th colspan="1">
                     <label><span>모집기간</span></label>
                   </th>
                 </tr>
                 <tr v-for="vboard in list" :key="vboard.num" @click="detail(vboard.num, vboard.address)">
-                  <td colspan="1"><label><span class="badge text-bg-danger" style="font-size: 17px;" v-if="calculateDateDifference(vboard.deadline).difference < 0">모집마감</span>
-            <span class="badge text-bg-primary" style="font-size: 17px;" v-else >마감 D-{{ calculateDateDifference(vboard.deadline).days }}</span>&nbsp;</label></td>
+                  <td colspan="1"><label><span class="badge text-bg-danger" style="font-size: 17px;"
+                        v-if="calculateDateDifference(vboard.deadline).difference < 0">모집마감</span>
+                      <span class="badge text-bg-primary" style="font-size: 17px;" v-else>마감 D-{{
+                        calculateDateDifference(vboard.deadline).days }}</span>&nbsp;</label></td>
                   <td colspan="1"><label><span>{{ vboard.place }}</span></label></td>
                   <td colspan="1"><label><span>({{ vboard.count }} / {{ vboard.vol_number }})</span></label></td>
-                  <td colspan="5" width="300px"><label><span>
-                    <tr v-for="person in list2" :key="person.num">
-        <td>{{ person.id.id }}</td>
-      </tr></span></label></td>
-                  <td colspan="2"><label><span></span></label></td>
+                  <td colspan="5" width="300px">
+                    <label>
+                      <span v-for="person in getParticipants(vboard.num)" :key="person.num">{{ person.id.id }}</span>
+                    </label>
+                  </td>
+                  <td colspan="2"><label><span>{{ formatDate(vboard.vol_date) }}</span></label></td>
                   <td colspan="1"><label><span></span></label></td>
                   <td colspan="1"><label><span>{{ formatDate(vboard.deadline) }}까지</span></label></td>
                 </tr>
@@ -64,11 +67,13 @@
       </div>
     </div>
     <div style="border-top:2px solid black; padding-top:10px; margin-top:10px">
-      
+
       <div class="vbody" v-for="vboard in list" :key="vboard.num" @click="detail(vboard.num, vboard.address)">
         <div style="text-align: left;">
-            <span class="badge text-bg-danger" style="font-size: 17px;" v-if="calculateDateDifference(vboard.deadline).difference < 0">모집마감</span>
-            <span class="badge text-bg-primary" style="font-size: 17px;" v-else >마감 D-{{ calculateDateDifference(vboard.deadline).days }}</span>&nbsp;
+          <span class="badge text-bg-danger" style="font-size: 17px;"
+            v-if="calculateDateDifference(vboard.deadline).difference < 0">모집마감</span>
+          <span class="badge text-bg-primary" style="font-size: 17px;" v-else>마감 D-{{
+            calculateDateDifference(vboard.deadline).days }}</span>&nbsp;
           <strong>모집기간</strong> {{ formatDate(vboard.deadline) }}까지
           <br />
           <div class=vtitle>{{ vboard.title }}</div>
@@ -119,8 +124,8 @@ export default {
       currentPage: 1,
       pageSize: 8,
       searchKeyword: '',
-      list2:[]
-      
+      list2: [],
+
     }
   },
   computed: {
@@ -134,17 +139,17 @@ export default {
     }
   },
   methods: {
-    search(){
+    search() {
       const self = this
       let address = self.searchKeyword
       self.$axios.get('http://localhost:8082/volboard/address/' + address)
-      .then(function (response){
-        if(response.status == 200){
-          self.list = response.data.list
-        }else{
-          alert('에러')
-        }
-      })
+        .then(function (response) {
+          if (response.status == 200) {
+            self.list = response.data.list
+          } else {
+            alert('에러')
+          }
+        })
     },
     detail(num, address) {
       this.$router.push({
@@ -179,6 +184,20 @@ export default {
     },
     goToPage(pageNumber) {
       this.currentPage = pageNumber;
+    },
+    getParticipants(num) {
+      const self = this;
+      alert(num)
+      self.$axios.get('http://localhost:8082/participants/' + num)
+        .then(function (res) {
+          if (res.status == 200) {
+            let list2 = res.data.list
+            alert(list2[0].id.id)
+            return list2;
+          } else {
+            alert('에러')
+          }
+        })
     }
   },
   created: function () {
@@ -191,15 +210,9 @@ export default {
         alert('에러')
       }
     })
-  self.$axios.get('http://localhost:8082/participants/' + this.num)
-      .then(function (res) {
-        if (res.status == 200) {
-          self.list2 = res.data.list
-        } else {
-          alert('에러')
-        }
-      })
-  }}
+
+  }
+}
 </script>
 
 <style scoped>
@@ -273,7 +286,7 @@ table {
   font-size: 14px;
   color: black;
   text-align: center;
-} 
+}
 
 .data-contents {
   display: flex;
@@ -281,6 +294,7 @@ table {
   padding-left: 60px;
   padding-right: 80px;
 }
+
 .v-title {
   margin-top: 120px;
   margin-bottom: 120px;
@@ -327,5 +341,4 @@ li {
 
 a {
   color: #42b983;
-}
-</style>
+}</style>
