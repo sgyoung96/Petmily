@@ -1,99 +1,140 @@
 <template>
   <div>
     <div class="container">
-       <div id="memedit">
-      <div class="edit_area">
+        <div class="list">
+            <ul>
+                <li class="list-li">
+                    <div>
+                        <p class="header-profile">PROFILE</p>
+                        <img @click="changeProfileImg" id="preview" @error="replaceImg" :src="'http://localhost:8082/members/imgs/'+ id">                    
+                        <input type="file" id="profile" @change="previewFile">
+                        <label class="announce-profile">프로필 사진을 수정하려면 클릭하세요.</label>
+                    </div>
+                </li>
 
-        <h2 class="edit_title">내정보 수정</h2>
+                <li class="list-li">
+                    <div>
+                        <p>BASE INFO</p>
+                        <br>
+                        <table>
+                            <tr>
+                                <th>
+                                    <label>아이디</label>
+                                </th>
+                                <td>
+                                    <label>{{this.id}}</label>
+                                </td>
+                            </tr>
+                            <tr>
+                                <th>
+                                    <label>이름</label>
+                                </th>
+                                <td>
+                                    <label>{{this.name}}</label>
+                                </td>
+                            </tr>
+                            <tr>
+                                <th>
+                                    <label>생일</label>
+                                </th>
+                                <td>
+                                    <label>{{this.birth}}</label>
+                                </td>
+                            </tr>
+                            <tr>
+                                <th>
+                                    <label>성별</label>
+                                </th>
+                                <td>
+                                    <label>{{this.gender}}</label>
+                                </td>
+                            </tr>
+                            <tr>
+                                <th>
+                                    <label>휴대폰</label>
+                                </th>
+                                <td>
+                                    <label>{{this.phone}}</label>
+                                </td>
+                            </tr>
+                            <tr>
+                                <th>
+                                    <label>주소</label>
+                                </th>
+                                <td>
+                                    <label>{{this.address}}</label>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                </li>
 
-          <!-- 프로필사진 -->
-          <div class="input_box">
-            <span class="box-profile" style="background: #black;"> 
-             
-              <img class="profile" id="preview" @error="replaceImg" :src="'http://localhost:8082/members/imgs/'+ id">
-            </span>
-            <input type="file" id="profile" @change="previewFile"><br/> 
-          </div>
+                <li class="list-li email">
+                    <div>
+                        <p>EMAIL AUTH</p>
+                        <br>
+                        <table>
+                            <tr>
+                                <th colspan="2">
+                                    <p>이메일 변경</p>
+                                </th>
+                            </tr>
+                            <tr>
+                                <th>
+                                    <label>NOW</label>
+                                </th>
+                                <td>
+                                    <div>
+                                        <label class="raw-email">{{this.email}}</label>
+                                    </div>
+                                </td>
+                            </tr>
 
-          <!-- 아이디 -->
-          <div class="input_box">
-            <h6 class="input_title">아이디</h6><br/>
-             <input class="input_txt" type="text" v-model="id" readonly><br/>
-          </div>
+                            <tr>
+                                <th>
+                                    <label>NEW</label>
+                                </th>
+                                <td>
+                                    <div>
+                                        <input id="new_email" type="text" placeholder="변경할 이메일" /><label class="btn-email">인증</label>
+                                        <br>
+                                        <input id="email-auth" type="text" placeholder="인증번호" /><label class="btn-email">확인</label>
+                                    </div>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                </li>
 
-          <!-- 이름   -->
-          <div class="input_box">
-            <h6 class="input_title">이름</h6><br/>
-            <input class="input_txt" type="text" v-model="name" readonly><br/>
-          </div>
 
-          <!-- 비밀번호  -->
-          <div class="input_box">
-            <h6 class="input_title">비밀번호</h6><br/>
-            <input class="input_txt" type="password" id="oldpwd1" v-model="oldpwd1" style= "width : 68%" ><button @click="pwdcheck"  style="margin-left:15px">비밀번호 확인</button><br/>
-          </div>
+                <li class="list-li">
+                    <div>
+                        <p>PASSWORD</p>
+                        <br>
+                        <table>
+                            <tr>
+                                <td>
+                                    <div>
+                                        <p>비밀번호 변경</p>
+                                        <input type="password" placeholder="새 비밀번호" />
+                                        <p class ="input_error" v-show="isPwdCheck">영문, 숫자, 특수문자 8~16문자</p><br/>  
+                                        <input type="password" placeholder="새 비밀번호 확인" />
+                                        <p class ="input_error" v-show="isPwdCheckEqual">비밀번호 확인해주세요</p><br/> 
+                                    </div>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                </li>
 
-          <div  v-show = "newpwdchecktrue">
-          <!-- 새 비밀번호  -->
-          <div class="input_box">
-            <h6 class="input_title" :class="{ 'title_danger': newpwdHasError}">새 비밀번호</h6><br/>
-            <input class="input_txt" :class="{ 'input_danger': newpwdHasError}"  type="password" v-model="pwd" ><br/>
-            <p class ="input_error" v-show="isPwdCheck">영문, 숫자, 특수문자 8~16문자</p><br/>  
-          </div>
+            </ul>
+        </div>
+        <br>
 
-          <!--새 비밀번호확인  -->
-          <div class="input_box">
-            <h6 class="input_title" :class="{ 'title_danger': newpwdcheckHasError}">비밀번호확인</h6><br/>
-            <input class="input_txt" :class="{ 'input_danger': newpwdcheckHasError}" type="password" id="newpwdcheck" v-model="newpwdcheck"  @blur="checkNewPwdEqual"><br/>
-            <p class ="input_error" v-show="isPwdCheckEqual">비밀번호 확인해주세요</p><br/> 
-          </div> 
-          </div>
-
-          <!-- 이메일확인  -->
-          <div class="input_box">
-            <h6 class="input_title" :class="{ 'title_danger': newemailHasError}">이메일</h6><br/>
-            <input input class="input_txt" :class="{ 'input_danger': newemailHasError}"  type="text" id="email" v-model="email" style= "width : 70%"><button v-on:click="emailcheck" style="margin-left:23px">이메일 확인</button><br/>
-            <p class ="input_error" v-show="isEmailCheck">이메일 형식을 확인해주세요</p><br/> 
-          </div>
-
-          <!-- 이메일인증  -->
-          <div class="input_box">
-            <h6 class="input_title" :class="{ 'title_danger': newemailCodeHasError}">인증번호</h6><br/>
-            <input input class="input_txt" :class="{ 'input_danger': newemailCodeHasError}"  type="text" id="emailCode" v-model="emailCode" style= "width : 83%"><button v-on:click="emailCodeCheck" style="margin-left:23px">인증</button><br/> 
-            <p class ="input_error" v-show="isEmailCodeCheck">인증코드를 확인해주세요</p><br/> 
-           </div>
-
-          <!-- 생일  -->
-          <div class="input_box">   
-            <h6 class="input_title">생년월일</h6><br/> 
-            <input class="input_txt" type="text" v-model="birth" readonly><br/>
-          </div>
-
-           <!-- 성별  -->
-          <div class="input_box">  
-            <h6 class="input_title">성별</h6>
-            <input class="input_txt" type="text" v-model="gender" readonly><br/>
-          </div>
-
-           <!-- 전화번호  -->
-          <div class="input_box">  
-            <h6 class="input_title" :class="{ 'title_danger': newphoneHasError}">전화번호</h6><br/>
-            <input class="input_txt" :class="{ 'input_danger': newphoneHasError}" type="text" v-model="phone" @blur="checkPhone"><br/>
-            <p class ="input_error" v-show="isPhoneCheck">전화번호 형식을 확인해주세요</p><br/> 
-          </div>
-
-          <!-- 주소  -->
-          <div class="input_box">
-            <h6 class="input_title">주소</h6>    
-            <input class="input_txt" type="text" v-model="address" readonly><br/>
-
-          </div>
-
-          <button v-on:click="editcheck" style ="padding:5px 20px 5px 20px; width:100%; margin-top:60px">내정보 수정</button>
-
+        <div>
+            <button v-on:click="editcheck" style ="padding:5px 20px 5px 20px; width:100%; margin-top:60px">내정보 수정</button>
+        </div>
       </div>
-  </div>
-    </div>
   </div>
 </template>
 
@@ -103,14 +144,91 @@ export default {
   name: 'MyInfoEdit',
   data () {
     return {
-        
+        id : sessionStorage.getItem('loginId'),
+        img_upload_img: '',
+        name: '',
+        email: '',
+        birth: '',
+        gender: '',
+        phone: '',
+        address: '',
+
+        isPwdCheck: true,
+        isPwdCheckEqual: true
     }
   },
   created: function () {
-      
+    this.getUserInfo();
   },
   methods: {
+    getUserInfo() {
+        const moment = require('moment');
+        //let token = sessionStorage.getItem('token');
+        const self = this;
+        this.$axios.get('http://localhost:8082/members/' + this.id)
+        .then(function(res){
+            if (res.status == 200) {
+                let dto = res.data.dto
+                if (dto != null) { 
+                    console.log(dto);
+                    //this.id = dto.id
+                    self.name = dto.name
+                    self.email = dto.email
+                    self.birth = moment(dto.birth).format('L');
+                    self.gender = dto.gender
+                    self.phone = dto.phone
+                    self.address = dto.address
+
+                    self.setBaseInfo();
+                } else {
+                    alert('없는 아이디 이거나 만료된 토큰')
+                }
+            } else {
+                alert('에러코드 :' + res.status)
+            }
+        });
+    },
+    setBaseInfo() {
+        // 변수 할당된거 화면에 뿌리는 함수
+        console.log(this.name);
+    },
+    changeProfileImg() {
+        const ipt_file_upload = document.getElementById('profile');
+        ipt_file_upload.click();
+    },
+    previewFile() {
+        const fileInput = document.getElementById('profile');
+        const previewImg = document.getElementById('preview');
+
+        // 파일이 선택되지 않았을 경우 미리보기를 초기화
+        if (!fileInput.files || fileInput.files.length === 0) {
+        previewImg.src = `http://localhost:8082/members/imgs/${this.id}`;
+        return;
+        }
+
+        // 첫 번째 파일을 가져옵니다.
+        const file = fileInput.files[0];
     
+        // 이미지 파일인지 확인
+        if (file.type.startsWith('image/')) {
+        const reader = new FileReader();
+        
+        // 파일 로드 완료 시 미리보기를 생성
+        reader.onload = function(event) {
+        
+        previewImg.src = event.target.result;
+        };
+        
+
+        // 파일을 읽어옵니다.
+        reader.readAsDataURL(file);
+        } else {
+        
+        // 이미지 파일이 아닌 경우 미리보기를 초기화합니다.
+        previewImg.src = `http://localhost:8082/members/imgs/${this.id}`;
+        }
+    },
+
   },
   components: {
      
@@ -119,9 +237,197 @@ export default {
 </script>
   
 <style scoped>
+
 .container {
     padding-top: 50px;
     padding-bottom: 100px;
+    color: black;
+}
+
+.list {
+    display: flex;
+    justify-content: center;
+}
+
+ul {
+    list-style: none;
+    list-style-type: none;
+    justify-content: space-evenly;
+}
+
+li {
+    font-size: 11px;
+    cursor: unset;
+}
+
+li:hover {
+    font-size: 11px;
+    cursor: unset;
+}
+
+.list-li {
+    float:left;
+}
+
+.header-profile {
+    font-family: 'IBMPlexSansKR-Bold';
+    font-size: 20px;
+}
+
+.list-li div table tr th label {
+    color: black;
+    margin-top: 10px;
+    font-family: 'IBMPlexSansKR-Regular';
+    font-size: 13px;
+}
+
+.list-li div table tr td label {
+    color: black;
+    margin-top: 10px;
+    font-family: 'IBMPlexSansKR-Light';
+    font-size: 12px
+}
+
+.list-li div p {
+    font-family: 'IBMPlexSansKR-Bold';
+    font-size: 20px;
+}
+
+.list-li  div table tr td p {
+    color: black;
+    font-family: 'IBMPlexSansKR-Bold';
+    font-size: 15px;
+}
+
+.list-li:hover > div table tr th label {
+    color: black;
+    margin-top: 10px;
+    font-family: 'IBMPlexSansKR-Regular';
+    font-size: 13px;
+}
+
+.list-li:hover > div table tr td label {
+    margin-top: 10px;
+    color: black;
+    font-family: 'IBMPlexSansKR-Light';
+    font-size: 12px
+}
+
+.list-li:hover > div p {
+    color: black;
+    font-family: 'IBMPlexSansKR-Bold';
+    font-size: 20px;
+}
+
+.list-li:hover > div table tr td p {
+    color: black;
+    font-family: 'IBMPlexSansKR-Bold';
+    font-size: 15px;
+}
+
+.txt-email {
+    font-family: 'IBMPlexSansKR-Medium';
+    font-size: 10px;
+    color: black;
+}
+
+.list-li .email > .raw-email {
+    font-family: 'IBMPlexSansKR-Bold';
+    font-size: 15px;
+    color: black;
+}
+
+.email div table tr th p {
+    font-family: 'IBMPlexSansKR-Bold';
+    font-size: 15px;
+    color: black;
+}
+
+.email:hover div table tr th p {
+    font-family: 'IBMPlexSansKR-Bold';
+    font-size: 15px;
+    color: black;
+}
+
+.email div table tr td div .raw-email {
+    font-family: 'IBMPlexSansKR-SemiBold';
+    font-size: 13px;
+    color: black;
+}
+
+.email > div table tr td {
+    width: 230px;
+}
+
+.email > div table tr td input {
+    width: 150px;
+    font-family: 'IBMPlexSansKR-Medium';
+    font-size: 12px;
+    margin-left: 10px;
+}
+
+.email > div table tr td input::placeholder {
+    font-family: 'IBMPlexSansKR-Regular';
+    font-size: 12px;
+}
+
+.list-li > div table tr td div p {
+    font-family: 'IBMPlexSansKR-Bold';
+    font-size: 15px;
+    color: black;
+}
+
+.btn-email {
+    margin-left: 10px;
+    width: 50px;
+    background: white;
+    border: 1px solid rgb(244, 191, 79);
+    border-radius: 10px;
+}
+
+#profile {
+    display: none;
+}
+
+.announce-profile {
+    margin-top: 10px;
+    font-family: 'IBMPlexSansKR-Regular';
+    font-size: 10px;
+    color: black;
+}
+
+.announce-profile:hover {
+    margin-top: 10px;
+    font-family: 'IBMPlexSansKR-Regular';
+    font-size: 10px;
+    color: black;
+}
+
+.header-text {
+    text-align: center;
+    justify-content: center;
+}
+
+.header-edit {
+    font-family: 'IBMPlexSansKR-Bold';
+    font-size: 15px;
+}
+
+.header-line {
+    width: 100px;
+    height: 2px;
+    border: 5px solid rgb(244, 191, 79);
+    background-color: rgb(244, 191, 79);
+    margin-top: -10px;
+    transform: translateX(50%);
+}
+
+#preview {
+    display: block;
+    width: 200px;
+    height: 200px;
+    border-radius: 70%;
+    overflow: hidden;
 }
 
 </style>

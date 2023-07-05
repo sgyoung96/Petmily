@@ -98,38 +98,6 @@ export default {
   },
 
   methods:{
-    previewFile(){
-      const fileInput = document.getElementById('profile');
-      const previewImg = document.getElementById('preview');
-
-      // 파일이 선택되지 않았을 경우 미리보기를 초기화
-      if (!fileInput.files || fileInput.files.length === 0) {
-      previewImg.src = `http://localhost:8082/members/imgs/${this.id}`;
-      return;
-      }
-
-      // 첫 번째 파일을 가져옵니다.
-      const file = fileInput.files[0];
-  
-      // 이미지 파일인지 확인
-      if (file.type.startsWith('image/')) {
-      const reader = new FileReader();
-    
-      // 파일 로드 완료 시 미리보기를 생성
-      reader.onload = function(event) {
-     
-       previewImg.src = event.target.result;
-    };
-      
-
-      // 파일을 읽어옵니다.
-      reader.readAsDataURL(file);
-      } else {
-    
-      // 이미지 파일이 아닌 경우 미리보기를 초기화합니다.
-      previewImg.src = `http://localhost:8082/members/imgs/${this.id}`;
-      }
-    },
 
     editcheck(){
       const self = this;
