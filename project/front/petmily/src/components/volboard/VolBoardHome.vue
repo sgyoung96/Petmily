@@ -18,7 +18,7 @@
             v-if="calculateDateDifference(vboard.deadline).difference < 0">모집마감</span>
           <span class="badge text-bg-primary" style="font-size: 17px;" v-else>마감 D-{{
             calculateDateDifference(vboard.deadline).days }}</span>&nbsp;
-          <strong>모집기간</strong> {{ formatDate(vboard.deadline) }}까지
+          <strong>모집기간</strong> {{ formatDate(vboard.deadline) }}까지 <strong>조회수</strong> {{ vboard.cnt }}
           <br />
           <div class=vtitle>{{ vboard.title }}</div>
           <div style="margin-bottom: 10px;">
