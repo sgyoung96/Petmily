@@ -6,7 +6,7 @@
           &nbsp;<span style="color:rgb(244, 191, 79);">ADOPT</span></strong></h4>
     </div>
     <div class="d-all">
-      <table class="table table-bordered" style="margin-bottom:50px">
+      <table class="table table-bordered" style="margin-bottom:0px">
       <tbody div class="tbody"  v-if="dto.id">
         <tr>
           <th>제목</th>
@@ -172,12 +172,13 @@
 }
 
 .table th {
-  background-color: rgb(156 133 109);
+  background-color: rgb(156, 156, 39);
 }
 .a-img {
  text-align: left;
   margin-top: 10px;
   margin-bottom: 10px;
+  width:1000px;
 }
 
 .d-all {

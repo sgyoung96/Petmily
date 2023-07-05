@@ -88,6 +88,8 @@
 .img-box {
   border: 1px solid silver;
   cursor: pointer;
+  width:293px;
+  height:260px;
 }
 
 .b-img {

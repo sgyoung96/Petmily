@@ -31,7 +31,27 @@
           <span class="visually-hidden">Next</span>
         </button>
       </div>
-      <div class="container text-center">
+<div style="display:flex">
+<div v-for="dboard in list" :key="dboard.num">
+  <div class="img-box" v-on:click="$event => detail(dboard.num)">
+    <a><img class="b-img" :src="'http://localhost:8082/dboard/imgs/' + dboard.num + '/1'"></a>
+    <div class="b-txt">
+      <div class="b-title">
+        {{ dboard.title }}
+      </div>
+      <div class="b-id">
+        <span>
+          작성자: {{ dboard.id.id }}
+        </span>
+        <span>
+          <img class="l-img" src="../assets/images/heart.png" style="width: 15px; height: 15px;">{{ dboard.likecnt }}
+        </span>
+      </div>
+    </div>
+  </div>
+</div>
+</div>
+<div class="container text-center">
         <div class="row">
           <div class="col">
             <canvas id="PieChart" width="1" height="1"></canvas>
@@ -104,6 +124,8 @@ export default {
     D4.setDate(D4.getDate() - 4);
     D5.setDate(D5.getDate() - 5);
     return {
+      loginId: null,
+      list: [],
       items: [],
       totalItems: 0, // 전체 항목 수
       sysdate: sysdate,
@@ -127,6 +149,18 @@ export default {
     return this.extractVideoId(this.videoUrl) !== null;
   }
 },
+created: function () {
+    this.loginId = sessionStorage.getItem('loginId')
+    const self = this;
+    self.$axios.get('http://localhost:8082/dboard')//+self.loginId
+      .then(function (res) {
+        if (res.status == 200) {
+          self.list = res.data.list
+        } else {
+          alert('에러코드' + res.status)
+        }
+      });
+  },
   mounted() {
     this.loadData();
     this.getKind(this.formatDate(this.sysdate), 417000)
@@ -168,6 +202,10 @@ export default {
       });
   },
   methods: {
+    detail(num) {
+      // alert(num)
+      this.$router.push({ name: 'DiaryBoardDetail', query: { num: num } })
+    },
     extractVideoId(url) {
   // Regular expression to extract the video ID from YouTube URL
   const regex = /[?&]v=([^&#]+)/;
@@ -295,6 +333,39 @@ export default {
 </script>
 
 <style scoped>
+.img-box {
+  border: 1px solid silver;
+  cursor: pointer;
+  width:293px;
+  height:260px;
+}
+
+.b-img {
+  width: 293px;
+  height:200px;
+}
+
+.b-txt {
+  text-align: left;
+  display: flex;
+  flex-direction: column;
+}
+
+.b-title {
+  font-size: large;
+}
+
+.b-id {
+  font-size: medium;
+  display: flex;
+  justify-content: space-between;
+}
+
+.l-img {
+  width: 15px;
+  height: 15px;
+}
+
 .container {
   height: auto;
 }

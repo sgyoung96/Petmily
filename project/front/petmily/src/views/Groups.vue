@@ -1,11 +1,10 @@
 <template>
   <div id="app" style="margin-top:50px;">
     <div class="grid-container">
-      <div v-for="item in displayedItems" :key="item.careNm" class="grid-item">
-        <div class="card" style="  height:186px;
-  width:280px;">
+      <div v-for="item in items" :key="item.careNm" class="grid-item">
+        <div class="card" style="height:186px; width:280px; cursor:pointer" @click="handleItemClick(item.careAddr, item.careNm)">
           <div class="cardName">
-            <div @click="handleItemClick(item.careAddr, item.careNm)">
+            <div>
               <strong>{{ item.careNm }}</strong>
             </div>
             <div class="divisionNm">
@@ -20,16 +19,17 @@
             <img src="../assets/images/phone.png" style="width: 15px; height: 15px;">
             {{ item.careTel }}
           </div>
+          <div style="border-top:1px solid lightgrey; margin-top:5px; margin-bottom:5px"></div>
           <div v-if="item.weekOprStime && item.weekOprEtime && item.weekOprStime!== ':' && item.weekOprEtime!== ':'">
             <span
               style="border-top: 1px solid lightgrey; border-radius: 10px 10px 10px 10px; background-color: skyblue; color: white; padding: 5px; font-size: x-small;">
-              <strong>평일운영시작:</strong> {{ item.weekOprStime }}~{{ item.weekOprEtime }}
+              <strong>평일운영시간:</strong> {{ item.weekOprStime }}~{{ item.weekOprEtime }}
           </span>
           </div>
           <div v-if="item.weekendOprStime && item.weekendOprEtime && item.weekendOprStime!== ':' && item.weekendOprEtime!== ':'">
             <span
               style="border-radius: 10px 10px 10px 10px; background-color: rgb(255, 134, 134); color: white; padding: 5px; font-size: x-small;">
-              <strong>주말운영시작:</strong> {{ item.weekendOprStime }}~{{ item.weekendOprEtime }}
+              <strong>주말운영시간:</strong> {{ item.weekendOprStime }}~{{ item.weekendOprEtime }}
             </span>
           </div>
           <div v-if="item.closeDay && item.closeDay !== '0'">
@@ -37,18 +37,17 @@
     <strong>{{ item.closeDay }}휴무</strong>
   </span>
 </div>
-
         </div>
       </div>
     </div>
   </div>
   <div style="margin-top: 2%;">
-    <button v-on:click="previousPage" class="custom-button" :disabled="pageNo === 1">이전</button>
-    <button v-for="pageNumber in currentPageNumbers" :key="pageNumber" v-on:click="goToPage(pageNumber)"
-      class="custom-button" :class="{ 'active-button': pageNo === pageNumber }">
+    <button v-on:click="previousPage" class="custom-button">이전</button>
+    <button v-for="pageNumber in displayedPages" :key="pageNumber" v-on:click="goToPage(pageNumber)"
+      class="custom-button">
       {{ pageNumber }}
     </button>
-    <button v-on:click="nextPage" class="custom-button" :disabled="pageNo === totalPages">다음</button>
+    <button v-on:click="nextPage" class="custom-button">다음</button>
   </div>
 </template>
   
@@ -60,23 +59,16 @@ export default {
     return {
       items: [],
       pageNo: 1, // 현재 페이지 번호
-      pageSize: 16, // 한 페이지에 표시할 항목 수
+      pageSize: 24, // 한 페이지에 표시할 항목 수
       totalItems: 0, // 전체 항목 수
       totalPages: 0, // 전체 페이지 수
       kindCd: '',
       displayedPages: [], // 현재 표시되는 페이지 버튼
       startPage: 1, // 시작 페이지 번호
-      endPage: 10, // 끝 페이지 번호
       addr: ''
     };
   },
   computed: {
-  displayedItems() {
-    const startIndex = (this.pageNo - 1) * this.pageSize;
-    const endIndex = startIndex + this.pageSize;
-    console.log(this.itmes)
-    return this.items.filter((item, index) => index >= startIndex && index < endIndex);
-  },
   currentPageNumbers() {
       const MAX_DISPLAYED_PAGES = 10; // 표시되는 최대 페이지 버튼 수
       let startPage = Math.max(1, this.pageNo - Math.floor(MAX_DISPLAYED_PAGES / 2));
@@ -97,7 +89,7 @@ export default {
   methods: {
     fetchData() {
   const self = this;
-  const url = 'https://apis.data.go.kr/1543061/animalShelterSrvc/shelterInfo?_type=json&numOfRows=1000&pageNo=' + this.pageNo + '&serviceKey=hqbUzbZx%2BbQR6OgVCNvZDXGGWIVTWAIawDhN2Y9fbW6Pndu%2BrU9e1NaR9UpW7%2BPotKdwoD9cXlkHbSS7tzFRJQ%3D%3D';
+  const url = 'https://apis.data.go.kr/1543061/animalShelterSrvc/shelterInfo?_type=json&numOfRows='+this.pageSize+'&pageNo=' + this.pageNo + '&serviceKey=hqbUzbZx%2BbQR6OgVCNvZDXGGWIVTWAIawDhN2Y9fbW6Pndu%2BrU9e1NaR9UpW7%2BPotKdwoD9cXlkHbSS7tzFRJQ%3D%3D';
   self.$axios.get(url)
     .then(function (res) {
       if (res.status == 200) {
@@ -105,7 +97,7 @@ export default {
         console.log(data.items.item); // 데이터 확인
         self.items = data.items.item;
         self.totalItems = parseInt(data.numOfRows);
-        self.totalPages = Math.ceil(self.totalItems / self.pageSize);
+        self.totalPages = 10;
         self.updateDisplayedPages();
       } else {
         alert(res.status);
@@ -138,23 +130,40 @@ export default {
       this.fetchData();
     },
     updateDisplayedPages() {
-      const MAX_DISPLAYED_PAGES = 10; // 표시되는 최대 페이지 버튼 수
-      let startPage = Math.max(1, this.pageNo - Math.floor(MAX_DISPLAYED_PAGES / 2));
-      let endPage = startPage + MAX_DISPLAYED_PAGES - 1;
+  const MAX_DISPLAYED_PAGES = 9; // 표시되는 최대 페이지 버튼 수
 
-      if (endPage > this.totalPages) {
-        endPage = this.totalPages;
-        startPage = Math.max(1, endPage - MAX_DISPLAYED_PAGES + 1);
-      }
+  let startPage = this.startPage;
+  let endPage = this.endPage;
 
-      this.displayedPages = [];
-      for (let i = startPage; i <= endPage; i++) {
-        this.displayedPages.push(i);
-      }
-
-      this.startPage = startPage;
-      this.endPage = endPage;
+  if (this.totalPages <= MAX_DISPLAYED_PAGES) {
+    // 전체 페이지 수가 최대 표시 페이지 수보다 작을 경우
+    startPage = 1;
+    endPage = this.totalPages;
+  } else {
+    // 전체 페이지 수가 최대 표시 페이지 수보다 클 경우
+    if (this.pageNo <= Math.floor(MAX_DISPLAYED_PAGES / 2)) {
+      // 현재 페이지 번호가 중간 페이지 번호보다 작을 경우
+      startPage = 1;
+      endPage = MAX_DISPLAYED_PAGES;
+    } else if (this.pageNo >= this.totalPages - Math.floor(MAX_DISPLAYED_PAGES / 2)) {
+      // 현재 페이지 번호가 중간 페이지 번호보다 크거나 같을 경우
+      startPage = this.totalPages - MAX_DISPLAYED_PAGES + 1;
+      endPage = this.totalPages;
+    } else {
+      // 그 외의 경우
+      startPage = this.pageNo - Math.floor(MAX_DISPLAYED_PAGES / 2);
+      endPage = this.pageNo + Math.floor(MAX_DISPLAYED_PAGES / 2);
     }
+  }
+
+  this.startPage = startPage;
+  this.endPage = endPage;
+
+  this.displayedPages = [];
+  for (let i = startPage; i <= endPage; i++) {
+    this.displayedPages.push(i);
+  }
+}
   }
 };
 </script>
