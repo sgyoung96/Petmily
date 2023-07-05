@@ -78,11 +78,12 @@ public class ApplyformService {
 		dao.updateApply(num);
 	}
 
+	// 삭제 -> 거부
+	//거부
 	public void refuse(int num) {
 		dao.updateRefuse(num);
 	}
-
-	// 삭제 -> 거부
+	//삭제
 	public void delApplyform(int num) {
 		dao.deleteById(num);
 	}

@@ -52,29 +52,24 @@
             <img :src="item.popfile" :alt="item.careNm" @click="handleItemClick(item.desertionNo, item.careAddr)"
               style="cursor: pointer; width:300px; height: 200px;">
           </div>
-          <div class="item-info-space-between">
-            <div class="info-item info-left">{{ item.kindCd }}</div>
+          <div class="info-item info-left" style="font-family: IBMPlexSansKR-Bold;">{{ item.kindCd }}</div>
             <div class="info-item info-right">{{ item.happenDt }}</div>
-          </div>
           <div class="item-info">
-            <div id="processState">
-              {{ item.processState }}
-            </div>
-            <div id="age">
-              {{ item.age }}
-            </div>
-          </div>
-          <div class="item-info">
+            <div id="orgNm">
+                {{ item.orgNm }}
+              </div>
+            
             <div id="colorCd">
               {{ item.colorCd }}
+            </div>
+           
+            <div class="item-info">
+              <div id="age">
+              {{ item.age }}
             </div>
             <div id="weight">
               {{ item.weight }}
             </div>
-            <div class="item-info">
-              <div id="orgNm">
-                {{ item.orgNm }}
-              </div>
             </div>
           </div>
         </div>
@@ -360,8 +355,7 @@ export default {
 };
 </script>
 
-
-<style>
+<style scoped>
  .custom-button {
     background-color: #f0cf81; /* 배경색 설정 */
     border: none; /* 테두리 제거 */
@@ -450,29 +444,45 @@ export default {
 #age {
   display: inline-block;
   margin-right: 10px;
-  background-color: bisque;
+  background-color: rgb(242, 170, 83);
+  padding: 5px; /* 상자 안의 내용과 여백을 조정할 수 있음 */
+  border-radius: 5px; /* 상자의 모서리를 둥글게 만듦 */
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
   color: white;
+  font-size: 5px;
 }
 
 #colorCd {
   display: inline-block;
   margin-right: 10px;
   background-color: rgb(203, 155, 248);
+  padding: 5px; /* 상자 안의 내용과 여백을 조정할 수 있음 */
+  border-radius: 5px; /* 상자의 모서리를 둥글게 만듦 */
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
   color: white;
+  font-size: 5px;
 }
 
 #weight {
   display: inline-block;
   margin-right: 10px;
   background-color: rgb(199, 97, 129);
+  padding: 5px; /* 상자 안의 내용과 여백을 조정할 수 있음 */
+  border-radius: 5px; /* 상자의 모서리를 둥글게 만듦 */
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
   color: white;
+  font-size: 5px;
 }
 
 #orgNm {
   display: inline-block;
   margin-right: 10px;
   background-color: rgb(125, 182, 243);
+  padding: 5px; /* 상자 안의 내용과 여백을 조정할 수 있음 */
+  border-radius: 5px; /* 상자의 모서리를 둥글게 만듦 */
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
   color: white;
+  font-size: 5px;
 }
 
 /***************************** */

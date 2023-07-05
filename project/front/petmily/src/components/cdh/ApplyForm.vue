@@ -1,105 +1,122 @@
 <template>
   <div class="base-info-container">
     <div class="base-info-pet">
-      <div>
-        <p>입양하실 아가의 기본정보예요.</p>
-        <div class="row">
-          <div class="col-2">
-          </div>
-          <div class="col-8" >
-            <div class="row" style="display: flex; text-align: left; align-items: center;">
-              <div class="col-sm-4" >
-                <img :src="info.popfile" style="width: 300px; height: 300px; border-radius: 20px; margin-left:-10px align-items: left;">
-              </div>
-              <div class="col-sm-2" style="text-align: left; align-items: center;">
-                <strong class="g-color-black" style="padding-left: 20px;">견종</strong><br />
-                <strong class="g-color-black" style="padding-left: 20px;">성별</strong><br />
-                <strong class="g-color-black" style="padding-left: 20px;">나이</strong><br />
-                <strong class="g-color-black" style="padding-left: 20px;">색</strong><br />
-                <strong class="g-color-black" style="padding-left: 20px;">몸무게</strong><br />
-                <strong class="g-color-black" style="padding-left: 20px;">중성화여부</strong><br />
-                <strong class="g-color-black" style="padding-left: 20px;">현상황</strong><br />
-                <strong class="g-color-black" style="padding-left: 20px;">특별사항</strong><br />
-              </div>
-              <div class="col-sm-4" style="text-align: left; align-items: center;">
-              <strong class="g-color-black" >{{ info.kindCd }}</strong><br/>
-              <strong class="g-color-black" v-if="info.sexCd === 'M'">수컷</strong>
-              <Strong class="g-color-black" v-else-if="info.sexCd === 'F'">암컷</strong>
-              <Strong class="g-color-black" v-else>미상</strong><br/>
-              <strong class="g-color-black" >{{ info.age }}</strong><br/>
-              <strong class="g-color-black" >{{ info.colorCd }}</strong><br/>
-              <strong class="g-color-black" >{{ info.weight }}</strong><br/>
-              <strong class="g-color-black" v-if="info.neuterYn === 'Y'">중성화O</strong>
-              <Strong class="g-color-black" v-else-if="info.neuterYn === 'N'">중성화X</strong>
-              <Strong class="g-color-black" v-else-if="info.neuterYn === 'U'">미상</strong><br/>
-              <strong class="g-color-black" >{{ info.processState }}</strong><br/>
-              <strong class="g-color-black" >{{ info.specialMark }}</strong><br/>
-             </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-    <div class="base-info-center" style="padding-top :20px;">
-      <div>
-        <p>아가를 보호하고 있는 곳의 정보예요.</p>
-        <div class="row">
-          <div class="col-2">
-          </div>
-          <div class="col-9" >
-            <div class="row" style="display: flex; text-align: left; align-items: center;">
-              <div class="col-sm-1" id="map">
-              </div>
-              <div class="col-sm-2" style="text-align: left; align-items: center;">
-                <strong class="g-color-black" style="padding-left: 20px;">접수일시</strong><br/>
-                <strong class="g-color-black" style="padding-left: 20px;">발견장소</strong><br/>
-                <strong class="g-color-black" style="padding-left: 20px;">동물보호센터명</strong><br/>
-                <strong class="g-color-black" style="padding-left: 20px;">보호장소</strong><br/>
-                <strong class="g-color-black" style="padding-left: 20px;">담당자</strong><br/>
-                <strong class="g-color-black" style="padding-left: 20px;">보호소 전화번호</strong><br/>
-                <strong class="g-color-black" style="padding-left: 20px;">담당자 전화번호</strong><br/>
-              </div>
-              <div class="col-sm-6" style="text-align: left; align-items: center;">
-                <strong class="g-color-black" style="padding-left: 20px;">{{ info.happenDt }}</strong><br/>
-                <strong class="g-color-black" style="padding-left: 20px;">{{ info.happenPlace }}</strong><br/>
-                <strong class="g-color-black" style="padding-left: 20px;">{{ info.careNm }}</strong><br/>
-                <strong class="g-color-black" style="padding-left: 20px;">{{ info.careAddr }}</strong><br/>
-                <strong class="g-color-black" style="padding-left: 20px;">{{ info.orgNm }}</strong><br/>
-                <strong class="g-color-black" style="padding-left: 20px;">{{ info.careTel }}</strong><br/>
-                <strong class="g-color-black" style="padding-left: 20px;">{{ info.officetel }}</strong><br/>
-             </div>
-            </div>
-          </div>
-        </div>
-      </div>
+      <p>입양하실 아가의 기본정보예요.</p>
+      <table style="text-align: left; margin-left: 350px; max-width: 1000px;">
+        <tr>
+          <th rowspan="8"><img :src="info.popfile"
+              style="width: 300px; height: 300px; border-radius: 20px; margin-left:-10px; padding-right:10px">
+          </th>
+          <th style="width: 150px; padding-left: 20px">견종</th>
+          <th style="padding-left: 10px">{{ info.kindCd }}</th>
+        </tr>
+        <tr>
+          <th style="width: 150px; padding-left: 20px">성별</th>
+          <th class="g-color-black" style="padding-left: 10px" v-if="info.sexCd === 'M'">수컷</th>
+          <th class="g-color-black" style="padding-left: 10px" v-else-if="info.sexCd === 'F'">암컷</th>
+          <th class="g-color-black" style="padding-left: 10px" v-else>미상</th>
+        </tr>
+        <tr>
+          <th style="width: 150px; padding-left: 20px">나이</th>
+          <th style="padding-left: 10px">{{ info.age }}</th>
+        </tr>
+        <tr>
+          <th style="width: 150px; padding-left: 20px">색</th>
+          <th style="padding-left: 10px">{{ info.colorCd }}</th>
+        </tr>
+        <tr>
+          <th style="width: 150px; padding-left: 20px">몸무게</th>
+          <th style="padding-left: 10px">{{ info.weight }}</th>
+        </tr>
+        <tr>
+          <th style="width: 150px; padding-left: 20px">중성화여부</th>
+          <th class="g-color-black" style="padding-left: 10px" v-if="info.neuterYn === 'Y'">중성화O</th>
+          <th class="g-color-black" style="padding-left: 10px" v-else-if="info.neuterYn === 'N'">중성화X</th>
+          <th class="g-color-black" style="padding-left: 10px" v-else-if="info.neuterYn === 'U'">미상</th>
+        </tr>
+        <tr>
+          <th style="width: 150px; padding-left: 20px">현상황</th>
+          <th style="padding-left: 10px">{{ info.processState }}</th>
+        </tr>
+        <tr>
+          <th style="width: 150px; padding-left: 20px">특별사항</th>
+          <th style="padding-left: 10px">{{ info.specialMark }}</th>
+        </tr>
+      </table>
     </div>
   </div>
-  <div class="applier-container">
+
+  <div class="base-info-center" style="padding-top :20px;">
+    <div>
+      <p>아가를 보호하고 있는 곳의 정보예요.</p>
+      <table style="text-align: left; margin-left: 340px; max-width: 1000px;">
+        <tr>
+          <th rowspan="7" id="map">
+          </th>
+          <th style="width: 150px; padding-left: 20px">접수일시</th>
+          <th style="padding-left: 10px">{{ info.happenDt }}</th>
+        </tr>
+        <tr>
+          <th style="width: 150px; padding-left: 20px">발견장소</th>
+          <th style="padding-left: 10px">{{ info.happenPlace }}</th>
+        </tr>
+        <tr>
+          <th style="width: 150px; padding-left: 20px">동물보호센터명</th>
+          <th style="padding-left: 10px">{{ info.careNm }}</th>
+        </tr>
+        <tr>
+          <th style="width: 150px; padding-left: 20px">보호장소</th>
+          <th style="padding-left: 10px">{{ info.careAddr }}</th>
+        </tr>
+        <tr>
+          <th style="width: 150px; padding-left: 20px">보호소 전화번호</th>
+          <th style="padding-left: 10px">{{ info.careTel }}</th>
+        </tr>
+        <tr>
+          <th style="width: 150px; padding-left: 20px">담당자</th>
+          <th style="padding-left: 10px">{{ info.orgNm }}</th>
+        </tr>
+        <tr>
+          <th style="width: 150px; padding-left: 20px">담당자 전화번호</th>
+          <th style="padding-left: 10px">{{ info.officetel }}</th>
+        </tr>
+      </table>
+    </div>
+  </div>
+  <div class="applier-container" style="padding-top :20px;">
     <p>입양 신청 양식을 작성해 주세요.</p>
-
-    <div class="row" style="text-align: left;">
-      <div class="col-3"></div>
-      <div class="col-4">NAME님의 정보를 기입해 주세요.</div>
-      <div class="col-3"><input type="text" style="width:250px" v-model="id" readonly><br /></div>
-    </div>
-
-    <div class="row" style="text-align: left;">
-      <div class="col-3"></div>
-      <div class="col-4">다른 반려 동물이 있으십니까?</div>
-      <div class="col-3"><input type="text" style="width:250px" v-model="another"><br /></div>
-    </div>
-
-    <p style="padding-top: 20px;">입양을 결심하신 이유를 알려주세요.</p>
-    <textarea style="width: 1000px; height: 300px; padding-top:10px;" v-model="reason"></textarea><br />
-
-    <p style="padding-top: 20px;">반려 동물로 맞이한 후에 아가와 함께할 시간들을 생각하며, 입양 후 다짐을 자유롭게 기술해 주세요.</p>
-    <textarea style="width: 1000px; height: 300px;" v-model="feeding"></textarea><br />
+    <table class="applyform" style="text-align: left; margin-bottom:50px; margin-left: 335px; width: 800px;">
+      <tr>
+        <th style="padding-top: 5px;padding-left: 5px; width: 130px; background-color:#bab9b9;">id</th>
+        <th style="padding-top: 5px;padding-left: 5px;"><input type="text" style="width:250px; border:0px" v-model="id"
+            readonly></th>
+        <th style="padding-top: 5px;padding-left: 5px; background-color:#bab9b9">입양신청일</th>
+        <th style="padding-top: 5px;padding-left: 5px;"> {{ wdate }}</th>
+      </tr>
+      <tr>
+        <th style="padding-top: 5px;padding-left: 5px; background-color:#bab9b9" colspan="1">반려 동물 여부</th>
+        <th style="padding-top: 5px;padding-left: 5px;" colspan="3"><input type="text" style="width: 100%; border:0px"
+            v-model="another"></th>
+      </tr>
+      <tr>
+        <th style="padding-top: 5px;padding-left: 5px; background-color:#bab9b9">입양 계기</th>
+        <th style="padding-top: 5px;padding-left: 5px;" colspan="3">
+          <textarea style="border:0px; width: 100%;" v-model="reason"></textarea>
+        </th>
+      </tr>
+      <tr>
+        <th style="padding-top: 5px;padding-left: 5px; background-color:#bab9b9">앞으로의 다짐</th>
+        <th style="padding-top: 5px;padding-left: 5px;" colspan="3">
+          <textarea style="border:0px; width: 100%;" v-model="feeding"></textarea>
+        </th>
+      </tr>
+    </table>
 
     <p style="padding-top: 20px;">개인정보 취급 동의서</p>
     <div>
       <div>
 
-        <textarea style="width: 1000px; height: 300px;" readonly>
+        <textarea style="width: 1000px; height: 300px; margin-right:20px" readonly>
 개인정보 취급방침
 
 펫밀리 (이하 '단체'는) 입양신청자의 개인정보를 중요시하며, "정보통신망 이용촉진 및 정보보호"에 관한 법률을 준수하고 있습니다.
@@ -144,9 +161,6 @@
 
     위 개인정보취급방침에 동의합니다. <input name="age" type="radio" v-model="agreement" value="0">미동의 /
     <input name="ag" type="radio" v-model="agreement" value="1">동의<br />
-
-    <strong class="g-color-black" style="padding-right:20px; padding-left:20px">입양신청일</strong>
-    <strong class="g-color-black" style="padding-right:20px; padding-left:20px">{{ wdate }}</strong>
 
     <button v-on:click="apply()" style="background-color:#FFD65B; border-radius:10px;">신청</button>
   </div>
@@ -211,7 +225,7 @@ export default {
   },
   methods: {
     apply() {
-     
+
       const self = this;
 
       let formdata = new FormData();
@@ -235,13 +249,13 @@ export default {
       formdata.append('careNm', self.info.careNm);
       formdata.append('careAddr', self.info.careAddr);
       formdata.append('popfile', self.info.popfile);
-      if(self.agreement==0){
-              alert("개인정보 동의서에 동의를 해야합니다")
-              return;
-            } else {
-      self.$axios.post('http://localhost:8082/Applyform', formdata)//비동기 요청
-        .then(function (res) {//요청 결과 받아옴. 파람 res에 결과저장됨. res.data가 백단에서 전송한 데이터
-          if (res.status == 200) {
+      if (self.agreement == 0) {
+        alert("개인정보 동의서에 동의를 해야합니다")
+        return;
+      } else {
+        self.$axios.post('http://localhost:8082/Applyform', formdata)//비동기 요청
+          .then(function (res) {//요청 결과 받아옴. 파람 res에 결과저장됨. res.data가 백단에서 전송한 데이터
+            if (res.status == 200) {
               if (res.data.dto != null) {
                 self.msg = '입양 신청이 완료되었습니다.';
                 alert(self.msg);
@@ -250,11 +264,11 @@ export default {
                 self.msg = '신청 양식을 보낸 상태입니다';
                 alert(self.msg);
               }
-            
-          } else {
-            alert('에러코드:' + res.status)
-          }
-        });
+
+            } else {
+              alert('에러코드:' + res.status)
+            }
+          });
       }
     },
     setDate() {
@@ -353,6 +367,11 @@ h3 {
   margin: 40px 0 0;
 }
 
+p {
+  font-family: 'IBMPlexSansKR-Bold';
+  padding-top: 20px
+}
+
 ul {
   list-style-type: none;
   padding: 0;
@@ -366,7 +385,9 @@ li {
 a {
   color: #42b983;
 }
-
+.applyform th, .applyform td {
+    border: 1px solid #444444;
+  }
 #map {
   width: 300px;
   height: 300px;
