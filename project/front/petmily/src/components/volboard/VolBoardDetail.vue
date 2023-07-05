@@ -23,7 +23,7 @@
       <span class="badge text-bg-primary" style="font-size: 17px;" v-else>마감 D-{{
         calculateDateDifference(dto.deadline).days }}</span>
       &nbsp;
-      <span style="font-size:20px">{{ dto.title }}</span>
+      <span style="font-size:20px">{{ dto.title }}</span><span style="float:right; padding-right: 10px; padding-top: 5px;">조회수:{{ dto.cnt }}</span>
     </div>
     <table class="table table-bordered" style="margin-bottom:50px">
       <tbody div class="tbody">
