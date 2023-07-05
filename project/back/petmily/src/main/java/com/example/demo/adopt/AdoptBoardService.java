@@ -33,7 +33,7 @@ public class AdoptBoardService {
 	 * @return
 	 */
 	public ArrayList<AdoptBoardDto> getAllOl() {
-		ArrayList<Adoptboard> list = (ArrayList<Adoptboard>) dao.findAllByOrderByLikecnt();
+		ArrayList<Adoptboard> list = (ArrayList<Adoptboard>) dao.findAllByOrderByLikecntDesc();
 		ArrayList<AdoptBoardDto> list2 = new ArrayList<AdoptBoardDto>();
 		for (Adoptboard adoptBoard : list) {
 			list2.add(new AdoptBoardDto(adoptBoard.getNum(), adoptBoard.getId(), adoptBoard.getTitle(), adoptBoard.getContent(), adoptBoard.getCategory(), adoptBoard.getGender(), adoptBoard.getW_date(), adoptBoard.getAddress(), adoptBoard.getPic1(), adoptBoard.getPic2(), adoptBoard.getLikecnt(),null));

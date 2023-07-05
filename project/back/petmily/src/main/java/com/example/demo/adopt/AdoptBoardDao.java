@@ -15,7 +15,7 @@ import com.example.demo.member.Member;
 public interface AdoptBoardDao extends JpaRepository<Adoptboard, Integer> {
     ArrayList<Adoptboard> findById(Member id);
     ArrayList<Adoptboard> findByTitle(String title);
-    ArrayList<Adoptboard> findAllByOrderByLikecnt();
+    ArrayList<Adoptboard> findAllByOrderByLikecntDesc();
 
     @Transactional
     @Query(value = "SELECT COUNT(*) FROM Adoptboard")
