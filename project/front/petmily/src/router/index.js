@@ -48,11 +48,8 @@ import MyPageMain from '@/components/Member/MyPage.vue'
 import MyInfo from '@/components/mypage/MyInfo.vue'
 import SavedList from '@/components/mypage/SavedList.vue'
 import AppliedList from '@/components/mypage/AppliedList.vue'
-<<<<<<< HEAD
-=======
+
 import AppliedDetail from '@/components/mypage/AppliedDetail.vue'
-import StateList from '@/components/mypage/StateList.vue'
->>>>>>> 490e8b9c73cfdb45d68be7309707f08d80ffcd66
 import MessageBox from '@/components/mypage/MessageBox.vue'
 import ExitService from '@/components/mypage/ExitService.vue'
 import MyInfoIntro from '@/components/mypage/MyInfoIntro'
@@ -295,19 +292,11 @@ const routes = [
     component: AppliedList
   },
   {
-<<<<<<< HEAD
-=======
     path: '/mypage/detail',
     name: 'AppliedDetail',
     component: AppliedDetail
   },
   {
-    path: '/mypage/state',
-    name: 'StateList',
-    component: StateList
-  }, 
-  {
->>>>>>> 490e8b9c73cfdb45d68be7309707f08d80ffcd66
     path: '/mypage/message',
     name: 'MessageBox',
     component: MessageBox
