@@ -2,110 +2,129 @@
     <div class="base-info-container">
         <div class="base-info-pet">
             <p>입양하실 아가의 기본정보예요.</p>
-            <table v-for="list in list" :key="list.num" style="text-align: left; margin-left: 300px;">
+            <table style="text-align: left; margin-left: 300px;">
                 <tr>
-                    <th rowspan="7"><img :src="list.popfile"
+                    <th rowspan="7"><img :src="popfile"
                             style="width: 300px; height: 300px; border-radius: 20px; margin-left:-10px; padding-right:10px">
                     </th>
                     <th>견종</th>
-                    <th style="padding-left: 10px">{{ list.kindCd }}</th>
+                    <th style="padding-left: 10px">{{ kindCd }}</th>
                 </tr>
                 <tr>
                     <th>성별</th>
-                    <th class="g-color-black" style="padding-left: 10px" v-if="list.sexCd === 'M'">수컷</th>
-                    <th class="g-color-black" style="padding-left: 10px" v-else-if="list.sexCd === 'F'">암컷</th>
+                    <th class="g-color-black" style="padding-left: 10px" v-if="sexCd === 'M'">수컷</th>
+                    <th class="g-color-black" style="padding-left: 10px" v-else-if="sexCd === 'F'">암컷</th>
                     <th class="g-color-black" style="padding-left: 10px" v-else>미상</th>
                 </tr>
                 <tr>
                     <th>나이</th>
-                    <th style="padding-left: 10px">{{ list.age }}</th>
+                    <th style="padding-left: 10px">{{ age }}</th>
                 </tr>
                 <tr>
                     <th>색</th>
-                    <th style="padding-left: 10px">{{ list.colorCd }}</th>
+                    <th style="padding-left: 10px">{{ colorCd }}</th>
                 </tr>
                 <tr>
                     <th>중성화여부</th>
-                    <th class="g-color-black" style="padding-left: 10px" v-if="list.neuterYn === 'Y'">중성화O</th>
-                    <th class="g-color-black" style="padding-left: 10px" v-else-if="list.neuterYn === 'N'">중성화X</th>
-                    <th class="g-color-black" style="padding-left: 10px" v-else-if="list.neuterYn === 'U'">미상</th>
+                    <th class="g-color-black" style="padding-left: 10px" v-if="neuterYn === 'Y'">중성화O</th>
+                    <th class="g-color-black" style="padding-left: 10px" v-else-if="neuterYn === 'N'">중성화X</th>
+                    <th class="g-color-black" style="padding-left: 10px" v-else-if="neuterYn === 'U'">미상</th>
                 </tr>
                 <tr>
                     <th>동물보호센터명</th>
-                    <th style="padding-left: 10px">{{ list.careNm }}</th>
+                    <th style="padding-left: 10px">{{ careNm }}</th>
                 </tr>
                 <tr>
                     <th>보호장소</th>
-                    <th style="padding-left: 10px">{{ list.careAddr }}</th>
+                    <th style="padding-left: 10px">{{ careAddr }}</th>
                 </tr>
             </table>
         </div>
     </div>
-    <div style="margin-top: 30px;">
-
-    </div>
-    <div v-for="list in list" :key="list.num">
-        <p>{{ list.id.id }}님의 입양신청 양식</p>
+    <div style="margin-top: 30px;"></div>
+    <div>
+        <p>{{ id }}님의 입양신청 양식</p>
 
         <table style="text-align: left; margin-bottom:50px; margin-left: 280px; width: 910px" border="1px">
             <tr>
                 <th style="padding-top: 5px;padding-left: 5px; width: 130px; background-color:#bab9b9;">이름</th>
-                <th style="padding-top: 5px;padding-left: 5px;">{{ list.id.name }}</th>
+                <th style="padding-top: 5px;padding-left: 5px;">{{ name }}</th>
                 <th style="padding-top: 5px;padding-left: 5px; background-color:#bab9b9">입양신청일</th>
-                <th style="padding-top: 5px;padding-left: 5px;"> {{ list.wdate }}</th>
+                <th style="padding-top: 5px;padding-left: 5px;"> {{ wdate }}</th>
             </tr>
             <tr>
                 <th style="padding-top: 5px;padding-left: 5px; background-color:#bab9b9" colspan="1">반려 동물 여부</th>
-                <th style="padding-top: 5px;padding-left: 5px;" colspan="3">{{ list.another }}</th>
+                <th style="padding-top: 5px;padding-left: 5px;" colspan="3">{{ another }}</th>
             </tr>
             <tr>
                 <th style="padding-top: 5px;padding-left: 5px; background-color:#bab9b9">입양 계기</th>
-                <th style="padding-top: 5px;padding-left: 5px;" colspan="3">{{ list.reason }}</th>
+                <th style="padding-top: 5px;padding-left: 5px;" colspan="3">{{ reason }}</th>
             </tr>
             <tr>
                 <th style="padding-top: 5px;padding-left: 5px; background-color:#bab9b9">앞으로의 다짐</th>
-                <th style="padding-top: 5px;padding-left: 5px;" colspan="3">{{ list.feeding }}</th>
+                <th style="padding-top: 5px;padding-left: 5px;" colspan="3">{{ feeding }}</th>
             </tr>
         </table>
     </div>
 </template>
-    
+
 <script>
 export default {
     name: 'ApplyDetail',
     data() {
         return {
-            list: [],
+            id: '',
+            name: '',
+            wdate: '',
+            another: '',
+            reason: '',
+            feeding: '',
+            kindCd: '',
+            sexCd: '',
+            age: '',
+            colorCd: '',
+            neuterYn: '',
+            careNm: '',
+            careAddr: '',
+            popfile: ''
         }
     },
     created: function () {
         this.$data.num = this.$route.query.num;
         this.fetchApplyFormData();
     },
-
     methods: {
         fetchApplyFormData() {
-            const self = this; // self 변수에 컴포넌트 인스턴스를 할당
+            const self = this;
             const num = this.$data.num;
             self.$axios
-                .get('http://localhost:8082/Applyform/getbynum/' + num) // 변경된 URL로 변경 필요
+                .get('http://localhost:8082/Applyform/getbynum/' + num)
                 .then(function (res) {
                     if (res.status == 200) {
-                        self.list = res.data.list;
+                        const data = res.data;
+                        self.id = data.id.id;
+                        self.name = data.id.name;
+                        self.wdate = data.wdate;
+                        self.another = data.another;
+                        self.reason = data.reason;
+                        self.feeding = data.feeding;
+                        self.kindCd = data.kindCd;
+                        self.sexCd = data.sexCd;
+                        self.age = data.age;
+                        self.colorCd = data.colorCd;
+                        self.neuterYn = data.neuterYn;
+                        self.careNm = data.careNm;
+                        self.careAddr = data.careAddr;
+                        self.popfile = data.popfile;
                     } else {
                         alert('에러코드' + res.status)
                     }
                 });
         },
-
-
-
-
     }
 }
 </script>
-    
-    <!-- Add "scoped" attribute to limit CSS to this component only -->
+
 <style scoped>
 h3 {
     margin: 40px 0 0;
@@ -135,4 +154,3 @@ a {
     border: #42b983;
 }
 </style>
-    
