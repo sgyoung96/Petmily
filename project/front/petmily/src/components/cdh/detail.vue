@@ -95,7 +95,7 @@
                   
                 </div>
                 <div class="padd"></div>
-                <div style="margin-top: 55px;"> <!-- 간격을 띄우는 div 요소 -->
+                <div style="margin-top: 37px;"> <!-- 간격을 띄우는 div 요소 -->
                 </div>
                 <div>
                   <img src="@/assets/images/officetel.png" alt="성별 코드 이미지" >

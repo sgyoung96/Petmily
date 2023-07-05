@@ -32,6 +32,9 @@ public class ApplyformController {
 		return map;
 	}
 	
+	///수정
+	
+	
 	// 전체목록 검색
 	@GetMapping("")
 	public Map getAll() {
@@ -42,13 +45,13 @@ public class ApplyformController {
 	}
 	
 	//num로 검색
-			@GetMapping("/getbynum/{num}")
-			public Map getbynum(@PathVariable("num") int num) {
-				ArrayList<ApplyformDto> list = service.findById(num);
-				Map map = new HashMap();
-				map.put("list", list);
-				return map;
-			}
+	@GetMapping("/getbynum/{num}")
+	public Map getbynum(@PathVariable("num") int num) {
+		ArrayList<ApplyformDto> list = service.findById(num);
+		Map map = new HashMap();
+		map.put("list", list);
+		return map;
+	}
 	
 	//id로 검색
 	@GetMapping("/getbyid/{id}")

@@ -49,6 +49,7 @@ import MyInfo from '@/components/mypage/MyInfo.vue'
 import GoodList from '@/components/mypage/GoodList.vue'
 import SavedList from '@/components/mypage/SavedList.vue'
 import AppliedList from '@/components/mypage/AppliedList.vue'
+import AppliedDetail from '@/components/mypage/AppliedDetail.vue'
 import StateList from '@/components/mypage/StateList.vue'
 import MessageBox from '@/components/mypage/MessageBox.vue'
 import ExitService from '@/components/mypage/ExitService.vue'
@@ -293,6 +294,11 @@ const routes = [
     path: '/mypage/apply',
     name: 'AppliedList',
     component: AppliedList
+  },
+  {
+    path: '/mypage/detail',
+    name: 'AppliedDetail',
+    component: AppliedDetail
   },
   {
     path: '/mypage/state',

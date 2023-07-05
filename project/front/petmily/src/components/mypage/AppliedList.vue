@@ -87,7 +87,7 @@
     methods: {
       goDetail(num) {
         console.log(num);
-        this.$router.push({ name: 'ApplyDetail', query: {num: num } });
+        this.$router.push({ name: 'AppliedDetail', query: {num: num } });
       },
     }
   }

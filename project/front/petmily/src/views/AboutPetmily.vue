@@ -1,18 +1,32 @@
 <template>
     <div class="col-8" style="margin-left: 250px; text-align: left; margin-top: 30px">
-        <h2><span style="color: #f0cf81;"><strong>팀 소개</strong></span>&nbsp;</h2>
-        <p>PETMILY는 프로젝트 주제를 선정하는 중 유기동물들이 매일 몇십에서 몇백 마리까지 생긴 다는 것을 알게 되었고,
-            이 사실을 이 사이트를 보는 사람들이 알 수 있게 만들어 봤습니다.
-        </p>
-        <p>PETMILY의 의미는 반려동물(PET) + 가족(FAMILY)의 합성어로 반려동물을 가족의 구성원으로 생각한다는 의미에서
-            이름을 만들게 되었습니다
-        </p>
+        <h2><span style="color: #f0cf81;"><strong>PETMILY를 소개합니다</strong></span>&nbsp;</h2>
+        <img src="@/assets/images/family.jpg" alt="가족강아지 이미지" style="width: 100%; height: 500px; padding-bottom: 10px;">
+        <p>PETMILY의 의미는 반려동물(PET) + 가족(FAMILY)의 합성어로 반려동물은 가족이라는 모토를 가지고 있습니다</p>
+        <p>PETMILY에서는 해당 모토를 유지하며 반려동물과 고객분의 행복하고 올바른 반려동물문화를 지향하고 있으며</p>
+        <p>유기동물들을 구조하고 보호 및 관리하며 새로운 가족들을 찾아주고 있습니다</p>
 
         <hr>
 
-        <h3><span style="color: #f0cf81; padding: bottom 20px;"><strong>개발 도구</strong></span></h3>
-        <p>사용언어 : Java</p>
-        <p>개발환경 및 도구 : Git, SourceTree, Oracle, Vue</p>
+        <img src="@/assets/images/dogwalk.webp" alt="보호소 이미지" style="width: 600px; height: 500px; margin-left: 200px; padding-bottom: 10px;">
+        <p>오늘의 날씨를 알려드려 산책 지향 및 산책 주의사항을 알려드립니다</p>
+        
+        <hr>
+        
+        <h3><span style="color: #f0cf81; padding: bottom 20px;"><strong></strong></span></h3>
+        <img src="@/assets/images/careplace.jpg" @click="gotogroups" alt="보호소 이미지" style="width: 600px; height: 500px; margin-left: 200px; padding-bottom: 10px;">
+        <p>언제 어디서든 치료 및 보호를 받을 수 있게 전국 보호소 및 병원을 알려드리고 있으며</p>
+        <p>저희 PETMILY에서도 고객분들과 반려동물을 위해 최선을 다할 것입니다</p>
+
+        <hr>
+        <p>더 궁금하신게 있다면 아래 연락처로 연락해주시면 성심성의껏 돕겠습니다</p>
+        <img src="@/assets/images/call.png" alt="전화기 이미지" style="width: 20px; height: 20px;">
+        <p style="display: inline; padding-left: 10px;">전화번호 : 257-pet-mily</p>
+
+        <br>
+        
+        <img src="@/assets/images/email.png" alt="이메일 이미지" style="width: 20px; height: 20px;">
+        <p style="display: inline; padding-left: 10px;">이메일 : petmily@petmily.kr</p>
 
         <hr>
         
@@ -26,18 +40,13 @@
         </ul>
         <br>
 
-        <hr>
         
-        <h3><span style="color: #f0cf81; padding: bottom 20px;"><strong></strong></span></h3>
 
-        <hr>
-
-        <h3><span style="color: #f0cf81; padding: bottom 20px;"><strong>팀원</strong></span></h3>
-        <p>손선영 | 김진혁 | 송가영 | 전준하 | 최동혁</p>
     </div>
 </template>
 
 <script>
+
 export default {
   methods: {
     gotoanimal() {
@@ -58,7 +67,12 @@ export default {
 
     gotoweather() {
       window.location.href = 'https://www.data.go.kr/data/15084084/openapi.do';
-    }
+    },
+
+    gotogroups() {
+      this.$router.push({ name: 'Groups'});
+    },
+    
   }
 };
 </script>

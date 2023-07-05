@@ -56,23 +56,30 @@
             </tr>
             <tr>
                 <th style="padding-top: 5px;padding-left: 5px; background-color:#bab9b9" colspan="1">반려 동물 여부</th>
-                <th style="padding-top: 5px;padding-left: 5px;" colspan="3">{{ list.another }}</th>
+                <th><input type="text" style="width: 100%; padding-left: 5px; border:0px; font-family: 'IBMPlexSansKR-Bold';" v-model="list.another">
+                </th>
             </tr>
             <tr>
                 <th style="padding-top: 5px;padding-left: 5px; background-color:#bab9b9">입양 계기</th>
-                <th style="padding-top: 5px;padding-left: 5px;" colspan="3">{{ list.reason }}</th>
+                <th style="padding-top: 5px;padding-left: 5px; font-family: 'IBMPlexSansKR-Bold';;" colspan="3">
+                    <textarea style="border:0px; width: 100%;" v-model="list.reason"></textarea>
+                </th>
             </tr>
             <tr>
                 <th style="padding-top: 5px;padding-left: 5px; background-color:#bab9b9">앞으로의 다짐</th>
-                <th style="padding-top: 5px;padding-left: 5px;" colspan="3">{{ list.feeding }}</th>
+                <th style="padding-top: 5px;padding-left: 5px; font-family: 'IBMPlexSansKR-Bold';" colspan="3" >
+                    <textarea style="border:0px; width: 100%;" v-model="list.feeding"></textarea>
+                </th>
             </tr>
         </table>
     </div>
+    <button @click="edit_form(list.num)" style="background-color:#FFD65B; border-radius:10px; ">수정</button>
+    <button @click="delete_form(list.num)" style="background-color:#FFD65B; border-radius:10px; ">삭제</button>
 </template>
     
 <script>
 export default {
-    name: 'ApplyDetail',
+    name: 'AppliedDetail',
     data() {
         return {
             list: [],
@@ -81,8 +88,7 @@ export default {
     created: function () {
         this.$data.num = this.$route.query.num;
         this.fetchApplyFormData();
-    },
-
+    },  
     methods: {
         fetchApplyFormData() {
             const self = this; // self 변수에 컴포넌트 인스턴스를 할당
@@ -97,7 +103,52 @@ export default {
                     }
                 });
         },
+        edit_form(num) {
 
+            let formdata = new FormData();
+            console.log(num);
+            const self = this;
+            
+            formdata.append('id', sessionStorage.getItem('loginId'));
+            formdata.append('wdate', self.wdate);
+            formdata.append('agreement', self.agreement);
+            formdata.append('another', self.another);
+            formdata.append('reason', self.reason);
+            formdata.append('feeding', self.feeding);
+            formdata.append('ischeck', self.ischeck);
+            formdata.append('kindCd', self.kindCd);
+            formdata.append('sexCd', self.sexCd);
+            formdata.append('age', self.age);
+            formdata.append('colorCd', self.colorCd);
+            formdata.append('neuterYn', self.neuterYn);
+            formdata.append('careNm', self.careNm);
+            formdata.append('careAddr', self.careAddr);
+            formdata.append('popfile', self.popfile);
+
+            //const applyNum = self.list.apply.num; // apply.num 값을 가져옴
+            self.$axios.put('http://localhost:8082/Applyform/' + num + formdata)
+                .then(function (res) {
+                    if (res.status == 200) {
+                        self.list = res.data.list;
+                    } else {
+                        alert('에러코드' + res.status);
+                    }
+                });
+        },
+
+        delete_form(num) {
+            console.log(num);
+            const self = this;
+            //const applyNum = self.list.apply.num; // apply.num 값을 가져옴
+            self.$axios.delete('http://localhost:8082/Applyform/' + num)
+                .then(function (res) {
+                    if (res.status == 200) {
+                        self.list = res.data.list;
+                    } else {
+                        alert('에러코드' + res.status);
+                    }
+                });
+        },
 
 
 
