@@ -74,9 +74,11 @@
         <div class="modal-box-profile" style="background: #black">
           <img class="modal-profile" @error="replaceImg" :src="'http://localhost:8082/members/imgs/' + reciever"/>
         </div>
-        <p>받는사람 : {{ reciever }}</p>
-        <p>내용 : {{ content }}</p>
-        <p>보낸날짜 : {{ senddt }}</p>
+        <div class="modal-box-content">
+          <div class="modal-box-reciever">받는사람 : {{ reciever }}</div>
+          <div class="modal-box-content">내용 : {{ content }}</div>
+          <div class="modal-box-date">{{ senddt }}</div>
+        </div>
        
         <button v-on:click="modalOpen = false" class="modal-exit-btn">확인</button>
       </div>
@@ -152,6 +154,7 @@ export default {
       this.content = content;
       this.modalOpen = true;
     },
+    
     read(){
       const self = this;
       self.$axios
@@ -290,6 +293,15 @@ export default {
   background-color: white;
   object-fit: cover;
   cursor: pointer;
+}
+
+.modal-box-content{
+  margin-left:160px;
+}
+.modal-box-date{
+  display:flex;
+  float: right;
+
 }
 
 .message-list{
