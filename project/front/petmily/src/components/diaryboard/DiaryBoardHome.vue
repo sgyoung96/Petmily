@@ -83,6 +83,7 @@
 .d-all {
   padding-left: 150px;
   padding-right: 150px;
+  text-align: center;
 }
 
 .img-box {
@@ -93,7 +94,7 @@
 }
 
 .b-img {
-  width: 293px;
+  width: 290px;
   height:200px;
 }
 
