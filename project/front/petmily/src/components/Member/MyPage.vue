@@ -25,19 +25,19 @@
     <div class="wrap">
       <div class="tab_menu">
         <ul class="list">
-          <li @click="initTabs()" class="is_on li-tab01">
+          <li @click="initTabs()" class="is_on li-tab01 tab-li">
             <div class="tab01"><a href="#tab1" class="btn"><span class="tab-a">MY INFO</span></a></div>
           </li>
-          <li @click="initTabs()" class="li-tab02">
+          <li @click="initTabs()" class="li-tab02 tab-li">
             <div class="tab02"><a href="#tab2" class="btn"><span class="tab-a">COLLECTED</span></a></div>
           </li>
-          <li @click="initTabs()" class="li-tab03">
+          <li @click="initTabs()" class="li-tab03 tab-li">
             <div class="tab03"><a href="#tab3" class="btn"><span class="tab-a">APPLY PET</span></a></div>
           </li>
-          <li @click="initTabs()" class="li-tab04">
+          <li @click="initTabs()" class="li-tab04 tab-li">
             <div class="tab04"><a href="#tab4" class="btn"><span class="tab-a">MESSAGE BOX</span></a></div>
           </li>
-          <li @click="initTabs()" class="li-tab05">
+          <li @click="initTabs()" class="li-tab05 tab-li">
             <div class="tab05"><a href="#tab5" class="btn"><span class="tab-a">EXIT</span></a></div>
           </li>
         </ul>
@@ -107,7 +107,7 @@ export default {
   },
   methods: {
     initTabs() {
-      const tabList = document.querySelectorAll('.tab_menu .list li');
+      const tabList = document.querySelectorAll('.tab_menu .list .tab-li');
       const contents = document.querySelectorAll('.tab_menu .cont_area .cont')
       let activeCont = 'tab1'; // 현재 활성화 된 컨텐츠 (기본:#tab1 활성화)
 
