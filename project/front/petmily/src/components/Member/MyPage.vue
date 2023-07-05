@@ -16,6 +16,7 @@
                     <p class="history"><span class="history-header">입양 신청 횟수 : </span><span class="history-num"> {갯수} 개</span></p>
                     <p class="history"><span class="history-header">받은 쪽지 : </span><span class="history-num"> {갯수} 개</span></p>
                 </div>
+                <img class="deco" src="../../assets/images/bg_dog_mypage.png" />
             </div>
         </div>
 
@@ -197,14 +198,15 @@ p {
 
 .img-profile {
   display: block;
-  width: 200px;
-  height: 200px; 
+  width: 50%;
+  height: auto;
   border-radius: 70%;
   overflow: hidden;
 }
 
 .box-border {
     height: 240px;
+    width: 800px;
     padding-left: 100px;
     padding-right: 100px;
     padding-top: 20px;
@@ -217,7 +219,7 @@ p {
 
 .box-txt-profile {
     padding-top: 20px;
-    margin-left: 50px;
+    margin-left: 70px;
     display: block;
     justify-content: space-evenly;
     width: 400px;
@@ -246,7 +248,11 @@ p {
     font-size: 13px;
 }
 
-
+.deco {
+    width: 90px;
+    height: 50px;
+    transform: translateX(50px) translateY(150px);
+}
 
 .li-tab01, .li-tab02 {
   list-style-type: none;
