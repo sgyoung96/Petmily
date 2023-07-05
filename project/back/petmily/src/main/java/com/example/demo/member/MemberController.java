@@ -290,7 +290,7 @@ public class MemberController {
 	//멤버 전체 목록
 	@GetMapping("/all")
 	public Map all() {
-		System.out.println("멤버 전체 목록 service");
+		System.out.println("멤버 전체 목록 controller");
 		ArrayList<MemberDto> dto = service.getAll();
 		Map map = new HashMap();
 		map.put("dto", dto);

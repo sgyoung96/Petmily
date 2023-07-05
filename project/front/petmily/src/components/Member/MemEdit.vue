@@ -7,11 +7,19 @@
 
           <!-- 프로필사진 -->
           <div class="input_box">
-            <span class="box-profile" style="background: #black;"> 
-             
-              <img class="profile" id="preview" @error="replaceImg" :src="'http://localhost:8082/members/imgs/'+ id">
-            </span>
-            <input type="file" id="profile" @change="previewFile"><br/> 
+            <div class="profileimg">
+              <span class="box-profile" style="background: #black;"> 
+                <img class="profile" id="preview" @error="replaceImg" :src="'http://localhost:8082/members/imgs/'+ id">
+              </span>
+            </div>
+        
+
+            <div class="file-upload">
+                <input type="text" id="profilename" class="upload-name" value="파일선택" disabled="disabled">
+                <label for="profile">업로드</label> 
+              <input type="file" id="profile" class="upload-hidden" @change="previewFile"> 
+            </div>
+
           </div>
 
           <!-- 아이디 -->
@@ -181,6 +189,7 @@ export default {
     previewFile(){
       const fileInput = document.getElementById('profile');
       const previewImg = document.getElementById('preview');
+      const profilename = document.getElementById('profilename');
 
       // 파일이 선택되지 않았을 경우 미리보기를 초기화
       if (!fileInput.files || fileInput.files.length === 0) {
@@ -190,6 +199,9 @@ export default {
 
       // 첫 번째 파일을 가져옵니다.
       const file = fileInput.files[0];
+
+      
+      
   
       // 이미지 파일인지 확인
       if (file.type.startsWith('image/')) {
@@ -199,11 +211,13 @@ export default {
       reader.onload = function(event) {
      
        previewImg.src = event.target.result;
+       profilename.value = file.name;
     };
       
 
       // 파일을 읽어옵니다.
       reader.readAsDataURL(file);
+
       } else {
     
       // 이미지 파일이 아닌 경우 미리보기를 초기화합니다.
@@ -471,6 +485,61 @@ export default {
   object-fit: cover;
   cursor: pointer;
 }
+.profileimg{
+   display:flex;
+   justify-content: center;
+
+}
+.file-upload{
+  margin-top:20px;
+}
+
+.file-upload label {
+    display: inline-block;
+    padding: .5em .75em;
+    color: #999;
+    font-size: inherit;
+    line-height: normal;
+    vertical-align: middle;
+    background-color: #fdfdfd;
+    cursor: pointer;
+    border: 1px solid #ebebeb;
+    border-bottom-color: #e2e2e2;
+    border-radius: .25em;
+    margin-left:10px;
+}
+
+.file-upload input[type="file"] {  /* 파일 필드 숨기기 */
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip:rect(0,0,0,0);
+    border: 0;
+}
+
+
+
+/* named upload */
+.file-upload .upload-name {
+    display: inline-block;
+    padding: .5em .75em;  /* label의 패딩값과 일치 */
+    font-size: inherit;
+    font-family: inherit;
+    line-height: normal;
+    vertical-align: middle;
+    background-color: #f5f5f5;
+    border: 1px solid #ebebeb;
+    border-bottom-color: #e2e2e2;
+    border-radius: .25em;
+    -webkit-appearance: none; /* 네이티브 외형 감추기 */
+    -moz-appearance: none;
+    appearance: none;
+   
+}
+
 
 .edit_area {
     margin: 0 auto;
@@ -530,8 +599,8 @@ button{
   border:0px;
   background-color:rgb(255, 214, 91);
   font-size:medium;
- 
-
+  color:white;
+  font-weight: bold;
 }  
 
  </style>

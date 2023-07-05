@@ -73,15 +73,17 @@
       <!-- 쪽지 내용 읽기 모달창 -->
       <div class="black-bg" v-if="modalOpen === true">
         <div class="white-bg">
-          <h3>{{ num }} title : {{ title }}</h3>
+          <h3>{{ title }}</h3>
             <span class="modal-box-profile" style="background: #black">
               <img
                 class="modal-profile" @error="replaceImg"
                 :src="'http://localhost:8082/members/imgs/' + sender"/>
             </span>
-          <p>보낸사람 : {{ sender }}</p>
-          <p>받은날짜 : {{ senddt }}</p>
-          <p>내용 : {{ content }}</p>
+            <div class="modal-box-content">
+              <div class="modal-box-sender">보낸사람 : {{ sender }}</div>
+              <div class="modal-box-date">내용 : {{ content }}</div>
+              <div class="modal-box-content">{{ senddt }}</div>
+            </div>
           <button v-on:click="readcheck(num)" class="modal-exit-btn">확인</button>
         </div>
       </div>
@@ -331,11 +333,13 @@ export default {
 
 .modal-box-profile {
   display: block;
-  width: 180px;
-  height: 180px; 
+  width: 150px;
+  height: 150px; 
   border-radius: 70%;
   overflow: hidden;
-  float: left
+  float: left;
+  margin-left:10px ;
+
 }
 .modal-profile {
   width: 100%;
@@ -343,6 +347,10 @@ export default {
   background-color: white;
   object-fit: cover;
   cursor: pointer;
+}
+.modal-box-content{
+  margin-left:160px;
+
 }
 
 .message-list{

@@ -7,12 +7,20 @@
           
 
           <!-- 프로필사진 -->
-          
-           <div class="box-profile">
-            <div class="profile" id="preview"></div>
-           </div>
-           <input type="file" id="profile" @change="previewFile"><br/> 
-          
+          <div class="input_box">
+            <div class="profileimg">
+              <div class="box-profile">
+                <div class="profile" id="preview" ></div>
+              </div>
+            </div>
+
+             <div class="file-upload">
+              <input type="text" id="profilename" class="upload-name" value="파일선택" disabled="disabled">
+              <label for="profile">업로드</label> 
+              <input type="file" id="profile" class="upload-hidden" @change="previewFile"><br/> 
+            </div>
+          </div>
+
           <!-- 아이디 -->
           <div class="input_box">
             <h6 class="input_title" :class="{ 'title_danger': idHasError}">아이디</h6><br/>
@@ -95,6 +103,7 @@
  
  <script>
 
+
 export default {
    
   name: 'MemJoin',
@@ -129,7 +138,8 @@ export default {
       pwdcheckHasError:false,
       emailHasError:false,
       emailCodeHasError:false,
-      phoneHasError:false
+      phoneHasError:false,
+      previewImage: require('@/assets/imgs/mypage_sample.jpg')
    
     }
 
@@ -151,20 +161,38 @@ export default {
 
     },
   
+  mounted(){
+     const previewDiv = document.getElementById('preview');
+    const img = new Image();
+  img.src = this.previewImage;
 
+  img.onload = function() {
+    previewDiv.innerHTML = '';
+    previewDiv.appendChild(img);
+  };
+  },
 
  
   methods:{
     previewFile(){
       const fileInput = document.getElementById('profile');
       const previewDiv = document.getElementById('preview');
+      const profilename = document.getElementById('profilename');
+      
 
       // 파일이 선택되지 않았을 경우 미리보기를 초기화
       if (!fileInput.files || fileInput.files.length === 0) {
-      previewDiv.innerHTML = '';
-      return;
-      }
+      const img = new Image();
+       img.src = this.previewImage;
 
+       img.onload = function() {
+       previewDiv.innerHTML = '';
+     previewDiv.appendChild(img);
+      profilename.value = '파일선택';
+       }
+      return;
+      
+      }
       // 첫 번째 파일을 가져옵니다.
       const file = fileInput.files[0];
   
@@ -179,16 +207,22 @@ export default {
 
       img.classList.add('profile');
       previewDiv.innerHTML = '';
-      previewDiv.appendChild(img);
+      previewDiv.appendChild(img); 
+      
+      profilename.value = file.name;
     };
       
 
       // 파일을 읽어옵니다.
       reader.readAsDataURL(file);
+
+     
       } else {
     
       // 이미지 파일이 아닌 경우 미리보기를 초기화합니다.
-      previewDiv.innerHTML = '';
+       previewDiv.innerHTML = '';
+      previewDiv.style.backgroundImage = `url(${this.previewImage})`; 
+      profilename.value = '파일선택';
       }
     },
 
@@ -483,6 +517,7 @@ export default {
     }).open();
     
     },
+ 
 
  
 }
@@ -493,18 +528,81 @@ export default {
 
 <style scoped>
 .box-profile {
-    display: block;
+   display: flex;
+  justify-content: center;
+  align-items: center; /* 이미지를 수직, 수평 가운데로 정렬 */
   width: 150px;
   height: 150px; 
   border-radius: 70%;
   overflow: hidden;
 }
 .profile {
-  width: 100%;
+   width: 100%;
   height: 100%;
   object-fit: cover;
   cursor: pointer;
+  display: flex; /* 이미지를 가운데 정렬하기 위해 flex 설정 */
+  justify-content: center;
+  align-items: center;
+  
 }
+
+.profileimg{
+   display:flex;
+   justify-content: center;
+
+}
+.file-upload{
+  margin-top:20px;
+}
+
+.file-upload label {
+    display: inline-block;
+    padding: .5em .75em;
+    color: #999;
+    font-size: inherit;
+    line-height: normal;
+    vertical-align: middle;
+    background-color: #fdfdfd;
+    cursor: pointer;
+    border: 1px solid #ebebeb;
+    border-bottom-color: #e2e2e2;
+    border-radius: .25em;
+    margin-left:10px;
+}
+
+.file-upload input[type="file"] {  /* 파일 필드 숨기기 */
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip:rect(0,0,0,0);
+    border: 0;
+}
+
+
+
+/* named upload */
+.file-upload .upload-name {
+    display: inline-block;
+    padding: .5em .75em;  /* label의 패딩값과 일치 */
+    font-size: inherit;
+    font-family: inherit;
+    line-height: normal;
+    vertical-align: middle;
+    background-color: #f5f5f5;
+    border: 1px solid #ebebeb;
+    border-bottom-color: #e2e2e2;
+    border-radius: .25em;
+    -webkit-appearance: none; /* 네이티브 외형 감추기 */
+    -moz-appearance: none;
+    appearance: none;
+   
+}
+
+
 .join_area {
     margin: 0 auto;
     padding: 58px 0 160px;
@@ -590,7 +688,9 @@ button{
   border:0px;
   background-color:rgb(255, 214, 91);
   font-size:medium;
- 
+  color:white;
+  font-weight: bold;
+
 
 }
 
