@@ -36,4 +36,11 @@ public class AdoptliketableService {
 	void deleteOne(AdoptliketableDto dto) {
 		dao.delete(new Adoptliketable(dto.getDb_num(), dto.getId(), dto.getNum()));
 	}
+	
+	//관심수 출력
+	public int printPerson(String id) {
+		Member m = new Member(id,"","","","",null,"","","",null);
+		return dao.countById(m);
+	}
+	
 }

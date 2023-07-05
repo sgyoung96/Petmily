@@ -41,4 +41,8 @@ public interface MessageDao extends JpaRepository<Message, Integer> {
 	@Modifying
 	@Query(value="update message set availablereciever='N' where num=:num", nativeQuery=true)
 	void updateavailablereciever(@Param("num") int num);
+	
+	@Transactional
+    @Query(value = "SELECT COUNT(*) FROM Message WHERE reciever = :reciever")
+    int countById(@Param("reciever") Member reciever);
 }

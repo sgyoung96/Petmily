@@ -114,7 +114,6 @@ public class DiaryboardController {
 		int saveNum = 0;
 		Map map = new HashMap();
 		DiaryboardDto dto2 = service.getByNum(dto.getNum());
-		System.out.println("#################################"+dto.getF()[0]+"#############################");
 		boolean flag = true;
 		if(dto.getF()[0] == null && dto.getF()[1] == null) {
 			dto2.setTitle(dto.getTitle());
@@ -122,7 +121,6 @@ public class DiaryboardController {
 			saveNum = service.save(dto2);
 		}else {
 		try {
-			System.out.println("#@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@");
 			dto2.setTitle(dto.getTitle());
 			dto2.setContent(dto.getContent());
 			File delf1 = new File(dto2.getPic1());
@@ -287,4 +285,13 @@ public class DiaryboardController {
 		map.put("count", count);
 		return map;
 	}
+    
+    //작성한 게시판개수 출력
+  	@GetMapping("/id2/{id}")
+  	public Map getWatch(@PathVariable("id") String id) {
+  		Map map = new HashMap<>();
+  		int dto = service.printPerson(id);
+  		map.put("dto", dto);
+  		return map;
+  	}
 }

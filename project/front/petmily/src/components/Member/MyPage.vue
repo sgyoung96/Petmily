@@ -9,12 +9,12 @@
                 <div class="box-txt-profile">
                     <p><span id="name">이름</span>님이 그동안 활동한 내역이에요.</p>
                     <br>
-                    <p class="history"><span class="history-header">관심 목록 : </span><span class="history-num"> {갯수} 개</span></p>
-                    <p class="history"><span class="history-header">좋아요 갯수 : </span><span class="history-num"> {갯수} 개</span> </p>
-                    <p class="history"><span class="history-header">글 작성 수 : </span><span class="history-num"> {갯수} 개</span></p>
-                    <p class="history"><span class="history-header">댓글 작성 수 : </span><span class="history-num"> {갯수} 개</span></p>
-                    <p class="history"><span class="history-header">입양 신청 횟수 : </span><span class="history-num"> {갯수} 개</span></p>
-                    <p class="history"><span class="history-header">받은 쪽지 : </span><span class="history-num"> {갯수} 개</span></p>
+                    <p class="history"><span class="history-header">관심 목록 : </span><span class="history-num"> {{ watch }} 개</span></p>
+                    <p class="history"><span class="history-header">좋아요 갯수 : </span><span class="history-num"> {{ likecnt2 }} 개</span> </p>
+                    <p class="history"><span class="history-header">글 작성 수 : </span><span class="history-num"> {{ writecnt3 }} 개</span></p>
+                    <p class="history"><span class="history-header">댓글 작성 수 : </span><span class="history-num"> {{ cocnt2 }} 개</span></p>
+                    <p class="history"><span class="history-header">입양 신청 횟수 : </span><span class="history-num"> {{ appcnt }} 개</span></p>
+                    <p class="history"><span class="history-header">받은 쪽지 : </span><span class="history-num"> {{ msgcnt }} 개</span></p>
                 </div>
             </div>
         </div>
@@ -86,11 +86,23 @@ export default {
         phone: '',
         address: '',
         token: '',
+        watch:0,
+        likecnt2:0,
+        writecnt3:0,
+        cocnt2:0,
+        appcnt:0,
+        msgcnt:0
     }
   },
   created: function () {
     this.initTabs();
     this.getUserInfo();
+    this.getWatch();
+    this.getLike();
+    this.getBoards();
+    this.getComment();
+    this.getApply();
+    this.getMessage();
   },
   methods: {
     initTabs() {
@@ -149,7 +161,91 @@ export default {
     setBaseInfo() {
         document.getElementById('login_name').innerText = this.name;
         document.getElementById('name').innerText = this.name;
-    }
+    },
+    getWatch(){
+      const self = this
+      self.$axios.get('http://localhost:8082/watchlist/id/' + this.id)
+      .then(function(res){
+        if(res.status == 200){
+          self.watch = res.data.dto
+        }
+      })
+    },
+    getLike(){
+      const self = this
+      let likecnt = 0;
+      
+      self.$axios.get('http://localhost:8082/liketable/id/' + this.id)
+      .then(function(res){
+        if(res.status == 200){
+          likecnt = res.data.dto
+          self.$axios.get('http://localhost:8082/adoptliketable/id/' + self.id)
+          .then(function(res){
+            if(res.status == 200){
+              self.likecnt2 = likecnt + res.data.dto
+            }
+          })
+        }
+      })
+    },
+    getBoards(){
+      const self = this
+      let writecnt = 0;
+      let writecnt2 = 0;
+      self.$axios.get('http://localhost:8082/adopt/id/' + this.id)
+      .then(function(res){
+        if(res.status == 200){
+          writecnt = res.data.dto
+          self.$axios.get('http://localhost:8082/dboard/id2/' + self.id)
+          .then(function(res){
+            if(res.status == 200){
+              writecnt2 = writecnt + res.data.dto
+              self.$axios.get('http://localhost:8082/volboard/id/' + self.id)
+              .then(function(res){
+                if(res.status == 200){
+                  self.writecnt3 = writecnt2 + res.data.dto
+                }
+              })
+            }
+          })
+        }
+      })
+    },
+    getComment(){
+      const self = this
+      let cocnt = 0;
+      
+      self.$axios.get('http://localhost:8082/adoptcomment/id/' + this.id)
+      .then(function(res){
+        if(res.status == 200){
+          cocnt = res.data.dto
+          self.$axios.get('http://localhost:8082/dcomment/id/' + self.id)
+          .then(function(res){
+            if(res.status == 200){
+              self.cocnt2 = cocnt + res.data.dto
+            }
+          })
+        }
+      })
+    },
+    getApply(){
+      const self = this
+      self.$axios.get('http://localhost:8082/Applyform/id/' + this.id)
+      .then(function(res){
+        if(res.status == 200){
+          self.appcnt = res.data.dto
+        }
+      })
+    },
+    getMessage(){
+      const self = this
+      self.$axios.get('http://localhost:8082/message/id/' + this.id)
+      .then(function(res){
+        if(res.status == 200){
+          self.msgcnt = res.data.dto
+        }
+      })
+    },
 
   },
   components: {

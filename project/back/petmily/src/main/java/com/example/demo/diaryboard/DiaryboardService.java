@@ -92,4 +92,9 @@ public class DiaryboardService {
 	public int getCount() {
 		return dao.countByAll();
 	}
+	//작성한 게시판수 출력
+		public int printPerson(String id) {
+			Member m = new Member(id,"","","","",null,"","","",null);
+			return dao.countById(m);
+		}
 }

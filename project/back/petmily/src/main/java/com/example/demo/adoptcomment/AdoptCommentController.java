@@ -15,22 +15,22 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 /**
- * 1. 해당 게시글 댓글 전체 검색
- * 2. 댓글 입력
- * 4. 댓글 삭제 
+ * 1. 해당 게시글 댓글 전체 검색 2. 댓글 입력 4. 댓글 삭제
+ * 
  * @author gayeong
  *
  */
 @RestController
-@CrossOrigin(origins= "*")
+@CrossOrigin(origins = "*")
 @RequestMapping("/adoptcomment")
 public class AdoptCommentController {
-	
+
 	@Autowired
 	private AdoptCommentService service;
-	
+
 	/**
 	 * 해당 게시글 댓글 전체 검색
+	 * 
 	 * @return
 	 */
 	@GetMapping("/{num}")
@@ -40,9 +40,10 @@ public class AdoptCommentController {
 		map.put("dto", dtos);
 		return map;
 	}
-	
+
 	/**
 	 * 댓글 입력
+	 * 
 	 * @param dto
 	 * @return
 	 */
@@ -53,9 +54,10 @@ public class AdoptCommentController {
 		map.put("dto", adoptComment);
 		return map;
 	}
-	
+
 	/**
 	 * 댓글 삭제
+	 * 
 	 * @param ab_num
 	 */
 	@DeleteMapping("/{num}")
@@ -69,6 +71,15 @@ public class AdoptCommentController {
 			flag = false;
 		}
 		map.put("flag", flag);
+		return map;
+	}
+
+	// 작성한 댓글개수 출력
+	@GetMapping("/id/{id}")
+	public Map getWatch(@PathVariable("id") String id) {
+		Map map = new HashMap<>();
+		int dto = service.printPerson(id);
+		map.put("dto", dto);
 		return map;
 	}
 }
