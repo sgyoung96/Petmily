@@ -55,7 +55,7 @@
 
       <div style="display:flex">
         <div v-for="dboard in arr2" :key="dboard.num">
-          <div class="img-box" v-on:click="$event => detail(dboard.num)">
+          <div class="img-box" v-on:click="$event => detail2(dboard.num)">
             <a><img class="b-img" :src="'http://localhost:8082/adopt/imgs/' + dboard.num + '/1'"></a>
             <div class="b-txt">
               <div class="b-title">
@@ -257,6 +257,9 @@ export default {
     detail(num) {
       // alert(num)
       this.$router.push({ name: 'DiaryBoardDetail', query: { num: num } })
+    },
+    detail2(num) {
+      this.$router.push({name: 'AdoptDetail', query: {num: num}})
     },
     extractVideoId(url) {
       // Regular expression to extract the video ID from YouTube URL
