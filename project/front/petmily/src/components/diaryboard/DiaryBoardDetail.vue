@@ -58,7 +58,7 @@
         <span class="comment-profile">
           <img class="profile" @error="replaceImg" :src="'http://localhost:8082/members/imgs/' + id">
         </span>
-        <textarea style="width:900px;" v-model="content" id="content"></textarea>
+        <textarea style="width:900px; resize: none;" v-model="content" id="content"></textarea>
         <button v-on:click="commentadd">등록하기</button>
       </div>
       <MessageModal :resender=resender v-if="displayDetail" @close="displayDetail=false"/>
@@ -75,7 +75,7 @@
                 formatDate(comment.w_date) }}</span><br />
               <div v-if="!comment.editMode">{{ comment.content }}</div>
               <div v-if="comment.editMode" class="c-editForm">
-                <textarea style="width:900px;" v-model="comment.editContent"
+                <textarea style="width:900px; resize: none;" v-model="comment.editContent"
                   :cols="comment.editContent.length"></textarea>
                 <button @click="saveComment(comment)">저장</button>
                 <button @click="cancelEdit(comment)">취소</button>

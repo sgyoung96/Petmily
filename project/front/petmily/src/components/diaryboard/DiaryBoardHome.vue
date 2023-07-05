@@ -96,6 +96,7 @@
 .b-img {
   width: 290px;
   height:200px;
+  border-bottom:1px solid silver;
 }
 
 .b-txt {
