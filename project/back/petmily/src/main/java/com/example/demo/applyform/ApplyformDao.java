@@ -10,7 +10,8 @@ import org.springframework.stereotype.Repository;
 
 import com.example.demo.member.Member;
 
-import jakarta.transaction.Transactional;
+import org.springframework.transaction.annotation.Transactional;
+
 @Repository
 public interface ApplyformDao extends JpaRepository<Applyform, Integer> {
 	ArrayList<Applyform> findById(int num);
@@ -26,4 +27,9 @@ public interface ApplyformDao extends JpaRepository<Applyform, Integer> {
 	@Modifying
 	@Query(value="update applyform set ischeck=2 where num=:num", nativeQuery=true)
 	void updateRefuse(@Param("num") int num);
+	
+	@Transactional
+    @Query(value = "SELECT COUNT(*) FROM Applyform WHERE id = :id")
+    int countById(@Param("id") Member id);
+	
 }

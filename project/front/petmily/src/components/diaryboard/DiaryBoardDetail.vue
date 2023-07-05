@@ -49,7 +49,7 @@
 </router-link>
         </div>
         <div>
-          <button @click="likebtn(dto.id.id, dto.num)">좋아요</button>
+          <button @click="likebtn(dto.num)">좋아요</button>
           <button v-on:click="edit(dto.id.id)" class="badge text-bg-secondary" style="font-size: 17px;">수정하기</button>
           <button v-on:click="boarddelete(dto.id.id)">삭제하기</button>
         </div>
@@ -301,16 +301,16 @@ export default {
       const options = { year: '2-digit', month: '2-digit', day: '2-digit', hour12: false };
       return new Date(date).toLocaleString('ko-KR', options);
     },
-    likebtn(id, num) {
+    likebtn(num) {
       if(this.id == null){
         alert('로그인 후 이용가능합니다.')
       }else{
-      this.$axios.get('http://localhost:8082/liketable/' + id + '/' + num)
+      this.$axios.get('http://localhost:8082/liketable/' + this.id + '/' + num)
         .then(response => {
           if (response.status == 200) {
             if (response.data.flag) {
               let formData = new FormData();
-              formData.append('id', id)
+              formData.append('id', this.id)
               formData.append('num', num)
               this.$axios.post('http://localhost:8082/liketable', formData)
                 .then(response => {
@@ -327,7 +327,7 @@ export default {
                 })
             } else {
               let formData = new FormData();
-              formData.append('id', id)
+              formData.append('id', this.id)
               formData.append('num', num)
               this.$axios.delete('http://localhost:8082/liketable', {
                 data: formData

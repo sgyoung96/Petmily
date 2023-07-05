@@ -94,4 +94,10 @@ public class VolboardService {
 		dao.updateCnt(num);
 	}
 	
+	//작성한 게시판수 출력
+		public int printPerson(String id) {
+			Member m = new Member(id,"","","","",null,"","","",null);
+			return dao.countById(m);
+		}
+	
 }

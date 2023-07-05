@@ -35,4 +35,10 @@ public class LiketableService {
 	void deleteOne(LiketableDto dto) {
 		dao.delete(new Liketable(dto.getDb_num(), dto.getId(), dto.getNum()));
 	}
+	
+	//관심수 출력
+	public int printPerson(String id) {
+		Member m = new Member(id,"","","","",null,"","","",null);
+		return dao.countById(m);
+	}
 }

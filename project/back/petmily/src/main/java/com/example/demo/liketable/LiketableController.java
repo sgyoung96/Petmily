@@ -63,4 +63,12 @@ public class LiketableController {
 		return map;
 	}
 	
+	@GetMapping("/id/{id}")
+	public Map getWatch(@PathVariable("id") String id) {
+		Map map = new HashMap<>();
+		int dto = service.printPerson(id);
+		map.put("dto", dto);
+		return map;
+	}
+	
 }

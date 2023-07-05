@@ -87,16 +87,22 @@ public class AdoptBoardService {
 	}
 	
 	//좋아요 수 올림
-		public void uplike(int num) {
-			dao.upCount(num);
-		}
+	public void uplike(int num) {
+		dao.upCount(num);
+	}
 		
-		//좋아요 수 내림
-		public void downlike(int num) {
-			dao.downCount(num);
-		}
+	//좋아요 수 내림
+	public void downlike(int num) {
+		dao.downCount(num);
+	}
 	
 	public int getCount() {
 		return dao.countByAll();
+	}
+	
+	//작성한 게시판수 출력
+	public int printPerson(String id) {
+		Member m = new Member(id,"","","","",null,"","","",null);
+		return dao.countById(m);
 	}
 }

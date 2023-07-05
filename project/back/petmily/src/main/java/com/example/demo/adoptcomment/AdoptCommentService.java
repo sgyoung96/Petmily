@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.example.demo.adopt.Adoptboard;
+import com.example.demo.member.Member;
 
 @Service
 public class AdoptCommentService {
@@ -45,5 +46,11 @@ public class AdoptCommentService {
 	 */
 	public void remove(int num) {
 		dao.deleteById(num);
+	}
+	
+	//작성한 댓글수 출력
+	public int printPerson(String id) {
+		Member m = new Member(id,"","","","",null,"","","",null);
+		return dao.countById(m);
 	}
 }

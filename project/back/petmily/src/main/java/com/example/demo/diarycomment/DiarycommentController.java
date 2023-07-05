@@ -1,6 +1,7 @@
 package com.example.demo.diarycomment;
 
 import java.util.ArrayList;
+
 import java.util.HashMap;
 import java.util.Map;
 
@@ -83,5 +84,13 @@ public class DiarycommentController {
 		map.put("flag", flag);
 		return map;
 	}
+	//작성한 댓글개수 출력
+		@GetMapping("/id/{id}")
+		public Map getWatch(@PathVariable("id") String id) {
+			Map map = new HashMap<>();
+			int dto = service.printPerson(id);
+			map.put("dto", dto);
+			return map;
+		}
 	}
 

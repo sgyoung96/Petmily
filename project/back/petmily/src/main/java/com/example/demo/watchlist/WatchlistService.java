@@ -22,11 +22,18 @@ public class WatchlistService {
 		}
 	}
 	
+	
 	public void save(WatchlistDto dto) {
 		dao.save(new Watchlist(dto.getDb_num(), dto.getId(), dto.getNum()));
 	}
 	
 	public void delete(WatchlistDto dto) {
 		dao.delete(new Watchlist(dto.getDb_num(), dto.getId(), dto.getNum()));
+	}
+	
+	//관심수 출력
+	public int printPerson(String id) {
+		Member m = new Member(id,"","","","",null,"","","",null);
+		return dao.countById(m);
 	}
 }

@@ -1,6 +1,7 @@
 package com.example.demo.applyform;
 
 import java.util.ArrayList;
+
 import java.util.HashMap;
 import java.util.Map;
 
@@ -11,7 +12,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -19,9 +19,10 @@ import org.springframework.web.bind.annotation.RestController;
 @CrossOrigin(origins = "*") // 모든 ip로부터 요청 받기 허용
 @RequestMapping("/Applyform")
 public class ApplyformController {
+	
 	@Autowired
 	private ApplyformService service;
-	
+
 	// 추가
 	@PostMapping("")
 	public Map add(ApplyformDto dto) {
@@ -31,7 +32,7 @@ public class ApplyformController {
 		map.put("dto", d);
 		return map;
 	}
-	
+
 	// 전체목록 검색
 	@GetMapping("")
 	public Map getAll() {
@@ -40,35 +41,35 @@ public class ApplyformController {
 		map.put("list", list);
 		return map;
 	}
-	
-	//num로 검색
-			@GetMapping("/getbynum/{num}")
-			public Map getbynum(@PathVariable("num") int num) {
-				ArrayList<ApplyformDto> list = service.findById(num);
-				Map map = new HashMap();
-				map.put("list", list);
-				return map;
-			}
-	
-	//id로 검색
+
+	// num로 검색
+	@GetMapping("/getbynum/{num}")
+	public Map getbynum(@PathVariable("num") int num) {
+		ArrayList<ApplyformDto> list = service.findById(num);
+		Map map = new HashMap();
+		map.put("list", list);
+		return map;
+	}
+
+	// id로 검색
 	@GetMapping("/getbyid/{id}")
-	public Map getbyid(@PathVariable("id")String id) {
+	public Map getbyid(@PathVariable("id") String id) {
 		ArrayList<ApplyformDto> list = service.findByMemberId(id);
 		Map map = new HashMap();
 		map.put("list", list);
 		return map;
 	}
-	
-	//check로 검색
-		@GetMapping("/getbycheck/{check}")
-		public Map getbycheck(@PathVariable("check") int check) {
-			ArrayList<ApplyformDto> list = service.findByCheck(check);
-			Map map = new HashMap();
-			map.put("list", list);
-			return map;
-		}
-	
-	//승인
+
+	// check로 검색
+	@GetMapping("/getbycheck/{check}")
+	public Map getbycheck(@PathVariable("check") int check) {
+		ArrayList<ApplyformDto> list = service.findByCheck(check);
+		Map map = new HashMap();
+		map.put("list", list);
+		return map;
+	}
+
+	// 승인
 	@PatchMapping("/apply/{num}")
 	public Map apply(@PathVariable("num") int num) {
 		boolean flag = true;
@@ -80,26 +81,34 @@ public class ApplyformController {
 		Map map = new HashMap();
 		map.put("flag", flag);
 		return map;
-	}	
-	
-	//거부
-		@PatchMapping("/refuse/{num}")
-		public Map refuse(@PathVariable("num") int num) {
-			boolean flag = true;
-			try {
-				service.refuse(num);
-			} catch (Exception e) {
-				flag = false;
-			}
-			Map map = new HashMap();
-			map.put("flag", flag);
-			return map;
-		}	
-		
-	//삭제
+	}
+
+	// 거부
+	@PatchMapping("/refuse/{num}")
+	public Map refuse(@PathVariable("num") int num) {
+		boolean flag = true;
+		try {
+			service.refuse(num);
+		} catch (Exception e) {
+			flag = false;
+		}
+		Map map = new HashMap();
+		map.put("flag", flag);
+		return map;
+	}
+
+	// 삭제
 	@DeleteMapping("/{num}")
 	public void delform(@PathVariable("num") int num) {
 		service.delApplyform(num);
 	}
-	
+
+	// 신청한 개수 출력
+	@GetMapping("/id/{id}")
+	public Map getWatch(@PathVariable("id") String id) {
+		Map map = new HashMap<>();
+		int dto = service.printPerson(id);
+		map.put("dto", dto);
+		return map;
+	}
 }
