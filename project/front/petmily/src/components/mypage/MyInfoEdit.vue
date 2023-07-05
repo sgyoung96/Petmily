@@ -2,7 +2,7 @@
   <div>
     <div class="container">
         <div class="list">
-            <ul>
+            <ul class="box-ul">
                 <li class="list-li">
                     <div>
                         <p class="header-profile">PROFILE</p>
@@ -107,19 +107,19 @@
                 </li>
 
 
-                <li class="list-li">
+                <li class="list-li password">
                     <div>
                         <p>PASSWORD</p>
                         <br>
                         <table>
                             <tr>
                                 <td>
-                                    <div>
+                                    <div class="box-password">
                                         <p>비밀번호 변경</p>
-                                        <input type="password" placeholder="새 비밀번호" />
-                                        <p class ="input_error" v-show="isPwdCheck">영문, 숫자, 특수문자 8~16문자</p><br/>  
-                                        <input type="password" placeholder="새 비밀번호 확인" />
-                                        <p class ="input_error" v-show="isPwdCheckEqual">비밀번호 확인해주세요</p><br/> 
+                                        <input class="ipt-pw" type="password" placeholder="새 비밀번호" /><br>
+                                        <label class ="ipt-error" v-show="isPwdCheck">영문, 숫자, 특수문자 8~16문자</label><br>  
+                                        <input class="ipt-pw" type="password" placeholder="새 비밀번호 확인" /><br>
+                                        <label class ="ipt-error" v-show="isPwdCheckEqual">비밀번호가 일치하지 않아요</label><br> 
                                     </div>
                                 </td>
                             </tr>
@@ -132,7 +132,7 @@
         <br>
 
         <div>
-            <button v-on:click="editcheck" style ="padding:5px 20px 5px 20px; width:100%; margin-top:60px">내정보 수정</button>
+            <button v-on:click="editcheck">내정보 수정</button>
         </div>
       </div>
   </div>
@@ -247,6 +247,10 @@ export default {
 .list {
     display: flex;
     justify-content: center;
+    border: 2px solid #eee;
+    border-radius: 20px;
+    padding-top: 20px;
+    padding-bottom: 20px;
 }
 
 ul {
@@ -413,13 +417,42 @@ li:hover {
     font-size: 15px;
 }
 
-.header-line {
-    width: 100px;
-    height: 2px;
-    border: 5px solid rgb(244, 191, 79);
-    background-color: rgb(244, 191, 79);
-    margin-top: -10px;
-    transform: translateX(50%);
+.ipt-pw {
+    width: 150px;
+    font-family: 'IBMPlexSansKR-Medium';
+    font-size: 12px;
+    margin-left: 10px;
+    margin-top: 10px;
+}
+
+.ipt-pw::placeholder {
+    font-family: 'IBMPlexSansKR-Regular';
+    font-size: 12px;
+}
+
+.box-password > .ipt-error {
+    font-family: 'IBMPlexSansKR-Light';
+    font-size: 8px;
+}
+
+.box-ul .password div table tr td .box-password p .ipt-error {
+    font-family: 'IBMPlexSansKR-Light';
+    font-size: 8px;
+}
+
+.box-ul .password div table tr td .box-password p:hover .ipt-error {
+    font-family: 'IBMPlexSansKR-Light';
+    font-size: 8px;
+}
+
+.box-ul .password .ipt-error {
+    font-family: 'IBMPlexSansKR-Light';
+    font-size: 8px;
+}
+
+.box-ul .password:hover .ipt-error {
+    font-family: 'IBMPlexSansKR-Light';
+    font-size: 8px;
 }
 
 #preview {
@@ -428,6 +461,17 @@ li:hover {
     height: 200px;
     border-radius: 70%;
     overflow: hidden;
+}
+
+button {
+    background-color: rgb(244, 191, 79);
+    color: white;
+    font-family: 'IBMPlexSansKR-Bold';
+    width: 100px;
+    height: 50px;
+    font-size: 15px;
+    border: 3px solid rgb(244, 191, 79);
+    border-radius: 20px;
 }
 
 </style>
