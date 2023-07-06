@@ -2,14 +2,10 @@ package com.example.demo.notification;
 
 import java.util.ArrayList;
 
-
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
-import org.springframework.transaction.annotation.Transactional;
-
-import com.example.demo.member.Member;
 
 @Repository
 public interface NotificationDao extends JpaRepository<Notification, Integer> {
@@ -19,18 +15,16 @@ public interface NotificationDao extends JpaRepository<Notification, Integer> {
 	 * @param id
 	 * @return
 	 */
-	@Transactional
-	@Query(value="SELECT * FROM Notification WHERE RECIEVER = :reciever AND IS_CLICKED = '0' ORDER BY TR_DATE DESC")
-	ArrayList<Notification> getNew2Notification(@Param("reciever") Member reciever);
+	@Query(value = "SELECT num, reciever, header, content, row_num, title, writer, commenter, notify_type, is_clicked, tr_date FROM Notification WHERE reciever = :reciever AND is_clicked = '0' ORDER BY tr_date DESC")
+	ArrayList<Notification> newNotification(@Param("reciever") String reciever);
 	
 	/**
 	 * 모든 알림 받는 사람으로 전체 검색
 	 * @param id
 	 * @return
 	 */
-	@Transactional
-	@Query(value = "SELECT * FROM Notification WHERE RECIEVER = :reciever ORDER BY TR_DATE DESC")
-	ArrayList<Notification> getAll2Notification(@Param("reciever") Member reciever);
+	@Query(value = "SELECT num, reciever, header, content, row_num, title, writer, commenter, notify_type, is_clicked, tr_date FROM Notification WHERE reciever = :reciever ORDER BY tr_date DESC")
+	ArrayList<Notification> allNotification(@Param("reciever") String reciever);
 
 	
 	/**
@@ -38,34 +32,22 @@ public interface NotificationDao extends JpaRepository<Notification, Integer> {
 	 * @param id
 	 * @return
 	 */
-	@Transactional
-	@Query(value="SELECT A.* FROM Notification A, ADOPTBOARD B WHERE A.RECIEVER = :reciever AND B.ID = A.RECIEVER AND A.NOTIFY_TYPE = '1' ORDER BY A.TR_DATE DESC")
-	ArrayList<Notification> getAdoptComment2Notification(@Param("reciever") Member reciever);
+	@Query(value = "SELECT num, reciever, header, content, row_num, title, writer, commenter, notify_type, is_clicked, tr_date FROM Notification WHERE reciever = :reciever AND notify_type = '1' ORDER BY tr_date DESC")
+	ArrayList<Notification> adoptNotification(@Param("reciever") String reciever);
 	
 	/**
 	 * 입양일지 게시판 댓글 알림
 	 * @param id
 	 * @return
 	 */
-	@Transactional
-	@Query(value="SELECT A.*"
-			   + "  FROM Notification A, DIARYBOARD B"
-			   + " WHERE A.RECIEVER = :reciever"
-			   + "   AND B.ID = A.RECIEVER"
-			   + "   AND A.NOTIFY_TYPE = '2'"
-			   + " ORDER BY A.TR_DATE DESC")
-	ArrayList<Notification> getDiaryComment2Notification(@Param("reciever") Member reciever);
+	@Query(value = "SELECT num, reciever, header, content, row_num, title, writer, commenter, notify_type, is_clicked, tr_date FROM Notification WHERE reciever = :reciever AND notify_type = '2' ORDER BY tr_date DESC")
+	ArrayList<Notification> dbNotification(@Param("reciever") String reciever);
 	
 	/**
 	 * 쪽지함 받은 쪽지 알림
 	 * @param id
 	 * @return
 	 */
-	@Transactional
-	@Query(value="SELECT *"
-			   + "  FROM Notification"
-			   + " WHERE RECIEVER = :reciever"
-			   + "   AND NOTIFY_TYPE = '3'"
-			   + " ORDER BY TR_DATE DESC")
-	ArrayList<Notification> getMessage2Notification(@Param("reciever") Member reciever);
+	@Query(value = "SELECT num, reciever, header, content, row_num, title, writer, commenter, notify_type, is_clicked, tr_date FROM Notification WHERE reciever = :reciever AND notify_type = '3' ORDER BY tr_date DESC")
+	ArrayList<Notification> msgboxNotification(@Param("reciever") String reciever);
 }
