@@ -24,6 +24,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.example.demo.diaryboard.DiaryboardDto;
+
 
 /**
  * 1. 전체 목록 검색
@@ -77,6 +79,26 @@ public class AdoptBoardController {
 		AdoptBoardDto dto = service.getDetail(num);
 		Map map = new HashMap();
 		map.put("dto", dto);
+		return map;
+	}
+	
+	/**
+	 * ID로 조회
+	 * @param id
+	 * @return
+	 */
+	@GetMapping("/id2/{id}")
+    public Map getById(@PathVariable("id") String id) {
+        Map map = new HashMap();
+    	ArrayList<AdoptBoardDto> list = null;
+    	boolean flag = true;
+		try {
+			list = service.getByWriter(id);
+		} catch (Exception e) {
+			flag = false;
+		}
+		map.put("flag", flag);
+		map.put("list", list);
 		return map;
 	}
 	

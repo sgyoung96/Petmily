@@ -224,15 +224,15 @@ public class DiaryboardController {
     @GetMapping("/id/{id}")
     public Map getById(@PathVariable("id") String id) {
         Map map = new HashMap();
-    	ArrayList<DiaryboardDto> dto = null;
+    	ArrayList<DiaryboardDto> list = null;
     	boolean flag = true;
 		try {
-			dto = service.getById(id);
+			list = service.getById(id);
 		} catch (Exception e) {
 			flag = false;
 		}
 		map.put("flag", flag);
-		map.put("dto", dto);
+		map.put("list", list);
 		return map;
 	}
 

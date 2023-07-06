@@ -40,6 +40,9 @@ public class ParticipantsController {
 	public Map getPerson(@PathVariable("boardnum") int boardnum) {
 		ArrayList<ParticipantsDto> list = service.getByNum(boardnum);
 		Map map = new HashMap<>();
+		if(list == null) {
+			list = null;
+		}
 		map.put("list", list);
 		return map;
 	}

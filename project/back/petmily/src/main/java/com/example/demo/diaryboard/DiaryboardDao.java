@@ -10,12 +10,15 @@ import org.springframework.stereotype.Repository;
 import com.example.demo.member.Member;
 
 import jakarta.transaction.Transactional;
+import java.util.List;
+
 @Repository
 public interface DiaryboardDao extends JpaRepository<Diaryboard, Integer> {
 	ArrayList<Diaryboard> findByIdContaining(Member id);
 	ArrayList<Diaryboard> findByTitleContaining(String title);
 	ArrayList<Diaryboard> findAllByOrderByNumDesc();
 	ArrayList<Diaryboard> findAllByOrderByLikecntDesc();
+	ArrayList<Diaryboard> findById(Member id);
 	
 	@Transactional
 	@Modifying
