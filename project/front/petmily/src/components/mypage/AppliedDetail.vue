@@ -54,7 +54,9 @@
             </tr>
             <tr>
                 <th style="padding-top: 5px;padding-left: 5px; background-color:#bab9b9" colspan="1">반려 동물 여부</th>
-                <th colspan="3"><input type="text" style="width: 100%; padding-left: 5px; border:0px; font-family: IBMPlexSansKR-Bold;"  v-model="another">
+                <th colspan="3"><input type="text"
+                        style="width: 100%; padding-left: 5px; border:0px; font-family: IBMPlexSansKR-Bold;"
+                        v-model="another">
                 </th>
             </tr>
             <tr>
@@ -65,11 +67,14 @@
             </tr>
             <tr>
                 <th style="padding-top: 5px;padding-left: 5px; background-color:#bab9b9">앞으로의 다짐</th>
-                <th style="padding-top: 5px;padding-left: 5px; font-family: 'IBMPlexSansKR-Bold';" colspan="3" >
-                    <textarea style="border:0px; width: 100%;" v-model="feeding"></textarea></th>
+                <th style="padding-top: 5px;padding-left: 5px; font-family: 'IBMPlexSansKR-Bold';" colspan="3">
+                    <textarea style="border:0px; width: 100%;" v-model="feeding"></textarea>
+                </th>
             </tr>
         </table>
     </div>
+    <button @click="edit_form()" style="background-color:#FFD65B; border-radius:10px;">수정</button>
+    <button @click="delete_form(num)" style="background-color:#FFD65B; border-radius:10px;">삭제</button>
 </template>
 
 <script>
@@ -77,6 +82,7 @@ export default {
     name: 'ApplyDetail',
     data() {
         return {
+            num: '',
             id: '',
             name: '',
             wdate: '',
@@ -106,6 +112,7 @@ export default {
                 .then(function (res) {
                     if (res.status == 200) {
                         const data = res.data;
+                        self.num = data.num;
                         self.id = data.id.id;
                         self.name = data.id.name;
                         self.wdate = data.wdate;
@@ -122,6 +129,46 @@ export default {
                         self.popfile = data.popfile;
                     } else {
                         alert('에러코드' + res.status)
+                    }
+                });
+        },
+
+        edit_form() {
+            const self = this;
+            let formdata = new FormData();
+            formdata.append('num', self.num);
+            formdata.append('another', self.another);
+            formdata.append('reason', self.reason);
+            formdata.append('feeding', self.feeding);
+
+            self.$axios.put(`http://localhost:8082/Applyform` , formdata, {
+                    headers: {
+                    'Content-Type': 'multipart/form-data'
+                }
+            })
+            
+            
+            
+                .then(function (res) {
+                    if (res.status == 200) {
+                        self.$router.go(-1);
+                    } else {
+                        alert('에러코드 ' + res.status);
+                    }
+                });
+        },
+
+
+        delete_form(num) {
+            console.log(num);
+            const self = this;
+            //const applyNum = self.list.apply.num; // apply.num 값을 가져옴
+            self.$axios.delete('http://localhost:8082/Applyform/' + num)
+                .then(function (res) {
+                    if (res.status == 200) {
+                        self.$router.go(-1);
+                    } else {
+                        alert('에러코드' + res.status);
                     }
                 });
         },
@@ -156,5 +203,4 @@ a {
 
 #block {
     border: #42b983;
-}
-</style>
+}</style>

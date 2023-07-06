@@ -2,7 +2,7 @@
   <div class="home">
     <div class="container">
       <div id="carouselExampleInterval" class="carousel slide" data-bs-ride="carousel">
-        <div class="carousel-inner">
+        <div class="carousel-inner" style="padding-bottom:20px">
           <div class="carousel-item active" data-bs-interval="3000">
             <img src="../assets/images/top_banner_cat_01.jpg" class="d-block w-100" alt="...">
           </div>
@@ -31,6 +31,43 @@
           <span class="visually-hidden">Next</span>
         </button>
       </div>
+
+      <div id="app">
+        <!-- ... Existing code ... -->
+
+        <div class="form-group">
+          <input type="hidden" class="form-control" v-model="videoUrl">
+        </div>
+
+        <!-- Display YouTube video -->
+        <!-- Display YouTube video -->
+        <div class="form-group">
+          <div v-if="isValidVideoUrl">
+            <iframe :src="embeddedVideoUrl" width="1290" height="700" frameborder="0" allowfullscreen></iframe>
+          </div>
+          <div v-else>
+            <p>유효한 YouTube 동영상 URL을 입력하세요.</p>
+          </div>
+        </div>
+
+        <!-- ... Existing code ... -->
+      </div>
+
+      <div class="container text-center">
+        <div class="row">
+          <div class="col">
+            <canvas id="PieChart" width="1" height="1"></canvas>
+            {{ formatDate(this.sysdate) }}
+          </div>
+          <div class="col">
+            <canvas id="BarChart" width="50px" height="50px"></canvas>
+            <div>{{ t1 }}</div>
+            <div>{{ t2 }}</div>
+            <div>{{ t3 }}</div>
+          </div>
+        </div>
+      </div>
+
       <div style="display:flex">
         <div v-for="dboard in arr" :key="dboard.num">
           <div class="img-box" v-on:click="$event => detail(dboard.num)">
@@ -74,42 +111,7 @@
           </div>
         </div>
       </div>
-
-      <div class="container text-center">
-        <div class="row">
-          <div class="col">
-            <canvas id="PieChart" width="1" height="1"></canvas>
-            {{ formatDate(this.sysdate) }}
-          </div>
-          <div class="col">
-            <canvas id="BarChart" width="50px" height="50px"></canvas>
-            <div>{{ t1 }}</div>
-            <div>{{ t2 }}</div>
-            <div>{{ t3 }}</div>
-          </div>
-        </div>
-      </div>
-
-      <div id="app">
-        <!-- ... Existing code ... -->
-
-        <div class="form-group">
-          <input type="hidden" class="form-control" v-model="videoUrl">
-        </div>
-
-        <!-- Display YouTube video -->
-        <!-- Display YouTube video -->
-        <div class="form-group">
-          <div v-if="isValidVideoUrl">
-            <iframe :src="embeddedVideoUrl" width="560" height="315" frameborder="0" allowfullscreen></iframe>
-          </div>
-          <div v-else>
-            <p>유효한 YouTube 동영상 URL을 입력하세요.</p>
-          </div>
-        </div>
-
-        <!-- ... Existing code ... -->
-      </div>
+      
       <div>
         <img src="../assets/images/dboardpic2.jpg" style="width: 40%; height: 200px; margin-bottom: 20px;">
       </div>

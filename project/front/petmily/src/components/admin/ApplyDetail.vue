@@ -66,6 +66,8 @@
             </tr>
         </table>
     </div>
+    <button @click="apply_form(num)" style="background-color:#FFD65B; border-radius:10px;">승인</button>
+    <button @click="refuse_form(num)" style="background-color:#FFD65B; border-radius:10px;">거부</button>
 </template>
 
 <script>
@@ -118,6 +120,37 @@ export default {
                         self.popfile = data.popfile;
                     } else {
                         alert('에러코드' + res.status)
+                    }
+                });
+        },
+
+        apply_form(num) {
+            console.log(num);
+            const self = this;
+            //const applyNum = self.list.apply.num; // apply.num 값을 가져옴
+            self.$axios.patch('http://localhost:8082/Applyform/apply/' + num)
+                .then(function (res) {
+                    if (res.status == 200) {
+                        
+                        self.$router.go(-1);
+                    } else {
+                        alert('에러코드' + res.status);
+                    }
+                });
+
+        },
+
+
+        refuse_form(num) {
+            console.log(num);
+            const self = this;
+            //const applyNum = self.list.apply.num; // apply.num 값을 가져옴
+            self.$axios.patch('http://localhost:8082/Applyform/refuse/' + num)
+                .then(function (res) {
+                    if (res.status == 200) {
+                        self.$router.go(-1);
+                    } else {
+                        alert('에러코드' + res.status);
                     }
                 });
         },

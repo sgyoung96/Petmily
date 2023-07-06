@@ -35,6 +35,17 @@ public class ApplyformService {
 		}
 		return list2;
 	}
+	// 내림차순
+	public ArrayList<ApplyformDto> getAllbyischeck() {
+		ArrayList<Applyform> list = (ArrayList<Applyform>) dao.findAllByOrderByIscheckAsc();
+		ArrayList<ApplyformDto> list2 = new ArrayList<ApplyformDto>();
+		for (Applyform a : list) {
+			list2.add(new ApplyformDto(a.getNum(), a.getId(), a.getWdate(), a.getAgreement(), a.getAnother(),
+					a.getReason(), a.getFeeding(), a.getIscheck(), a.getKindCd(), a.getSexCd(), a.getAge(),
+					a.getColorCd(), a.getNeuterYn(), a.getCareNm(), a.getCareAddr(), a.getPopfile()));
+		}
+		return list2;
+	}
 
 	// Id로 검색
 	public ApplyformDto getById(int num) {
