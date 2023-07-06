@@ -119,7 +119,8 @@
 
 .v-all {
   padding-left: 150px;
-  padding-right: 150px
+  padding-right: 150px;
+  padding-bottom: 150px;
 }
 
 #map {

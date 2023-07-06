@@ -20,6 +20,17 @@
             <input type="radio" name="radioBtn" id="r2" value="수컷" v-model="gender">
             <label for="r2">수컷</label>
       </div>
+      <div>
+        <select id="address" v-model="address">
+  <option value="" disabled selected hidden>주소</option>
+  <option value="서울">서울시</option>
+  <option value="경기,인천">경기,인천</option>
+  <option value="충청도">충청도</option>
+  <option value="전라도">전라도</option>
+  <option value="경상도">경상도</option>
+  <option value="제주도">제주도</option>
+        </select>
+      </div>
       </div>
       <div class="box-warning">
       ※ 양식에 맞지 않거나 게시판과 관계없는 글일 경우 작성자의 동의 없이 삭제될 수 있습니다.<br />
@@ -60,7 +71,7 @@ export default {
         pic2: '',
         gender: '',
         category: '',
-        radioValues:''
+        radioValues:'',
     }
   },
   created: function () {
