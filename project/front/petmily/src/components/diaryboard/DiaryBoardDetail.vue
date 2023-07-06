@@ -5,7 +5,7 @@
       <h4 style="text-align: center;"><strong><span style="color:rgb(156, 156, 39)">PETMILY</span>
           &nbsp;<span style="color:rgb(244, 191, 79);">DIARY</span></strong></h4>
     </div>
-    <img class="m-img" src="../../assets/images/dboardpic.png">
+    <!-- <img class="m-img" src="../../assets/images/dboardpic.png"> -->
     <div class="d-all">
       <div class="box-title" v-if="dto.id">
         <span>{{ dto.title }}</span>
