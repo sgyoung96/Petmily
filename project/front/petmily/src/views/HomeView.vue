@@ -127,26 +127,7 @@
         </div>
       </div>
 
-      <div id="app">
-        <!-- ... Existing code ... -->
-
-        <div class="form-group">
-          <input type="hidden" class="form-control" v-model="videoUrl">
-        </div>
-
-        <!-- Display YouTube video -->
-        <!-- Display YouTube video -->
-        <div class="form-group">
-          <div v-if="isValidVideoUrl">
-            <iframe :src="embeddedVideoUrl" width="560" height="315" frameborder="0" allowfullscreen></iframe>
-          </div>
-          <div v-else>
-            <p>유효한 YouTube 동영상 URL을 입력하세요.</p>
-          </div>
-        </div>
-
-        <!-- ... Existing code ... -->
-      </div>
+      
       <div class="container text-center">
   <div class="row">
     <div class="col-7">
