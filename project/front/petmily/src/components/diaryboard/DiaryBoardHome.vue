@@ -7,8 +7,7 @@
   <!-- <img class="m-img" src="../../assets/images/dboardpic.png"> -->
   <div class="d-all">
     <div id="slider">
-      <div v-for="(dboard, index) in paginatedList" :key="dboard.num" class="slider-item"
-        :class="{ 'new-row': index % itemsPerRow === 0 }">
+      <div v-for="dboard in paginatedList" :key="dboard.num" class="slider-item">
         <div class="img-box" @mouseover="zoomIn" @mouseleave="zoomOut" v-on:click="$event => detail(dboard.num)">
           <a><img class="b-img" :src="'http://localhost:8082/dboard/imgs/' + dboard.num + '/1'"></a>
           <div class="b-txt">
@@ -76,6 +75,68 @@ button{
     padding-top: 2px;
     margin-right: 5px;
 }
+button:hover {
+  background-color: rgb(235, 156, 39);
+  cursor: pointer;
+}
+.pagination {
+  display: inline-block;
+  margin-top: 20px;
+  margin-bottom: 20px;
+}
+
+.page-item {
+  display: inline-block;
+  margin-right: 5px;
+}
+
+.page-item a {
+  color: black;
+  padding: 5px 10px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  text-decoration: none;
+}
+
+.page-item a:hover {
+  background-color: #f2f2f2;
+}
+
+.page-item.active a {
+  background-color: rgb(244, 191, 79);
+  color: white;
+}
+
+.search-box {
+  margin-bottom: 30px;
+  text-align: center;
+}
+
+.search-box input[type="text"] {
+  width: 300px;
+  height: 30px;
+  padding: 5px;
+  font-size: 14px;
+  border: 1px solid #ccc;
+  border-radius: 10px;
+}
+
+.search-box button {
+  width: 80px;
+  height: 30px;
+  color: white;
+  border: none;
+  border-radius: 10px;
+  background-color: rgb(244, 191, 79);
+  font-family: 'IBMPlexSansKR-Bold';
+  font-size: 15px;
+  margin-left: 5px;
+}
+
+.search-box button:hover {
+  background-color: rgb(235, 156, 39);
+  cursor: pointer;
+}
 .t-img {
   width: 85%;
   height: 500px;
@@ -111,7 +172,7 @@ button{
 }
 .b-img {
   border-radius: 10px 10px 0px 0px;
-  width: 286px;
+  width: 288px;
   height:214px;
   border-bottom:1px solid silver;
 }
@@ -213,9 +274,24 @@ export default {
       // alert(num)
       this.$router.push({ name: 'DiaryBoardDetail', query: { num: num } })
     },
-    goToFullList() {
-      this.$router.push('/diaryboardhome');
-    },
+  goToFullList() {
+  this.searchKeyword = ''; // Clear the search keyword
+  this.$axios.get('http://localhost:8082/dboard') //+ self.loginId
+    .then((res) => {
+      if (res.status === 200) {
+        this.list = res.data.list;
+        this.currentPage = 1; // Reset the current page to the first page
+      } else {
+        alert('에러코드' + res.status);
+      }
+    })
+    .catch((error) => {
+      console.log(error);
+    });
+
+  this.$router.push('/diaryboardhome');
+},
+
     searchByTitle() {
       const self = this;
       alert(self.searchKeyword)
