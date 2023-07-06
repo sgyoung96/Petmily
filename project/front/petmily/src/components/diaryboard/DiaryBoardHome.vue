@@ -4,24 +4,27 @@
     <h4 style="text-align: center;"><strong><span style="color:rgb(156, 156, 39)">PETMILY</span>
         &nbsp;<span style="color:rgb(244, 191, 79);">DIARY</span></strong></h4>
   </div>
-  <img class="m-img" src="../../assets/images/dboardpic.png">
+  <!-- <img class="m-img" src="../../assets/images/dboardpic.png"> -->
   <div class="d-all">
     <div id="slider">
       <div v-for="(dboard, index) in paginatedList" :key="dboard.num" class="slider-item"
         :class="{ 'new-row': index % itemsPerRow === 0 }">
-        <div class="img-box" v-on:click="$event => detail(dboard.num)">
+        <div class="img-box" @mouseover="zoomIn" @mouseleave="zoomOut" v-on:click="$event => detail(dboard.num)">
           <a><img class="b-img" :src="'http://localhost:8082/dboard/imgs/' + dboard.num + '/1'"></a>
           <div class="b-txt">
             <div class="b-title">
-              {{ dboard.title }}
+              <strong>{{ dboard.title }}</strong>
             </div>
-            <div class="b-id">
-              <span>
-                작성자 : {{ dboard.id.id }}
+            <div class="b-content">
+                {{ dboard.content.length > 35 ? dboard.content.substring(0, 35) + '...' : dboard.content }}
+              </div>
+              <div style="font-size:small; display:flex; justify-content: space-between;">
+                <span>
+                <img class=l-img src="../../assets/images/heart.png" style="width: 15px; height: 15px;">
+                {{ dboard.likecnt }}
               </span>
-              <span>
-                <img class=l-img src="../../assets/images/heart.png" style="width: 15px; height: 15px;">{{ dboard.likecnt
-                }}
+              <span style="color:rgb(156, 156, 39);">
+                +더보기
               </span>
             </div>
           </div>
@@ -37,23 +40,22 @@
       </span>
     </div>
     <div>
-      <ul class="pagination" style="display: inline-block">
-        <li class="page-item">
-          <a class="page-link" href="#" aria-label="Previous" @click="previousPage">
-            <span aria-hidden="true">&laquo;</span>
-          </a>
-        </li>
-        <li class="page-item" v-for="pageNumber in totalPages" :key="pageNumber"
-          :class="{ active: pageNumber === currentPage }">
-          <a class="page-link" href="#" @click="goToPage(pageNumber)">{{ pageNumber }}</a>
-        </li>
-        <li class="page-item">
-          <a class="page-link" href="#" aria-label="Next" @click="nextPage">
-            <span aria-hidden="true">&raquo;</span>
-          </a>
-        </li>
-      </ul>
-    </div>
+  <ul class="pagination" style="display: inline-block">
+    <li class="page-item">
+      <a class="page-link" href="#" aria-label="Previous" @click.prevent="previousPage">
+        <span aria-hidden="true">&laquo;</span>
+      </a>
+    </li>
+    <li class="page-item" v-for="pageNumber in totalPages" :key="pageNumber" :class="{ active: pageNumber === currentPage }">
+      <a class="page-link" href="#" @click.prevent="goToPage(pageNumber)">{{ pageNumber }}</a>
+    </li>
+    <li class="page-item">
+      <a class="page-link" href="#" aria-label="Next" @click.prevent="nextPage">
+        <span aria-hidden="true">&raquo;</span>
+      </a>
+    </li>
+  </ul>
+</div>
     <div class="search-box">
       <input type="text" id="searchKeyword" v-model="searchKeyword" placeholder="제목을 입력해주세요">
       <button id="search_btn" @click="searchByTitle()">검색</button>
@@ -61,6 +63,19 @@
   </div>
 </template>
 <style scoped>
+@import url('https://fonts.googleapis.com/css2?family=Single+Day&display=swap');
+button{
+  width: 100px;
+    color: white;
+    height: 30px;
+    border: 1px solid rgb(244, 191, 79);
+    border-radius: 20px;
+    background-color: rgb(244, 191, 79);
+    font-family: 'IBMPlexSansKR-Bold';
+    font-size: 15px;
+    padding-top: 2px;
+    margin-right: 5px;
+}
 .t-img {
   width: 85%;
   height: 500px;
@@ -78,41 +93,45 @@
   height: 160px;
   margin-top: 10px;
   margin-bottom: 10px;
+  border-radius: 10px;
+  margin-right:10px;
 }
 
 .d-all {
   padding-left: 150px;
   padding-right: 150px;
-  text-align: center;
 }
 
 .img-box {
-  border: 1px solid silver;
-  cursor: pointer;
-  width:293px;
-  height:260px;
+  box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 1px 3px 1px;
+  border-radius: 10px;
+  cursor:pointer;
+  height:316px;
+  width:288px;
 }
-
 .b-img {
-  width: 290px;
-  height:200px;
+  border-radius: 10px 10px 0px 0px;
+  width: 286px;
+  height:214px;
   border-bottom:1px solid silver;
 }
 
 .b-txt {
   text-align: left;
-  display: flex;
-  flex-direction: column;
+
+  padding:7px 10px;
 }
 
 .b-title {
   font-size: large;
+  font-family:'Single Day', cursive;
 }
 
-.b-id {
-  font-size: medium;
-  display: flex;
-  justify-content: space-between;
+.b-content {
+  font-size: small;
+  color:silver;
+  width: 276px;
+  height: 39px;
 }
 
 .l-img {
@@ -184,6 +203,12 @@ export default {
       });
   },
   methods: {
+    zoomIn(event) {
+    event.currentTarget.style.transform = 'scale(1.05)';
+  },
+  zoomOut(event) {
+    event.currentTarget.style.transform = 'scale(1)';
+  },
     detail(num) {
       // alert(num)
       this.$router.push({ name: 'DiaryBoardDetail', query: { num: num } })

@@ -182,6 +182,10 @@
 
 </template>
 <style scoped>
+#map {
+    width: 100%;
+    height: 400px;
+  }
 .banner{
   border: solid #e5e7eb;
   border-radius: 20px;
