@@ -135,6 +135,7 @@ export default {
     justify-content: center;
     padding-top: 12px;
     background: rgb(244, 191, 79);
+    cursor: pointer;
 }
 
 .span-btn {

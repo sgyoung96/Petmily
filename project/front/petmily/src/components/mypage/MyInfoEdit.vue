@@ -30,7 +30,8 @@
                                     <label>이름</label>
                                 </th>
                                 <td>
-                                    <label>{{this.name}}</label>
+                                    <label id="lbl_name" @click="editName">{{this.name}}</label>
+                                    <input id="ipt_name" type="text" v-model="this.name" />
                                 </td>
                             </tr>
                             <tr>
@@ -38,7 +39,8 @@
                                     <label>생일</label>
                                 </th>
                                 <td>
-                                    <label>{{this.birth}}</label>
+                                    <label id="lbl_birth" @click="editBirth">{{this.birth}}</label>
+                                    <input id="ipt_birth" type="date" v-model="birth" data-placeholder='생일입력' required aria-required="true">
                                 </td>
                             </tr>
                             <tr>
@@ -46,7 +48,11 @@
                                     <label>성별</label>
                                 </th>
                                 <td>
-                                    <label>{{this.gender}}</label>
+                                    <label id="lbl_gender" @click="editGender">{{this.gender}}</label>
+                                    <div id="ipt_gender" class="input_box">  
+                                        <input name="g" type="radio" v-model="gender" id="m" value="m"><label for="m" style="margin-right:10px">남</label>
+                                        <input name="g" type="radio" v-model="gender" id="f" value="f"><label for="f">여</label><br/>
+                                    </div>
                                 </td>
                             </tr>
                             <tr>
@@ -54,7 +60,9 @@
                                     <label>휴대폰</label>
                                 </th>
                                 <td>
-                                    <label>{{this.phone}}</label>
+                                    <label id="lbl_phone" @click="editPhone">{{this.phone}}</label>
+                                    <input id="ipt_phone" type="text" v-model="phone" @blur="checkPhone"/>
+                                    <p id="warn_phone" >전화번호 형식을 확인해주세요</p>
                                 </td>
                             </tr>
                             <tr>
@@ -62,7 +70,13 @@
                                     <label>주소</label>
                                 </th>
                                 <td>
-                                    <label>{{this.address}}</label>
+                                    <label id="lbl_address" @click="editAddress">{{this.address}}</label>
+                                    <div id="ipt_address">   
+                                        <input type="text" v-model="postcode" @click="execDaumPostcode" placeholder="우편번호" readonly>
+                                        <input type="text" v-model="roadAddress" placeholder="주소" readonly><br/>
+                                        <input type="text" v-model="detailAddress" placeholder="상세주소"><br/>
+                                        <input type="text" v-model="extraAddress" placeholder="참고항목"><br/>
+                                    </div>
                                 </td>
                             </tr>
                         </table>
@@ -132,7 +146,7 @@
         <br>
 
         <div>
-            <button v-on:click="editcheck">내정보 수정</button>
+            <button v-on:click="edit">내정보 수정</button>
         </div>
       </div>
   </div>
@@ -157,16 +171,25 @@ export default {
         rawpw: '',
         new_pw: '',
 
+        postcode: '',
+        roadAddress: '',
+        detailAddress: '',
+        extraAddress: '',
+
+
         isPwdCheck: true,
         isPwdCheckEqual: true
     }
   },
   watch:{
     'pw' : function(){
-        this.checkNewPwd()
+        this.checkNewPwd();
     },
     'new_pw' : function () {
-        this.isCheckNewPwd()
+        this.isCheckNewPwd();
+    },
+    'phone': function() {
+        this.checkPhone();
     }
   },
   created: function () {
@@ -182,9 +205,11 @@ export default {
             if (res.status == 200) {
                 let dto = res.data.dto
                 if (dto != null) { 
-                    console.log(dto);
+                    console.log('무언가 잘못됐다.' + dto.pwd);
+                    
                     //this.id = dto.id
-                    self.rawpw = dto.pw
+                    self.rawpw = dto.pwd
+                    console.log(self.rawpw);
                     self.name = dto.name
                     self.email = dto.email
                     self.birth = moment(dto.birth).format('L');
@@ -304,7 +329,134 @@ export default {
         } else{
             alert('인증을 다시 시도해주세요');
         }
+    },
+    editName () {
+        document.getElementById('lbl_name').style = 'display: none';
+        document.getElementById('ipt_name').style = 'display: block';
+    },
+    editGender() {
+        document.getElementById('lbl_gender').style = 'display: none;';
+        document.getElementById('ipt_gender').style = 'display: block';
+    },
+    editBirth() {
+        document.getElementById('lbl_birth').style = 'display: none;';
+        document.getElementById('ipt_birth').style = 'display: block';
+    },
+    editPhone() {
+        document.getElementById('lbl_phone').style = 'display: none;';
+        document.getElementById('ipt_phone').style = 'display: block';
+    },
+    checkPhone(){
+        const validatePhone = /^\d{3}-\d{3,4}-\d{4}$/;
+        if(!validatePhone.test(this.phone)){
+            document.getElementById('warn_phone').style = 'display: block';
+        }else{
+            document.getElementById('warn_phone').style = 'display: none';
+        }
+    },
+    editAddress() {
+        document.getElementById('lbl_address').style = 'display: none;';
+        document.getElementById('ipt_address').style = 'display: block;';
+    },
+    execDaumPostcode(){
+        new window.daum.Postcode({
+            oncomplete:(data) =>{
 
+                var addr='';
+                var extraAddr='';
+
+                //사용자가 선택한 주소 타입에 따라 해당 주소 값을 가져온다.
+                if (data.userSelectedType === 'R') { // 사용자가 도로명 주소를 선택했을 경우
+                    addr = data.roadAddress;
+                } else { // 사용자가 지번 주소를 선택했을 경우(J)
+                    addr = data.jibunAddress;
+                }
+
+                // 사용자가 선택한 주소가 도로명 타입일때 참고항목을 조합한다.
+                if(data.userSelectedType === 'R'){
+                    // 법정동명이 있을 경우 추가한다. (법정리는 제외)
+                    // 법정동의 경우 마지막 문자가 "동/로/가"로 끝난다.
+                    if(data.bname !== '' && /[동|로|가]$/g.test(data.bname)){
+                        extraAddr += data.bname;
+                    }
+                    // 건물명이 있고, 공동주택일 경우 추가한다.
+                    if(data.buildingName !== '' && data.apartment === 'Y'){
+                        extraAddr += (extraAddr !== '' ? ', ' + data.buildingName : data.buildingName);
+                    }
+                    // 표시할 참고항목이 있을 경우, 괄호까지 추가한 최종 문자열을 만든다.
+                    if(extraAddr !== ''){
+                        extraAddr = ' (' + extraAddr + ')';
+                    }
+                    // 조합된 참고항목을 해당 필드에 넣는다.
+                        this.extraAddress = extraAddr;
+                } else {
+                    this.extraAddress = '';
+                }    
+                    
+            
+                this.postcode = data.zonecode;
+                this.roadAddress = addr;
+
+        
+            },
+            
+        }).open();
+        
+    },
+    edit(){
+        
+      const self = this;
+      const moment = require('moment');
+      const mybirth = moment(self.birth).format('L');
+     
+
+      var address = '';
+      if (self.roadAddress != '') {
+          address = self.roadAddress;
+          if (self.extraAddress != '') {
+            address += "," + self.extraAddress;
+          }
+       } else {
+           address = self.address;
+       }
+
+      let formdata = new FormData();
+      formdata.append('id',self.id)
+
+      //alert(self.rawpw);
+
+      if (self.new_pw != null) {
+          formdata.append('pwd',self.rawpw);
+      } else {
+          formdata.append('pwd',self.new_pw);
+      }
+
+      formdata.append('name',self.name)
+      formdata.append('email',self.email)
+      formdata.append('gender',self.gender)
+      formdata.append('birth',mybirth)
+      formdata.append('phone',self.phone)
+      formdata.append('address', address)
+
+      //alert('파일' + document.getElementById('profile').value)
+      if(document.getElementById('profile').value !== ''){
+        const file = document.getElementById('profile').files[0]
+       
+        formdata.append('f', file)}
+        console.log(this.f)
+     
+      self.$axios.put('http://localhost:8082/members', formdata,
+      {headers:{"Content-Type":"multipart/form-data"}}) 
+      .then(function(res){ 
+        if(res.status == 200){
+          let dto = res.data.dto
+          console.log(dto);
+           alert('회원정보가 수정되었습니다.');
+           location.href = '/member/mypage/home';
+        }else{
+          alert('에러코드:' + res.status)
+        }
+      });
     },
   },
   components: {
@@ -353,6 +505,12 @@ li:hover {
 .header-profile {
     font-family: 'IBMPlexSansKR-Bold';
     font-size: 20px;
+}
+
+.list-li div table tr td {
+    width: 230px;
+    padding-left: 10px;
+    padding-right: 10px;
 }
 
 .list-li div table tr th label {
@@ -460,7 +618,7 @@ li:hover {
 
 .btn-email {
     margin-left: 10px;
-    width: 50px;
+    width: 35px;
     background: white;
     border: 1px solid rgb(244, 191, 79);
     border-radius: 10px;
@@ -538,6 +696,85 @@ li:hover {
     height: 200px;
     border-radius: 70%;
     overflow: hidden;
+}
+
+#preview, #lbl_name, #lbl_gender, #lbl_birth, #lbl_phone, #lbl_address {
+    cursor: pointer;
+}
+
+#ipt_name {
+    margin-top: 10px;
+    border: none;
+    border-bottom: 1px solid;
+    font-family: 'IBMPlexSansKR-Light';
+    font-size: 12px;
+    text-align: center;
+    display: none;
+    margin-left: 40px;
+    margin-right: 40px;
+}
+
+#ipt_gender {
+    display: none;
+    font-family: 'IBMPlexSansKR-Light';
+    font-size: 12px;
+}
+
+#lbl_gender {
+    width: 70px;
+    justify-content: center;
+}
+
+#ipt_birth {
+    display: none;
+    font-family: 'IBMPlexSansKR-Light';
+    font-size: 12px;
+    margin-top: 10px;
+    margin-left: 50px;
+    margin-right: 50px;
+}
+
+#ipt_phone {
+    display: none;
+    margin-top: 10px;
+    border: none;
+    border-bottom: 1px solid;
+    font-family: 'IBMPlexSansKR-Light';
+    font-size: 12px;
+    text-align: center;
+    display: none;
+    margin-left: 40px;
+    margin-right: 40px;
+}
+
+#warn_phone {
+    display: none;
+    font-family: 'IBMPlexSansKR-Light';
+    font-size: 8px;
+}
+
+#ipt_address {
+    display: none;
+    margin-left: 20px;
+    margin-right: 20px;
+    justify-content: center;
+    padding-left: 20px;
+    padding-right: 20px;
+}
+
+#ipt_address input {
+    display: block;
+    border: none;
+    border-bottom: 1px solid;
+    font-family: 'IBMPlexSansKR-Light';
+    font-size: 12px;
+    text-align: center;
+    width: 100%;
+}
+
+#ipt_address > input::placeholder {
+    font-family: 'IBMPlexSansKR-Light';
+    font-size: 12px;
 }
 
 button {
