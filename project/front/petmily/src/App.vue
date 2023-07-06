@@ -24,7 +24,7 @@
 
         <div class="box-mypage">
           <img v-if="this.notify == false" class="ico-bell" src="./assets/bell.png" />
-          <img v-if="this.notify == true" class="ico-bell" src="./assets/bell_notify.png" />
+          <img v-if="this.notify == true" class="ico-bell" src="./assets/bell_notify.png" @click="openNotifyBox()"/>
           <img @click="goMyPage()" class="ico-mypage" src="./assets/profile-user.png" />
         </div>
       </div>
@@ -70,7 +70,7 @@
 
     <br>
 
-    
+    <NotifyBox id="notify_box" v-if="isNotifyBoxOpen" @click="closeNotifyBox()" />
 
     <!-- 이곳에 라우터로 설정한 화면이 로드됨 -->
     <router-view/>
@@ -110,6 +110,7 @@
 import img from "@/assets/imgs/mypage_sample.jpg";
 import './assets/fonts/BagleFatOne.css';
 import './assets/fonts/IBMPlexSansKR.css';
+import NotifyBox from './components/notify/NotifyList.vue';
 
 export default {
   
@@ -122,6 +123,7 @@ export default {
       cntchecktf:true,
       notifyData: [],
       notify: '0',
+      isNotifyBoxOpen: false,
     }
   },
   created:function(){ // 이 컴포넌트가 시작될때 실행되는 함수
@@ -367,7 +369,16 @@ export default {
         this.login();
       }
 
+    },
+    openNotifyBox() {
+      this.isNotifyBoxOpen = true;
+    },
+    closeNotifyBox() {
+      this.isNotifyBoxOpen = false;
     }
+  },
+  components: {
+    NotifyBox
   }
 }
 </script>
@@ -487,6 +498,17 @@ li:hover {
   width: 25px;
   height: 25px;
   cursor: pointer;
+}
+
+#notify_box {
+  position: absolute;
+  display: inline-block;
+  z-index: 20;
+  width: 500px;
+  height: 500px;
+  background: white;
+  border: 10px solid #eee;
+  transform: translateX(-50%) translateY(-25%);
 }
 
 </style>
