@@ -5,8 +5,7 @@
       <div class="form-container">
 
         <div class="list-container">
-          <!-- <p><label class="section01" >SECTION 1</label></p>
-          <p><label class="section01-title"><u><span>간편 승인/반려 영역</span></u></label></p> -->
+          <p style="padding-right:30px"><label class="section01-title"><u><span>입양신청명단</span></u></label></p>
           <div class="section01-content">
             <div class="data-header">
               <table>
@@ -29,13 +28,9 @@
                   <th colspan="1">
                     <label><span>STATE</span></label>
                   </th>
-                  <th colspan="1">
-                    <label><span>APPROVE</span></label> |
-                    <label><span>REFUSE</span></label>
-                  </th>
                 </tr>
-                <tr class="clickable-row" v-for="(apply, index) in list" :key="index" aria-colspan="12" @click="goDetail(apply.num,)"
-                  style="cursor: pointer;">
+                <tr class="clickable-row" v-for="(apply, index) in pagedData" :key="index"
+                  :aria-colspan="tableColumns.length" @click="goDetail(apply.num)" style="cursor: pointer;">
                   <td colspan="1" :id="index"><label><span>{{ index + 1 }}</span></label></td>
                   <td colspan="1"><label><span>{{ apply.id.id }}</span></label></td>
                   <td colspan="1"><label><span>{{ apply.id.name }}</span></label></td>
@@ -49,15 +44,28 @@
                       <span v-else>오류</span>
                     </label>
                   </td>
-                  <td colspan="1">
-                    <button @click="apply_form(apply.num)"
-                      style="background-color:#FFD65B; border-radius:10px;">승인</button>
-                    <button @click="refuse_form(apply.num)"
-                      style="background-color:#FFD65B; border-radius:10px;">거부</button>
-                  </td>
                 </tr>
               </table>
             </div>
+            <ul class="pagination" style="display: inline-block; padding-top:40px">
+              <!-- 이전 페이지 버튼 -->
+              <li class="page-item">
+                <a class="page-link" href="#" aria-label="Previous" @click="previousPage">
+                  <span aria-hidden="true">&laquo;</span>
+                </a>
+              </li>
+              <!-- 페이지 번호 -->
+              <li class="page-item" v-for="pageNumber in totalPages" :key="pageNumber"
+                :class="{ active: pageNumber === currentPage }">
+                <a class="page-link" href="#" @click="goToPage(pageNumber)">{{ pageNumber }}</a>
+              </li>
+              <!-- 다음 페이지 버튼 -->
+              <li class="page-item">
+                <a class="page-link" href="#" aria-label="Next" @click="nextPage">
+                  <span aria-hidden="true">&raquo;</span>
+                </a>
+              </li>
+            </ul>
           </div>
         </div>
       </div>
@@ -66,79 +74,58 @@
 </template>
 
 <script>
-
 export default {
   name: 'AdminAppliedList',
   data() {
     return {
       list: [],
-      num: '',
-      id: '',
-      wdate: '',
-      agreement: '',
-      another: '',
-      reason: '',
-      feeding: '',
-      ischeck: '',
-      petCd: '',
-
-      index: '',
+      currentPage: 1,
+      pageSize: 5, // 페이지당 데이터 개수 설정
+      tableColumns: [],
+      searchTerm: '' // 검색어
     }
   },
-  created: function () {
+  created() {
     const self = this;
-    self.$axios.get('http://localhost:8082/Applyform')
+    self.$axios.get('http://localhost:8082/Applyform/getAllbyischeck')
       .then(function (res) {
-        if (res.status == 200) {
+        if (res.status === 200) {
           self.list = res.data.list;
-          self.setData();
         } else {
           alert('에러코드' + res.status)
         }
       });
   },
-  methods: {
-    apply_form(num) {
-      console.log(num);
-      const self = this;
-      //const applyNum = self.list.apply.num; // apply.num 값을 가져옴
-      self.$axios.patch('http://localhost:8082/Applyform/apply/' + num)
-        .then(function (res) {
-          if (res.status == 200) {
-            self.list = res.data.list;
-          } else {
-            alert('에러코드' + res.status);
-          }
-        });
-        const routeParams = {
-          path: 'Api',
-          query: {
-        
-         }
-        };
-        this.$router.push(routeParams);
+  computed: {
+    totalPages() {
+      return Math.ceil(this.list.length / this.pageSize);
     },
-
-    
-    refuse_form(num) {
-      console.log(num);
-      const self = this;
-      //const applyNum = self.list.apply.num; // apply.num 값을 가져옴
-      self.$axios.patch('http://localhost:8082/Applyform/refuse/' + num)
-        .then(function (res) {
-          if (res.status == 200) {
-            self.list = res.data.list;
-          } else {
-            alert('에러코드' + res.status);
-          }
-        });
+    pagedData() {
+      const start = (this.currentPage - 1) * this.pageSize;
+      const end = start + this.pageSize;
+      return this.list.slice(start, end);
+    },
+  },
+  methods: {
+    previousPage() {
+      if (this.currentPage > 1) {
+        this.currentPage--;
+      }
+    },
+    nextPage() {
+      if (this.currentPage < this.totalPages) {
+        this.currentPage++;
+      }
+    },
+    goToPage(pageNumber) {
+      this.currentPage = pageNumber;
     },
     setData() { // 데이터 가공
 
     },
     goDetail(num) {
       console.log(num);
-      this.$router.push({ name: 'ApplyDetail', query: {num: num} });
+      this.$router.push({ name: 'ApplyDetail', query: { num: num } });
     }
   },
   components: {

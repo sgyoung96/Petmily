@@ -38,7 +38,7 @@ public class ApplyformController {
 	@PutMapping("")
 	public Map edit(ApplyformDto dto) {
 		ApplyformDto a = service.getById(dto.getNum());
-		a.setAgreement(dto.getAgreement());
+		a.setAnother(dto.getAnother());
 		a.setFeeding(dto.getFeeding());
 		a.setReason(dto.getReason());
 		ApplyformDto dto2 = null;
@@ -59,6 +59,14 @@ public class ApplyformController {
 	@GetMapping("")
 	public Map getAll() {
 		ArrayList<ApplyformDto> list = service.getAll();
+		Map map = new HashMap();
+		map.put("list", list);
+		return map;
+	}
+	
+	@GetMapping("/getAllbyischeck")
+	public Map getAllbyischeck() {
+		ArrayList<ApplyformDto> list = service.getAllbyischeck();
 		Map map = new HashMap();
 		map.put("list", list);
 		return map;

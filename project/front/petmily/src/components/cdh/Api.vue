@@ -3,73 +3,99 @@
   </div>
   <div class="col-10"
     style="border: solid #e5e7eb; border-radius: 20px; margin-top: 50px; position: relative; margin-left: 130px; text-align: left; background-color:white;">
-    
+
 
     <div>
-
       <div class="box-places">
         <div class="chk-places">
-          <input type="checkbox" id="chk-places" name="chk-01"  v-model="chk_title" ><div class="box-chk-01" v-on:click="PlacetoggleButtons"><label for="chk-places" ><span class="chk-01">전체시도조회</span></label></div>
+          <input type="checkbox" id="chk-places" name="chk-01" v-model="chk_title">
+          <div class="box-chk-01" v-on:click="PlacetoggleButtons"><label for="chk-places"><span
+                class="chk-01">전체시도조회</span></label></div>
         </div>
         <div v-if="showPlaceButtons">
           <div class="box-place-container">
-            <div class="radio-all-place box-radio chk-all"  v-on:click="chkRadiobtn(99)"><input type="radio" id="place_all" name="ipt-radio-place" v-on:click="PlaceAll" class="ipt-radio-place" ><label for="place_all" class="lbl-place-all"><span class="span-place-all">전체</span></label></div>
-            <div v-for="(button, index) in placeButtons" :key="index"  >
-              <div v-on:click="button.onClick" class="place" ><input type="radio" :id="index"  :value="index" name="ipt-radio-place" class="ipt-radio-place"><label v-on:click="chkRadiobtn(index)" :for="index" class="lbl-place chk-lbl"><span class="span-place">{{ button.label }} </span></label></div>
+            <div class="radio-all-place box-radio chk-all" v-on:click="chkRadiobtn(99)"><input type="radio" id="place_all"
+                name="ipt-radio-place" v-on:click="PlaceAll" class="ipt-radio-place"><label for="place_all"
+                class="lbl-place-all"><span class="span-place-all">전체</span></label></div>
+            <div v-for="(button, index) in placeButtons" :key="index">
+              <div v-on:click="button.onClick" class="place"><input type="radio" :id="index" :value="index"
+                  name="ipt-radio-place" class="ipt-radio-place"><label v-on:click="chkRadiobtn(index)" :for="index"
+                  class="lbl-place chk-lbl"><span class="span-place">{{ button.label }} </span></label></div>
             </div>
           </div>
         </div>
       </div>
 
-      <div class="box-yn"> 
+      <div class="box-yn">
         <div class="chk-yn">
           <div class="chk_neuter">
             <div>
-              <input type="checkbox" id="chk_neuter" name="chk-01" v-model="chk_title" ><div class="box-chk-01" v-on:click="NeutertoggleButtons"><label for="chk_neuter" ><span class="chk-01">중성화여부</span></label></div>
+              <input type="checkbox" id="chk_neuter" name="chk-01" v-model="chk_title">
+              <div class="box-chk-01" v-on:click="NeutertoggleButtons"><label for="chk_neuter"><span
+                    class="chk-01">중성화여부</span></label></div>
             </div>
           </div>
           <div v-if="showNeuterButtons">
             <div class="Neuter-container">
-              <div class="place yn"><input type="radio" id="neuter_all" v-model="picked" value="all"  name="radio-neuter" class="Neuter-button" ><label v-on:click="NeuterAll, chkRadiobtn('all')" class="lbl-place lbl-yn" for="neuter_all"><span class="span-place">전체</span></label></div>
-              <div class="place yn"><input type="radio" id="neuter_y" v-model="picked" value="O" name="radio-neuter" class="Neuter-button" ><label v-on:click="NeuterAll, chkRadiobtn('y')" class="lbl-place lbl-yn" for="neuter_y"><span class="span-place">중성화O</span></label></div>
-              <div class="place yn"><input type="radio" id="neuter_n" v-model="picked" value="X"  name="radio-neuter" class="Neuter-button" ><label v-on:click="NeuterAll, chkRadiobtn('n')" class="lbl-place lbl-yn" for="neuter_n"><span class="span-place">중성화X</span></label></div>
-              <div class="place yn"><input type="radio" id="neuter_x" v-model="picked" value="??" name="radio-neuter" class="Neuter-button" ><label v-on:click="NeuterAll, chkRadiobtn('x')" class="lbl-place lbl-yn" for="neuter_x"><span class="span-place">확인불가</span></label></div>
+              <div class="place yn"><input type="radio" id="neuter_all" v-model="picked" value="all" name="radio-neuter"
+                  class="Neuter-button"><label v-on:click="NeuterAll, chkRadiobtn('all')" class="lbl-place lbl-yn"
+                  for="neuter_all"><span class="span-place">전체</span></label></div>
+              <div class="place yn"><input type="radio" id="neuter_y" v-model="picked" value="O" name="radio-neuter"
+                  class="Neuter-button"><label v-on:click="NeuterAll, chkRadiobtn('y')" class="lbl-place lbl-yn"
+                  for="neuter_y"><span class="span-place">중성화O</span></label></div>
+              <div class="place yn"><input type="radio" id="neuter_n" v-model="picked" value="X" name="radio-neuter"
+                  class="Neuter-button"><label v-on:click="NeuterAll, chkRadiobtn('n')" class="lbl-place lbl-yn"
+                  for="neuter_n"><span class="span-place">중성화X</span></label></div>
+              <div class="place yn"><input type="radio" id="neuter_x" v-model="picked" value="??" name="radio-neuter"
+                  class="Neuter-button"><label v-on:click="NeuterAll, chkRadiobtn('x')" class="lbl-place lbl-yn"
+                  for="neuter_x"><span class="span-place">확인불가</span></label></div>
             </div>
           </div>
         </div>
       </div>
 
       <label v-on:click="search" class="btn-search"><span>검색</span></label>
-      
+
     </div>
 
   </div>
-  <div id="app" style="margin-top:50px;">
+  <div id="app" style="margin-top:50px; ">
     <div class="grid-container">
       <div v-for="item in items" :key="item.desertionNo" class="grid-item">
         <div class="card">
           <div>
             <img :src="item.popfile" :alt="item.careNm" @click="handleItemClick(item.desertionNo, item.careAddr)"
-              style="cursor: pointer; width:300px; height: 200px;">
+              style="cursor: pointer; width: 250px; height: 200px; ">
           </div>
-            <div class="info-item info-left" style="font-family: IBMPlexSansKR-Bold;">{{ item.kindCd }}</div>
-            <div class="info-item info-right">{{ item.happenDt }}</div>
-          <div class="item-info">
+          <div class="info-item info-left" style="font-family: IBMPlexSansKR-Bold; text-align: left;">{{ item.kindCd }}
+            <span style="padding-left: 8px" v-if="item.sexCd === 'M'"><img src="@/assets/images/boy.png" alt="수컷 이미지"></span>
+            <span style="padding-left: 8px" v-else-if="item.sexCd === 'F'"><img src="@/assets/images/girl.png" alt="암컷 이미지"></span>
+            <span style="padding-left: 8px" v-else><img src="@/assets/images/nosex.png" alt="미상 이미지"></span>
+          </div>
+          <div style="text-align: left;">
+            <img src="@/assets/images/careAddr.png" alt="보호장소 이미지">
+            <h5 style="display: inline;"><span>{{ item.noticeNo }}</span></h5>
+            <br>
+            <img src="@/assets/images/cal.png" alt="보호장소 이미지">
+            <h5 style="display: inline;"><span>{{ item.noticeSdt }} ~ {{ item.noticeEdt }}</span></h5>
+          </div>
+          <hr>
+
+          <div class="item-info" style="text-align: left;">
             <div id="orgNm">
-                {{ item.orgNm }}
-              </div>
-            
+              {{ item.orgNm }}
+            </div>
             <div id="colorCd">
               {{ item.colorCd }}
             </div>
-           
+
             <div class="item-info">
               <div id="age">
-              {{ item.age }}
-            </div>
-            <div id="weight">
-              {{ item.weight }}
-            </div>
+                {{ item.age }}
+              </div>
+              <div id="weight">
+                {{ item.weight }}
+              </div>
             </div>
           </div>
         </div>
@@ -128,7 +154,7 @@ export default {
     this.fetchData(orgCd);
   },
   watch: {
-    picked: function() {
+    picked: function () {
       if (this.picked.length == 2) {
         console.log('picked');
       }
@@ -136,45 +162,45 @@ export default {
   },
   methods: {
     fetchData(orgCd, neuter_yn) {
-    let apiUrl;
-    if (orgCd && neuter_yn) {
-      apiUrl = `http://apis.data.go.kr/1543061/abandonmentPublicSrvc/abandonmentPublic?_type=json&pageNo=${this.pageNo}&numOfRows=${this.pageSize}&upr_cd=${orgCd}&neuter_yn=${neuter_yn}&serviceKey=JkjPRne8oXZTCJTyLN9579FQZI6%2FkhepY9kJhsmdEpdiEjyDUj8HjiEo8ba4BAa8AOGXfQWZA7AAHiljNzoOBA%3D%3D`;
-    } else if (orgCd) {
-      apiUrl = `http://apis.data.go.kr/1543061/abandonmentPublicSrvc/abandonmentPublic?_type=json&pageNo=${this.pageNo}&numOfRows=${this.pageSize}&upr_cd=${orgCd}&serviceKey=JkjPRne8oXZTCJTyLN9579FQZI6%2FkhepY9kJhsmdEpdiEjyDUj8HjiEo8ba4BAa8AOGXfQWZA7AAHiljNzoOBA%3D%3D`;
-    } else if (neuter_yn) {
-      apiUrl = `http://apis.data.go.kr/1543061/abandonmentPublicSrvc/abandonmentPublic?_type=json&pageNo=${this.pageNo}&numOfRows=${this.pageSize}&neuter_yn=${neuter_yn}&serviceKey=JkjPRne8oXZTCJTyLN9579FQZI6%2FkhepY9kJhsmdEpdiEjyDUj8HjiEo8ba4BAa8AOGXfQWZA7AAHiljNzoOBA%3D%3D`;
-    } else {
-      apiUrl = `http://apis.data.go.kr/1543061/abandonmentPublicSrvc/abandonmentPublic?_type=json&pageNo=${this.pageNo}&numOfRows=${this.pageSize}&serviceKey=JkjPRne8oXZTCJTyLN9579FQZI6%2FkhepY9kJhsmdEpdiEjyDUj8HjiEo8ba4BAa8AOGXfQWZA7AAHiljNzoOBA%3D%3D`;
-    }
-
-    axios.get(apiUrl)
-    .then((response) => {
-      const data = response.data.response.body;
-      this.items = data.items.item;
-      this.totalItems = data.totalCount;
-      this.totalPages = 20;
-      this.updateDisplayedPages();
-
-    })
-    .catch((error) => {
-      console.error(error);
-    })
-    .catch((error) => {
-      console.error(error);
-    });
-
-
-    const routeParams = {
-      path: 'Api',
-      query: {
-        orgCd: orgCd,
-        
+      let apiUrl;
+      if (orgCd && neuter_yn) {
+        apiUrl = `http://apis.data.go.kr/1543061/abandonmentPublicSrvc/abandonmentPublic?_type=json&pageNo=${this.pageNo}&numOfRows=${this.pageSize}&upr_cd=${orgCd}&neuter_yn=${neuter_yn}&serviceKey=JkjPRne8oXZTCJTyLN9579FQZI6%2FkhepY9kJhsmdEpdiEjyDUj8HjiEo8ba4BAa8AOGXfQWZA7AAHiljNzoOBA%3D%3D`;
+      } else if (orgCd) {
+        apiUrl = `http://apis.data.go.kr/1543061/abandonmentPublicSrvc/abandonmentPublic?_type=json&pageNo=${this.pageNo}&numOfRows=${this.pageSize}&upr_cd=${orgCd}&serviceKey=JkjPRne8oXZTCJTyLN9579FQZI6%2FkhepY9kJhsmdEpdiEjyDUj8HjiEo8ba4BAa8AOGXfQWZA7AAHiljNzoOBA%3D%3D`;
+      } else if (neuter_yn) {
+        apiUrl = `http://apis.data.go.kr/1543061/abandonmentPublicSrvc/abandonmentPublic?_type=json&pageNo=${this.pageNo}&numOfRows=${this.pageSize}&neuter_yn=${neuter_yn}&serviceKey=JkjPRne8oXZTCJTyLN9579FQZI6%2FkhepY9kJhsmdEpdiEjyDUj8HjiEo8ba4BAa8AOGXfQWZA7AAHiljNzoOBA%3D%3D`;
+      } else {
+        apiUrl = `http://apis.data.go.kr/1543061/abandonmentPublicSrvc/abandonmentPublic?_type=json&pageNo=${this.pageNo}&numOfRows=${this.pageSize}&serviceKey=JkjPRne8oXZTCJTyLN9579FQZI6%2FkhepY9kJhsmdEpdiEjyDUj8HjiEo8ba4BAa8AOGXfQWZA7AAHiljNzoOBA%3D%3D`;
       }
-    };
-    this.$router.push(routeParams);
 
-    // 장소 데이터 가져오기
-    this.place();
+      axios.get(apiUrl)
+        .then((response) => {
+          const data = response.data.response.body;
+          this.items = data.items.item;
+          this.totalItems = data.totalCount;
+          this.totalPages = 20;
+          this.updateDisplayedPages();
+
+        })
+        .catch((error) => {
+          console.error(error);
+        })
+        .catch((error) => {
+          console.error(error);
+        });
+
+
+      const routeParams = {
+        path: 'Api',
+        query: {
+          orgCd: orgCd,
+
+        }
+      };
+      this.$router.push(routeParams);
+
+      // 장소 데이터 가져오기
+      this.place();
     },
 
     place() {
@@ -195,7 +221,7 @@ export default {
             label: org.orgdownNm,
             onClick: () => {
               this.orgCd = org.orgCd;
-              
+
             }
           }));
         })
@@ -219,14 +245,14 @@ export default {
       this.orgCd = '';
     },
     search() {
-      
+
       for (var i = 0; i < document.getElementsByName('ipt-radio-place').length; i++) {
         if (document.getElementsByName('ipt-radio-place')[i].checked == true) {
-           for (var j = 0; j < document.getElementsByName('radio-neuter').length; j++) {
+          for (var j = 0; j < document.getElementsByName('radio-neuter').length; j++) {
             if (document.getElementsByName('radio-neuter')[j].checked == true) {
               this.fetchData(this.orgCd, this.neuter_yn);
               break;
-            } 
+            }
           }
         }
       }
@@ -239,7 +265,7 @@ export default {
       } else {
         document.getElementById('chk-places').check = false;
       }
-      
+
     },
     NeutertoggleButtons() {
       this.showNeuterButtons = !this.showNeuterButtons; // showNeuterButtons 값을 토글
@@ -277,7 +303,7 @@ export default {
 
     },
 
-    goToPage(pageNumber){
+    goToPage(pageNumber) {
       this.pageNo = pageNumber;
       this.pageNumber = this.pageNo;
       this.fetchData();
@@ -315,7 +341,7 @@ export default {
         for (let i = 0; i < chkPlace.length; i++) {
           chkPlace[i].style = "border: 2px solid #999999;";
         }
-       } else if (value < 18) {
+      } else if (value < 18) {
         chkAll[0].style = "border: 2px solid #999999;";
         for (let i = 0; i < chkPlace.length; i++) {
           chkPlace[i].style = "border: 2px solid #999999;";
@@ -357,24 +383,38 @@ export default {
 
 
 <style scoped>
- .custom-button {
-    background-color: #f0cf81; /* 배경색 설정 */
-    border: none; /* 테두리 제거 */
-    color: white; /* 텍스트 색상 설정 */
-    padding: 10px 20px; /* 안쪽 여백 설정 */
-    text-align: center; /* 텍스트 가운데 정렬 */
-    text-decoration: none; /* 밑줄 제거 */
-    display: inline-block; /* 인라인 요소로 표시 */
-    font-size: 16px; /* 폰트 크기 설정 */
-    margin: 4px 2px; /* 외부 여백 설정 */
-    cursor: pointer; /* 커서 포인터로 변경 */
-    border-radius: 4px; /* 모서리를 둥글게 설정 */
-  }
-  
+.custom-button {
+  background-color: #f0cf81;
+  /* 배경색 설정 */
+  border: none;
+  /* 테두리 제거 */
+  color: white;
+  /* 텍스트 색상 설정 */
+  padding: 10px 20px;
+  /* 안쪽 여백 설정 */
+  text-align: center;
+  /* 텍스트 가운데 정렬 */
+  text-decoration: none;
+  /* 밑줄 제거 */
+  display: inline-block;
+  /* 인라인 요소로 표시 */
+  font-size: 16px;
+  /* 폰트 크기 설정 */
+  margin: 4px 2px;
+  /* 외부 여백 설정 */
+  cursor: pointer;
+  /* 커서 포인터로 변경 */
+  border-radius: 4px;
+  /* 모서리를 둥글게 설정 */
+}
+
+img {
+  width: 20px;
+  height: 20px;
+}
+
 .card {
   border-radius: 10px;
-  /* 모서리를 둥글게 만듭니다 */
-  /* 다른 스타일을 추가로 적용할 수 있습니다 */
   position: relative;
 }
 
@@ -388,7 +428,7 @@ export default {
 .place-container:focus {
   display: grid;
   grid-template-columns: repeat(7, 1fr);
-  padding: 0;  
+  padding: 0;
 }
 
 .Neutered-container {
@@ -446,8 +486,10 @@ export default {
   display: inline-block;
   margin-right: 10px;
   background-color: rgb(242, 170, 83);
-  padding: 5px; /* 상자 안의 내용과 여백을 조정할 수 있음 */
-  border-radius: 5px; /* 상자의 모서리를 둥글게 만듦 */
+  padding: 5px;
+  /* 상자 안의 내용과 여백을 조정할 수 있음 */
+  border-radius: 5px;
+  /* 상자의 모서리를 둥글게 만듦 */
   box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
   color: white;
   font-size: 5px;
@@ -457,8 +499,10 @@ export default {
   display: inline-block;
   margin-right: 10px;
   background-color: rgb(203, 155, 248);
-  padding: 5px; /* 상자 안의 내용과 여백을 조정할 수 있음 */
-  border-radius: 5px; /* 상자의 모서리를 둥글게 만듦 */
+  padding: 5px;
+  /* 상자 안의 내용과 여백을 조정할 수 있음 */
+  border-radius: 5px;
+  /* 상자의 모서리를 둥글게 만듦 */
   box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
   color: white;
   font-size: 5px;
@@ -468,8 +512,10 @@ export default {
   display: inline-block;
   margin-right: 10px;
   background-color: rgb(199, 97, 129);
-  padding: 5px; /* 상자 안의 내용과 여백을 조정할 수 있음 */
-  border-radius: 5px; /* 상자의 모서리를 둥글게 만듦 */
+  padding: 5px;
+  /* 상자 안의 내용과 여백을 조정할 수 있음 */
+  border-radius: 5px;
+  /* 상자의 모서리를 둥글게 만듦 */
   box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
   color: white;
   font-size: 5px;
@@ -479,8 +525,10 @@ export default {
   display: inline-block;
   margin-right: 10px;
   background-color: rgb(125, 182, 243);
-  padding: 5px; /* 상자 안의 내용과 여백을 조정할 수 있음 */
-  border-radius: 5px; /* 상자의 모서리를 둥글게 만듦 */
+  padding: 5px;
+  /* 상자 안의 내용과 여백을 조정할 수 있음 */
+  border-radius: 5px;
+  /* 상자의 모서리를 둥글게 만듦 */
   box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
   color: white;
   font-size: 5px;
@@ -611,8 +659,15 @@ input[type="checkbox"] {
   cursor: pointer;
 }
 
-.lbl-place-all, .lbl-place, .chk-places, .chk_neuter {
+.lbl-place-all,
+.lbl-place,
+.chk-places,
+.chk_neuter {
   cursor: pointer;
 }
 
-</style>
+h5 {
+  font-family: 'IBMPlexSansKR-Bold';
+  padding-left: 10px;
+  font-size: 15px;
+}</style>

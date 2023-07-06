@@ -1,5 +1,5 @@
 <template>
-  <div id="DetailsItem" style="background-color:#e5e7eb;">
+  <div id="DetailsItem" style="background-color:#white;">
     <div>
       <div class="container text-center">
         <div class="row" v-for="item in filteredItems" :key="item.desertionNo">
@@ -71,26 +71,26 @@
             <div style="display: flex;">
               <div style="flex: 1;">
                 <div>
-                  <img src="@/assets/images/careNm.png" alt="성별 코드 이미지" >
+                  <img src="@/assets/images/careNm.png" alt="보호센터 이미지" >
                   <h5 style="display: inline;">보호센터명 : <span>{{ item.careNm }}</span></h5>
                   
                 </div>
                 <div class="padd"></div>
                 <div>
-                  <img src="@/assets/images/careAddr.png" alt="성별 코드 이미지" >
+                  <img src="@/assets/images/careAddr.png" alt="보호장소 이미지" >
                   <h5 style="display: inline;">보호장소 : <span>{{ item.careAddr }}</span></h5>
                   
                 </div>
                 <div class="padd"></div>
                 <div>
-                  <img src="@/assets/images/orgNm.png" alt="성별 코드 이미지" >
+                  <img src="@/assets/images/orgNm.png" alt="담당자 이미지" >
                   <h5 style="display: inline;">담당자 : <span>{{ item.orgNm }}</span></h5>
                   
                 </div>
               </div>
               <div style="flex: 1;">
                 <div>
-                  <img src="@/assets/images/careTel.png" alt="성별 코드 이미지" >
+                  <img src="@/assets/images/careTel.png" alt="보호소 전화이미지" >
                   <h5 style="display: inline;">보호소전화번호 : <span>{{ item.careTel }}</span></h5>
                   
                 </div>
@@ -98,7 +98,7 @@
                 <div style="margin-top: 37px;"> <!-- 간격을 띄우는 div 요소 -->
                 </div>
                 <div>
-                  <img src="@/assets/images/officetel.png" alt="성별 코드 이미지" >
+                  <img src="@/assets/images/officetel.png" alt="담당자 전화 이미지" >
                   <h5 style="display: inline;">담당자전화번호 : <span>{{ item.officetel }}</span></h5>
                   
                 </div>

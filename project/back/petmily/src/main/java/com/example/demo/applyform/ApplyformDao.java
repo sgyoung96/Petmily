@@ -1,6 +1,7 @@
 package com.example.demo.applyform;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
@@ -10,6 +11,8 @@ import org.springframework.stereotype.Repository;
 
 import com.example.demo.member.Member;
 
+import jakarta.persistence.OrderBy;
+
 import org.springframework.transaction.annotation.Transactional;
 
 @Repository
@@ -17,6 +20,7 @@ public interface ApplyformDao extends JpaRepository<Applyform, Integer> {
 	Applyform findById(int num);
 	ArrayList<Applyform> findAllById(Member id);
 	ArrayList<Applyform> findByIscheck(int ischeck);
+	List<Applyform> findAllByOrderByIscheckAsc();
 	
 	@Transactional
 	@Modifying
@@ -31,5 +35,7 @@ public interface ApplyformDao extends JpaRepository<Applyform, Integer> {
 	@Transactional
     @Query(value = "SELECT COUNT(*) FROM Applyform WHERE id = :id")
     int countById(@Param("id") Member id);
+	
+	
 	
 }
