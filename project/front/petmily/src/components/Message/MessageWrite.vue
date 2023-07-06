@@ -1,15 +1,33 @@
 <template>
   <div id="messagewrite">
-    <h2>쪽지보내기</h2>
-    보내는 사람 : <input type="text" v-model="sender" readonly /><br />
-    받는 사람 : <input type="text" v-model="reciever" @input="submitAutoComplete" /><br />
-    <ul class="autocomplete disabled" :class="{'disable':tf}">
-      <li @mousedown="searchSkillAdd(res)" style="cursor:pointer" :id="i" v-for="(res,i) in result" :key="i">{{res}}</li>
-    </ul>
-    제목 : <input type="text" v-model="title" /><br />
-    내용 : <input type="text" v-model="content" /><br />
+    <div class="message_area">
+      <h2>쪽지보내기</h2>
 
-    <button @click="send">쪽지보내기</button><br />
+      <!-- 보내는 사람 -->
+      <div class="input_box">
+       <input type="hidden" v-model="sender" readonly /><br />
+      </div>
+
+      <div class="input_box">
+        받는이 : <input class="input_txt" type="text" v-model="reciever" @input="submitAutoComplete" /><br />
+      </div>
+
+      <div class="select">
+        <ul class="autocomplete " :class="{'disabled':tf}">
+          <li><button class="autocompletebtn" @mousedown="searchSkillAdd(res)" style="cursor:pointer" :id="i" v-for="(res,i) in result" :key="i">{{res}}</button></li>
+        </ul>
+      </div>
+
+      <div class="input_box">
+      제목 : <input class="input_txt" type="text" v-model="title" />
+      </div>
+
+      <div class="input_box">
+      내용 : <textarea class="input_txtarea" v-model="content" cols="50" rows="10"></textarea>
+      </div>
+
+      <button @click="send">쪽지보내기</button><br />
+    </div>
   </div>
 </template>
 
@@ -39,7 +57,13 @@ export default {
     this.loginId = sessionStorage.getItem("loginId");
     self.sender = this.loginId;
     this.userlist()
+    document.addEventListener("click", this.handleClickOutside);
   },
+
+  beforeUnmount() {
+  document.removeEventListener("click", this.handleClickOutside);
+},
+ 
 
   methods: {
 
@@ -69,6 +93,16 @@ export default {
         //autocomplete.classList.add("disabled");
       }
     },
+
+    handleClickOutside(event) {
+      const self = this;
+       const select = document.querySelector(".select");
+       if (select && !select.contains(event.target)) {
+        console.log('외부클릭')
+       self.result = [];
+      }
+    },
+
     searchSkillAdd(res){ // result[i] = i 번째 값 (res)
       console.log('res :' + res)
       const self = this;
@@ -127,4 +161,85 @@ export default {
   },
 };
 </script>
+
+<style scoped>
+
+/* .input_box {
+  
+    padding: 0 0 40px;
+    position: relative;
+} */
+.message_area {
+    margin: 0 auto;
+    padding: 58px 0 160px;
+    width: 400px;
+   
+}
+
+.input_txt{
+  width: 100%;
+  height: 40px;
+  border:1px solid black;
+  outline-offset: 0;
+  outline: none;
+  color:black;
+}
+
+.input_txtarea{
+  width: 100%;
+  border:1px solid black;
+  outline-offset: 0;
+  outline: none;
+  color:black;
+}
+
+ul, li{
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    text-align: initial;
+}
+.autocomplete {
+    position: absolute;
+    overflow: hidden;
+    outline: 1px solid #C4C4C4;
+    border-radius: 10px;
+    overflow: hidden;
+    background-color: white;
+    width: 400px;
+    /* display: none; */
+
+    
+}
+.autocomplete.on {
+    display: block;
+}
+
+.autocomplete li {
+    width: 200px;
+}
+
+.autocomplete li button {
+    display: block;
+    width: 380px;
+    background-color: #fff;
+    border-top: none;
+    margin: 8px;
+    padding: 7px 10px 7px;
+    border-radius: 10px;
+    border:0px
+}
+
+.autocomplete li button:hover {
+    background-color: rgb(244, 191, 79);
+}
+/* .butautocompletebtnton{
+    border: initial;
+    border-radius: initial;
+    background-color: initial;
+    margin: 0;
+    padding: 0;
+    text-align: initial;
+} */
+</style>
  

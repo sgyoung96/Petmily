@@ -12,7 +12,7 @@
 
         <button @click="read">읽은 메일</button>
         <button @click="unread">읽지 않은 메일</button>
-        <button @click="all">전체</button>
+        <button @click="all">전체</button><br/>
         <select v-model="select" >
           <option value = "title">제목</option>
           <option value = "sender">보낸이</option>
@@ -25,7 +25,7 @@
           
 
           <!-- 쪽지목록 -->
-           <div class="message" v-for="message in list" :key="message.num">
+           <div class="message" v-for="message in paginatedList " :key="message.num">
 
             <div class="message-header">
               <div class="message-profile">
@@ -68,6 +68,41 @@
             </div>
         </div>
 
+        <!-- 페이징 -->
+        <div>
+          <ul class="pagination" style="display: inline-block">
+            <li class="page-item">
+              <a class="page-link" href="#" aria-label="Previous" @click="previousPage">
+                <span aria-hidden="true">&laquo;</span>
+              </a>
+            </li>
+            <!-- <li class="page-item" v-for="pageNumber in totalPages" :key="pageNumber"
+              :class="{ active: pageNumber === pageNum }">
+              <a class="page-link" href="#" @click="goToPage(pageNumber)">{{ pageNumber }}</a>
+            </li> -->
+
+            <li class="page-item" v-for="blocks in blockList[blocknum]" :key="blocks.num"
+              :class="{ active: blocks === pageNum }">
+              <a class="page-link" href="#" @click="goToPage(blocks)">{{ blocks }}</a>
+            </li>
+
+             <!-- <li class="page-item" v-for="(blocks, index) in blockList[blocknum]" :key="index"
+              :class="{ active: index === 0  }">
+              <a class="page-link" href="#" @click="goToPage(blocks)">{{ blocks }}</a>
+            </li> -->
+
+            <li class="page-item">
+              <a class="page-link" href="#" aria-label="Next" @click="nextPage">
+                <span aria-hidden="true">&raquo;</span>
+              </a>
+            </li>
+          </ul>
+        </div>
+
+        <div class="message" v-for="blocks in blockList[1] " :key="blocks.num">
+          {{blocks}}
+        </div>
+
 
 
       <!-- 쪽지 내용 읽기 모달창 -->
@@ -98,6 +133,8 @@ import MessageModal from "@/components/Message/MessageModal";
 
 export default {
   name: "MessageReciever",
+
+  emits:['new-cnt'],
   props:{
     message:Array
    
@@ -123,6 +160,14 @@ export default {
       value:'',
      select:'title',
       find:'',
+      pageNum:1,
+      pageSize:8,
+      block:5,
+      blockArray :[],
+      blocknum:0,
+      cnt:0
+      
+      
      
       
       
@@ -130,14 +175,59 @@ export default {
     };
   },
 
+// mounted(){
+// this.$emit('new-cnt',self.cnt)
+// },
+  computed: {
+      totalPages() {
+        return Math.ceil(this.list.length / this.pageSize);
+      },
+      paginatedList() {
+        const start= (this.pageNum-1) * this.pageSize;
+        const end = start + this.pageSize;
+        console.log('end : ' + end)
+        return this.list.slice(start, end);
+      },
+      blockList(){
+      
+        const blockArray = [];
+      
+        for(let i=0; i<=this.totalPages; i += this.block){
+          const temp = [];
+          for(let j=i+1; j<=i + this.block && j<= this.totalPages; j++){
+           
+            temp.push(j);
+            
+          }blockArray.push(temp);
+        }
+
+        if(this.totalPages % this.block === 0 && blockArray.length > 0){
+          const lastTemp = blockArray[blockArray.length-1];
+          lastTemp.pop();
+          if(lastTemp.length ===0){
+            blockArray.pop();
+          }
+        }
+        const blockSize = blockArray.length;
+        console.log('this.list.length : ' + this.list.length)
+        console.log('blockArray.length : ' + blockArray.length)
+        console.log('blockArray : ' + blockArray)
+        console.log('blockSize : ' + blockSize);
+        
+        return blockArray;
+      }
+    },
+
   created: function () {
     this.loginId = sessionStorage.getItem("loginId");
+    
     const self = this;
     self.$axios
       .get("http://localhost:8082/message/reciever/" + self.loginId)
       .then(function (res) {
         if (res.status == 200) {
           self.list = res.data.list;
+          
         } else {
           alert("에러코드 :" + res.status);
         }
@@ -184,6 +274,8 @@ export default {
         .then(function (res) {
           if (res.status == 200) {
             alert("읽음");
+            self.cntcheck()
+            
             self.$axios
               .get("http://localhost:8082/message/reciever/" + self.loginId)
               .then(function (res) {
@@ -200,6 +292,18 @@ export default {
       this.modalOpen = false;
     },
 
+    cntcheck(){
+       const self = this;
+       self.$axios.get('http://localhost:8082/message/cnt/' + self.loginId)
+      .then(function(res){
+        if(res.status == 200){
+         self.cnt = res.data.cnt
+          self.$emit('new-cnt',self.cnt)
+        }else{
+          alert('에러코드 :' + res.status)
+        }
+      });  
+    },
      read(){
       const self = this;
       self.$axios
@@ -207,6 +311,7 @@ export default {
       .then(function (res) {
         if (res.status == 200) {
           self.list = res.data.list;
+          
         } else {
           alert("에러코드 :" + res.status);
         }
@@ -243,6 +348,7 @@ export default {
         } else {
           alert("에러코드 :" + res.status);
         }
+        self.find='';
       });
 
       }else{
@@ -263,7 +369,19 @@ export default {
     },
 
     all(){
-       this.$router.go();
+       //this.$router.go();
+       this.loginId = sessionStorage.getItem("loginId");
+      const self = this;
+      self.$axios
+      .get("http://localhost:8082/message/reciever/" + self.loginId)
+      .then(function (res) {
+        if (res.status == 200) {
+          self.list = res.data.list;
+          
+        } else {
+          alert("에러코드 :" + res.status);
+        }
+      });
     },
     replaceImg(e) {
             e.target.src = img;
@@ -275,6 +393,25 @@ export default {
       
       self.displayDetail=true
 
+    },
+
+     previousPage() {
+      if (this.blocknum > 0) {
+        this.blocknum--;
+        this.pageNum -= this.block
+        console.log(this.pageNum)
+      }
+    },
+    nextPage() {
+      if (this.blocknum < this.blockList.length-1) {
+        this.blocknum++;
+        console.log(this.blockArray)
+        this.pageNum += this.block
+        console.log(this.pageNum)
+      }
+    },
+    goToPage(blocks) {
+      this.pageNum = blocks;
     }
   
    

@@ -5,10 +5,10 @@
           
         
                 <h4> {{reciever}}에게 답장 쪽지 보내기</h4>
-                보내는이 : <input type="text" v-model="sender">
-                받는이:<input type="text" v-model="reciever">
+                <input type="hidden" v-model="sender">
+                <input type="hidden" v-model="reciever">
                 제목:<input type="text" v-model="title">
-                내용:<input type="text" v-model="content">
+                내용:<textarea class="input_txt" v-model="content" cols="30" rows="5"></textarea>
             
                 <button @click="$emit('close')">취소</button>
                 <button @click="send">쪽지보내기</button>

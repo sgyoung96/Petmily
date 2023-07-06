@@ -164,6 +164,7 @@ public class MessageService {
 	// 받은 쪽지수 출력
 	public int printPerson(String id) {
 		Member m = new Member(id, "", "", "", "", null, "", "", "", null);
-		return dao.countById(m);
+		ArrayList<Message> list = (ArrayList<Message>) dao.findByRecieverAndAvailablereciever(m, "A");
+		return list.size();
 	}
 }
