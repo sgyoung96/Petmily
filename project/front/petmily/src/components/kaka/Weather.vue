@@ -284,39 +284,25 @@ export default {
   name: 'App',
   data() {
     return {
-      items: [],
+      items:[],
       datetime: new Date(),
       date: this.formatDate(new Date()),
       time: ''
     };
   },
   created() {
-    if (8 <= this.datetime.getHours() && this.datetime.getHours() <= 9) {
+    if (8 <= this.datetime.getHours() && this.datetime.getHours() <= 14) {
       this.time = '0800';
-    } else if (9 <= this.datetime.getHours() && this.datetime.getHours() < 10) {
-      this.time = '0800';
-    } else if (10 <= this.datetime.getHours() && this.datetime.getHours() < 11) {
-      this.time = '0800';
-    } else if (11 <= this.datetime.getHours() && this.datetime.getHours() < 12) {
-      this.time = '0800';
-    } else if (12 <= this.datetime.getHours() && this.datetime.getHours() < 13) {
-      this.time = '0800';
-    } else if (13 <= this.datetime.getHours() && this.datetime.getHours() < 14) {
-      this.time = '0800';
-    } else if (14 <= this.datetime.getHours() && this.datetime.getHours() < 15) {
-      this.time = '1400';
-    } else if (15 <= this.datetime.getHours() && this.datetime.getHours() < 16) {
-      this.time = '1400';
-    } else if (16 <= this.datetime.getHours() && this.datetime.getHours() < 17) {
+    } else if (14 <= this.datetime.getHours() && this.datetime.getHours() < 20) {
       this.time = '1400';
     } else {
       this.time = '2000';
-    }
+    } 
 
-    this.fetchData(); // 페이지가 생성될 때 데이터 가져오기
+    this.fetchData2(); // 페이지가 생성될 때 데이터 가져오기
   },
   methods: {
-    fetchData() {
+    fetchData2() {
 
 
       console.log(this.time);
@@ -331,11 +317,6 @@ export default {
             alert(res.status)
           }
         })
-    },
-    handleItemClick(addr, name) {
-      this.addr = addr;
-      this.name = name;
-      this.$router.push({ name: 'AnimalHospital', params: { addr: this.addr, name: this.name } });
     },
     formatDate(date) {
       const options = {

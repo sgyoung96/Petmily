@@ -129,6 +129,7 @@
 
       
       <div class="container text-center">
+
   <div class="row">
     <div class="col-7">
       <table class="table" v-if="witems.length">
@@ -378,23 +379,9 @@ export default {
         }
       });
 
-      if (8 <= this.datetime.getHours() && this.datetime.getHours() <= 9) {
+    if (8 <= this.datetime.getHours() && this.datetime.getHours() <= 14) {
       this.time = '0800';
-    } else if (9 <= this.datetime.getHours() && this.datetime.getHours() < 10) {
-      this.time = '0800';
-    } else if (10 <= this.datetime.getHours() && this.datetime.getHours() < 11) {
-      this.time = '0800';
-    } else if (11 <= this.datetime.getHours() && this.datetime.getHours() < 12) {
-      this.time = '0800';
-    } else if (12 <= this.datetime.getHours() && this.datetime.getHours() < 13) {
-      this.time = '0800';
-    } else if (13 <= this.datetime.getHours() && this.datetime.getHours() < 14) {
-      this.time = '0800';
-    } else if (14 <= this.datetime.getHours() && this.datetime.getHours() < 15) {
-      this.time = '1400';
-    } else if (15 <= this.datetime.getHours() && this.datetime.getHours() < 16) {
-      this.time = '1400';
-    } else if (16 <= this.datetime.getHours() && this.datetime.getHours() < 17) {
+    } else if (14 <= this.datetime.getHours() && this.datetime.getHours() < 20) {
       this.time = '1400';
     } else {
       this.time = '2000';
@@ -406,15 +393,15 @@ export default {
       if (res.status == 200) {
         self.list = res.data.list;
         let list = res.data.list
-          if (list.length < 4) {
-            for (let i = 0; i < list.length; i++) {
-              self.arr2[i] = list[i]
-            }
-          } else {
-            for (let i = 0; i < 4; i++) {
-              self.arr2[i] = list[i]
-            }
+        if (list.length < 4) {
+          for (let i = 0; i < list.length; i++) {
+            self.arr2[i] = list[i]
           }
+        } else {
+          for (let i = 0; i < 4; i++) {
+            self.arr2[i] = list[i]
+          }
+        }
       } else {
         alert('에러');
       }
@@ -464,25 +451,25 @@ export default {
     fetchData2() {
 
 
-console.log(this.time);
-console.log(this.date);
-const self = this;
-self.$axios.get(`https://apis.data.go.kr/1360000/VilageFcstInfoService_2.0/getVilageFcst?dataType=json&serviceKey=hqbUzbZx%2BbQR6OgVCNvZDXGGWIVTWAIawDhN2Y9fbW6Pndu%2BrU9e1NaR9UpW7%2BPotKdwoD9cXlkHbSS7tzFRJQ%3D%3D&numOfRows=50&pageNo=1&base_date=${self.date}&base_time=${self.time}&nx=62&ny=122`)
-  .then(function (res) {
-    if (res.status == 200) {
-      const data = res.data.response.body
-      self.witems = data.items.item;
-    } else {
-      alert(res.status)
-    }
-  })
-},
+      console.log(this.time);
+      console.log(this.date);
+      const self = this;
+      self.$axios.get(`https://apis.data.go.kr/1360000/VilageFcstInfoService_2.0/getVilageFcst?dataType=json&serviceKey=hqbUzbZx%2BbQR6OgVCNvZDXGGWIVTWAIawDhN2Y9fbW6Pndu%2BrU9e1NaR9UpW7%2BPotKdwoD9cXlkHbSS7tzFRJQ%3D%3D&numOfRows=50&pageNo=1&base_date=${self.date}&base_time=${self.time}&nx=62&ny=122`)
+        .then(function (res) {
+          if (res.status == 200) {
+            const data = res.data.response.body
+            self.witems = data.items.item;
+          } else {
+            alert(res.status)
+          }
+        })
+    },
     detail(num) {
       // alert(num)
       this.$router.push({ name: 'DiaryBoardDetail', query: { num: num } })
     },
     detail2(num) {
-      this.$router.push({name: 'AdoptDetail', query: {num: num}})
+      this.$router.push({ name: 'AdoptDetail', query: { num: num } })
     },
     extractVideoId(url) {
       // Regular expression to extract the video ID from YouTube URL

@@ -15,6 +15,7 @@ public interface NotificationDao extends JpaRepository<Notification, Integer> {
 	 * @param id
 	 * @return
 	 */
+
 	@Query(value = "SELECT num, reciever, header, content, row_num, title, writer, commenter, notify_type, is_clicked, tr_date FROM Notification WHERE reciever = :reciever AND is_clicked = '0' ORDER BY tr_date DESC")
 	ArrayList<Notification> newNotification(@Param("reciever") String reciever);
 	
@@ -32,6 +33,7 @@ public interface NotificationDao extends JpaRepository<Notification, Integer> {
 	 * @param id
 	 * @return
 	 */
+
 	@Query(value = "SELECT num, reciever, header, content, row_num, title, writer, commenter, notify_type, is_clicked, tr_date FROM Notification WHERE reciever = :reciever AND notify_type = '1' ORDER BY tr_date DESC")
 	ArrayList<Notification> adoptNotification(@Param("reciever") String reciever);
 	
