@@ -98,6 +98,9 @@ export default {
   created: function () {
     this.initTabs();
     this.getUserInfo();
+    
+  },
+  mounted: function() {
     this.getWatch();
     this.getLike();
     this.getBoards();
@@ -231,7 +234,7 @@ export default {
     },
     getApply(){
       const self = this
-      self.$axios.get('http://localhost:8082/Applyform/id/' + this.id)
+      self.$axios.get('http://localhost:8082/Applyform/getbyid/' + this.id)
       .then(function(res){
         if(res.status == 200){
           self.appcnt = res.data.dto
