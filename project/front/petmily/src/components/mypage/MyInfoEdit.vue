@@ -205,8 +205,6 @@ export default {
             if (res.status == 200) {
                 let dto = res.data.dto
                 if (dto != null) { 
-                    console.log('무언가 잘못됐다.' + dto.pwd);
-                    
                     //this.id = dto.id
                     self.rawpw = dto.pwd
                     console.log(self.rawpw);
