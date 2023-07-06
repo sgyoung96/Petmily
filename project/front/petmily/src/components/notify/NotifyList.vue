@@ -1,6 +1,8 @@
 <template>
     <div>
         <h1>HERE IT IS!!</h1>
+
+        <label @click="goNotifyBox">알림함으로 이동</label>
     </div>
 </template>
 
@@ -13,6 +15,7 @@ export default {
       id: sessionStorage.getItem('loginId'),
       list: [],
       listStr: '',
+      isClickNotifyBoxOpen: false,
     }
   },
   created: function () {
@@ -28,6 +31,10 @@ export default {
             self.listStr = self.list.toString;
             console.log(self.listStr);
         })
+    },
+    goNotifyBox() {
+      this.isClickNotifyBoxOpen = true;
+      this.$emit('childEvent', this.isClickNotifyBoxOpen);
     }
   }
 }

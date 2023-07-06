@@ -70,7 +70,7 @@
 
     <br>
 
-    <NotifyBox id="notify_box" v-if="isNotifyBoxOpen" @click="closeNotifyBox()" />
+    <NotifyBox id="notify_box" v-if="isNotifyBoxOpen" @childEvent="goAlertBox" @click="closeNotifyBox()" />
 
     <!-- 이곳에 라우터로 설정한 화면이 로드됨 -->
     <router-view/>
@@ -124,6 +124,7 @@ export default {
       notifyData: [],
       notify: '0',
       isNotifyBoxOpen: false,
+      isClickNotifyBoxOpen: false,
     }
   },
   created:function(){ // 이 컴포넌트가 시작될때 실행되는 함수
@@ -375,6 +376,13 @@ export default {
     },
     closeNotifyBox() {
       this.isNotifyBoxOpen = false;
+    },
+    goAlertBox(value) {
+      this.isClickNotifyBoxOpen = value; // true 면 알림함 오픈
+      if (this.isClickNotifyBoxOpen) {
+        this.isNotifyBoxOpen = false;
+        this.$router.push('/mypage/alert');
+      }
     }
   },
   components: {
