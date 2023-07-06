@@ -54,6 +54,7 @@ import MessageBox from '@/components/mypage/MessageBox.vue'
 import ExitService from '@/components/mypage/ExitService.vue'
 import MyInfoIntro from '@/components/mypage/MyInfoIntro'
 import MyInfoEdit from '@/components/mypage/MyInfoEdit.vue'
+import AlertBox from '@/components/mypage/AlertBox.vue'
 
 
 const routes = [
@@ -315,6 +316,11 @@ const routes = [
     path: '/mypage/infomain',
     name: 'MyInfoEdit',
     component: MyInfoEdit
+  },
+  {
+    path: '/mypage/alert',
+    name: 'AlertBox',
+    component: AlertBox
   }
 ]
 
