@@ -20,7 +20,7 @@ public class NotificationService {
 	 */
 	public ArrayList<NotificationDto> getNewNotification(String id) {
 		Member memberId = new Member(id,"","","","",null,"","","",null);
-		ArrayList<Notification> news = (ArrayList<Notification>) dao.getNewNotification(memberId);
+		ArrayList<Notification> news = (ArrayList<Notification>) dao.getNew2Notification(memberId);
 		ArrayList<NotificationDto> dtos = new ArrayList<NotificationDto>();
 		for (Notification e : news) {
 			dtos.add(new NotificationDto(e.getNum(), e.getReciever(), e.getHeader(), e.getContent(), e.getRow_num(), e.getTitle(), e.getWriter(), e.getCommenter(), e.getNotify_type(), e.getIs_clicked(), e.getTr_date()));
@@ -35,7 +35,7 @@ public class NotificationService {
 	 */
 	public ArrayList<NotificationDto> getAllNotification(String id) {
 		Member memberId = new Member(id,"","","","",null,"","","",null);
-		ArrayList<Notification> news = (ArrayList<Notification>) dao.getAllNotification(memberId);
+		ArrayList<Notification> news = (ArrayList<Notification>) dao.getAll2Notification(memberId);
 		ArrayList<NotificationDto> dtos = new ArrayList<NotificationDto>();
 		for (Notification e : news) {
 			dtos.add(new NotificationDto(e.getNum(), e.getReciever(), e.getHeader(), e.getContent(), e.getRow_num(), e.getTitle(), e.getWriter(), e.getCommenter(), e.getNotify_type(), e.getIs_clicked(), e.getTr_date()));
@@ -50,7 +50,7 @@ public class NotificationService {
 	 */
 	public ArrayList<NotificationDto> getAdoptCommentNotification(String id) {
 		Member memberId = new Member(id,"","","","",null,"","","",null);
-		ArrayList<Notification> news = (ArrayList<Notification>) dao.getAdoptCommentNotification(memberId);
+		ArrayList<Notification> news = (ArrayList<Notification>) dao.getAdoptComment2Notification(memberId);
 		ArrayList<NotificationDto> dtos = new ArrayList<NotificationDto>();
 		for (Notification e : news) {
 			dtos.add(new NotificationDto(e.getNum(), e.getReciever(), e.getHeader(), e.getContent(), e.getRow_num(), e.getTitle(), e.getWriter(), e.getCommenter(), e.getNotify_type(), e.getIs_clicked(), e.getTr_date()));
@@ -65,7 +65,7 @@ public class NotificationService {
 	 */
 	public ArrayList<NotificationDto> getDiaryCommentNotification(String id) {
 		Member memberId = new Member(id,"","","","",null,"","","",null);
-		ArrayList<Notification> news = (ArrayList<Notification>) dao.getDiaryCommentNotification(memberId);
+		ArrayList<Notification> news = (ArrayList<Notification>) dao.getDiaryComment2Notification(memberId);
 		ArrayList<NotificationDto> dtos = new ArrayList<NotificationDto>();
 		for (Notification e : news) {
 			dtos.add(new NotificationDto(e.getNum(), e.getReciever(), e.getHeader(), e.getContent(), e.getRow_num(), e.getTitle(), e.getWriter(), e.getCommenter(), e.getNotify_type(), e.getIs_clicked(), e.getTr_date()));
@@ -80,7 +80,7 @@ public class NotificationService {
 	 */
 	public ArrayList<NotificationDto> getMessageNotification(String id) {
 		Member memberId = new Member(id,"","","","",null,"","","",null);
-		ArrayList<Notification> news = (ArrayList<Notification>) dao.getMessageNotification(memberId);
+		ArrayList<Notification> news = (ArrayList<Notification>) dao.getMessage2Notification(memberId);
 		ArrayList<NotificationDto> dtos = new ArrayList<NotificationDto>();
 		for (Notification e : news) {
 			dtos.add(new NotificationDto(e.getNum(), e.getReciever(), e.getHeader(), e.getContent(), e.getRow_num(), e.getTitle(), e.getWriter(), e.getCommenter(), e.getNotify_type(), e.getIs_clicked(), e.getTr_date()));
