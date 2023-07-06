@@ -93,8 +93,8 @@
             <label><span>참가자BIRTH</span></label>
           </th>
         </tr>
-        <tr v-for="person in list2" :key="person.num">
-          <td colspan="1"><label><span>1</span></label></td>
+        <tr v-for="(person,index) in list2" :key="person.num">
+          <td colspan="1"><label><span>{{ index+1 }}</span></label></td>
           <td colspan="2"><label><span>{{ person.id.id }}</span></label></td>
           <td colspan="1"><label><span>{{ person.id.id }}</span></label></td>
           <td colspan="1"><label><span>{{ person.id.name }}</span></label></td>

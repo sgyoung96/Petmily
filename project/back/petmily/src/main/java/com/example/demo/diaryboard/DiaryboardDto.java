@@ -1,5 +1,6 @@
 package com.example.demo.diaryboard;
 
+import java.sql.Clob;
 import java.util.Date;
 
 import org.springframework.web.multipart.MultipartFile;
@@ -20,7 +21,7 @@ import lombok.ToString;
 public class DiaryboardDto {
 	private int num;
 	private String title;
-	private String content;
+	private Clob content;
 	private Date w_date;
 	private Member id;
 	private String pic1;

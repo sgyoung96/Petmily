@@ -1,5 +1,6 @@
 package com.example.demo.diaryboard;
 
+import java.sql.Clob;
 import java.util.Date;
 
 import org.hibernate.annotations.OnDelete;
@@ -34,7 +35,7 @@ public class Diaryboard {
 	@GeneratedValue(strategy=GenerationType.SEQUENCE, generator="seq_diaryboard")//값 자동생성설정
 	private int num;
 	private String title;
-	private String content;
+	private Clob content;
 	private Date w_date;
 	@ManyToOne
 	@JoinColumn(name="id", nullable=false)  //fk 설정
