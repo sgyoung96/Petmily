@@ -56,19 +56,59 @@
       <img :src="'http://localhost:8082/volboard/imgs/' + dto.num + '/2'">
     </div>
     <div>
-      <label>주소:</label>
-      <input type="text" v-model="address" placeholder="주소를 입력하세요" />
-      <button @click="showLocation">위치 보기</button>
+      <input type="hidden" v-model="address" placeholder="주소를 입력하세요" />
     </div>
     <div id="map" ref="map"></div>
-    <div>참여자 리스트 ID</div>
-    <table border="1">
-      <tr v-for="person in list2" :key="person.num">
-        <td>{{ person.id.id }}</td>
-      </tr>
-    </table>
-    {{ count }} / {{ dto.vol_number }} {{ address }}
+    <div class="form-container">
+
+<div class="list-container" v-if="this.loginId=='admin'">
+  <p><label class="section01">SECTION 1</label></p>
+  <p><label class="section01-title"><u><span>봉사신청명단영역</span></u></label></p>
+  <div class="section01-content">
+    <div class="data-header">
+      <table>
+        <tr aria-colspan="9">
+          <th colspan="1">
+            <label><span>No.</span></label>
+          </th>
+          <th colspan="2">
+            <label><span>참가자PROFILE</span></label>
+          </th>
+          <th colspan="1">
+            <label><span>참가자ID</span></label>
+          </th>
+          <th colspan="1">
+            <label><span>참가자NAME</span></label>
+          </th>
+          <th colspan="1">
+            <label><span>참가자TEL</span></label>
+          </th>
+          <th colspan="1">
+            <label><span>참가자EMAIL</span></label>
+          </th>
+          <th colspan="2">
+            <label><span>참가자ADDRESS</span></label>
+          </th>
+          <th colspan="2">
+            <label><span>참가자BIRTH</span></label>
+          </th>
+        </tr>
+        <tr v-for="person in list2" :key="person.num">
+          <td colspan="1"><label><span>1</span></label></td>
+          <td colspan="2"><label><span>{{ person.id.id }}</span></label></td>
+          <td colspan="1"><label><span>{{ person.id.id }}</span></label></td>
+          <td colspan="1"><label><span>{{ person.id.name }}</span></label></td>
+          <td colspan="1"><label><span>{{ person.id.phone }}</span></label></td>
+          <td colspan="1"><label><span>{{ person.id.email }}</span></label></td>
+          <td colspan="2"><label><span>{{ person.id.address }}</span></label></td>
+          <td colspan="2"><label><span>{{ formatDate(person.id.birth) }}</span></label></td>
+        </tr>
+      </table>
+    </div>
   </div>
+</div>
+</div>
+</div>
 </template>
 
 <style scoped>
@@ -110,6 +150,133 @@
 img {
   width: 530px;
   height: 310px;
+}
+
+.form-container {
+  display: block;
+  position: relative;
+}
+
+.list-container {
+  display: block;
+  position: relative;
+  margin-left: 50px;
+  margin-right: 50px;
+  padding-top: 40px;
+  padding-bottom: 100px;
+  border: 5px solid #efefef;
+  border-radius: 10px;
+  height: auto;
+}
+
+.section01 {
+  font-family: 'IBMPlexSansKR-Bold';
+  font-size: 15px;
+  text-align: center;
+  vertical-align: center;
+  width: 120px;
+  height: 25px;
+  background: rgb(244, 191, 79);
+  color: white;
+  border-radius: 10px;
+}
+
+.section01-content {
+  border: 1px solid #efefef;
+  border-radius: 20px;
+  margin-left: 20px;
+  margin-right: 20px;
+}
+
+.section01-title u span {
+  font-family: 'IBMPlexSansKR-Bold';
+  font-size: 18px;
+  color: black;
+}
+
+.section01-title u {
+  text-decoration-color: rgb(244, 191, 79);
+  text-decoration-thickness: 3px;
+}
+
+.data-header {
+  display: flex;
+  justify-content: space-between;
+  padding-left: 80px;
+  padding-right: 80px;
+}
+
+table {
+  width: 100%;
+}
+
+.data-header table tr th {
+  font-family: 'IBMPlexSansKR-Bold';
+  font-size: 14px;
+  color: black;
+  text-align: center;
+}
+
+.data-header table tr td {
+  font-family: 'IBMPlexSansKR-Regular';
+  font-size: 14px;
+  color: black;
+  text-align: center;
+}
+
+.data-contents {
+  display: flex;
+  justify-content: space-between;
+  padding-left: 60px;
+  padding-right: 80px;
+}
+
+.v-title {
+  margin-top: 120px;
+  margin-bottom: 120px;
+}
+
+.vbody {
+  border-bottom: 1px solid #666666;
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 10px;
+  cursor: pointer;
+}
+
+.vcount {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 70px;
+  height: 70px;
+  border: 2px solid #666666;
+  font-size: 15px;
+  font-weight: bold;
+  text-align: center;
+  margin-top: 20px;
+}
+
+.vtitle {
+  font-size: 30px;
+}
+
+h3 {
+  margin: 40px 0 0;
+}
+
+ul {
+  list-style-type: none;
+  padding: 0;
+}
+
+li {
+  display: inline-block;
+  margin: 0 10px;
+}
+
+a {
+  color: #42b983;
 }
 </style>
 
@@ -322,15 +489,15 @@ const self = this;
       };
 
       const formattedDate = new Date(date).toLocaleString('ko-KR', options).replace(/\D/g, '');
-  const year = formattedDate.slice(0, 4);
-  const month = formattedDate.slice(4, 6);
-  const day = formattedDate.slice(6, 8);
+      const year = formattedDate.slice(0, 4);
+      const month = formattedDate.slice(4, 6);
+      const day = formattedDate.slice(6, 8);
 
   return `${year}년 ${month}월 ${day}일`;
     },
     scrollToMap() {
       this.$refs.map.scrollIntoView({ behavior: 'smooth' });
-    }
+    },
   },
   created: function () {//이 컴포넌트가 시작될때 실행되는 함수
     this.loginId = sessionStorage.getItem('loginId')

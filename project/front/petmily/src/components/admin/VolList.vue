@@ -6,7 +6,7 @@
 
         <div class="list-container">
           <p><label class="section01">SECTION 1</label></p>
-          <p><label class="section01-title"><u><span>봉사신청명단영역</span></u></label></p>
+          <p><label class="section01-title"><u><span>봉사모집게시판현황</span></u></label></p>
           <div class="section01-content">
             <div class="data-header">
               <table>
@@ -42,7 +42,9 @@
                   <td colspan="1"><label><span>({{ vboard.count }} / {{ vboard.vol_number }})</span></label></td>
                   <td colspan="5" width="300px">
                     <label>
-                      <span v-for="person in getParticipants(vboard.num)" :key="person.num">{{ person.id.id }}</span>
+                      <div v-for="person in getParticipants(vboard.num)" :key="person.num">
+                        {{ person.num }}
+                      </div>
                     </label>
                   </td>
                   <td colspan="2"><label><span>{{ formatDate(vboard.vol_date) }}</span></label></td>
@@ -125,7 +127,7 @@ export default {
       pageSize: 8,
       searchKeyword: '',
       list2: [],
-
+      participants: [],
     }
   },
   computed: {
@@ -187,17 +189,19 @@ export default {
     },
     getParticipants(num) {
       const self = this;
-      alert(num)
       self.$axios.get('http://localhost:8082/participants/' + num)
         .then(function (res) {
-          if (res.status == 200) {
-            let list2 = res.data.list
-            alert(list2[0].id.id)
-            return list2;
+          if (res.status === 200) {
+            let list2 = res.data.list;
+            if (list2 === null) {
+              alert('참가자 없음');
+            } else {
+              return list2;
+            }
           } else {
-            alert('에러')
+            alert('에러');
           }
-        })
+        });
     }
   },
   created: function () {
@@ -205,12 +209,12 @@ export default {
     const self = this
     self.$axios.get('http://localhost:8082/volboard').then(function (res) {
       if (res.status == 200) {
+        console.log(res);
         self.list = res.data.list
       } else {
         alert('에러')
       }
     })
-
   }
 }
 </script>
