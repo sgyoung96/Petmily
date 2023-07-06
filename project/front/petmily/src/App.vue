@@ -23,7 +23,8 @@
         </div>
 
         <div class="box-mypage">
-          <img class="ico-bell" src="./assets/bell.png" />
+          <img v-if="this.notify == false" class="ico-bell" src="./assets/bell.png" />
+          <img v-if="this.notify == true" class="ico-bell" src="./assets/bell_notify.png" />
           <img @click="goMyPage()" class="ico-mypage" src="./assets/profile-user.png" />
         </div>
       </div>
@@ -119,7 +120,8 @@ export default {
       dto: {},
       cnt:0,
       cntchecktf:true,
-      notifyData: null
+      notifyData: [],
+      notify: '0',
     }
   },
   created:function(){ // 이 컴포넌트가 시작될때 실행되는 함수
@@ -139,7 +141,7 @@ export default {
     }
   },
   mounted: function() {
-    //this.notifyPolling();
+    this.notifyPolling();
   },
   beforeUnmount: function() {
     clearInterval(this.notifyData);
@@ -150,9 +152,16 @@ export default {
         // 3초마다 한번씩 알림 테이블의 데이터 확인
         if (this.loginId != null) {
           const self = this;
-          self.$axios.get('http://localhost:8082/notify/' + this.loginId)
+          self.$axios.get('http://localhost:8082/notify/new/' + this.loginId)
           .then (function(rs) {
-            console.log(rs);
+            //console.log(rs); //rs.data.list.is_clicked
+            self.notifyData = rs.data.list;
+            if (self.notifyData != null) {
+              //document.getElementById('notify_bell').src = './assets/bell_notify.png';
+              self.notify = true;
+            } else {
+              self.notify = false;
+            }
           });
         }
       }, 3000);

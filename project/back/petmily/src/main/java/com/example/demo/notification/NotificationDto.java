@@ -2,6 +2,10 @@ package com.example.demo.notification;
 
 import java.util.Date;
 
+import org.springframework.web.multipart.MultipartFile;
+
+import com.example.demo.member.Member;
+
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -16,7 +20,7 @@ import lombok.ToString;
 public class NotificationDto {
 
 	private int num;				
-	private String reciever;	
+	private Member reciever;	
 	private String header;		
 	private String content;		
 	private int row_num;		

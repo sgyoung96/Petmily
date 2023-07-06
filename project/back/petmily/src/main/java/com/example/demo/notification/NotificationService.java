@@ -36,6 +36,7 @@ public class NotificationService {
 	public ArrayList<NotificationDto> getAllNotification(String id) {
 		Member memberId = new Member(id,"","","","",null,"","","",null);
 		ArrayList<Notification> news = (ArrayList<Notification>) dao.allNotification(id);
+		//ArrayList<Notification> news = (ArrayList<Notification>) dao.findByReciever(memberId);
 		ArrayList<NotificationDto> dtos = new ArrayList<NotificationDto>();
 		for (Notification e : news) {
 			dtos.add(new NotificationDto(e.getNum(), e.getReciever(), e.getHeader(), e.getContent(), e.getRow_num(), e.getTitle(), e.getWriter(), e.getCommenter(), e.getNotify_type(), e.getIs_clicked(), e.getTr_date()));
@@ -51,6 +52,7 @@ public class NotificationService {
 	public ArrayList<NotificationDto> getAdoptCommentNotification(String id) {
 		Member memberId = new Member(id,"","","","",null,"","","",null);
 		ArrayList<Notification> news = (ArrayList<Notification>) dao.adoptNotification(id);
+		//ArrayList<Notification> news = (ArrayList<Notification>) dao.adoptNotification(memberId);
 		ArrayList<NotificationDto> dtos = new ArrayList<NotificationDto>();
 		for (Notification e : news) {
 			dtos.add(new NotificationDto(e.getNum(), e.getReciever(), e.getHeader(), e.getContent(), e.getRow_num(), e.getTitle(), e.getWriter(), e.getCommenter(), e.getNotify_type(), e.getIs_clicked(), e.getTr_date()));
