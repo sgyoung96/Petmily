@@ -10,7 +10,7 @@
 
       <button @click="read">읽은 메일</button>
       <button @click="unread">읽지 않은 메일</button>
-      <button @click="all">전체</button>
+      <button @click="all">전체</button><br/>
         <select v-model="select" >
           <option value = "title">제목</option>
           <option value = "reciever">받는이</option>
@@ -217,7 +217,18 @@ export default {
     },
 
     all(){
-       this.$router.go();
+      // this.$router.go();
+      this.loginId = sessionStorage.getItem("loginId");
+      const self = this;
+      self.$axios
+      .get("http://localhost:8082/message/sender/" + self.loginId)
+      .then(function (res) {
+        if (res.status == 200) {
+          self.list = res.data.list;
+        } else {
+          alert("에러코드 :" + res.status);
+        }
+      });
     },
 
     replaceImg(e) {
