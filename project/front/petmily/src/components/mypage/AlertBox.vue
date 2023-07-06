@@ -1,7 +1,7 @@
 <template>
   <div>
     <div class="container">
-        <div v-for="(list, index) in this.allList" :key="index" @click="detail(vboard.num, vboard.address)">
+        <div v-for="(list, index) in this.allList" :key="index">
             <div>
                 <ul class="list-starter">
                     <li>

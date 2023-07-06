@@ -70,7 +70,7 @@
 
     <br>
 
-    <NotifyBox id="notify_box" v-if="isNotifyBoxOpen" @childEvent="goAlertBox" @click="closeNotifyBox()" />
+    <NotifyBox isBedgeClicked="1" id="notify_box" v-if="isNotifyBoxOpen" @childEvent="goAlertBox" @click="closeNotifyBox()" />
 
     <!-- 이곳에 라우터로 설정한 화면이 로드됨 -->
     <router-view/>
@@ -95,9 +95,6 @@
           <span v-show="cntchecktf" @click="cntcheck">{{cnt}}</span> 
           <router-link to="/memedit">내정보 수정</router-link>
         </div>
-        |
-        <router-link to="/notify">알림함페이지이동</router-link> |
-        <span @click="exitService()" style="cursor: pointer;">회원탈퇴</span>
         <!-- //기존 링크 모음 (테스트용, 추후 삭제 예정) -->
         <p>Copyright by Petmily, ... etc</p>
       </div>
@@ -512,11 +509,12 @@ li:hover {
   position: absolute;
   display: inline-block;
   z-index: 20;
-  width: 500px;
+  width: 800px;
   height: 500px;
   background: white;
-  border: 10px solid #eee;
   transform: translateX(-50%) translateY(-25%);
+  border: 1px solid rgb(244, 191, 79);
+  border-radius: 30px;
 }
 
 </style>
