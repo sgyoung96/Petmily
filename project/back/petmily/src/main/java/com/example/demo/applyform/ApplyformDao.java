@@ -14,7 +14,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 @Repository
 public interface ApplyformDao extends JpaRepository<Applyform, Integer> {
-	ArrayList<Applyform> findById(int num);
+	Applyform findById(int num);
 	ArrayList<Applyform> findAllById(Member id);
 	ArrayList<Applyform> findByIscheck(int ischeck);
 	
