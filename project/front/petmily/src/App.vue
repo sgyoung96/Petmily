@@ -88,6 +88,7 @@
         <router-link to="/piechart">파이차트</router-link> |
         <router-link to="/animalhospital">동물병원</router-link> |
         <router-link to="/weather">날씨</router-link> |
+        <router-link to="/imgsl">날씨</router-link> |
         <div v-if="loginId != null">
           <router-link to="/messagewrite" >쪽지보내기</router-link> |
           <router-link to="/messagesender" >보낸쪽지함</router-link> |
