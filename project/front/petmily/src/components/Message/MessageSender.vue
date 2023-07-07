@@ -6,17 +6,20 @@
   <div id="messagesender">
 
     <div class="message-list">
-      <h2>{{ loginId }}가 보낸 쪽지 목록</h2>
+      
 
       <button @click="read">읽은 메일</button>
       <button @click="unread">읽지 않은 메일</button>
       <button @click="all">전체</button><br/>
+      <div class="search">
         <select v-model="select" >
           <option value = "title">제목</option>
           <option value = "reciever">받는이</option>
         </select>
 
+        
         <input type="text" v-model="find"><button @click="findbtn">검색</button>
+      </div>
     </div> 
 
     <!-- 쪽지목록 -->
@@ -413,7 +416,7 @@ computed: {
   margin-bottom: 40px;
 }
 .message{
-  width:30%;
+  width:40%;
   display: block;
   margin:auto;
   border:2px solid #F0F0F0;
@@ -517,6 +520,38 @@ computed: {
 .page-item.active a {
   background-color: rgb(244, 191, 79);
   color: white;
+}
+
+.search{
+  margin-top:30px;
+}
+input{
+   width:250px;
+   height: 35px;
+   margin:20px;
+   border:1px solid rgb(244, 191, 79);
+   border-radius: 10px;
+}
+
+.search button{
+  background-color: rgb(244, 191, 79);
+  border-radius: 10px;
+  color:white;
+  border:0px;
+  height:35px;
+  width: 100px;
+  padding: 5px;
+  font-size: 18px;
+  font-weight: bold;
+}
+
+select{
+  width:120px;
+  height: 35px;
+  border-radius: 10px;
+  border:0px;
+  font-size: 18px;
+  font-weight: bold;
 }
 
 
