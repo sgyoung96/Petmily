@@ -4,7 +4,7 @@
     <div class="findpwd_area">
       <h2 class="findpwd_title">비밀번호 찾기</h2>
 
-      <div class="" v-show="showidemail">
+      <div v-show="showidemail">
         <!-- 아이디 -->
         <div class="input_box" >
           <input type="text" class="input_txt" v-model="id" placeholder="ID"><br/>

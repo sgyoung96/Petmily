@@ -277,7 +277,7 @@ public class MemberController {
 	public Map changepwd(MemberDto dto) {
 		System.out.println("비밀번호 찾기 수정");
 		MemberDto old = service.getMember(dto.getId());
-		
+		System.out.println("old : "+ old);
 		old.setPwd(dto.getPwd());
 		
 

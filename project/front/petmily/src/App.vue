@@ -465,6 +465,7 @@ export default {
   height: 200px;
   width: 100%;
   background-color: #efefef;
+  z-index: -1;
 }
 
 .pet-box-bottom {

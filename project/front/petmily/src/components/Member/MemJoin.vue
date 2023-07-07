@@ -95,7 +95,7 @@
             <input class="input_txt" type="text" v-model="extraAddress" placeholder="참고항목"><br/>
           </div>
           
-            <button v-on:click="joincheck" style ="padding:5px 20px 5px 20px; width:100%; margin-top:60px">가입</button>
+            <button v-on:click="joincheck" style ="padding:5px 20px 5px 20px; width:100%; height:40px; margin-top:60px">가입</button>
           
         </div>
     </div>

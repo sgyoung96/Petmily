@@ -93,25 +93,33 @@ export default {
     padding-top: 50px;
     padding-bottom: 100px;
 }
-.mbtns{
-  width:100%;
-  display:flex;
-  
+
+.mbtns {
+  width: 400px;
+  display: flex;
+  justify-content: space-between;
+  margin-top: 20px;
+  margin-bottom: 20px;
+  margin-left: auto;
+  margin-right: auto;
+ 
 }
+
 .mbtn{
   position:relative;
-  border:1.5px solid  rgb(156, 156, 39);
+  border:1px solid  #cfcfcf;
   border-radius: 20px;
-  padding:8px;
-  color: rgb(156, 156, 39);
+  padding:6px;
+  color:#7a7a7a;
   background-color: white;
-
 }
 
 .mbtn.active{
-  color: white;
+  color:  rgb(156, 156, 39);
   font-weight: bold;
-  background-color: rgb(156, 156, 39);
+  background-color: white;
+  border:0px
+ 
 }
 
 

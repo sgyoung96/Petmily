@@ -1,24 +1,29 @@
 
 <template>
+
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200"/>
 
   <!-- 쪽지 보내기 모달창(보낸사람 프로필 클릭하면) -->
-  <MessageModal :resender=resender v-if="displayDetail" @close="displayDetail=false"/>
+  
 
     <div id="messagereciever">
 
       <div class="message-list">
-        <h2>{{ loginId }}가 받은 쪽지 목록</h2>
+        
 
         <button @click="read">읽은 메일</button>
         <button @click="unread">읽지 않은 메일</button>
         <button @click="all">전체</button><br/>
-        <select v-model="select" >
-          <option value = "title">제목</option>
-          <option value = "sender">보낸이</option>
-        </select>
+        <div class="search">
+          <select v-model="select" >
+            <option value = "title">제목</option>
+            <option value = "sender">보낸이</option>
+          </select>
 
-        <input type="text" v-model="find"><button @click="findbtn">검색</button>
+
+        
+          <input type="text" v-model="find"><button @click="findbtn">검색</button>
+        </div>
       </div>
        
         
@@ -112,6 +117,7 @@
         </div>
       </div>
     </div>
+    <MessageModal :resender=resender v-if="displayDetail" @close="displayDetail=false"/>
 </template>
 
 
@@ -159,6 +165,8 @@ export default {
       
     };
   },
+
+
 
 
   computed: {
@@ -477,7 +485,7 @@ export default {
   margin-bottom: 40px;
 }
 .message{
-  width:30%;
+  width:40%;
   display: block;
   margin:auto;
   border:2px solid  rgb(244, 191, 79);
@@ -561,8 +569,10 @@ export default {
 }
 
 .page-item {
+  position:relative;
   display: inline-block;
   margin-right: 5px;
+  display: flex
 }
 
 .page-item a {
@@ -574,11 +584,54 @@ export default {
 }
 
 .page-item a:hover {
+
   background-color: #f2f2f2;
 }
 
 .page-item.active a {
+  position:relative;
   background-color: rgb(244, 191, 79);
   color: white;
+  z-index: 0;
+}
+.search{
+  margin-top:30px;
+}
+input{
+   width:250px;
+   height: 35px;
+   margin:20px;
+   border:1px solid rgb(244, 191, 79);
+   border-radius: 10px;
+}
+
+.search button{
+  background-color: rgb(244, 191, 79);
+  border-radius: 10px;
+  color:white;
+  border:0px;
+  height:35px;
+  width: 100px;
+  padding: 5px;
+  font-size: 18px;
+  font-weight: bold;
+}
+
+select{
+  width:120px;
+  height: 35px;
+  border-radius: 10px;
+
+  border:0px;
+ 
+  font-size: 18px;
+  font-weight: bold;
+}
+MessageModal{
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 99999;
 }
 </style>
