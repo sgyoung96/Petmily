@@ -27,6 +27,7 @@ import PieChart from '@/components/kaka/PieChart.vue'
 import MemEdit from '@/components/Member/MemEdit.vue'
 import FindPwd from '@/components/Member/FindPwd.vue'
 import FindId from '@/components/Member/FindId.vue'
+import ImgSl from '@/components/kaka/Imgsl.vue'
 
 
 import AddressConvert from '@/components/kaka/AddressConvert.vue' 
@@ -67,6 +68,11 @@ const routes = [
     path: '/aboutpetmily',
     name: 'AboutPetmily',
     component: AboutPetmily
+  },
+  {
+    path: '/imgsl',
+    name: 'ImgSl',
+    component: ImgSl
   },
   { 
     path: '/groups',
