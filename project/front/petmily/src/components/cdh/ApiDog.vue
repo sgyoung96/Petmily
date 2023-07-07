@@ -44,32 +44,43 @@
     </div>
 
   </div>
-  <div id="app" style="margin-top:50px;">
+  <div id="app" style="margin-top:50px; ">
     <div class="grid-container">
       <div v-for="item in items" :key="item.desertionNo" class="grid-item">
         <div class="card">
           <div>
             <img :src="item.popfile" :alt="item.careNm" @click="handleItemClick(item.desertionNo, item.careAddr)"
-              style="cursor: pointer; width:300px; height: 200px;">
+              style="cursor: pointer; width: 250px; height: 200px; ">
           </div>
-          <div class="info-item info-left" style="font-family: IBMPlexSansKR-Bold;">{{ item.kindCd }}</div>
-            <div class="info-item info-right">{{ item.happenDt }}</div>
-          <div class="item-info">
+          <div class="info-item info-left" style="font-family: IBMPlexSansKR-Bold; text-align: left;">{{ item.kindCd }}
+            <span style="padding-left: 8px" v-if="item.sexCd === 'M'"><img src="@/assets/images/boy.png" alt="수컷 이미지"></span>
+            <span style="padding-left: 8px" v-else-if="item.sexCd === 'F'"><img src="@/assets/images/girl.png" alt="암컷 이미지"></span>
+            <span style="padding-left: 8px" v-else><img src="@/assets/images/nosex.png" alt="미상 이미지"></span>
+          </div>
+          <div style="text-align: left;">
+            <img src="@/assets/images/careAddr.png" alt="보호장소 이미지">
+            <h5 style="display: inline;"><span>{{ item.noticeNo }}</span></h5>
+            <br>
+            <img src="@/assets/images/cal.png" alt="보호장소 이미지">
+            <h5 style="display: inline;"><span>{{ item.noticeSdt }} ~ {{ item.noticeEdt }}</span></h5>
+          </div>
+          <hr>
+
+          <div class="item-info" style="text-align: left;">
             <div id="orgNm">
-                {{ item.orgNm }}
-              </div>
-            
+              {{ item.orgNm }}
+            </div>
             <div id="colorCd">
               {{ item.colorCd }}
             </div>
-           
+
             <div class="item-info">
               <div id="age">
-              {{ item.age }}
-            </div>
-            <div id="weight">
-              {{ item.weight }}
-            </div>
+                {{ item.age }}
+              </div>
+              <div id="weight">
+                {{ item.weight }}
+              </div>
             </div>
           </div>
         </div>
@@ -369,7 +380,10 @@ export default {
     cursor: pointer; /* 커서 포인터로 변경 */
     border-radius: 4px; /* 모서리를 둥글게 설정 */
   }
-
+img {
+  width: 20px;
+  height: 20px;
+}
 .card {
   border-radius: 10px;
   /* 모서리를 둥글게 만듭니다 */
@@ -614,4 +628,9 @@ input[type="checkbox"] {
   cursor: pointer;
 }
 
+h5 {
+  font-family: 'IBMPlexSansKR-Bold';
+  padding-left: 10px;
+  font-size: 15px;
+}
 </style>

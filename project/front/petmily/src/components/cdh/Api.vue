@@ -103,12 +103,12 @@
     </div>
   </div>
   <div style="margin-top: 2%;">
-    <button v-on:click="previousPage" class="custom-button">이전</button>
-    <button v-for="pageNumber in displayedPages" :key="pageNumber" v-on:click="goToPage(pageNumber)"
+    <button v-on:click="previousPage(orgCd, neuter_yn)" class="custom-button">이전</button>
+    <button v-for="pageNumber in displayedPages" :key="pageNumber" v-on:click="goToPage(pageNumber, orgCd, neuter_yn)"
       class="custom-button">
       {{ pageNumber }}
     </button>
-    <button v-on:click="nextPage" class="custom-button">다음</button>
+    <button v-on:click="nextPage(orgCd, neuter_yn)" class="custom-button">다음</button>
   </div>
 </template>
 
@@ -282,20 +282,20 @@ export default {
       this.careAddr = careAddr;
       this.$router.push({ name: 'Detail', query: { desertionNo: desertionNo, careAddr: this.careAddr } });
     },
-    previousPage() {
+    previousPage(orgCd, neuter_yn) {
       if (this.pageNo > 1) {
         this.pageNo--;
-        this.fetchData();
+        this.fetchData(orgCd, neuter_yn);
       } else {
         alert("이전 페이지가 없습니다");
       }
 
     },
-    nextPage() {
+    nextPage(orgCd, neuter_yn) {
       const totalPages = Math.ceil(this.totalItems / this.pageSize);
       if (this.pageNo < totalPages && this.pageNo < 20) {
         this.pageNo++;
-        this.fetchData();
+        this.fetchData(orgCd, neuter_yn);
       }
       else {
         alert("다음 페이지가 없습니다")
@@ -303,10 +303,10 @@ export default {
 
     },
 
-    goToPage(pageNumber) {
+    goToPage(pageNumber, orgCd, neuter_yn) {
       this.pageNo = pageNumber;
       this.pageNumber = this.pageNo;
-      this.fetchData();
+      this.fetchData(orgCd, neuter_yn);
     },
 
     updateDisplayedPages() {
@@ -670,4 +670,5 @@ h5 {
   font-family: 'IBMPlexSansKR-Bold';
   padding-left: 10px;
   font-size: 15px;
-}</style>
+}
+</style>

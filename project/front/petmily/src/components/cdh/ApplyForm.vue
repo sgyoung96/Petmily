@@ -99,7 +99,7 @@
             v-model="another"></th>
       </tr>
       <tr>
-        <th style="padding-top: 5px;padding-left: 5px; background-color:#bab9b9">입양 계기</th>
+        <th style="padding-top: 5px;padding-left: 5px; background-color:#bab9b9">입양신청 계기</th>
         <th style="padding-top: 5px;padding-left: 5px;" colspan="3">
           <textarea style="border:0px; width: 100%;" v-model="reason"></textarea>
         </th>
@@ -111,7 +111,6 @@
         </th>
       </tr>
     </table>
-
     <p style="padding-top: 20px;">개인정보 취급 동의서</p>
     <div>
       <div>
@@ -249,28 +248,48 @@ export default {
       formdata.append('careNm', self.info.careNm);
       formdata.append('careAddr', self.info.careAddr);
       formdata.append('popfile', self.info.popfile);
-      if (self.agreement == 0) {
-        alert("개인정보 동의서에 동의를 해야합니다")
-        return;
+      if (self.id == null) {
+        alert("로그인을 해야합니다")
+        this.$router.push('/member');
       } else {
-        self.$axios.post('http://localhost:8082/Applyform', formdata)//비동기 요청
-          .then(function (res) {//요청 결과 받아옴. 파람 res에 결과저장됨. res.data가 백단에서 전송한 데이터
-            if (res.status == 200) {
-              if (res.data.dto != null) {
-                self.msg = '입양 신청이 완료되었습니다.';
-                alert(self.msg);
-                self.$router.go(-1);
-              } else {
-                self.msg = '신청 양식을 보낸 상태입니다';
-                alert(self.msg);
-              }
+        if (self.agreement == 0) {
+          alert("개인정보 동의서에 동의를 해야합니다")
+          return;
+        }
+        else {
+          if (self.another == '') {
+            alert("반려동물여부가 비었습니다")
+            return;
+          } else {
+          if (self.reason == '') {
+            alert("입양신청 계기가 비었습니다")
+            return;
+          }  else {
+          if (self.feeding == '') {
+            alert("앞으로의 다짐이 비었습니다")
+            return;
+          } else {
+            self.$axios.post('http://localhost:8082/Applyform', formdata)//비동기 요청
+              .then(function (res) {//요청 결과 받아옴. 파람 res에 결과저장됨. res.data가 백단에서 전송한 데이터
+                if (res.status == 200) {
+                  if (res.data.dto != null) {
+                    self.msg = '입양 신청이 완료되었습니다.';
+                    alert(self.msg);
+                    self.$router.go(-1);
+                  } else {
+                    self.msg = '신청 양식을 보낸 상태입니다';
+                    alert(self.msg);
+                  }
 
-            } else {
-              alert('에러코드:' + res.status)
-            }
-          });
-      }
+                } else {
+                  alert('에러코드:' + res.status)
+                }
+              });
+          }
+        }
+      }}}
     },
+
     setDate() {
       let year = new Date().getFullYear();
       let month = new Date().getMonth() + 1 < 10 ? "0" + (new Date().getMonth() + 1) : new Date().getMonth() + 1;
@@ -359,6 +378,7 @@ export default {
     }
   }
 }
+
 </script>
   
   <!-- Add "scoped" attribute to limit CSS to this component only -->
@@ -385,9 +405,12 @@ li {
 a {
   color: #42b983;
 }
-.applyform th, .applyform td {
-    border: 1px solid #444444;
-  }
+
+.applyform th,
+.applyform td {
+  border: 1px solid #444444;
+}
+
 #map {
   width: 300px;
   height: 300px;

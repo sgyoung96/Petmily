@@ -141,14 +141,23 @@ export default {
             formdata.append('reason', self.reason);
             formdata.append('feeding', self.feeding);
 
+            if (self.another == '') {
+            alert("반려동물여부가 비었습니다")
+            return;
+          } else {
+          if (self.reason == '') {
+            alert("입양신청 계기가 비었습니다")
+            return;
+          }  else {
+          if (self.feeding == '') {
+            alert("앞으로의 다짐이 비었습니다")
+            return;
+          } else{
             self.$axios.put(`http://localhost:8082/Applyform` , formdata, {
                     headers: {
                     'Content-Type': 'multipart/form-data'
                 }
             })
-            
-            
-            
                 .then(function (res) {
                     if (res.status == 200) {
                         self.$router.go(-1);
@@ -156,6 +165,7 @@ export default {
                         alert('에러코드 ' + res.status);
                     }
                 });
+            }}}
         },
 
 

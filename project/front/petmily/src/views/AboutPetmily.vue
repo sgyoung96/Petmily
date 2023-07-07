@@ -1,8 +1,8 @@
 <template>
   
   <div v-if="showSvg">
-    <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
-    <svg viewBox="-150 -70 1000 20" style="position: absolute; top: 0; left: 0; z-index: 9999;">
+    <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+    <svg viewBox="-150 0 1000 20" style="position: absolute; top: 0; left: 0; z-index: 9999;">
       <text>PETMILY</text>
     </svg>
   </div>
@@ -11,7 +11,7 @@
    
       <h2><span style="color: #f0cf81;"><strong>PETMILY를 소개합니다</strong></span>&nbsp;</h2>
       <img src="@/assets/images/family.jpg" alt="가족강아지 이미지" style="width: 100%; height: 500px; padding-bottom: 10px;">
-      <p>PETMILY의 의미는 반려동물(PET) + 가족(FAMILY)의 합성어로 반려동물은 가족이라는 모토를 가지고 있습니다</p>
+      <p>PETMILY의 의미는 반려동물(PET) + 가족(FAMILY)의 합성어로 반려동물은 가족이라는 의미를 가지고 있습니다</p>
       <p>PETMILY에서는 해당 모토를 유지하며 반려동물과 고객분의 행복하고 올바른 반려동물문화를 지향하고 있으며</p>
       <p>유기동물들을 구조하고 보호 및 관리하며 새로운 가족들을 찾아주고 있습니다</p>
 
@@ -24,22 +24,12 @@
       
       <h3><span style="color: #f0cf81; padding: bottom 20px;"><strong></strong></span></h3>
       <img src="@/assets/images/careplace.jpg" @click="gotogroups" alt="보호소 이미지" style="width: 600px; height: 500px; margin-left: 200px; padding-bottom: 10px;">
-      <p>언제 어디서든 치료 및 보호를 받을 수 있게 전국 보호소 및 병원을 알려드리고 있으며</p>
+      <p>언제 어디서든 치료 및 보호를 받을 수 있게 전국 보호소 및 병원을 알려드리고 있습니다</p>
       <p>저희 PETMILY에서도 고객분들과 반려동물을 위해 최선을 다할 것입니다</p>
-
-      <hr>
-      <p>더 궁금하신게 있다면 아래 연락처로 연락해주시면 성심성의껏 돕겠습니다</p>
-      <img src="@/assets/images/call.png" alt="전화기 이미지" style="width: 20px; height: 20px;">
-      <p style="display: inline; padding-left: 10px;">전화번호 : 257-pet-mily</p>
-
-      <br>
       
-      <img src="@/assets/images/email.png" alt="이메일 이미지" style="width: 20px; height: 20px;">
-      <p style="display: inline; padding-left: 10px;">이메일 : petmily@petmily.kr</p>
-
       <hr>
-
-      <div class="dog">
+      
+      <div class="dog" style="margin-left:800px; margin-top: -90px;">
     <div class="dog-body">
       <div class="dog-tail">
         <div class="dog-tail">
@@ -59,20 +49,37 @@
     </div>
     <div class="dog-torso"></div>
     <div class="dog-head">
-      <div class="dog-ears"></div>
-      <div class="dog-ear"></div>
-      <div class="dog-ear"></div>
-      <div class="dog-ear"></div>
-      <div class="dog-eyes"></div>
-      <div class="dog-eye"></div>
-      <div class="dog-eye"></div>
-      <div class="dog-muzzle"></div>
-      <div class="dog-tongue"></div>
-      <div class="dog-earline"></div>
-      <div class="dog-earliner"></div>
-      <div class="dog-earliner"></div>
+      <div class="dog-ears">
+        <div class="dog-ear"></div>
+        <div class="dog-ear"></div>
+        <div class="dog-ear"></div>
+      </div>
+      <div class="dog-eyes">
+        <div class="dog-eye"></div>
+        <div class="dog-eye"></div>
+      </div>
+      <div class="dog-muzzle">
+        <div class="dog-tongue"></div>
+      </div>
+      <div class="dog-earline">
+        <div class="dog-earliner"></div>
+        <div class="dog-earliner"></div>
+        <div class="dog-earliner"></div>
+      </div>
     </div>
   </div>
+      
+      <hr>
+      <p>더 궁금하신게 있다면 아래 연락처로 연락해주시면 성심성의껏 돕겠습니다</p>
+      <img src="@/assets/images/call.png" alt="전화기 이미지" style="width: 20px; height: 20px;">
+      <p style="display: inline; padding-left: 10px;">전화번호 : 257-pet-mily</p>
+
+      <br>
+      
+      <img src="@/assets/images/email.png" alt="이메일 이미지" style="width: 20px; height: 20px;">
+      <p style="display: inline; padding-left: 10px;">이메일 : petmily@petmily.kr</p>
+
+      
       <hr>
 
       <img src="@/assets/images/dogcat.jpg" @click="gotogroups" alt="내가 원하는 이미지" style="width: 600px; height: 500px; margin-left: 200px; padding-bottom: 10px;">
@@ -107,7 +114,7 @@ export default {
     setTimeout(() => {
       this.showSvg = false;
       this.showDiv = true;
-    }, 3000);
+    }, 6000);
   },
 methods: {
   gotoanimal() {
@@ -175,7 +182,7 @@ svg {
   height: 100%;
   text-transform: uppercase;
   animation: stroke 5s 1 alternate;
-  fill: #f0cf81;;
+  fill: #f0cf81;
 }
 @keyframes stroke {
   0%   {
@@ -186,11 +193,11 @@ svg {
     stroke-width: 2;
   }
   70%  {
-    fill: #f0cf81;
+    fill: white;
     stroke: #fae7ba;
   }
   80%  {
-    fill: #f0cf81;
+    fill: white;
     stroke: #fae7ba;
   }
   100% {
@@ -228,14 +235,16 @@ html, body {
   z-index: 1;
 }
 
-.dog:before {
+  .dog:before {
+  margin-left:-50px;
+  margin-top: -20px;
   content: '';
   display: block;
   position: absolute;
-  width: 100%;
-  height: 100%;
+  width: 200%;
+  height: 200%;
   border-radius: 50%;
-  background: rgba(0, 0, 0, 0.03);
+  background: rgba(42, 128, 157, 0.5);
   transform: translateY(-30%) scale(1.5);
 }
 
@@ -257,20 +266,6 @@ html, body {
   animation: dog-body 200ms ease-in-out infinite alternate;
 }
 
-.dog-body:before {
-  content: '';
-  position: absolute;
-  bottom: 90%;
-  right: 50%;
-  width: 60%;
-  height: 70%;
-  background: rgba(255, 255, 255, 0.4);
-  border-top-left-radius: 100%;
-  border-bottom-left-radius: 10%;
-  border-top-right-radius: 10%;
-  transform-origin: right bottom;
-  animation: dog-tail-blur 200ms 200ms / 6 ease-in-out infinite alternate both;
-}
 
 @keyframes dog-tail-blur {
   0% {
@@ -300,7 +295,7 @@ html, body {
   border-top-right-radius: 200px;
   border-top-left-radius: 200px;
   box-shadow: inset -3px -4px 15px 0 #eaebec;
-  animation: dog-head 200ms 1800ms cubic-bezier(0.11, 0.79, 0, 0.99) infinite;
+  animation: dog-head 2000ms 1800ms cubic-bezier(0.11, 0.79, 0, 0.99) infinite;
 }
 
 @keyframes dog-head {
@@ -346,7 +341,7 @@ html, body {
   width: 40px;
   height: 40px;
   border-radius: 40px;
-  background: orange;
+  background: white;
   position: absolute;
   top: -10px;
   left: -10px;
@@ -416,13 +411,7 @@ html, body {
   left: 43%;
 }
 
-.dog-ear {
-  z-index: 100;
-  bottom: -20px;
-  height: 40px;
-  width: 50px;
-  background: rgba(135, 206, 235, 0.8);
-}
+
 
 .dog-ear:first-child {
   right: 90%;
@@ -432,13 +421,6 @@ html, body {
   box-shadow: inset 1px 1px 5px 0 #8DAFAF;
 }
 
-.dog-ear:nth-child(2) {
-  width: 13px;
-  height: 5px;
-  bottom: 5px;
-  background-color: rgba(128, 128, 128, 0.5);
-  z-index: 1300;
-}
 
 .dog-ear:last-child {
   border-radius: 30%;
@@ -512,28 +494,5 @@ html, body {
   z-index: 2;
 }
 
-.dog-earline:before {
-  content: '';
-  display: block;
-  width: 40px;
-  height: 40px;
-  border-radius: 40px;
-  background: orange;
-  position: absolute;
-  top: -10px;
-  left: 0px;
-  z-index: 0;
-  box-shadow: inset -1px -1px 5px 0 #CB8534;
-  transform: rotate(-45deg);
-}
 
-.dog-earliner {
-  width: 10px;
-  height: 10px;
-  background: green;
-  left: 10px;
-  top: -12px;
-  z-index: 1;
-  border-radius: 50%;
-} 
 </style>
