@@ -24,7 +24,7 @@
 
         <div class="box-mypage">
           <img v-if="this.notify == false" class="ico-bell" src="./assets/bell.png" />
-          <img v-if="this.notify == true" class="ico-bell" src="./assets/bell_notify.png" @click="openNotifyBox()"/>
+          <img v-if="this.notify == true" class="ico-bell bell-notify" src="./assets/bell_notify.png" @click="openNotifyBox()"/>
           <img @click="goMyPage()" class="ico-mypage" src="./assets/profile-user.png" />
         </div>
       </div>
@@ -542,6 +542,10 @@ li:hover {
   transform: translateX(-50%) translateY(-25%);
   border: 1px solid rgb(244, 191, 79);
   border-radius: 30px;
+}
+
+.bell-notify {
+  cursor: pointer;
 }
 
 </style>
