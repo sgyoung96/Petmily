@@ -343,8 +343,13 @@ export default {
         },
         
     sendData(value) {
-      console.log(value);
-      this.chkPwResult = value;
+      if (sessionStorage.getItem('loginFlag') == 'kakao') {
+        this.chkPwResult = true;
+      } else {
+        console.log(value);
+        this.chkPwResult = value;
+      }
+
       if (this.chkPwResult == true) {
         //alert('비밀번호 확인');
         document.getElementById('intro').style = 'display: none;';

@@ -132,6 +132,7 @@ export default {
   border-radius: 20px;
   padding-top: 10px;
   margin-top: 50px;
+  cursor: pointer;
 }
 
 .span-exit {

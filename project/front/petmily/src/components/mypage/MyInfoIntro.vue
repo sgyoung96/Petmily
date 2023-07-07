@@ -8,6 +8,7 @@
             <img class="ico-enter" @click="chkPw()" src="../../assets/ico-enter.png" /><br>
             
             <label @click="chkPw()" class="lbl-btn"><span class="span-btn">정보수정</span></label>
+            <p class="txt-kakao">카카오 로그인 회원은 정보수정 버튼을 눌러주세요.</p>
         </div>
     </div>
   </div>
@@ -30,20 +31,27 @@ export default {
   },
   methods: {
     chkPw() {
-        //this.emitData();
         this.getMemInfo();
     },
     getMemInfo() {
-        const self = this;
-        this.$axios.get('http://localhost:8082/members/' + this.id)
-        .then(function(res){
-            if(res.status == 200){
-                let dto = res.data.dto
-                if(dto != null){
-                    self.chkpw = dto.pwd;
-                    if (self.chkpw == self.pw) {
-                        self.flag = true;
-                        self.emitData();
+        if (sessionStorage.getItem('loginFlag') == 'kakao') {
+            this.emitData();
+        } else {
+            const self = this;
+            this.$axios.get('http://localhost:8082/members/' + this.id)
+            .then(function(res){
+                if(res.status == 200){
+                    let dto = res.data.dto
+                    if(dto != null){
+                        self.chkpw = dto.pwd;
+                        if (self.chkpw == self.pw) {
+                            self.flag = true;
+                            self.emitData();
+                        } else {
+                            self.flag = false;
+                            self.pw = '';
+                            self.emitData();
+                        }
                     } else {
                         self.flag = false;
                         self.pw = '';
@@ -52,15 +60,12 @@ export default {
                 } else {
                     self.flag = false;
                     self.pw = '';
+                    console.log('에러코드 :' + res.status)
                     self.emitData();
                 }
-            } else {
-                self.flag = false;
-                self.pw = '';
-                console.log('에러코드 :' + res.status)
-                self.emitData();
-            }
-        });
+            });
+        }
+        
     },
     emitData() {
         this.$emit('childEvent', this.flag);
@@ -142,5 +147,11 @@ export default {
     font-family: 'IBMPlexSansKR-SemiBold';
     font-size: 15px;
     color: white;
+}
+
+.txt-kakao {
+    margin-top: 5px;
+    font-family: 'IBMPlexSansKR-Light';
+    font-size: 8px;
 }
 </style>

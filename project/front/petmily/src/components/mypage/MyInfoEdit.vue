@@ -130,9 +130,9 @@
                                 <td>
                                     <div class="box-password">
                                         <p>비밀번호 변경</p>
-                                        <input class="ipt-pw" v-model="pw" type="password" placeholder="새 비밀번호" /><br>
+                                        <input id="pwdcheck" class="ipt-pw" v-model="pw" type="password" placeholder="새 비밀번호" :readonly="isReadonly" /><br>
                                         <label id="warn_pw" class ="ipt-error" >영문, 숫자, 특수문자 8~16문자</label><br>  
-                                        <input id="newpwdcheck" v-model="new_pw" class="ipt-pw" type="password" placeholder="새 비밀번호 확인" /><br>
+                                        <input id="newpwdcheck" v-model="new_pw" class="ipt-pw" type="password" placeholder="새 비밀번호 확인" :readonly="isReadonly" /><br>
                                         <label id="warn_pw_chk" class ="ipt-error" >비밀번호가 일치하지 않아요</label><br> 
                                     </div>
                                 </td>
@@ -178,7 +178,9 @@ export default {
 
 
         isPwdCheck: true,
-        isPwdCheckEqual: true
+        isPwdCheckEqual: true,
+
+        isReadonly: false,
     }
   },
   watch:{
@@ -228,6 +230,12 @@ export default {
         console.log(this.name);
         document.getElementById('warn_pw').style = 'display: none;';
         document.getElementById('warn_pw_chk').style = 'display: none;';
+
+        if (sessionStorage.getItem('loginFlag') == 'kakao') {
+            this.isReadonly = true;
+        } else {
+            this.isReadonly = false;
+        }
     },
     changeProfileImg() {
         const ipt_file_upload = document.getElementById('profile');
