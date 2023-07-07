@@ -1,13 +1,14 @@
 <template>
   <div>
     <div class="container">
+      <div class="msgbox_area">
         <h1>message box</h1>
         
-        <div>
+        <div class="mbtns">
          
-         <button class="mbtn" @click="reciever">받은 쪽지<span v-if="cnt !== 0"  class="badge">{{cnt}}</span></button>
-         <button class="mbtn" @click="sender">보낸쪽지</button>
-         <button class="mbtn" @click="send">쪽지보내기</button>
+         <button class="mbtn" :class="{ active: showMessageReciever }"  @click="reciever">받은 쪽지<span v-if="cnt !== 0"  class="badge">{{cnt}}</span></button>
+         <button class="mbtn" :class="{ active: showMessageSender }"  @click="sender">보낸쪽지</button>
+         <button class="mbtn" :class="{ active: showMessageWrite }"  @click="send">쪽지보내기</button>
         </div>
         <div v-if="showMessageReciever">
          <MessageReciever @new-cnt ="newcnt" id="reciever"/> 
@@ -20,7 +21,7 @@
          <div v-if="showMessageWrite">
           <MessageWrite id="send"/> 
         </div>
-
+      </div>
     </div>
   </div>
 </template>
@@ -87,11 +88,16 @@ export default {
 </script>
   
 <style scoped>
+
 .container {
     padding-top: 50px;
     padding-bottom: 100px;
 }
-
+.mbtns{
+  width:100%;
+  display:flex;
+  
+}
 .mbtn{
   position:relative;
   border:1.5px solid  rgb(156, 156, 39);
@@ -101,6 +107,13 @@ export default {
   background-color: white;
 
 }
+
+.mbtn.active{
+  color: white;
+  font-weight: bold;
+  background-color: rgb(156, 156, 39);
+}
+
 
 .badge{
   position:absolute;

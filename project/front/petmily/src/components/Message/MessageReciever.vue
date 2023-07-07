@@ -76,20 +76,14 @@
                 <span aria-hidden="true">&laquo;</span>
               </a>
             </li>
-            <!-- <li class="page-item" v-for="pageNumber in totalPages" :key="pageNumber"
-              :class="{ active: pageNumber === pageNum }">
-              <a class="page-link" href="#" @click="goToPage(pageNumber)">{{ pageNumber }}</a>
-            </li> -->
+         
 
             <li class="page-item" v-for="blocks in blockList[blocknum]" :key="blocks.num"
               :class="{ active: blocks === pageNum }">
               <a class="page-link" href="#" @click="goToPage(blocks)">{{ blocks }}</a>
             </li>
 
-             <!-- <li class="page-item" v-for="(blocks, index) in blockList[blocknum]" :key="index"
-              :class="{ active: index === 0  }">
-              <a class="page-link" href="#" @click="goToPage(blocks)">{{ blocks }}</a>
-            </li> -->
+            
 
             <li class="page-item">
               <a class="page-link" href="#" aria-label="Next" @click="nextPage">
@@ -98,11 +92,6 @@
             </li>
           </ul>
         </div>
-
-        <div class="message" v-for="blocks in blockList[1] " :key="blocks.num">
-          {{blocks}}
-        </div>
-
 
 
       <!-- 쪽지 내용 읽기 모달창 -->
@@ -168,16 +157,10 @@ export default {
       cnt:0
       
       
-     
-      
-      
-      
     };
   },
 
-// mounted(){
-// this.$emit('new-cnt',self.cnt)
-// },
+
   computed: {
       totalPages() {
         return Math.ceil(this.list.length / this.pageSize);
@@ -452,7 +435,7 @@ export default {
   cursor: pointer;
 }
 
- .box-profile {
+.box-profile {
   display: block;
   width: 35px;
   height: 35px; 
@@ -575,5 +558,27 @@ export default {
   margin-bottom:10px;
   border:0px;
   border-radius: 10px;
+}
+
+.page-item {
+  display: inline-block;
+  margin-right: 5px;
+}
+
+.page-item a {
+  color: black;
+  padding: 5px 10px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  text-decoration: none;
+}
+
+.page-item a:hover {
+  background-color: #f2f2f2;
+}
+
+.page-item.active a {
+  background-color: rgb(244, 191, 79);
+  color: white;
 }
 </style>
