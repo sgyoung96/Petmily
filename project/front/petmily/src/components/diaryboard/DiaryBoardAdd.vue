@@ -14,7 +14,8 @@
       ※ 음란물, 차별, 비하, 혐오 및 초상권, 저작권 침해 게시물은 민, 형사상의 책임을 질 수 있습니다.<br/>
     </div>
       <div class="box-content">
-        <textarea id="content" rows="25" cols="130" v-model="content" style="resize: none;" placeholder="내용을 입력해 주세요."></textarea>
+        <textarea id="content" v-model="content" rows="25" cols="130" style="resize: none;">
+        </textarea>
       </div>
       <tr>
         <th>이미지1</th>
@@ -73,7 +74,9 @@ export default {
     return {
       id: sessionStorage.getItem('loginId'),
       title: '',
-      content: '',
+      content: '이름:\n\n' +
+              '나이:\n\n' +
+              '입양일수:\n',
       likecnt: 0
     }
   },

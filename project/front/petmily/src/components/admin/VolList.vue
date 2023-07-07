@@ -6,7 +6,10 @@
 
         <div class="list-container">
           <p><label class="section01">SECTION 1</label></p>
-          <p><label class="section01-title"><u><span>봉사모집게시판현황</span></u></label></p>
+          <p><label class="section01-title"><u>
+            <span>봉사모집게시판현황</span>
+            <button @click="$router.push('/volboardadd')" style="font-size: 17px; text-decoration:none; margin-left:800px;">글등록</button>
+            </u></label></p>
           <div class="section01-content">
             <div class="data-header">
               <table>
@@ -38,12 +41,13 @@
                         v-if="calculateDateDifference(vboard.deadline).difference < 0">모집마감</span>
                       <span class="badge text-bg-primary" style="font-size: 17px;" v-else>마감 D-{{
                         calculateDateDifference(vboard.deadline).days }}</span>&nbsp;</label></td>
-                  <td colspan="1"><label><span>{{ vboard.place }}</span></label></td>
-                  <td colspan="1"><label><span>({{ vboard.count }} / {{ vboard.vol_number }})</span></label></td>
-                  <td colspan="2"><label><span>{{ vboard.title }}</span></label></td>
-                  <td colspan="3"><label><span>{{ vboard.address }}</span></label></td>
-                  <td colspan="2"><label><span>{{ formatDate(vboard.vol_date) }}</span></label></td>
-                  <td colspan="1"><label><span>{{ formatDate(vboard.deadline) }}까지</span></label></td>
+                  <td colspan="1"><label><span style=" cursor: pointer;">{{ vboard.place }}</span></label></td>
+                  <td colspan="1"><label><span style=" cursor: pointer;">({{ vboard.count }} / {{ vboard.vol_number }})</span></label></td>
+                  <td colspan="2"><label><span style=" cursor: pointer;">{{ vboard.title }}</span></label></td>
+                  <td colspan="3"><label><span style=" cursor: pointer;">{{ vboard.address }}</span></label></td>
+                  <td colspan="2"><label><span style=" cursor: pointer;">{{ formatDate(vboard.vol_date) }}</span></label></td>
+                  <td colspan="1"><label><span style=" cursor: pointer;">{{ formatDate(vboard.deadline) }}까지</span></label></td>
+                  <button v-if="this.loginId==='admin'" @click="del(dto.num)" style="font-size: 17px;">삭제</button>
                 </tr>
               </table>
             </div>
@@ -52,9 +56,6 @@
       </div>
     </div>
   </div>
-      <div>
-        <router-link to="/volboardadd">봉사게시판 작성</router-link>
-      </div>
 </template>
 
 <script>
@@ -85,6 +86,22 @@ export default {
     }
   },
   methods: {
+    del: function(num) {
+  const self = this;
+  self.$axios.delete('http://localhost:8082/volboard/' + num)
+    .then(function (res) {
+      if(res.status == 200){
+        if(res.data.flag){
+          alert('삭제가 정상적으로 되었습니다');
+          self.$router.push({ name: 'VolBoardHome' });
+        }else{
+          alert('삭제 처리 에러');
+        }
+      }else{
+        alert('에러코드: '+ res.status);
+      }
+    })
+},
     search() {
       const self = this
       let address = self.searchKeyword
@@ -181,6 +198,18 @@ export default {
   height: auto;
 }
 
+button{
+  font-family: 'IBMPlexSansKR-Bold';
+  font-size: 10px;
+  text-align: center;
+  vertical-align: center;
+  width: 80px;
+  height: 30px;
+  background: rgb(244, 191, 79);
+  color: white;
+  border-radius: 10px;
+  border:none;
+}
 .section01 {
   font-family: 'IBMPlexSansKR-Bold';
   font-size: 15px;

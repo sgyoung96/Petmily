@@ -7,7 +7,7 @@
         &nbsp;<span style="color:rgb(244, 191, 79);">VOLUNTEER</span></strong></h4>
   </div>
   <div style="padding-left: 150px;padding-right:150px">
-    <div>
+    <div class="search-box">
       <input type="text" @keyup.enter="search()" v-model="searchKeyword" placeholder="주소를 입력해주세요">
       <button v-on:click="search()">검색</button>
     </div>
@@ -154,6 +154,79 @@ export default {
 </script>
 
 <style scoped>
+.pagination {
+  display: inline-block;
+  margin-top: 20px;
+  margin-bottom: 20px;
+}
+
+.page-item {
+  display: inline-block;
+  margin-right: 5px;
+}
+
+.page-item a {
+  color: black;
+  padding: 5px 10px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  text-decoration: none;
+}
+
+.page-item a:hover {
+  background-color: #f2f2f2;
+}
+
+.page-item.active a {
+  background-color: rgb(244, 191, 79);
+  color: white;
+}
+.search-box {
+  margin-bottom: 30px;
+  text-align: center;
+}
+
+.search-box input[type="text"] {
+  width: 300px;
+  height: 30px;
+  padding: 5px;
+  font-size: 14px;
+  border: 1px solid #ccc;
+  border-radius: 10px;
+}
+
+.search-box button {
+  width: 80px;
+  height: 30px;
+  color: white;
+  border: none;
+  border-radius: 10px;
+  background-color: rgb(244, 191, 79);
+  font-family: 'IBMPlexSansKR-Bold';
+  font-size: 15px;
+  margin-left: 5px;
+}
+
+.search-box button:hover {
+  background-color: rgb(235, 156, 39);
+  cursor: pointer;
+}
+button{
+  width: 100px;
+    color: white;
+    height: 30px;
+    border: 1px solid rgb(244, 191, 79);
+    border-radius: 20px;
+    background-color: rgb(244, 191, 79);
+    font-family: 'IBMPlexSansKR-Bold';
+    font-size: 15px;
+    padding-top: 2px;
+    margin-right: 5px;
+}
+button:hover {
+  background-color: rgb(235, 156, 39);
+  cursor: pointer;
+}
 .v-title {
   margin-top: 120px;
   margin-bottom: 120px;
