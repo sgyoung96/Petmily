@@ -1,9 +1,14 @@
 <template>
+  
+  <div v-if="showSvg">
+    <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+    <svg viewBox="-150 -70 1000 20" style="position: absolute; top: 0; left: 0; z-index: 9999;">
+      <text>PETMILY</text>
+    </svg>
+  </div>
+  <div v-if="showDiv">
   <div class="col-8" style="margin-left: 250px; text-align: left; margin-top: 30px">
-    <br>
-    <svg viewBox="0 0 400 400" style="position: absolute; top: 0; left: 0; z-index: 9999; margin-top:-430px;  margin-left:900px ">
-    <text>PETMILY</text>
-  </svg>
+   
       <h2><span style="color: #f0cf81;"><strong>PETMILY를 소개합니다</strong></span>&nbsp;</h2>
       <img src="@/assets/images/family.jpg" alt="가족강아지 이미지" style="width: 100%; height: 500px; padding-bottom: 10px;">
       <p>PETMILY의 의미는 반려동물(PET) + 가족(FAMILY)의 합성어로 반려동물은 가족이라는 모토를 가지고 있습니다</p>
@@ -34,6 +39,42 @@
 
       <hr>
 
+      <div class="dog">
+    <div class="dog-body">
+      <div class="dog-tail">
+        <div class="dog-tail">
+          <div class="dog-tail">
+            <div class="dog-tail">
+              <div class="dog-tail">
+                <div class="dog-tail">
+                  <div class="dog-tail">
+                    <div class="dog-tail"></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="dog-torso"></div>
+    <div class="dog-head">
+      <div class="dog-ears"></div>
+      <div class="dog-ear"></div>
+      <div class="dog-ear"></div>
+      <div class="dog-ear"></div>
+      <div class="dog-eyes"></div>
+      <div class="dog-eye"></div>
+      <div class="dog-eye"></div>
+      <div class="dog-muzzle"></div>
+      <div class="dog-tongue"></div>
+      <div class="dog-earline"></div>
+      <div class="dog-earliner"></div>
+      <div class="dog-earliner"></div>
+    </div>
+  </div>
+      <hr>
+
       <img src="@/assets/images/dogcat.jpg" @click="gotogroups" alt="내가 원하는 이미지" style="width: 600px; height: 500px; margin-left: 200px; padding-bottom: 10px;">
       <p>PETMILY는 여러분의 행복한 반려생활을 언제나 응원합니다</p>
       <hr>
@@ -49,13 +90,25 @@
       <br>
 
       
-
+    </div>
   </div>
 </template>
 
 <script>
 
 export default {
+  data() {
+    return {
+      showSvg: true,
+      showDiv: false
+    };
+  },
+  mounted() {
+    setTimeout(() => {
+      this.showSvg = false;
+      this.showDiv = true;
+    }, 3000);
+  },
 methods: {
   gotoanimal() {
     window.location.href = 'https://www.data.go.kr/data/15098931/openapi.do#tab_layer_prcuse_exam';
@@ -116,7 +169,7 @@ body {
 }
 svg {
   font-family: 'Tmon';
-  font-size: 20px;
+  font-size:150px;
   position: absolute;
   width: 100%;
   height: 100%;
@@ -133,19 +186,354 @@ svg {
     stroke-width: 2;
   }
   70%  {
-    fill: white;
+    fill: #f0cf81;
     stroke: #fae7ba;
   }
   80%  {
-    fill: white;
+    fill: #f0cf81;
     stroke: #fae7ba;
   }
   100% {
     stroke-dashoffset: -25%;
     stroke-dasharray: 50% 0;
-    fill: white;
+    fill: #f0cf81;
     stroke: #fae7ba;
     stroke-width: 0;
   }
 }
+
+body {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+html, body {
+  background: #b7e3e4;
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+*, *:before, *:after {
+  box-sizing: border-box;
+  position: relative;
+}
+
+.dog {
+  width: 100px;
+  height: 100px;
+  z-index: 1;
+}
+
+.dog:before {
+  content: '';
+  display: block;
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  background: rgba(0, 0, 0, 0.03);
+  transform: translateY(-30%) scale(1.5);
+}
+
+.dog * {
+  position: absolute;
+}
+
+.dog-body, .dog-head, .dog-torso {
+  border-radius: 50%;
+  background: white;
+  position: absolute;
+  width: 100%;
+  height: 100%;
+}
+
+.dog-body {
+  top: -50%;
+  box-shadow: inset 0 -15px 0 0 #eaebec;
+  animation: dog-body 200ms ease-in-out infinite alternate;
+}
+
+.dog-body:before {
+  content: '';
+  position: absolute;
+  bottom: 90%;
+  right: 50%;
+  width: 60%;
+  height: 70%;
+  background: rgba(255, 255, 255, 0.4);
+  border-top-left-radius: 100%;
+  border-bottom-left-radius: 10%;
+  border-top-right-radius: 10%;
+  transform-origin: right bottom;
+  animation: dog-tail-blur 200ms 200ms / 6 ease-in-out infinite alternate both;
+}
+
+@keyframes dog-tail-blur {
+  0% {
+    transform: rotate(0);
+    opacity: 0;
+  }
+  50% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+    transform: rotate(90deg);
+  }
+}
+
+@keyframes dog-body {
+  from {
+    transform: translateX(-10%);
+  }
+  to {
+    transform: translateX(10%);
+  }
+}
+
+.dog-head {
+  border-radius: 80px;
+  border-top-right-radius: 200px;
+  border-top-left-radius: 200px;
+  box-shadow: inset -3px -4px 15px 0 #eaebec;
+  animation: dog-head 200ms 1800ms cubic-bezier(0.11, 0.79, 0, 0.99) infinite;
+}
+
+@keyframes dog-head {
+  0% {
+    transform: rotate(45deg);
+  }
+  33% {
+    transform: rotate(-45deg);
+  }
+  66% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(45deg);
+  }
+}
+
+.dog-torso {
+  top: -20%;
+  box-shadow: inset 0 -15px 0 0 #eaebec;
+  animation: dog-torso 200ms ease-in-out infinite alternate-reverse;
+}
+
+@keyframes dog-torso {
+  0% {
+    transform: translateX(-5%);
+  }
+  100% {
+    transform: translateX(5%);
+  }
+}
+
+.dog-eyes {
+  width: 60%;
+  top: 55%;
+  left: 20%;
+  z-index: 1;
+}
+
+.dog-eyes:before {
+  content: '';
+  display: block;
+  width: 40px;
+  height: 40px;
+  border-radius: 40px;
+  background: orange;
+  position: absolute;
+  top: -10px;
+  left: -10px;
+  z-index: 0;
+  border: 4px solid white;
+  border-left-width: 0;
+  border-top-width: 0;
+  border-bottom-width: 0;
+  transform: rotate(-45deg);
+}
+
+.dog-eye {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: black;
+  z-index: 1;
+}
+
+.dog-eye:first-child {
+  left: 0;
+}
+
+.dog-eye:last-child {
+  right: 0;
+}
+
+.dog-muzzle {
+  width: 60%;
+  left: 20%;
+  height: 50%;
+  border-bottom-left-radius: 100%;
+  border-bottom-right-radius: 100%;
+  bottom: -15%;
+  background: white;
+}
+
+.dog-muzzle:before, .dog-muzzle:after {
+  content: '';
+  display: block;
+  position: absolute;
+}
+
+.dog-muzzle:before {
+  width: 6px;
+  height: 20px;
+ left: calc(50% - 3px);
+  bottom: 0;
+  background: #eaebec;
+}
+
+.dog-muzzle:after {
+  background: black;
+  width: 20px;
+  height: 15px;
+  left: calc(50% - 10px);
+  bottom: 12px;
+  border-bottom-left-radius: 60% 60%;
+  border-bottom-right-radius: 60% 60%;
+  border-top-left-radius: 50% 40%;
+  border-top-right-radius: 50% 40%;
+}
+
+.dog-ears {
+  width: 40%;
+  top: 65%;
+  left: 43%;
+}
+
+.dog-ear {
+  z-index: 100;
+  bottom: -20px;
+  height: 40px;
+  width: 50px;
+  background: rgba(135, 206, 235, 0.8);
+}
+
+.dog-ear:first-child {
+  right: 90%;
+  border-radius: 30%;
+  border-bottom-left-radius: 50%;
+  border-bottom-right-radius: 50%;
+  box-shadow: inset 1px 1px 5px 0 #8DAFAF;
+}
+
+.dog-ear:nth-child(2) {
+  width: 13px;
+  height: 5px;
+  bottom: 5px;
+  background-color: rgba(128, 128, 128, 0.5);
+  z-index: 1300;
+}
+
+.dog-ear:last-child {
+  border-radius: 30%;
+  border-bottom-left-radius: 50%;
+  border-bottom-right-radius: 50%;
+  box-shadow: inset -1px 1px 5px 0 #8DAFAF;
+  left: 20%;
+}
+
+.dog-tongue {
+  width: 40%;
+  height: 100%;
+  left: calc(50% - 20px);
+  z-index: -1;
+  transform-origin: center top;
+}
+
+.dog-tongue:before {
+  content: '';
+  position: absolute;
+  left: 8px;
+  display: block;
+  width: 100%;
+  height: 100%;
+  border-radius: 40px;
+  background: #fd3163;
+  animation: dog-tongue-inner 200ms/2 ease-in-out infinite alternate;
+}
+
+@keyframes dog-tongue-inner {
+  from {
+    transform: translateY(5%);
+  }
+  to {
+    transform: translateY(22%);
+  }
+}
+
+.dog-tail {
+  width: 17px;
+  height: 18.7px;
+  background: white;
+  bottom: 40%;
+  border-radius: 8.5px;
+  left: calc(50% - 8.5px);
+  transform-origin: center bottom;
+  animation: dog-tail-segment 200ms ease-in-out infinite alternate;
+}
+
+.dog-tail .dog-tail {
+  animation: none;
+}
+
+@keyframes dog-tail-segment {
+  0% {
+    transform: rotate(-10deg);
+  }
+  100% {
+    transform: rotate(10deg);
+  }
+}
+
+.dog-body > .dog-tail {
+  bottom: 90%;
+}
+
+.dog-earline {
+  width: 10%;
+  top: 5%;
+  left: 20%;
+  z-index: 2;
+}
+
+.dog-earline:before {
+  content: '';
+  display: block;
+  width: 40px;
+  height: 40px;
+  border-radius: 40px;
+  background: orange;
+  position: absolute;
+  top: -10px;
+  left: 0px;
+  z-index: 0;
+  box-shadow: inset -1px -1px 5px 0 #CB8534;
+  transform: rotate(-45deg);
+}
+
+.dog-earliner {
+  width: 10px;
+  height: 10px;
+  background: green;
+  left: 10px;
+  top: -12px;
+  z-index: 1;
+  border-radius: 50%;
+} 
 </style>

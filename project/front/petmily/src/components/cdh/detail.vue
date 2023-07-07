@@ -1,5 +1,5 @@
 <template>
-  <div id="DetailsItem" style="background-color:#white;">
+  <div id="DetailsItem" style="background-color:#e5e7eb;">
     <div>
       <div class="container text-center">
         <div class="row" v-for="item in filteredItems" :key="item.desertionNo">
@@ -13,7 +13,7 @@
           <div class="col-1">
           </div>
           <div class="col-10"
-            style="border: solid #e5e7eb; border-radius: 20px; margin-top: 50px; position: relative; margin-left: 110px; text-align: left; background-color:white;">
+            style="border: solid #e5e7eb; border-radius: 20px; margin-top: 50px; position: relative; margin-left: 110px; text-align: left; background-color:#e3f2fd;">
             <h4>유기동물정보</h4>
             <div style="display: flex;">
               <div style="flex: 1;">
