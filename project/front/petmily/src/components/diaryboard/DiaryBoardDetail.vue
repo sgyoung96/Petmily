@@ -5,7 +5,6 @@
       <h4 style="text-align: center;"><strong><span style="color:rgb(156, 156, 39)">PETMILY</span>
           &nbsp;<span style="color:rgb(244, 191, 79);">DIARY</span></strong></h4>
     </div>
-    <!-- <img class="m-img" src="../../assets/images/dboardpic.png"> -->
     <div class="d-all">
       <div class="box-title" v-if="dto.id">
         <span style="font-size: x-large; font-family:'Single Day', cursive;">{{ dto.title }}</span>
@@ -14,7 +13,7 @@
       <img class="box-img" :src="'http://localhost:8082/dboard/imgs/' + dto.num + '/1'">
       <img class="box-img" :src="'http://localhost:8082/dboard/imgs/' + dto.num + '/2'">
       <div class="box-content">
-        {{ dto.content }}
+        <div v-if="dto.content" v-html="convertNewlines(dto.content)"></div>
       </div>
       
       <div class="likebnt" @click="likebtn(dto.num)">
@@ -77,7 +76,7 @@
             <div style="width:900px">
               <span>{{ comment.id.id }}</span>&nbsp;<span style="font-size: small; color:grey">{{
                 formatDate(comment.w_date) }}</span><br />
-              <div v-if="!comment.editMode">{{ comment.content }}</div>
+              <div v-if="!comment.editMode"><div v-if="dto.content" v-html="convertNewlines(comment.content)"></div></div>
               <div v-if="comment.editMode" class="c-editForm">
                 <textarea style="width:900px; resize: none;" v-model="comment.editContent"
                   :cols="comment.editContent.length"></textarea>
@@ -287,6 +286,9 @@ export default {
     this.commentlist();
   },
   methods: {
+    convertNewlines(text) {
+    return text.replace(/\n/g, '<br>');
+  },
     editcancle() {
       this.showModal = false;
     },

@@ -14,7 +14,7 @@
         </div>
         <div class="form-group">
           <label for="volboard-content">내용</label>
-          <input type="textarea" class="form-control" v-model="content" required>
+          <textarea class="form-control" v-model="content" required></textarea>
         </div>
         <div class="form-group">
           <label for="volboard-count">모집인원</label>
