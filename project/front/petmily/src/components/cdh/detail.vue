@@ -13,7 +13,7 @@
           <div class="col-1">
           </div>
           <div class="col-10"
-            style="border: solid #e5e7eb; border-radius: 20px; margin-top: 50px; position: relative; margin-left: 110px; text-align: left; background-color:#e3f2fd;">
+            style="border: solid #e5e7eb; border-radius: 20px; margin-top: 50px; position: relative; margin-left: 110px; text-align: left; background-color:white;">
             <h4>유기동물정보</h4>
             <div style="display: flex;">
               <div style="flex: 1;">
@@ -106,7 +106,7 @@
             </div>
             <div id="map"></div>
           </div>
-          <div class="box-form"> <!-- 입양신청양식으로 이동 -->
+          <div class="box-form" style="margin-top:10px; margin-bottom:10px"> <!-- 입양신청양식으로 이동 -->
             <span @click="apply()" class="txt-form">입양 신청하기</span>
           </div>
       </div>
