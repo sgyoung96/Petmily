@@ -70,7 +70,7 @@
 
     <br>
 
-    <NotifyBox isBedgeClicked="1" id="notify_box" v-if="isNotifyBoxOpen" @childEvent="goAlertBox" @click="closeNotifyBox()" />
+    <NotifyBox isBedgeClicked="1" id="notify_box" v-if="isNotifyBoxOpen" @childEvent="chkIsClicked" @click="closeNotifyBox()" />
 
     <!-- 이곳에 라우터로 설정한 화면이 로드됨 -->
     <router-view/>
@@ -119,14 +119,21 @@ export default {
       cnt:0,
       cntchecktf:true,
       notifyData: [],
-      notify: '0',
+      notify: false,
       isNotifyBoxOpen: false,
       isClickNotifyBoxOpen: false,
+      emit: '',
+      isclicked: false,
+      childNumList: [],
     }
+  },
+  beforeMount: function() {
+    this.notifyPolling();
   },
   created:function(){ // 이 컴포넌트가 시작될때 실행되는 함수
     if (sessionStorage.getItem('loginId') != null) {
       this.loginId = sessionStorage.getItem('loginId');
+      
 
       if (sessionStorage.getItem('loginFlag') == 'kakao') {
         const self = this;
@@ -141,12 +148,26 @@ export default {
     }
   },
   mounted: function() {
-    this.notifyPolling();
+    //this.notifyPolling();
   },
   beforeUnmount: function() {
     clearInterval(this.notifyData);
   },
   methods:{
+    async emitData() {
+      const self = this;
+      self.stopPolling();
+      if (self.childNumList.length > 0) {
+        for (let i = 0; i < self.childNumList.length; i++) {
+          try {
+            await self.$axios.post('http://localhost:8082/notify/read/' + self.childNumList[i]);
+            console.log(i);
+          } catch (error) {
+            console.log(error);
+          }
+        }
+      } 
+    },
     notifyPolling() { // 알림 뱃지 실시간 확인
       this.notifyData = setInterval(() => {
         // 3초마다 한번씩 알림 테이블의 데이터 확인
@@ -154,17 +175,27 @@ export default {
           const self = this;
           self.$axios.get('http://localhost:8082/notify/new/' + this.loginId)
           .then (function(rs) {
-            //console.log(rs); //rs.data.list.is_clicked
             self.notifyData = rs.data.list;
-            if (self.notifyData != null) {
-              //document.getElementById('notify_bell').src = './assets/bell_notify.png';
-              self.notify = true;
-            } else {
+            if (self.notifyData.length == 0) {
               self.notify = false;
+            } else {
+              self.notify = true;
             }
+          })
+          .catch(function(e) {
+            console.log(e);
           });
         }
       }, 1500);
+    },
+    stopPolling() {
+      clearInterval(this.notifyData);
+    },
+    chkIsClicked(value) { // 알림박스 닫을때 이벤트
+      console.log('closed');
+      const self = this;
+      self.childNumList = value;
+      //this.emitData();
     },
     register() { // 회원가입
       this.$router.push('/join');
@@ -369,18 +400,14 @@ export default {
 
     },
     openNotifyBox() {
+      this.stopPolling();
       this.isNotifyBoxOpen = true;
+      clearInterval(this.notifyData);
     },
     closeNotifyBox() {
       this.isNotifyBoxOpen = false;
+      this.emitData();
     },
-    goAlertBox(value) {
-      this.isClickNotifyBoxOpen = value; // true 면 알림함 오픈
-      if (this.isClickNotifyBoxOpen) {
-        this.isNotifyBoxOpen = false;
-        this.$router.push('/mypage/alert');
-      }
-    }
   },
   components: {
     NotifyBox

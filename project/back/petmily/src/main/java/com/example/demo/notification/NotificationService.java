@@ -90,5 +90,15 @@ public class NotificationService {
 		return dtos;
 	}
 	
+	public void setNotifyTypeOpened(String id, ArrayList<Integer> numList) {
+		for (int num : numList) {
+			dao.deleteById(num);
+		}
+	}
+	
+	public void readNotification(int num) {
+		dao.readNotification(num);
+	}
+	
 	
 }

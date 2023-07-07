@@ -18,9 +18,6 @@
               </td>
             </tr>
           </table>
-          <footer>
-            <label class="lbl-go-btn" @click="goNotifyBox">알림함으로 이동</label>
-          </footer>
         </div>
         
     </div>
@@ -38,7 +35,7 @@ export default {
       id: sessionStorage.getItem('loginId'),
       list: [],
       dateList: [],
-      date: '',
+      numList: [],
       isClickNotifyBoxOpen: false,
       isclicked: '0'
     }
@@ -53,22 +50,20 @@ export default {
   },
   methods:{
     getNewNotification() {
-        const self = this;
-        self.$axios.get('http://localhost:8082/notify/new/' + self.id)
-        .then(function(res){
-            //console.log(res);
-            self.list = res.data.list;
-            console.log(self.list)
-            console.log(self.list.length);
-            for (let i = 0; i < self.list.length; i++) {
-              self.dateList.push(self.list[i].tr_date.split('T')[0]);
-            }
-        })
+      const self = this;
+      self.$axios.get('http://localhost:8082/notify/new/' + self.id)
+      .then(function(res){
+          //console.log(res);
+          self.list = res.data.list;
+          console.log(self.list)
+          console.log(self.list.length);
+          for (let i = 0; i < self.list.length; i++) {
+            self.dateList.push(self.list[i].tr_date.split('T')[0]);
+            self.numList.push(self.list[i].num);
+          }
+          self.$emit('childEvent', self.numList);
+      })
     },
-    goNotifyBox() {
-      this.isClickNotifyBoxOpen = true;
-      this.$emit('childEvent', this.isClickNotifyBoxOpen);
-    }
   }
 }
 </script>

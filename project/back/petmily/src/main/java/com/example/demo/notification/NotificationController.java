@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -82,5 +83,19 @@ public class NotificationController {
 		Map result = new HashMap();
 		result.put("list", dto);
 		return result;
+	}
+	
+	
+	@PostMapping("/type")
+	public void setNotifyTypeOpened(@PathVariable("id") Map map) {
+		String id = (String) map.get("id");
+		ArrayList<Integer> numList = (ArrayList<Integer>) map.get("numList");
+		
+		service.setNotifyTypeOpened(id, numList);
+	}
+	
+	@PostMapping("/read/{num}")
+	public void readNotification(@PathVariable("num") int num) {
+		service.readNotification(num);
 	}
 }

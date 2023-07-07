@@ -59,4 +59,10 @@ public interface NotificationDao extends JpaRepository<Notification, Integer> {
 	 */
 	@Query(value = "SELECT num, reciever, header, content, row_num, title, writer, commenter, notify_type, is_clicked, tr_date FROM Notification WHERE reciever = :reciever AND notify_type = '3' ORDER BY tr_date DESC", nativeQuery = true)
 	ArrayList<Notification> msgboxNotification(@Param("reciever") String reciever);
+	
+	@Query(value = "update Notification set is_clicked = '1' where reciever = :id and is_clicked = '0'", nativeQuery = true)
+	void setNotifyTypeOpened(@Param("id") String id);
+	
+	@Query(value="update Notification set is_clicked='1' where num = :num", nativeQuery=true)
+	void readNotification(@Param("num") int num);
 }
