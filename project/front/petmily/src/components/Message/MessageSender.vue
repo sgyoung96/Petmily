@@ -20,7 +20,7 @@
     </div> 
 
     <!-- 쪽지목록 -->
-    <div class="message" v-for="message in list" :key="message.num">
+    <div class="message" v-for="message in paginatedList" :key="message.num">
 
       <div class="message-header">
         <div class="message-profile">
@@ -65,7 +65,32 @@
              
     </div>
   
-  
+            <!-- 페이징 -->
+        <div>
+          <ul class="pagination" style="display: inline-block">
+            <li class="page-item">
+              <a class="page-link" href="#" aria-label="Previous" @click="previousPage">
+                <span aria-hidden="true">&laquo;</span>
+              </a>
+            </li>
+         
+
+            <li class="page-item" v-for="blocks in blockList[blocknum]" :key="blocks.num"
+              :class="{ active: blocks === pageNum }">
+              <a class="page-link" href="#" @click="goToPage(blocks)">{{ blocks }}</a>
+            </li>
+
+            
+
+            <li class="page-item">
+              <a class="page-link" href="#" aria-label="Next" @click="nextPage">
+                <span aria-hidden="true">&raquo;</span>
+              </a>
+            </li>
+          </ul>
+        </div>
+
+
 
    <!-- 쪽지 내용 읽기 모달창 -->
     <div class="black-bg" v-if="modalOpen === true">
@@ -104,8 +129,56 @@ export default {
       value:'',
       select:'title',
       find:'',
+      pageNum:1,
+      pageSize:8,
+      block:5,
+      blockArray :[],
+      blocknum:0,
     };
   },
+
+computed: {
+      totalPages() {
+        return Math.ceil(this.list.length / this.pageSize);
+      },
+      paginatedList() {
+        const start= (this.pageNum-1) * this.pageSize;
+        const end = start + this.pageSize;
+        console.log('end : ' + end)
+        return this.list.slice(start, end);
+      },
+      blockList(){
+      
+        const blockArray = [];
+      
+        for(let i=0; i<=this.totalPages; i += this.block){
+          const temp = [];
+          for(let j=i+1; j<=i + this.block && j<= this.totalPages; j++){
+           
+            temp.push(j);
+            
+          }blockArray.push(temp);
+        }
+
+        if(this.totalPages % this.block === 0 && blockArray.length > 0){
+          const lastTemp = blockArray[blockArray.length-1];
+          lastTemp.pop();
+          if(lastTemp.length ===0){
+            blockArray.pop();
+          }
+        }
+        const blockSize = blockArray.length;
+        console.log('this.list : ' + this.list)
+        console.log('this.list.length : ' + this.list.length)
+        console.log('blockArray.length : ' + blockArray.length)
+        console.log('blockArray : ' + blockArray)
+        console.log('blockSize : ' + blockSize);
+        
+        return blockArray;
+      }
+    },
+
+
 
   created: function () {
     //컴포넌트 실행될 때 한번 실행
@@ -234,6 +307,27 @@ export default {
     replaceImg(e) {
       e.target.src = img;
     },
+
+    previousPage() {
+      if (this.blocknum > 0) {
+        this.blocknum--;
+        this.pageNum -= this.block
+        console.log(this.pageNum)
+      }
+    },
+    nextPage() {
+      if (this.blocknum < this.blockList.length-1) {
+        this.blocknum++;
+        console.log(this.blockArray)
+        this.pageNum += this.block
+        console.log(this.pageNum)
+      }
+    },
+    goToPage(blocks) {
+      console.log(blocks)
+      this.pageNum = blocks;
+    }
+  
   },
 };
 </script>
@@ -403,7 +497,27 @@ export default {
   border-radius: 10px;
   background-color:rgb(244, 191, 79)
 }
+.page-item {
+  display: inline-block;
+  margin-right: 5px;
+}
 
+.page-item a {
+  color: black;
+  padding: 5px 10px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  text-decoration: none;
+}
+
+.page-item a:hover {
+  background-color: #f2f2f2;
+}
+
+.page-item.active a {
+  background-color: rgb(244, 191, 79);
+  color: white;
+}
 
 
 </style>
