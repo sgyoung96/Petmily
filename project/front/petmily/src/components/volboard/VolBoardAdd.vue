@@ -1,62 +1,70 @@
 <template>
-    <div id="app">
-        <h3>봉사모집게시판 등록</h3>
-        <div class="container">
-    <div class="form-container">
-      <h2>{{writer}}봉사모집게시판 추가</h2>
-        <div class="form-group">
-          <label for="volboard-writer">작성자</label>
-          <input type="text" class="form-control" v-model="writer" required>
-        </div>
-        <div class="form-group">
-          <label for="volboard-title">제목</label>
-          <input type="text" class="form-control" v-model="title" required>
-        </div>
-        <div class="form-group">
-          <label for="volboard-content">내용</label>
-          <textarea class="form-control" v-model="content" required></textarea>
-        </div>
-        <div class="form-group">
-          <label for="volboard-count">모집인원</label>
-          <input type="number" class="form-control" v-model="vol_number">
-        </div>
-        <div class="form-group">
-          <label for="volboard-count">봉사모집기관</label>
-          <input type="text" class="form-control" v-model="place">
-        </div>
-        <div class="form-group">
-          <label for="volboard-count">모집마감일</label>
-          <input type="date" class="form-control" v-model="deadline">
-        </div>
-        <div class="form-group">
-          <label for="volboard-address">봉사장소주소</label>
-          <input  type="text" v-model="postcode" placeholder="우편번호" readonly>
-          <button id="postcode" @click="execDaumPostcode">검색</button><br/>
-          <input type="text" v-model="roadAddress" placeholder="주소" readonly><br/>
-          <input type="text" v-model="detailAddress" placeholder="상세주소"><br/>
-          <input type="text" v-model="extraAddress" placeholder="참고항목"><br/>
-          <div ref="wrap" style="display:none;border:1px solid;width:500px;height:300px;margin:5px 0;position:relative">
-          <img src="//t1.daumcdn.net/postcode/resource/images/close.png" id="btnFoldWrap" style="cursor:pointer;position:absolute;right:0px;top:-1px;z-index:1" v-on:click="foldDaumPostcode()" alt="접기 버튼">
-        </div>
-        </div>
-        <div class="form-group">
-          <label for="volboard-voldate">봉사일자</label>
-          <input type="date" class="form-control" v-model="vol_date" required>
-        </div>
-        <div class="form-group">
-          <label for="volboard-img1">게시판이미지1</label>
-          <input type="file" class="form-control" id="f1">
-        </div>
-        <div class="form-group">
-          <label for="volboard-img2">게시판이미지2</label>
-          <input type="file" class="form-control" id="f2">
-        </div>
-        
-        <button type="button" class="btn btn-primary" v-on:click="add">추가</button>
-        <button type="button" class="btn btn-secondary" v-on:click="cancel">취소</button>
+    <div class="d-all">
+    <div class="d-title">
+      <h4 style="text-align: center;"><strong><span style="color:rgb(156, 156, 39)">PETMILY</span>
+          &nbsp;<span style="color:rgb(244, 191, 79);">VOLUNTEER</span></strong></h4>
+    </div>
+    <div class="d-box">
+      <table class="box-title">
+  <tr>
+    <td>작성자:</td>
+    <td><input type="text" id="writer" v-model="writer" readonly style="margin-bottom:5px"></td>
+  </tr>
+  <tr>
+    <td>제목:</td>
+    <td><input type="text" id="title" v-model="title" size="80" maxlength="20" placeholder="제목을 입력해 주세요."></td>
+  </tr>
+  <tr>
+    <td>모집인원:</td>
+    <td><input type="number" v-model="vol_number"></td>
+  </tr>
+  <tr>
+    <td>봉사모집기관:</td>
+    <td><input type="text" id="place" v-model="place" style="margin-bottom:5px"></td>
+  </tr>
+  <tr>
+    <td>모집마감일:</td>
+    <td><input type="date" class="form-control" v-model="deadline"></td>
+  </tr>
+  <tr>
+    <td>봉사일자:</td>
+    <td><input type="date" class="form-control" v-model="vol_date" required></td>
+  </tr>
+  <tr>
+    <td>봉사장소주소:</td>
+    <td>
+      <input type="text" v-model="postcode" placeholder="우편번호" readonly>
+      <button id="postcode" @click="execDaumPostcode">검색</button><br/>
+      <input type="text" v-model="roadAddress" placeholder="주소" readonly><br/>
+      <input type="text" v-model="detailAddress" placeholder="상세주소"><br/>
+      <input type="text" v-model="extraAddress" placeholder="참고항목"><br/>
+      <div ref="wrap" style="display:none;border:1px solid;width:500px;height:300px;margin:5px 0;position:relative">
+        <img src="//t1.daumcdn.net/postcode/resource/images/close.png" id="btnFoldWrap" style="cursor:pointer;position:absolute;right:0px;top:-1px;z-index:1" v-on:click="foldDaumPostcode()" alt="접기 버튼">
+      </div>
+    </td>
+  </tr>
+</table>
+
+      <div class="box-content">
+        <textarea id="content" v-model="content" rows="25" cols="130" style="resize: none;">
+        </textarea>
+      </div>
+      <tr>
+        <th>이미지1</th>
+        <td><input type="file" id="f1"></td>
+      </tr>
+      <tr>
+        <th>이미지2</th>
+        <td><input type="file" id="f2"></td>
+      </tr>
+      <tr>
+        <th>등록</th>
+        <td><button v-on:click="add">등록</button></td>
+      </tr>
     </div>
   </div>
-    </div>
+    
+          
 </template>
   
   <script>
@@ -66,7 +74,12 @@
       return {
         writer: sessionStorage.getItem('loginId'),
         title: '',
-        content: '',
+        content: '1. 내용: \n\n' +
+        '2. 일시: \n\n' +
+        '3. 장소: \n\n' +
+        '4. 모집인원: \n\n' +
+        '5. 자격요건: \n\n' +
+        '6. 관련문의:',
         vol_number: 0,
         vol_date:'',
         postcode:'',
@@ -192,26 +205,37 @@
   }
   </script>
   <style scoped>
-  img{
-      width:100px;
-      height: 100px;
-  }
-h3 {
-  margin: 40px 0 0;
+.d-all {
+  margin-left: 150px;
+  margin-right: 150px;
+  margin-bottom: 150px;
 }
-ul {
-  list-style-type: none;
-  padding: 0;
+
+.d-title {
+  flex-direction: column;
+  display: flex;
+  margin-top: 120px;
+  margin-bottom: 120px;
 }
-li {
-  display: inline-block;
-  margin: 0 10px;
+
+.d-box {
+  border: 1px solid grey;
+  border-top: 2px solid black;
+  padding: 80px;
+  text-align: left;
 }
-a {
-  color: #42b983;
+
+.box-title{
+  text-align: left;
 }
-.form-container {
-      margin-top: 20px;
-      max-width: 500px;
-    }
+
+.box-warning{
+  margin-top:10px;
+  margin-bottom:10px;
+  font-size:small;
+}
+
+.box-content{
+  resize: none;
+}
 </style>

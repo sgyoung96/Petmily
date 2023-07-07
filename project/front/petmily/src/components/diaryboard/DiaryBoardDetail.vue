@@ -181,8 +181,8 @@ button:hover {
 }
 
 .box-title {
-  border-top: 2px solid black;
-  border-bottom: 2px solid lightgrey;
+  border-top: 2px solid lightgray;
+  border-bottom: 2px solid #ebeced;
   display: flex;
   justify-content: space-between;
   padding: 10px;
