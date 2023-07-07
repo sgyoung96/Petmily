@@ -164,7 +164,7 @@ export default {
             }
           });
         }
-      }, 3000);
+      }, 1500);
     },
     register() { // 회원가입
       this.$router.push('/join');
