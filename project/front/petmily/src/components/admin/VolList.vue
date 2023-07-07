@@ -10,7 +10,7 @@
           <div class="section01-content">
             <div class="data-header">
               <table>
-                <tr aria-colspan="12">
+                <tr aria-colspan="11">
                   <th colspan="1">
                     <label><span>모집상태</span></label>
                   </th>
@@ -20,14 +20,14 @@
                   <th colspan="1">
                     <label><span>신청인원</span></label>
                   </th>
-                  <th colspan="5">
-                    <label><span>신청명단</span></label>
+                  <th colspan="2">
+                    <label><span>봉사제목</span></label>
+                  </th>
+                  <th colspan="3">
+                    <label><span>봉사장소</span></label>
                   </th>
                   <th colspan="2">
                     <label><span>봉사날짜</span></label>
-                  </th>
-                  <th colspan="1">
-                    <label><span>STATE</span></label>
                   </th>
                   <th colspan="1">
                     <label><span>모집기간</span></label>
@@ -40,15 +40,9 @@
                         calculateDateDifference(vboard.deadline).days }}</span>&nbsp;</label></td>
                   <td colspan="1"><label><span>{{ vboard.place }}</span></label></td>
                   <td colspan="1"><label><span>({{ vboard.count }} / {{ vboard.vol_number }})</span></label></td>
-                  <td colspan="5" width="300px">
-                    <label>
-                      <div v-for="person in getParticipants(vboard.num)" :key="person.num">
-                        {{ person.num }}
-                      </div>
-                    </label>
-                  </td>
+                  <td colspan="2"><label><span>{{ vboard.title }}</span></label></td>
+                  <td colspan="3"><label><span>{{ vboard.address }}</span></label></td>
                   <td colspan="2"><label><span>{{ formatDate(vboard.vol_date) }}</span></label></td>
-                  <td colspan="1"><label><span></span></label></td>
                   <td colspan="1"><label><span>{{ formatDate(vboard.deadline) }}까지</span></label></td>
                 </tr>
               </table>
@@ -58,59 +52,9 @@
       </div>
     </div>
   </div>
-  <div style="padding-left: 150px;padding-right:150px">
-    <div style="display: flex;justify-content: space-between;">
       <div>
         <router-link to="/volboardadd">봉사게시판 작성</router-link>
       </div>
-      <div>
-        <input type="text" v-model="searchKeyword" placeholder="주소를 입력해주세요">
-        <button v-on:click="search()">검색</button>
-      </div>
-    </div>
-    <div style="border-top:2px solid black; padding-top:10px; margin-top:10px">
-
-      <div class="vbody" v-for="vboard in list" :key="vboard.num" @click="detail(vboard.num, vboard.address)">
-        <div style="text-align: left;">
-          <span class="badge text-bg-danger" style="font-size: 17px;"
-            v-if="calculateDateDifference(vboard.deadline).difference < 0">모집마감</span>
-          <span class="badge text-bg-primary" style="font-size: 17px;" v-else>마감 D-{{
-            calculateDateDifference(vboard.deadline).days }}</span>&nbsp;
-          <strong>모집기간</strong> {{ formatDate(vboard.deadline) }}까지
-          <br />
-          <div class=vtitle>{{ vboard.title }}</div>
-          <div style="margin-bottom: 10px;">
-            <strong>[모집기관]</strong> {{ vboard.place }} &nbsp;
-            <strong>[봉사날짜]</strong> {{ formatDate(vboard.vol_date) }} &nbsp;<br />
-            <strong>[봉사장소]</strong> {{ vboard.address }}
-          </div>
-        </div>
-        <div style class="vcount">
-          모집인원<br />({{ vboard.count }} / {{ vboard.vol_number }})
-        </div>
-      </div>
-
-    </div>
-  </div>
-  <ul class="pagination" style="display: inline-block">
-    <!-- 이전 페이지 버튼 -->
-    <li class="page-item">
-      <a class="page-link" href="#" aria-label="Previous" @click="previousPage">
-        <span aria-hidden="true">&laquo;</span>
-      </a>
-    </li>
-    <!-- 페이지 번호 -->
-    <li class="page-item" v-for="pageNumber in totalPages" :key="pageNumber"
-      :class="{ active: pageNumber === currentPage }">
-      <a class="page-link" href="#" @click="goToPage(pageNumber)">{{ pageNumber }}</a>
-    </li>
-    <!-- 다음 페이지 버튼 -->
-    <li class="page-item">
-      <a class="page-link" href="#" aria-label="Next" @click="nextPage">
-        <span aria-hidden="true">&raquo;</span>
-      </a>
-    </li>
-  </ul>
 </template>
 
 <script>

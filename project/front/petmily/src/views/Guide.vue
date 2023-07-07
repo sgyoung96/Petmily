@@ -9,7 +9,7 @@
           <img style="width:560px; height:505px;" src="../assets/images/5가이드.jpg">
           <img style="width:560px; height:505px;" src="../assets/images/6가이드.jpg">
       </div>
-      <div>
+      <div class="rounded">
         <p class="hash-tit">
           #
           <span>
@@ -17,9 +17,9 @@
           </span>
         </p>
         <p class="txt"></p>
-        <div class="box first">
+        <div class="box">
           <span class="img">
-            <img alt src="">
+            <img alt src="https://www.kca.go.kr/webzine/resources/images/webzine/sub/2009/recommend_08.jpg">
           </span>
           <div class="txt_wrap">
             <p class="tt">
@@ -31,9 +31,9 @@
             </p>
           </div>
         </div>
-        <div class="box second">
+        <div class="box">
           <span class="img">
-            <img alt src="">
+            <img alt src="https://www.kca.go.kr/webzine/resources/images/webzine/sub/2009/recommend_09.jpg">
           </span>
           <div class="txt_wrap">
             <p class="tt">
@@ -45,9 +45,9 @@
             </p>
           </div>
         </div>
-        <div class="box third">
+        <div class="box">
           <span class="img">
-            <img alt src="">
+            <img alt src="https://www.kca.go.kr/webzine/resources/images/webzine/sub/2009/recommend_10.jpg">
           </span>
           <div class="txt_wrap">
             <p class="tt">
@@ -59,9 +59,9 @@
             </p>
           </div>
         </div>
-        <div class="box fourth">
+        <div class="box">
           <span class="img">
-            <img alt src="">
+            <img alt src="https://www.kca.go.kr/webzine/resources/images/webzine/sub/2009/recommend_11.jpg">
           </span>
           <div class="txt_wrap">
             <p class="tt">
@@ -100,16 +100,47 @@
   </script>
     
   <style scoped>
-  [class^="section"] .txt {
+  .box{
+    display: flex;
+    width: 1100px;
+    height:320px;
+    
+  }
+  .rounded {
+  width: 100%;
+  background-color: #f2fafa;
+  padding: 0.5rem;
+  line-height: 1rem;
+  border-radius: 15px;
+  margin: 0;
+  padding: 0;
+  font-size: .8rem;
+  font-family: 'Noto', sans-serif;
+  line-height: 1.25;
+  color: #f2fafa;
+  overflow-x: hidden;
+  font-weight: 300;
+}
+  .txt {
     font-size: .9rem;
     color: #555;
     font-weight: 300;
     line-height: 1.8;
+    font-size: 20px;
     text-align: justify;
+  }
+  .tt{
+    font-size: 1.1rem;
+    color: #333;
+    font-weight: 700;
+    margin-bottom: 0.7rem;
   }
   .container {
       padding-top: 50px;
       padding-bottom: 100px;
+  }
+  .em{
+    background: #f0c738
   }
   
   </style>
