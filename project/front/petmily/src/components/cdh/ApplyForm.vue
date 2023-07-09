@@ -205,13 +205,17 @@ export default {
     }
   },
   created: function () {
-    this.nowTimes();
-    const self = this;
-    self.info = JSON.parse(this.$route.query.info);
-    console.log(self.info);
-    this.$data.careAddr = this.$route.query.careAddr;
+    if (sessionStorage.getItem('loginId') == 'kakao') {
+      this.chkKakaoValidatoion();
+    } else {
+      this.nowTimes();
+      const self = this;
+      self.info = JSON.parse(this.$route.query.info);
+      console.log(self.info);
+      this.$data.careAddr = this.$route.query.careAddr;
 
-    alert(this.$data.careAddr);
+      alert(this.$data.careAddr);
+    }
   },
 
   mounted() {
@@ -223,6 +227,26 @@ export default {
     }
   },
   methods: {
+    chkKakaoValidatoion() {
+      if (sessionStorage.getItem('loginFlag') == 'kakao') {
+        const self = this;
+        self.$axios.get('http://localhost:8082/members/' + self.id).then (function(rs) {
+          console.log(rs.data.dto);
+        
+          if (rs.data.dto == null) {
+            self.$router.push({name:'KakaoAdditionalForm', query:{kakaoId: sessionStorage.getItem('loginId'), kakaoName: sessionStorage.getItem('kakaoName')}});
+          } else {
+            this.nowTimes();
+            const self = this;
+            self.info = JSON.parse(this.$route.query.info);
+            console.log(self.info);
+            this.$data.careAddr = this.$route.query.careAddr;
+
+            alert(this.$data.careAddr);
+          }
+        });
+      }
+    },
     apply() {
 
       const self = this;

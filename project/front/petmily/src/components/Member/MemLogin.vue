@@ -98,13 +98,7 @@ export default {
 
           self.$axios.get('http://localhost:8082/members/' + sessionStorage.getItem('loginId')).then (function(rs) {
             console.log(rs);
-            window.location.href = '/';
-            // self.dto = rs.data.dto;
-            // if (self.dto != null) {
-            //   window.location.href = "/";
-            // } else {
-            //   self.$router.push({name:'KakaoAdditionalForm', query:{kakaoId: self.kakaoId, kakaoName: self.kakaoName, loginFlag: self.loginFlag}}) // 추가정보기입화면
-            // }
+            self.chkKakaoValidatoion();
           });
         },
         fail: (error) => {
@@ -138,7 +132,23 @@ export default {
       }
 
     },
-    
+    chkKakaoValidatoion() {
+      if (sessionStorage.getItem('loginId') != null) {
+      this.loginId = sessionStorage.getItem('loginId');
+      
+
+        if (sessionStorage.getItem('loginFlag') == 'kakao') {
+          const self = this;
+          self.$axios.get('http://localhost:8082/members/' + this.loginId).then (function(rs) {
+            console.log(rs.data.dto);
+          
+            if (rs.data.dto == null) {
+              self.$router.push({name:'KakaoAdditionalForm', query:{kakaoId: sessionStorage.getItem('loginId'), kakaoName: sessionStorage.getItem('kakaoName')}});
+            }
+          });
+        }
+      }
+    },
   
   }
 }

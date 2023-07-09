@@ -132,20 +132,9 @@ export default {
     this.notifyPolling();
   },
   created:function(){ // 이 컴포넌트가 시작될때 실행되는 함수
+    //this.chkKakaoValidatoion();
     if (sessionStorage.getItem('loginId') != null) {
       this.loginId = sessionStorage.getItem('loginId');
-      
-
-      if (sessionStorage.getItem('loginFlag') == 'kakao') {
-        const self = this;
-        self.$axios.get('http://localhost:8082/members/' + this.loginId).then (function(rs) {
-          console.log(rs.data.dto);
-        
-          if (rs.data.dto == null) {
-            self.$router.push({name:'KakaoAdditionalForm', query:{kakaoId: sessionStorage.getItem('loginId'), kakaoName: sessionStorage.getItem('kakaoName')}});
-          }
-        });
-      }
     }
   },
   mounted: function() {
@@ -155,6 +144,23 @@ export default {
     clearInterval(this.notifyData);
   },
   methods:{
+    chkKakaoValidatoion() {
+      if (sessionStorage.getItem('loginId') != null) {
+      this.loginId = sessionStorage.getItem('loginId');
+      
+
+        if (sessionStorage.getItem('loginFlag') == 'kakao') {
+          const self = this;
+          self.$axios.get('http://localhost:8082/members/' + this.loginId).then (function(rs) {
+            console.log(rs.data.dto);
+          
+            if (rs.data.dto == null) {
+              self.$router.push({name:'KakaoAdditionalForm', query:{kakaoId: sessionStorage.getItem('loginId'), kakaoName: sessionStorage.getItem('kakaoName')}});
+            }
+          });
+        }
+      }
+    },
     async emitData() {
       const self = this;
       self.stopPolling();

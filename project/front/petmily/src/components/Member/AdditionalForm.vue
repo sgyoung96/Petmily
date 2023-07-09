@@ -114,9 +114,10 @@ export default {
     }
   },
   created: function () {
-      if (sessionStorage.getItem('loginFlag') == 'kakao') {
-        this.name = sessionStorage.getItem('kakaoName');
-      }
+    const self = this;
+    if (sessionStorage.getItem('loginFlag') == 'kakao') {
+      self.name = sessionStorage.getItem('kakaoName');
+    }
   },
   mounted: function() {
     const previewDiv = document.getElementById('preview');
@@ -223,6 +224,7 @@ export default {
       this.isEmailCodeCheck=false;
       self.emailCodeHasError=false;
       self.emailtf=true;
+      self.email = document.getElementById('email').value;
       
       document.getElementById("email").readOnly = true;
       document.getElementById("emailCode").readOnly = true;
