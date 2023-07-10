@@ -104,9 +104,7 @@
                 </div>
               </div>
             </div>
-            <div></div>
-            <div v-if="mapExists"><img style="width: 200px; height: 200px;" src="https://img1.daumcdn.net/thumb/C176x176/?fname=https://t1.daumcdn.net/cfile/tistory/257DD74E534A07EC2A"></div>
-            <div v-else id="map"></div>
+            <div id="map"></div>
           </div>
           <div class="box-form" style="margin-top:10px; margin-bottom:10px"> <!-- 입양신청양식으로 이동 -->
             <span @click="apply()" class="txt-form">입양 신청하기</span>
