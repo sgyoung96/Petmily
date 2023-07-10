@@ -1,6 +1,6 @@
 <template>
   <div class="box-container">
-    <img class="t-img" src="../../assets/images/배경.png">
+    <img class="t-img" src="../../assets/images/강고.png">
     <div class="d-title">
       <h4 style="text-align: center;"><strong><span style="color:rgb(156, 156, 39)">PETMILY</span>
           &nbsp;<span style="color:rgb(244, 191, 79);">ADOPT</span></strong></h4>
@@ -53,20 +53,16 @@
         <div>
           <table>
             <tr>
+              <th>제목</th>
+              <td><input style="text; width:300px" v-model="dto.title" id="editTitle"></td>
               <th>사진1</th>
               <td><input type="file" id="f1"></td>
-            </tr>
-            <tr>
               <th>사진2</th>
               <td><input type="file" id="f2"></td>
             </tr>
             <tr>
-              <th>Title</th>
-              <td><input type="text" v-model="dto.title" id="editTitle"></td>
-            </tr>
-            <tr>
-              <th>Content</th>
-              <td><input type="text" v-model="dto.content" id="editContent"></td>
+              <th>내용</th>
+              <td colspan="5"><textarea v-model="dto.content" id="editContent" style="width:100%; height:400px; resize:none"></textarea></td>
             </tr>
           </table>
           <div class="edit-buttons">
@@ -95,7 +91,7 @@
         <span class="comment-profile">
           <img class="profile" @error="replaceImg" :src="'http://localhost:8082/members/imgs/' + id">
         </span>
-        <textarea style="width:900px;" v-model="content" id="content"></textarea>
+        <textarea style="width:900px; resize:none;" v-model="content" id="content"></textarea>
         <button v-on:click="commentadd">등록하기</button>
       </div>
       <div v-for="comment in comment" :key="comment.id">
@@ -109,7 +105,7 @@
                 formatDate(comment.w_date) }}</span><br />
               <div v-if="!comment.editMode">{{ comment.content }}</div>
               <div v-if="comment.editMode" class="c-editForm">
-                <textarea style="width:900px;" v-model="comment.editContent"
+                <textarea style="width:900px;  resize:none;" v-model="comment.editContent"
                   :cols="comment.editContent.length"></textarea>
                 <button @click="saveComment(comment)">저장</button>
                 <button @click="cancelEdit(comment)">취소</button>
@@ -148,7 +144,7 @@ button:hover {
   padding: 20px;
   border: 1px solid #ddd;
   border-radius: 4px;
-  max-width: 500px;
+  max-width: 100%;
   margin: 0 auto;
 }
 
@@ -157,9 +153,7 @@ button:hover {
   border-collapse: collapse;
 }
 
-.edit-form th {
-
-}
+.edit-form th,
 .edit-form td {
   padding: 10px;
   text-align: left;
@@ -171,7 +165,7 @@ button:hover {
 }
 
 .edit-buttons button {
-  padding: 8px 16px;
+  padding: 4px 16px;
   background-color: #4caf50;
   color: white;
   border: none;
@@ -189,8 +183,8 @@ button:hover {
 }
 
 .t-img {
-  width: 85%;
-  height: 500px;
+  width: 100%;
+  height: 600px;
   margin-bottom: 20px;
 }
 

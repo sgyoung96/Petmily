@@ -136,6 +136,7 @@ export default {
       this.showSvg = false;
       this.showDiv = true;
     }, 6000);
+    window.scrollTo({ top: 0, behavior: 'auto' });
   },
 methods: {
   gotoanimal() {
