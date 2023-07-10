@@ -1,6 +1,6 @@
 <template>
   <div class="MessageModal">
-    <div class="wrapper">
+    <div class="wrapper2">
         <div class="container">
             
                 <div class="mtitle">
@@ -96,7 +96,7 @@ export default{
   overflow: hidden;
 }
 
-.wrapper {
+.wrapper2 {
   background-color: rgba(0, 0, 0, 0.5);
   position: fixed;
   width: 100%;
