@@ -35,14 +35,19 @@
       </tbody>
     </table>
     <img class="a-img" src="../../assets/images/jinjin.png">
-      <div class="box-title" v-if="dto.id">
-        <span>{{ dto.title }}</span>
-        <span>{{ dto.id.id }}{{ formatDate(dto.w_date) }}</span>
-      </div>
       <img class="box-img" :src="'http://localhost:8082/adopt/imgs/' + dto.num + '/1'">
       <img class="box-img" :src="'http://localhost:8082/adopt/imgs/' + dto.num + '/2'">
       <div class="box-content">
-        {{ dto.content }}
+        <span>{{ dto.content }}</span>
+        <span class="box-warning">
+        ★사랑하는 반려동물이 좋은 주인을 만나 안전하게 살 수 있도록 아래의 사항을 꼭 지켜 주세요!!<br/><Br/>
+        1. 무료분양 계약서를 꼭 주고받으시기 바랍니다.<br/>
+        2. 반려동물 분양시, 분양자와 분양하시는분의 신분을 필히 확인하여 기억해두거나 신분증 사본을 받도록 하세요.<br/>
+        3. 본 무료분양글의 내용 및 사진은 저작권이 있으므로 재배포 및 무단전재를 금지합니다.<br/>
+        ※ 분양받을 목적 이외의 사항으로 분양글 등록 회원에게 연락,문자 등을 보내실 경우 법적 조치를 받으실 수 있습니다.<br/>
+      </span>
+      </div>
+      <div>
       </div>
       <div v-if="showModal" class="edit-form">
         <div>
@@ -72,15 +77,18 @@
       </div>
       <div class="d-btn">
         <div>
-          <router-link to="/diaryboardhome" class="badge text-bg-secondary" style="font-size: 17px;">목록으로</router-link>
+          <button style="font-size: 17px;" @click="$router.push('/diaryboardhome')">목록으로</button>
         </div>
-        <div>
-          <span v-if="dto.ischeck==1">분양완료</span>
-          <span v-else>분양중</span>
-          <button @click="adoptbtn(dto.num)">분양신청</button>
+        <div v-if="dto.id">
+          <span v-if="isAuthor">
+          <button @click="adoptbtn(dto.num)" v-if="dto.ischeck==1">분양완료</button>
+          <button @click="adoptbtn(dto.num)" v-else>분양중</button>
+        </span>
           <button @click="likebtn(dto.num)">좋아요</button>
-          <span v-on:click="edit()" class="badge text-bg-secondary" style="font-size: 17px;">수정하기</span>
+          <span v-if="isAuthor">
+          <button @click="edit()" style="font-size: 17px;">수정하기</button>
           <button v-on:click="boarddelete">삭제하기</button>
+        </span>
         </div>
       </div><br />
       <div class="cbox-add">
@@ -118,6 +126,22 @@
   </div>
 </template>
 <style scoped>
+button{
+  width: 100px;
+    color: white;
+    height: 30px;
+    border: 1px solid rgb(244, 191, 79);
+    border-radius: 20px;
+    background-color: rgb(244, 191, 79);
+    font-family: 'IBMPlexSansKR-Bold';
+    font-size: 15px;
+    padding-top: 2px;
+    margin-right: 5px;
+}
+button:hover {
+  background-color: rgb(235, 156, 39);
+  cursor: pointer;
+}
 
 .edit-form {
   background-color: #f9f9f9;
@@ -133,7 +157,9 @@
   border-collapse: collapse;
 }
 
-.edit-form th,
+.edit-form th {
+
+}
 .edit-form td {
   padding: 10px;
   text-align: left;
@@ -176,7 +202,7 @@
 }
 
 .table th {
-  background-color: rgb(156, 156, 39);
+  background-color: #f8f9fa;
 }
 .a-img {
  text-align: left;
@@ -191,8 +217,8 @@
 }
 
 .box-title {
-  border-top: 2px solid black;
-  border-bottom: 2px solid lightgrey;
+  border-top: 2px solid lightgrey;
+  border-bottom: 2px solid #e3e4e6;
   display: flex;
   justify-content: space-between;
   padding: 10px;
@@ -200,7 +226,7 @@
 
 .box-img {
   padding: 20px;
-  width: 400px;
+  width: 45%;
   height: 400px;
   margin-top: 20px;
 }
@@ -209,6 +235,19 @@
   padding: 50px;
   border-bottom: solid 2px lightgrey;
   text-align: left;
+  display:flex;
+  flex-direction: column;
+}
+
+.box-warning{
+  border: solid #e5e7eb;
+  border-radius: 20px;
+  margin-top: 50px;
+  float:center;
+  background-color:white;
+  padding:24px 63px;
+  display:flex;
+  justify-content: left;
 }
 
 .d-btn {
@@ -268,11 +307,27 @@ export default {
       showModal: false,
     };
   },
+  computed: {
+  showHeader() {
+    console.log('showHeader:', false); // 콘솔에서 계산된 속성 값 확인
+    return false;
+  },
+  isAuthor() {
+      // 현재 로그인한 사용자와 글 작성자를 비교하여 일치하는지 확인합니다.
+      // 예를 들어, 현재 로그인한 사용자의 ID와 글 작성자의 ID를 비교할 수 있습니다.
+      // 글 작성자의 ID는 dto.id.id로 가정합니다.
+      const loginId = sessionStorage.getItem('loginId');
+      return loginId === this.dto.id.id;
+    },
+},
   created() {
     this.boarddetail();
     this.commentlist();
   },
   methods: {
+    convertNewlines(text) {
+    return text.replace(/\n/g, '<br>');
+  },
     adoptbtn(num){
       const self = this
       self.$axios.get('http://localhost:8082/adopt/ischeck/'+ num)

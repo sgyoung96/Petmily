@@ -146,17 +146,19 @@ methods: {
 
   return `${year}년 ${month}월 ${day}일`;
 },
-  detail: function(num) {
-    this.$router.push({name: 'AdoptDetail', query: {num: num}})
-    const self = this;
-    self.$axios.get('http://localhost:8082/adopt/cnt/'+num).then(function (res) {
-    if (res.status == 200) {
-      console.log(res.data.flag)
+detail(num) {
+  this.$router.push({ name: 'AdoptDetail', query: { num: num } });
+  const self = this;
+  self.$axios.get('http://localhost:8082/adopt/cnt/' + num).then(function (res) {
+    if (res.status === 200) {
+      console.log(res.data.flag);
+      // 윈도우 팝업 창 열기
     } else {
       alert('에러');
     }
   });
-  },
+},
+
   previousPage() {
       if (this.currentPage > 1) {
         this.currentPage--;
