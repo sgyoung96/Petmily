@@ -8,7 +8,7 @@
          
          <button class="mbtn" :class="{ active: showMessageReciever }"  @click="reciever">받은 쪽지<span v-if="cnt !== 0"  class="badge">{{cnt}}</span></button>
          <button class="mbtn" :class="{ active: showMessageSender }"  @click="sender">보낸쪽지</button>
-         <button class="mbtn" :class="{ active: showMessageWrite }"  @click="send">쪽지보내기</button>
+         <button class="mbtn" :class="{ active: showMessageWrite }" @click="send">쪽지보내기</button>
         </div>
         <div v-if="showMessageReciever">
          <MessageReciever @new-cnt ="newcnt" id="reciever"/> 
@@ -18,9 +18,9 @@
           <MessageSender id="sender"/> 
         </div>
 
-         <div v-if="showMessageWrite">
-          <MessageWrite id="send"/> 
-        </div>
+         
+          <MessageWrite id="send" v-if="showMessageWrite" @close="showMessageWrite=false"/> 
+        
       </div>
     </div>
   </div>
@@ -36,6 +36,8 @@
 import MessageReciever from '../Message/MessageReciever.vue'
 import MessageSender from '../Message/MessageSender.vue'
 import MessageWrite from '../Message/MessageWrite.vue'
+
+
 
 export default {
   name: 'MessageBox',
@@ -54,17 +56,17 @@ export default {
     reciever(){
       this.showMessageReciever = true;
       this.showMessageSender = false;
-      this.showMessageWrite = false;
+      // this.showMessageWrite = false;
     },
     sender(){
       this.showMessageReciever = false;
-      this.showMessageWrite = false;
+      // this.showMessageWrite = false;
       this.showMessageSender = true;
     },
     send(){
       this.showMessageWrite = true;
-      this.showMessageSender = false;
-      this.showMessageReciever = false;
+      // this.showMessageSender = false;
+      // this.showMessageReciever = false;
      
     },
     cntcheck(){

@@ -50,7 +50,6 @@
       <div class="d-btn">
         <div>
           <button @click="$router.push('/diaryboardhome')">목록으로</button>
-
         </div>
         <div>
           <button v-on:click="edit(dto.id.id)">수정하기</button>
