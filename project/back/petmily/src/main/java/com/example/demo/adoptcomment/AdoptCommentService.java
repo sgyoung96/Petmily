@@ -20,7 +20,7 @@ public class AdoptCommentService {
 	 * @return
 	 */
 	public ArrayList<AdoptCommentDto> getAll(int num) {
-		Adoptboard b = new Adoptboard(num,null,"","","","",null,"","","",0);
+		Adoptboard b = new Adoptboard(num,null,"","","","",null,"","","",0,0,0);
 		ArrayList<Adoptcomment> list = dao.findByNum(b);
 		ArrayList<AdoptCommentDto> list2 = new ArrayList<AdoptCommentDto>();
 		

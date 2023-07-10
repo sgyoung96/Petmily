@@ -29,5 +29,7 @@ public class AdoptBoardDto {
 	private String pic1;	// 첫번째 사진 파일 경로
 	private String pic2;	// 두번째 사진 파일 경로
 	private int likecnt;
+	private int cnt; // 조회수
+	private int isCheck; //분양여부
 	private MultipartFile[] f = new MultipartFile[2];
 }
