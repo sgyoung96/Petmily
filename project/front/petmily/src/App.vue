@@ -67,8 +67,6 @@
     </div>
     <!-- //공통 헤더 -->
 
-    <br>
-
     <NotifyBox isBedgeClicked="1" id="notify_box" v-if="isNotifyBoxOpen" @childEvent="chkIsClicked" @click="closeNotifyBox()" />
 
     <!-- 이곳에 라우터로 설정한 화면이 로드됨 -->
