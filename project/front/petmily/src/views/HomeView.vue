@@ -581,8 +581,12 @@ export default {
     },
     fadeoutAnim() {
       setTimeout(function() {
-        document.getElementById('fadeout_text').style = 'display: none;';
-        document.getElementById('fadeout_bg').style = 'display: none;';
+        try {
+          document.getElementById('fadeout_text').style.display = 'none';
+          document.getElementById('fadeout_bg').style.display = 'none';
+        } catch(e) {
+          console.log(e);
+        }
       }, 3000);
     },
     showHeadText02() {
