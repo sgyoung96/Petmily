@@ -9,7 +9,8 @@
           &nbsp;<span style="color:rgb(244, 191, 79);">VOLUNTEER</span></strong></h4>
     </div>
     <div class="d-box" style="text-align: center;">
-      <img src="https://media.tenor.com/Eo-EZ0G_-qoAAAAC/samoyed-dog.gif" style="width:360px; height: 270px; margin-bottom: 20px;">
+      <img src="https://media.tenor.com/acgNzAvdOKIAAAAC/thank-you-volunteers-poll-workers.gif" style="width:360px; height: 270px; margin-bottom: 20px;">
+      <div style="border-bottom: solid black 2px; margin-bottom:15px; width: 80%; text-align: left; font-weight: 900; font-size:36px; font-family: 'Jua', sans-serif;">봉사게시판 글쓰기</div>
       <table class="box-title">
   <tr>
     <td>작성자:</td>
