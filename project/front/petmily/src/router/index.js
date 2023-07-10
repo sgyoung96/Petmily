@@ -6,6 +6,7 @@ import MyPageHome from '../views/MypageView.vue'
 import AboutPetmily from '../views/AboutPetmily.vue'
 import Groups from '../views/Groups.vue'
 import Guide from '../views/Guide.vue'
+import ContactUs from '../views/ContactUs.vue'
 import DiaryBoardHome from '@/components/diaryboard/DiaryBoardHome.vue'
 import AdoptBoardHome from '@/components/adopt/AdoptList.vue'
 import AdoptForm from '@/components/adopt/AdoptForm.vue'
@@ -327,7 +328,13 @@ const routes = [
     path: '/mypage/alert',
     name: 'AlertBox',
     component: AlertBox
+  },
+  {
+    path: '/contactus',
+    name: 'ContactUs',
+    component: ContactUs
   }
+
 ]
 
 const router = createRouter({
