@@ -77,27 +77,33 @@
 
     <!-- 풋터 -->
     <footer class="footer">
-      <div>
-        <p>이곳에 풋터 디자인</p>
-        <!-- 기존 링크 모음 (테스트용, 추후 삭제 예정) -->
-        <router-link to="/kaka">카카</router-link> |
-        <router-link to="/addressconvert">주소변환</router-link> |
-        <router-link to="/addressmap">주소로 지도</router-link> |
-        <router-link to="/barchart">막대그래프</router-link> |
-        <router-link to="/piechart">파이차트</router-link> |
-        <router-link to="/animalhospital">동물병원</router-link> |
-        <router-link to="/weather">날씨</router-link> |
-        <router-link to="/imgsl">날씨</router-link> |
-        <div v-if="loginId != null">
-          <router-link to="/messagewrite" >쪽지보내기</router-link> |
-          <router-link to="/messagesender" >보낸쪽지함</router-link> |
-          <router-link to="/messagereciever">쪽지함</router-link> |
-          <span v-show="cntchecktf" @click="cntcheck">{{cnt}}</span> 
-          <router-link to="/memedit">내정보 수정</router-link>
-        </div>
-        <!-- //기존 링크 모음 (테스트용, 추후 삭제 예정) -->
-        <p>Copyright by Petmily, ... etc</p>
-      </div>
+      <div id="footer" class="footer_wrap clearfix">
+	<div class="wrapper clearfix">
+		<div class="foot_wrap" >
+			<div class="foot_logo">
+        <img src="@/assets/logo_petmily.png" alt="펫밀리 로그" style="width:120px; height:80px; margin-left:70px; " >
+			</div>
+			<div class="foot_txt" style="padding-left:110px">
+
+				<p class="bar_span">
+					<span>(주)펫밀리</span> |
+					<span>대표: 전준하</span> |
+					<span>(13637) 경기도 성남시 분당구 성남대로 34 6층(구미동 하나프라자빌딩)</span>
+				</p>
+				<p class="bar_span">
+					<span>사업자등록번호 : 012-01-01234</span> |
+					<span>동물판매업 : 제1234567-213-2023-000호</span>
+				</p>
+				<p class="copy">
+					COPYRIGHT ⓒ 2023 PETMILY, ALL RIGHTS RESERVED.
+				</p>
+			</div>
+      <div class="foot_logo" style="padding-left:100px">
+        <img src="@/assets/kosta.png" alt="코스타 로그" style="width:120px; height:80px" >
+			</div>
+		</div>
+	</div>
+</div>
     </footer>
   <!--//풋터-->
   </div>
@@ -562,4 +568,38 @@ li:hover {
   cursor: pointer;
 }
 
+.footer_wrap {
+    background-color: #c9d4d2;
+    position: relative;
+    width: 100%;
+    font-weight: 300;
+    text-align: left;
+    padding: 30px 0;
+    font-size: 14px;
+}
+
+.wrapper {
+    width: 100%;
+    max-width: 1200px;
+    position: relative;
+    margin: 0 auto;
+}
+
+.footer_wrap {
+    display: flex;
+    flex-wrap: nowrap;
+}
+
+.footer_wrap .foot_wrap {
+    display: flex;
+    align-items: center;
+}
+
+.foot_txt .bar_span {
+    margin-bottom: 5px;
+}
+
+.foot_txt .copy {
+    margin-top: 5px;
+}
 </style>
