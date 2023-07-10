@@ -9,10 +9,12 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.example.demo.diaryboard.Diaryboard;
 import com.example.demo.member.Member;
 
 @Repository
 public interface AdoptBoardDao extends JpaRepository<Adoptboard, Integer> {
+	ArrayList<Adoptboard> findByAddressContaining(String address);
     ArrayList<Adoptboard> findById(Member id);
     ArrayList<Adoptboard> findByTitle(String title);
     ArrayList<Adoptboard> findAllByOrderByLikecntDesc();

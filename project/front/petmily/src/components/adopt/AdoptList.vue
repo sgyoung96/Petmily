@@ -35,22 +35,23 @@
       <table class="table">
   <thead>
     <tr>
-      <th scope="col">분양중</th>
-      <th scope="col">사진</th>
-      <th scope="col">동물종류</th>
-      <th scope="col">상세설명</th>
-      <th scope="col">구분</th>
-      <th scope="col">분양지역</th>
-      <th scope="col">작성일</th>
-      <th scope="col">조회수</th>
+      <th style="width:10%">분양중</th>
+      <th style="width:10%">사진</th>
+      <th style="width:10%">동물종류</th>
+      <th style="width:30%">상세설명</th>
+      <th style="width:8%">구분</th>
+      <th style="width:10%">분양지역</th>
+      <th style="width:15%">작성일</th>
+      <th style="width:7%">조회수</th>
     </tr>
   </thead>
   <tbody class="table-group-divider">
-    <tr v-for="(adopt) in paginatedList" :key="adopt.num" v-on:click="$event => detail(adopt.num)" style="cursor:pointer; vertical-align:middle">
-      <td><span v-if="adopt.ischeck==0">분양중</span><span v-else>분양완료</span></td>
+    <tr class="b-list" v-for="(adopt) in paginatedList" :key="adopt.num" v-on:click="$event => detail(adopt.num)">
+      <td><span class="adopt" v-if="adopt.ischeck==0">분양중</span>
+        <span class="adopted" v-else>분양완료</span></td>
       <td><img class="b-img" :src="'http://localhost:8082/adopt/imgs/' +adopt.num+ '/1'"></td>
       <td>{{ adopt.category }}</td>
-      <td>{{ adopt.title }}</td>
+      <td style="text-align: left;">{{ adopt.title }}</td>
       <td>{{ adopt.gender }}</td>
       <td>{{adopt.address}}</td>
       <td>{{ formatDateTime(adopt.w_date)}}</td>
@@ -87,8 +88,8 @@
     </ul>
   </div>
   <div class="search-box">
-    <input type="text" id="searchKeyword" v-model="searchKeyword" placeholder="제목을 입력해주세요">
-    <button id="search_btn" @click="searchByTitle()">검색</button>
+    <input type="text" id="searchKeyword" v-model="searchKeyword" placeholder="주소를 입력해주세요">
+    <button id="search_btn" @click="searchByAddress()">검색</button>
   </div>
 </div>
 
@@ -132,6 +133,22 @@ created: function () {
   });
 },
 methods: {
+  searchByAddress() {
+      const self = this;
+      alert(self.searchKeyword)
+      self.$axios
+        .get('http://localhost:8082/adopt/getByAddress/' + self.searchKeyword)
+        .then(function (res) {
+          if (res.status === 200) {
+            self.list = res.data;
+          } else {
+            alert('에러코드' + res.status);
+          }
+        })
+        .catch(function (error) {
+          console.log(error);
+        });
+    },
   zoomIn(event) {
     event.currentTarget.style.transform = 'scale(1.1)';
   },
@@ -315,15 +332,45 @@ padding-right: 150px;
   height:100px;
   border-radius: 10px 10px 0px 0px;
 }
+.b-list{
+  cursor:pointer;
+  vertical-align:middle;
+}
 
-.img-box {
-border: 1px solid silver;
-cursor: pointer;
+.adopt{
+background-color:blue;
+width: 70px;
+    color: white;
+    height: 30px;
+font-weight: bold;
+    border:blue;
+    border-radius: 10px;
+    font-family: 'IBMPlexSansKR-Bold';
+    font-size: 15px;
+    padding-top: 2px;
+    margin-right: 5px;
+    display:inline-block;
+}
+
+.adopted{
+  background-color:silver;
+  width: 70px;
+    color: white;
+    height: 30px;
+font-weight: bold;
+border:silver;
+    border-radius: 10px;
+    font-family: 'IBMPlexSansKR-Bold';
+    font-size: 15px;
+    padding-top: 2px;
+    margin-right: 5px;
+    display:inline-block;
 }
 
 .b-img {
-  width: 60px;
-  height:50px;
+  width: 100px;
+  height:80px;
+  border-radius: 10px;
 }
 
 .b-txt {

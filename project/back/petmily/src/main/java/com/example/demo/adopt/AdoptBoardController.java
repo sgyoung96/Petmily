@@ -267,6 +267,13 @@ public class AdoptBoardController {
 		return map;
 	}
 
+	// 주소로검색
+    @GetMapping("/getByAddress/{address}")
+    public ResponseEntity<ArrayList<AdoptBoardDto>> getByAddress(@PathVariable String address) {
+        ArrayList<AdoptBoardDto> list = service.getByAddress(address);
+        return ResponseEntity.ok(list);
+    }
+    
 	// 좋아요 수 올림
 	@GetMapping("/likeup/{num}")
 	public Map likeup(@PathVariable int num) {

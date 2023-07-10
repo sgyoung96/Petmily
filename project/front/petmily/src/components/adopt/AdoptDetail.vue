@@ -77,7 +77,7 @@
       </div>
       <div class="d-btn">
         <div>
-          <button style="font-size: 17px;" @click="$router.push('/diaryboardhome')">목록으로</button>
+          <button style="font-size: 17px;" @click="$router.push('/adopt')">목록으로</button>
         </div>
         <div v-if="dto.id">
           <span v-if="isAuthor">
@@ -105,8 +105,8 @@
             v-on:click="modal(comment.id.id)">
             </div>
             <div style="width:900px">
-              <span>{{ comment.id.id }}</span>&nbsp;<span style="font-size: small; color:grey">{{
-                formatDate(comment.w_date) }}</span><br />
+              <span>{{ comment.id.id }}</span>&nbsp;
+              <span style="font-size: small; color:grey">{{ formatDate(comment.w_date) }}</span><br />
               <div v-if="!comment.editMode">{{ comment.content }}</div>
               <div v-if="comment.editMode" class="c-editForm">
                 <textarea style="width:900px;  resize:none;" v-model="comment.editContent"
@@ -116,10 +116,11 @@
               </div>
             </div>
           </div>
-          <div style="float:right;">
-            <button @click="showEditForm(comment)">수정하기</button>
-            <button @click="commentdelete(comment.db_num)">삭제하기</button>
-          </div>
+            <div style="float:right;" v-if="comment.id.id === id">
+  <button @click="showEditForm(comment)">수정하기</button>
+  <button @click="commentdelete(db_num)">삭제하기</button>
+</div>
+
         </div>
       </div>
     </div>
