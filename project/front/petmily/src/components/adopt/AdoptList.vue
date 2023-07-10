@@ -47,14 +47,14 @@
   </thead>
   <tbody class="table-group-divider">
     <tr v-for="(adopt) in paginatedList" :key="adopt.num" v-on:click="$event => detail(adopt.num)" style="cursor:pointer; vertical-align:middle">
-      <td>분양중</td>
+      <td><span v-if="adopt.ischeck==0">분양중</span><span v-else>분양완료</span></td>
       <td><img class="b-img" :src="'http://localhost:8082/adopt/imgs/' +adopt.num+ '/1'"></td>
-      <td>동물종류</td>
+      <td>{{ adopt.category }}</td>
       <td>{{ adopt.title }}</td>
       <td>{{ adopt.gender }}</td>
       <td>{{adopt.address}}</td>
-      <td>{{ formatDate}}</td>
-      <td>조회수</td>
+      <td>{{ formatDateTime(adopt.w_date)}}</td>
+      <td>{{ adopt.cnt }}</td>
     </tr>
   </tbody>
 </table>
@@ -138,10 +138,25 @@ methods: {
   zoomOut(event) {
     event.currentTarget.style.transform = 'scale(1.0)';
   },
-  detail(num) {
-  const url = this.$router.resolve({ name: 'AdoptDetail', query: { num: num } }).href;
-  window.open(url, '_blank', 'width=800,height=1000');
+  formatDateTime(dateTime) {
+  const dateObj = new Date(dateTime);
+  const year = dateObj.getFullYear();
+  const month = ("0" + (dateObj.getMonth() + 1)).slice(-2);
+  const day = ("0" + dateObj.getDate()).slice(-2);
+
+  return `${year}년 ${month}월 ${day}일`;
 },
+  detail: function(num) {
+    this.$router.push({name: 'AdoptDetail', query: {num: num}})
+    const self = this;
+    self.$axios.get('http://localhost:8082/adopt/cnt/'+num).then(function (res) {
+    if (res.status == 200) {
+      console.log(res.data.flag)
+    } else {
+      alert('에러');
+    }
+  });
+  },
   previousPage() {
       if (this.currentPage > 1) {
         this.currentPage--;
