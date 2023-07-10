@@ -104,7 +104,9 @@
                 </div>
               </div>
             </div>
-            <div id="map"></div>
+            <div></div>
+            <div v-if="mapExists"><img style="width: 200px; height: 200px;" src="https://img1.daumcdn.net/thumb/C176x176/?fname=https://t1.daumcdn.net/cfile/tistory/257DD74E534A07EC2A"></div>
+            <div v-else id="map"></div>
           </div>
           <div class="box-form" style="margin-top:10px; margin-bottom:10px"> <!-- 입양신청양식으로 이동 -->
             <span @click="apply()" class="txt-form">입양 신청하기</span>
@@ -125,6 +127,7 @@ export default {
       careAddr: '',
       map: null,
       marker: null,
+      mapExists: false,
       info: {
         target: {
           kindCd: '[개]믹스견',
@@ -149,10 +152,16 @@ export default {
 
   mounted() {
   const mapElement = document.getElementById("map");
+  
   if (window.kakao && window.kakao.maps && mapElement) {
+    setTimeout(() => {
     this.loadMap();
+  }, 5000);
+  
   } else {
-    this.loadScript();
+    setTimeout(() => {
+      this.loadScript();
+  }, 5000);
   }
 },
 
@@ -175,8 +184,6 @@ export default {
     this.$data.desertionNo = this.$route.query.desertionNo;
     this.$data.careAddr = this.$route.query.careAddr;
     this.fetchItems();
-
-    alert(this.$data.careAddr);
   },
 
   methods: {
@@ -208,6 +215,7 @@ export default {
       this.map = new window.kakao.maps.Map(container, options);
 
       this.showLocation();
+      this.mapExists = true;
     },
     showLocation() {
       if (this.careAddr === "") {

@@ -6,6 +6,7 @@
     </div>
     <div class="d-box" style="text-align: center;">
       <img src="https://media4.giphy.com/media/F9Jq2l4665hNQxwumF/giphy.gif?cid=ecf05e47zaj6bkvkgje5m0239nrz09hswkfk4jm8xjjxpwa6&ep=v1_gifs_search&rid=giphy.gif&ct=g" style="width:360px; height: 270px; margin-bottom: 20px;">
+      <div style="border-bottom: solid black 2px; margin-bottom:15px; width: 80%; text-align: left; font-weight: 900; font-size:36px; font-family: 'Jua', sans-serif;">분양게시판 글쓰기</div>
       <div class="box-title">
         <input type="text" id="id" v-model="id" readonly style="margin-bottom:5px"><br/>
         <input type="text" id="title" v-model="title" size="80" maxlength="20" placeholder="제목을 입력해 주세요."><br/>
