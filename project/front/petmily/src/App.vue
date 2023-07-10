@@ -78,27 +78,27 @@
     <!-- 풋터 -->
     <footer class="footer">
       <div id="footer" class="footer_wrap clearfix">
-	<div class="wrapper clearfix">
-		<div class="foot_wrap" >
-			<div class="foot_logo">
-        <img src="@/assets/logo_petmily.png" alt="펫밀리 로그" style="width:120px; height:80px; margin-left:70px; " >
-			</div>
-			<div class="foot_txt" style="padding-left:110px">
+        <div class="wrapper clearfix">
+          <div class="foot_wrap" >
+            <div class="foot_logo">
+              <img src="@/assets/logo_petmily.png" alt="펫밀리 로그" style="width:120px; height:80px; margin-left:70px; " >
+            </div>
+            <div class="foot_txt" style="padding-left:110px">
 
-				<p class="bar_span">
-					<span>(주)펫밀리</span> |
-					<span>대표: 전준하</span> |
-					<span>(13637) 경기도 성남시 분당구 성남대로 34 6층(구미동 하나프라자빌딩)</span>
-				</p>
-				<p class="bar_span">
-					<span>사업자등록번호 : 012-01-01234</span> |
-					<span>동물판매업 : 제1234567-213-2023-000호</span>
-				</p>
-				<p class="copy">
-					COPYRIGHT ⓒ 2023 PETMILY, ALL RIGHTS RESERVED.
-				</p>
-			</div>
-      <div class="foot_logo" style="padding-left:100px">
+            <p class="bar_span">
+              <span>(주)펫밀리</span> |
+              <span>대표: 전준하</span> |
+              <span>(13637) 경기도 성남시 분당구 성남대로 34 6층(구미동 하나프라자빌딩)</span>
+            </p>
+            <p class="bar_span">
+              <span>사업자등록번호 : 012-01-01234</span> |
+              <span>동물판매업 : 제1234567-213-2023-000호</span>
+            </p>
+            <p class="copy">
+              COPYRIGHT ⓒ 2023 PETMILY, ALL RIGHTS RESERVED.
+            </p>
+          </div>
+        <div class="foot_logo" style="padding-left:100px">
         <img src="@/assets/kosta.png" alt="코스타 로그" style="width:120px; height:80px" >
 			</div>
 		</div>
@@ -508,7 +508,7 @@ export default {
 }
 
 .footer {
-  position: absolute;
+  position: relative;
   height: 200px;
   width: 100%;
   background-color: #efefef;
@@ -584,6 +584,10 @@ li:hover {
     max-width: 1200px;
     position: relative;
     margin: 0 auto;
+}
+
+#footer {
+  position: absolute;
 }
 
 .footer_wrap {

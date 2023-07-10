@@ -592,13 +592,13 @@ export default {
         // if (document.scrollY > document.getElementById('container2').getBoundingClientRect().height/2) {
         //   window.scrollBy(0, 400);
         // }
-        let imgBannerHeight = document.getElementById('container2').scrollTop + document.getElementById('container2').clientHeight;
-        if (imgBannerHeight / 2 < window.scrollY) {
-          document.getElementById('top_02').classList.add('active');
-          setTimeout(function() {
-            //window.scrollTo(imgBannerHeight, imgBannerHeight * 2);
-          }, 6000)
-        }
+        // let imgBannerHeight = document.getElementById('container2').scrollTop + document.getElementById('container2').clientHeight;
+        // if (imgBannerHeight / 2 < window.scrollY) {
+        //   document.getElementById('top_02').classList.add('active');
+        //   setTimeout(function() {
+        //     //window.scrollTo(imgBannerHeight, imgBannerHeight * 2);
+        //   }, 6000)
+        // }
 
         
       });
@@ -647,7 +647,7 @@ export default {
 }
 
 .top_02 {
-  position: absolute;
+  position: relative;
   width: 100%;
   height: 800px;
   justify-content: center;
@@ -730,7 +730,7 @@ export default {
 }
 
 .picture {
-  position: absolute;
+  position: relative;
   top: 0;
   width: 100%;
   height: 550px;
