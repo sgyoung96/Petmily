@@ -2,135 +2,113 @@
   <img id="fadeout_text" class="head-text fade-out" src="../assets/images/문구_01.png" />
   <div id="fadeout_bg" class="bg_fadeout"></div>
   <div class="home">
-    <div class="container2">
+    <div id="container2" class="container2">
       <img class="picture left" src="../assets/images/banner_top_cat_02.jpg" @click="all_cats()">
       <img class="picture right" src="../assets/images/banner_top_dog_01.jpg" @click="all_dogs()">
     </div>
-      <!-- <div id="carouselExampleInterval" class="carousel slide" data-bs-ride="carousel">
-        <div class="carousel-inner" style="padding-bottom:20px">
-          <div class="carousel-item active" data-bs-interval="3000">
-            <img src="../assets/images/top_banner_cat_01.jpg" class="d-block w-100" alt="...">
-          </div>
-          <div class="carousel-item" data-bs-interval="3000">
-            <img src="../assets/images/top_banner_dog_01.jpg" class="d-block w-100" alt="...">
-          </div>
 
-          <div class="carousel-item" data-bs-interval="2000">
-            <img src="../assets/images/배경.png" class="d-block w-100" alt="...">
-          </div>
-          <div class="carousel-item" data-bs-interval="2000">
-            <img src="../assets/images/고양.png" class="d-block w-100" alt="...">
-          </div>
-          <div class="carousel-item" data-bs-interval="2000">
-            <img src="../assets/images/강고.png" class="d-block w-100" alt="...">
-          </div>
-        </div>
-        <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleInterval"
-          data-bs-slide="prev">
-          <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-          <span class="visually-hidden">Previous</span>
-        </button>
-        <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleInterval"
-          data-bs-slide="next">
-          <span class="carousel-control-next-icon" aria-hidden="true"></span>
-          <span class="visually-hidden">Next</span>
-        </button>
+    <div id="app">
+      <!-- ... Existing code ... -->
+
+      <!-- <div class="form-group">
+        <input type="hidden" class="form-control" v-model="videoUrl">
       </div> -->
 
-      <div id="app">
-        <!-- ... Existing code ... -->
-
-        <!-- <div class="form-group">
-          <input type="hidden" class="form-control" v-model="videoUrl">
-        </div> -->
-
-        <!-- Display YouTube video -->
-        <!-- Display YouTube video -->
-        <div class="form-group">
-          <div v-if="isValidVideoUrl">
-            <iframe :src="embeddedVideoUrl" width="50%" height="400px" frameborder="0" allowfullscreen></iframe>
-          </div>
-        </div>
-
-        <!-- ... Existing code ... -->
+      <div id="top_02" class="top_02">
+        <p>당신만을 바라보는 반려견 유기 횟수 10만 마리</p>
       </div>
 
-      <div class="container text-center">
-        <div class="row">
-          <div class="col">
-            <canvas id="PieChart" width="1" height="1"></canvas>
-            {{ formatDate(this.sysdate) }}
-          </div>
-          <div class="col">
-            <canvas id="BarChart" width="50px" height="50px"></canvas>
-            <div>{{ t1 }}</div>
-            <div>{{ t2 }}</div>
-            <div>{{ t3 }}</div>
-          </div>
+      <!-- Display YouTube video -->
+      <!-- Display YouTube video -->
+      <div class="form-group">
+        <div v-if="isValidVideoUrl">
+          <iframe :src="embeddedVideoUrl" width="80%" height="800px" frameborder="0" allowfullscreen></iframe>
         </div>
       </div>
-      <div class="container">
-      <div style="display:flex">
-        <div v-for="dboard in arr" :key="dboard.num">
-          <div class="img-box" v-on:click="$event => detail(dboard.num)">
-            <a><img class="b-img" :src="'http://localhost:8082/dboard/imgs/' + dboard.num + '/1'"></a>
-            <div class="b-txt">
-              <div class="b-title">
-                {{ dboard.title }}
-              </div>
-              <div class="b-id">
-                <span>
-                  작성자: {{ dboard.id.id }}
-                </span>
-                <span>
-                  <img class="l-img" src="../assets/images/heart.png" style="width: 15px; height: 15px;">{{ dboard.likecnt
-                  }}
-                </span>
-              </div>
+    </div>
+
+
+
+
+
+    <div class="container text-center">
+      <div class="row">
+        <div class="col">
+          <canvas id="PieChart" width="1" height="1"></canvas>
+          {{ formatDate(this.sysdate) }}
+        </div>
+        <div class="col">
+          <canvas id="BarChart" width="50px" height="50px"></canvas>
+          <div>{{ t1 }}</div>
+          <div>{{ t2 }}</div>
+          <div>{{ t3 }}</div>
+        </div>
+      </div>
+    </div>
+
+    
+    <div class="container">
+    <div style="display:flex">
+      <div v-for="dboard in arr" :key="dboard.num">
+        <div class="img-box" v-on:click="$event => detail(dboard.num)">
+          <a><img class="b-img" :src="'http://localhost:8082/dboard/imgs/' + dboard.num + '/1'"></a>
+          <div class="b-txt">
+            <div class="b-title">
+              {{ dboard.title }}
+            </div>
+            <div class="b-id">
+              <span>
+                작성자: {{ dboard.id.id }}
+              </span>
+              <span>
+                <img class="l-img" src="../assets/images/heart.png" style="width: 15px; height: 15px;">{{ dboard.likecnt
+                }}
+              </span>
             </div>
           </div>
         </div>
       </div>
+    </div>
 
-      <div style="display:flex">
-        <div v-for="dboard in arr2" :key="dboard.num">
-          <div class="img-box" v-on:click="$event => detail2(dboard.num)">
-            <a><img class="b-img" :src="'http://localhost:8082/adopt/imgs/' + dboard.num + '/1'"></a>
-            <div class="b-txt">
-              <div class="b-title">
-                {{ dboard.title }}
-              </div>
-              <div class="b-id">
-                <span>
-                  작성자: {{ dboard.id.id }}
-                </span>
-                <span>
-                  <img class="l-img" src="../assets/images/heart.png" style="width: 15px; height: 15px;">{{ dboard.likecnt
-                  }}
-                </span>
-              </div>
+    <div style="display:flex">
+      <div v-for="dboard in arr2" :key="dboard.num">
+        <div class="img-box" v-on:click="$event => detail2(dboard.num)">
+          <a><img class="b-img" :src="'http://localhost:8082/adopt/imgs/' + dboard.num + '/1'"></a>
+          <div class="b-txt">
+            <div class="b-title">
+              {{ dboard.title }}
+            </div>
+            <div class="b-id">
+              <span>
+                작성자: {{ dboard.id.id }}
+              </span>
+              <span>
+                <img class="l-img" src="../assets/images/heart.png" style="width: 15px; height: 15px;">{{ dboard.likecnt
+                }}
+              </span>
             </div>
           </div>
         </div>
       </div>
+    </div>
 
-      <div class="container text-center">
-        <div class="row">
-          <div class="col">
-            <canvas id="PieChart" width="1" height="1"></canvas>
-            {{ formatDate(this.sysdate) }}
-          </div>
-          <div class="col">
-            <canvas id="BarChart" width="50px" height="50px"></canvas>
-            <div>{{ t1 }}</div>
-            <div>{{ t2 }}</div>
-            <div>{{ t3 }}</div>
-          </div>
+    <div class="container text-center">
+      <div class="row">
+        <div class="col">
+          <canvas id="PieChart" width="1" height="1"></canvas>
+          {{ formatDate(this.sysdate) }}
+        </div>
+        <div class="col">
+          <canvas id="BarChart" width="50px" height="50px"></canvas>
+          <div>{{ t1 }}</div>
+          <div>{{ t2 }}</div>
+          <div>{{ t3 }}</div>
         </div>
       </div>
+    </div>
 
-      
-      <div class="container text-center">
+    
+    <div class="container text-center">
 
   <div class="row">
     <div class="col-7">
@@ -359,6 +337,7 @@ export default {
   },
   created: function () {
     this.fadeoutAnim();
+    this.showHeadText02();
     this.loginId = sessionStorage.getItem('loginId')
     const self = this;
     self.$axios.get('http://localhost:8082/dboard/ol')//+self.loginId
@@ -601,15 +580,28 @@ export default {
       });
     },
     fadeoutAnim() {
-      // setInterval(() => {
-      //   // fadeout_text, fadeout_bg
-      //   document.getElementById('fadeout_text').style = 'display: none;';
-      //   document.getElementById('fadeout_bg').style = 'display: none;';
-      // }, 3000);
       setTimeout(function() {
         document.getElementById('fadeout_text').style = 'display: none;';
         document.getElementById('fadeout_bg').style = 'display: none;';
       }, 3000);
+    },
+    showHeadText02() {
+      document.addEventListener('scroll', () => {
+        //alert('aaa');
+
+        // if (document.scrollY > document.getElementById('container2').getBoundingClientRect().height/2) {
+        //   window.scrollBy(0, 400);
+        // }
+        let imgBannerHeight = document.getElementById('container2').scrollTop + document.getElementById('container2').clientHeight;
+        if (imgBannerHeight / 2 < window.scrollY) {
+          document.getElementById('top_02').classList.add('active');
+          setTimeout(function() {
+            window.scrollTo(imgBannerHeight, imgBannerHeight * 2);
+          }, 6000)
+        }
+
+        
+      });
     }
   }
 }
@@ -647,7 +639,50 @@ export default {
   100% { opacity: 0;}
 }
 
-/* ////////////////////////  */
+#app {
+  display: relative;
+  width: 100%;
+  height: 3000px;
+  justify-content: center;
+}
+
+.top_02 {
+  position: absolute;
+  width: 100%;
+  height: 800px;
+  justify-content: center;
+  vertical-align: middle;
+  background: white;
+}
+
+.top_02 p {
+  margin-top: 200px;
+  color: black;
+  font-family: 'IBMPlexSansKR-Bold';
+  font-size: 20px;
+}
+
+#top_02.active {
+  animation: showtext 3s linear;
+}
+
+@keyframes showtext {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+.form-group {
+  display: relative;
+  margin-top: 800px;
+  position: relative;
+  width: 100%;
+  height: 1000px;
+  justify-content: center;
+}
 
 .img-box {
   border: 1px solid silver;
@@ -683,7 +718,8 @@ export default {
 }
 
 .container {
-  height: auto;
+  width: 100%;
+  height: 1000px;
 }
 
 .container2 {
