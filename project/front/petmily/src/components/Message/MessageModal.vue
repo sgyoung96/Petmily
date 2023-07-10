@@ -1,6 +1,6 @@
-<template>ssage_area
+<template>
   <div class="MessageModal">
-    <div class="wrapper">
+    <div class="wrapper2">
         <div class="container">
             
                 <div class="mtitle">
@@ -13,7 +13,7 @@
 
                 <div class="message_box">
                   <input class="input_box" type="text" v-model="title" placeholder="제목">
-                  <textarea class="input_txt" v-model="content" cols="30" rows="5" placeholder="message"></textarea>
+                  <textarea class="input_txt" v-model="content" cols="30" rows="5" @keyup.enter="send" placeholder="message"></textarea>
               
                   <button class="message_botton" style="margin-top:20px" @click="$emit('close')">취소</button>
                   <button class="message_botton" style="background-color:rgb(255, 214, 91);" @click="send">쪽지보내기</button>
@@ -96,10 +96,10 @@ export default{
   overflow: hidden;
 }
 
-.wrapper {
+.wrapper2 {
   background-color: rgba(0, 0, 0, 0.5);
   position: fixed;
-  max-width: 100%;
+  width: 100%;
   height: 100%;
   top:0;
   left:0;

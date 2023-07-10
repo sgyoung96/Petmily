@@ -251,8 +251,8 @@ export default {
         
         const self = this;
 
-        alert(self.emailCode)
-        alert(self.confirm)
+      
+       
   
         if(self.confirm === self.emailCode){
             alert('인증완료')
@@ -321,7 +321,7 @@ export default {
       formdata.append('phone',self.phone)
       formdata.append('address', address)
 
-      alert('파일' + document.getElementById('profile').value)
+      //alert('파일' + document.getElementById('profile').value)
      if(document.getElementById('profile').value !== ''){
         const file = document.getElementById('profile').files[0]
        

@@ -56,17 +56,14 @@ export default {
     reciever(){
       this.showMessageReciever = true;
       this.showMessageSender = false;
-      // this.showMessageWrite = false;
+   
     },
     sender(){
       this.showMessageReciever = false;
-      // this.showMessageWrite = false;
       this.showMessageSender = true;
     },
     send(){
       this.showMessageWrite = true;
-      // this.showMessageSender = false;
-      // this.showMessageReciever = false;
      
     },
     cntcheck(){
@@ -135,13 +132,15 @@ export default {
   padding:6px;
   color:#7a7a7a;
   background-color: white;
+  font-family: "IBMPlexSansKR-Medium";
 }
 
 .mbtn.active{
   color:  rgb(156, 156, 39);
   font-weight: bold;
   background-color: white;
-  border:0px
+  border:0px;
+  font-family: "IBMPlexSansKR-bold";
  
 }
 

@@ -10,9 +10,8 @@
 
       <div class="message-list">
         <div class="menu">
-          <!-- <button @click="read"></button> -->
+          
           <span class="material-symbols-outlined" @click="read" :class="{ active: activeMenu ==='read' }"  >drafts<span class="messagemenu">읽은쪽지</span></span>
-          <!-- <button @click="unread">읽지 않은 메일</button> -->
           <span class="material-symbols-outlined" @click="unread" :class="{ active: activeMenu ==='unread' }">mail<span class="messagemenu">안읽은쪽지</span></span>
           <span class="material-symbols-outlined" @click="all" :class="{ active: activeMenu ==='all' }"><span class="messagemenu">전체</span></span>
       
@@ -26,7 +25,7 @@
 
 
         
-          <input type="text" v-model="find"><button @click="findbtn">검색</button>
+          <input type="text" v-model="find"  @keyup.enter="findbtn"><button @click="findbtn">검색</button>
         </div>
       </div>
        
@@ -176,7 +175,8 @@ export default {
       blocknum:0,
       cnt:0,
       activeMenu: "",
-      nomessage:''
+      nomessage:'',
+      checknum:0
       
       
     };
@@ -242,15 +242,15 @@ export default {
   },
   methods: {
     del(num) {
-      alert("삭제버튼 클릭");
+      
       this.loginId = sessionStorage.getItem("loginId");
       const self = this;
-      alert(num);
+      
       self.$axios
         .delete("http://localhost:8082/message/reciever/" + num)
         .then(function (res) {
           if (res.status == 200) {
-            alert("삭제완료");
+            
             self.$axios
               .get("http://localhost:8082/message/reciever/" + self.loginId)
               .then(function (res) {
@@ -275,14 +275,14 @@ export default {
     },
     readcheck(num) {
       const self = this;
-      alert(num);
+      
       self.$axios
         .patch("http://localhost:8082/message/" + num)
         .then(function (res) {
           if (res.status == 200) {
-            alert("읽음");
-            self.cntcheck()
             
+            self.cntcheck()
+            if(self.checknum === 0){
             self.$axios
               .get("http://localhost:8082/message/reciever/" + self.loginId)
               .then(function (res) {
@@ -293,6 +293,11 @@ export default {
                   alert("에러코드 :" + res.status);
                 }
               });
+            }else if(self.checknum === 1){
+              self.read()
+            }else{
+              self.unread()
+            }
           } else {
             alert("에러코드 :" + res.status);
           }
@@ -320,11 +325,13 @@ export default {
         if (res.status == 200) {
           if(res.data.list.length === 0){
             self.nomessage= '메세지가 없습니다'
+            
           }else{
             self.nomessage= ''
           }
           self.list = res.data.list;
           self.activeMenu = "read";
+          self.checknum=1;
         } else {
           alert("에러코드 :" + res.status);
         }
@@ -339,11 +346,13 @@ export default {
         if (res.status == 200) {
           if(res.data.list.length === 0){
             self.nomessage= '메세지가 없습니다'
+            
           }else{
             self.nomessage= ''
           }
           self.list = res.data.list;
           self.activeMenu = "unread";
+          self.checknum=2;
         } else {
           alert("에러코드 :" + res.status);
         }
@@ -354,7 +363,7 @@ export default {
 
     findbtn(){
       const self = this;
-      alert(self.loginId)
+    
       if(self.find==''){
         alert('검색어를 입력하세요')
       }else{
@@ -363,6 +372,13 @@ export default {
       .get("http://localhost:8082/message/r_title/" + self.find + "/" + self.loginId)
       .then(function (res) {
         if (res.status == 200) {
+        
+          if(res.data.list.length === 0){
+            self.nomessage= '메세지가 없습니다'
+           
+          }else{
+            self.nomessage= ''
+          }
           self.list = res.data.list;
         } else {
           alert("에러코드 :" + res.status);
@@ -397,11 +413,13 @@ export default {
         if (res.status == 200) {
           if(res.data.list.length === 0){
             self.nomessage= '메세지가 없습니다'
+           
           }else{
             self.nomessage= ''
           }
           self.list = res.data.list;
           self.activeMenu = "all";
+           self.checknum=0;
           
         } else {
           alert("에러코드 :" + res.status);
@@ -527,6 +545,7 @@ export default {
   text-align: left;
   font-weight: bold;
   font-size:22px;
+
 }
 .modal-box-content{
 
@@ -534,12 +553,14 @@ export default {
  margin-top: 10px;
  width:100%;
  text-align: left;  
+ font-family: "IBMPlexSansKR-Medium";
 }
 .modal-box-sender{
  display:block;
  margin-top: 10px;
  width:100%;
  text-align: right; 
+ font-family: "IBMPlexSansKR-Medium";
 }
 
 .modal-box-bottom{
@@ -561,6 +582,7 @@ border-radius: 10px;
 }
 .modal-box-date{
   margin-left: auto;
+   font-family: "IBMPlexSansKR-Medium";
  
 }
 .modal-box-profile {
@@ -629,6 +651,7 @@ border-radius: 10px;
   margin-left:10px;
   align-items : center;
   font-size: 1.3em;
+  font-family: "IBMPlexSansKR-Medium";
   
 
 }
@@ -654,11 +677,13 @@ border-radius: 10px;
   font-size: 1.2em;
   cursor: pointer;
   margin-left:10px;
+  font-family: "IBMPlexSansKR-Medium";
 }
 .message-date{
  
   float:right;
   display:flex;
+  font-family: "IBMPlexSansKR-Medium";
   /* text-align:right; */
   /* justify-content: right; */
 }
