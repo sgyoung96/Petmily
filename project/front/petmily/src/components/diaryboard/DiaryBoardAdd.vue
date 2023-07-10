@@ -4,12 +4,13 @@
       <h4 style="text-align: center;"><strong><span style="color:rgb(156, 156, 39)">PETMILY</span>
           &nbsp;<span style="color:rgb(244, 191, 79);">DIARY</span></strong></h4>
     </div>
-    <div class="d-box">
+    <div class="d-box" style="text-align: center;">
+      <img src="https://media2.giphy.com/media/3ov9jQGg5J9LGVbBKg/giphy.gif?cid=ecf05e47nipfu9pzm7cfepksrg0i23fgcot04lqgxx8fkdg6&ep=v1_gifs_related&rid=giphy.gif&ct=g" style="width:500px; height: 280px; margin-bottom: 20px;">
       <div class="box-title">
         <input type="text" id="id" v-model="id" readonly style="margin-bottom:5px"><br/>
         <input type="text" id="title" v-model="title" size="80" maxlength="20" placeholder="제목을 입력해 주세요.">
       </div>
-      <div class="box-warning">
+      <div class="box-warning" style="text-align: left;">
       ※ 양식에 맞지 않거나 게시판과 관계없는 글일 경우 작성자의 동의 없이 삭제될 수 있습니다.<br />
       ※ 음란물, 차별, 비하, 혐오 및 초상권, 저작권 침해 게시물은 민, 형사상의 책임을 질 수 있습니다.<br/>
     </div>
@@ -27,7 +28,7 @@
       </tr>
       <tr>
         <th>등록</th>
-        <td><button v-on:click="add">등록</button></td>
+        <td><button v-on:click="add" style="text-align: left;">등록</button></td>
       </tr>
     </div>
   </div>
