@@ -6,6 +6,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.example.demo.adopt.Adoptboard;
+import com.example.demo.diarycomment.Diarycomment;
+import com.example.demo.diarycomment.DiarycommentDto;
 import com.example.demo.member.Member;
 
 @Service
@@ -35,10 +37,11 @@ public class AdoptCommentService {
 	 * @param dtoz
 	 * @return
 	 */
-	public Adoptcomment add(AdoptCommentDto dto) {
-		Adoptcomment adoptComment = (Adoptcomment) dao.save(new Adoptcomment(dto.getAb_num(),dto.getContent(),dto.getId(),dto.getW_date(),dto.getNum()));
-		return adoptComment;
-	}
+	
+		public AdoptCommentDto save(AdoptCommentDto dto) {
+			Adoptcomment c = dao.save(new Adoptcomment(dto.getAb_num(), dto.getContent(), dto.getId(), dto.getW_date(), dto.getNum()));
+			return new AdoptCommentDto(c.getAb_num(), c.getContent(), c.getId(), c.getW_date(), c.getNum());
+		}
 	
 	/**
 	 * 댓글 삭제
@@ -53,4 +56,13 @@ public class AdoptCommentService {
 		Member m = new Member(id,"","","","",null,"","","",null);
 		return dao.countById(m);
 	}
+	
+	//pk로 검색
+		public AdoptCommentDto getByNum2(int db_num) {
+			Adoptcomment c = dao.findById(db_num).orElse(null);
+			if(c==null) {
+				return null;
+			}
+			return new AdoptCommentDto(c.getAb_num(), c.getContent(), c.getId(), c.getW_date(), c.getNum());
+		}
 }

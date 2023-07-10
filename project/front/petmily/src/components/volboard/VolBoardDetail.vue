@@ -48,6 +48,7 @@
         </tr>
       </tbody>
     <tfoot v-if="this.loginId=='admin'">
+      <tr><th colspan="4">⬇ 참가자 리스트 ⬇</th></tr>
       <tr><th>아이디</th><th>전화번호</th><th>이름</th><th>이메일</th></tr>
       <tr v-for="person in list2" :key="person.num">
         <td>{{ person.id.id }}</td><td>{{ person.id.phone }}</td><td>{{ person.id.name }}</td><td>{{ person.id.email }}</td>
