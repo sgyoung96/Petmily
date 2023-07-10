@@ -25,20 +25,16 @@
         <div>
           <table>
             <tr>
+              <th>제목</th>
+              <td><input style="text; width:300px" v-model="dto.title" id="editTitle"></td>
               <th>사진1</th>
               <td><input type="file" id="f1"></td>
-            </tr>
-            <tr>
               <th>사진2</th>
               <td><input type="file" id="f2"></td>
             </tr>
             <tr>
-              <th>Title</th>
-              <td><input type="text" v-model="dto.title" id="editTitle"></td>
-            </tr>
-            <tr>
-              <th>Content</th>
-              <td><input type="text" v-model="dto.content" id="editContent"></td>
+              <th>내용</th>
+              <td colspan="5"><textarea v-model="dto.content" id="editContent" style="width:100%; height:400px; resize:none"></textarea></td>
             </tr>
           </table>
           <div class="edit-buttons">
@@ -51,16 +47,18 @@
         <div>
           <button @click="$router.push('/diaryboardhome')">목록으로</button>
         </div>
-        <div>
+        <div v-if="dto.id">
+          <span v-if="isAuthor">
           <button v-on:click="edit(dto.id.id)">수정하기</button>
           <button v-on:click="boarddelete(dto.id.id)">삭제하기</button>
+          </span>
         </div>
       </div><br />
       <div class="cbox-add">
         <span class="comment-profile">
           <img class="profile" @error="replaceImg" :src="'http://localhost:8082/members/imgs/' + id">
         </span>
-        <textarea style="overflow:auto; height:auto; width:900px; resize: none; margin:0px; text-align:top;" v-model="content" id="content"></textarea>
+        <textarea style="overflow:auto; height:auto; width:900px; resize: none; margin-right:5px; text-align:top;" v-model="content" id="content"></textarea>
         <button v-on:click="commentadd">등록하기</button>
       </div>
       <MessageModal :resender=resender v-if="displayDetail" @close="displayDetail=false"/>
@@ -84,10 +82,10 @@
               </div>
             </div>
           </div>
-          <div style="float:right;">
-            <button @click="showEditForm(comment)">수정하기</button>
-            <button @click="commentdelete(comment.db_num)">삭제하기</button>
-          </div>
+          <div style="float:right;" v-if="comment.id.id === id">
+  <button @click="showEditForm(comment)">수정하기</button>
+  <button @click="commentdelete(comment.db_num)">삭제하기</button>
+</div>
         </div>
       </div>
     </div>
@@ -116,7 +114,7 @@ button:hover {
   padding: 20px;
   border: 1px solid #ddd;
   border-radius: 4px;
-  max-width: 500px;
+  max-width: 100%;
   margin: 0 auto;
 }
 
@@ -137,7 +135,7 @@ button:hover {
 }
 
 .edit-buttons button {
-  padding: 8px 16px;
+  padding: 4px 16px;
   background-color: #4caf50;
   color: white;
   border: none;
@@ -155,8 +153,8 @@ button:hover {
 }
 
 .t-img {
-  width: 85%;
-  height: 500px;
+  width: 100%;
+  height: 600px;
   margin-bottom: 20px;
 }
 
@@ -283,6 +281,18 @@ export default {
   created() {
     this.boarddetail();
     this.commentlist();
+  },
+  mounted() {
+    window.scrollTo({ top: 0, behavior: 'auto' });
+  },
+  computed: {
+    isAuthor() {
+      // 현재 로그인한 사용자와 글 작성자를 비교하여 일치하는지 확인합니다.
+      // 예를 들어, 현재 로그인한 사용자의 ID와 글 작성자의 ID를 비교할 수 있습니다.
+      // 글 작성자의 ID는 dto.id.id로 가정합니다.
+      const loginId = sessionStorage.getItem('loginId');
+      return loginId === this.dto.id.id;
+    }
   },
   methods: {
     convertNewlines(text) {

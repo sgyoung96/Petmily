@@ -138,8 +138,8 @@ button:hover {
   cursor: pointer;
 }
 .t-img {
-  width: 85%;
-  height: 500px;
+  width: 100%;
+  height: 600px;
   margin-bottom: 20px;
 }
 
@@ -240,6 +240,9 @@ export default {
       currentPage: 1,
       pageSize: 12
     };
+  },
+  mounted() {
+    window.scrollTo({ top: 0, behavior: 'auto' });
   },
   computed: {
     totalPages() {
