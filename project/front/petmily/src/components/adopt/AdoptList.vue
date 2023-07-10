@@ -185,6 +185,7 @@ components: {
   background-color:white;
   padding:24px 63px;
   display:flex;
+  justify-content: center;
 }
 
 .banner img{

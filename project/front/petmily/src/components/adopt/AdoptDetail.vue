@@ -118,6 +118,7 @@
   </div>
 </template>
 <style scoped>
+
 .edit-form {
   background-color: #f9f9f9;
   padding: 20px;
