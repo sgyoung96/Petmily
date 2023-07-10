@@ -88,8 +88,6 @@ export default {
             self.$router.push({name:'KakaoAdditionalForm', query:{kakaoId: sessionStorage.getItem('loginId'), kakaoName: sessionStorage.getItem('kakaoName')}});
           }
         });
-      } else {
-        this.getUserInfo();
       }
     },
 
