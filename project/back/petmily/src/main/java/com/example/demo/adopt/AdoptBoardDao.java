@@ -40,4 +40,14 @@ public interface AdoptBoardDao extends JpaRepository<Adoptboard, Integer> {
 	@Modifying
 	@Query(value="update adoptboard set cnt=cnt+1 where num=:num", nativeQuery = true)
 	void updateCnt(@Param("num") int num);
+    
+    @Transactional
+	@Modifying
+	@Query(value="update adoptboard set ischeck=ischeck+1 where num=:num", nativeQuery = true)
+	void upIsCheck(@Param("num") int num);
+    
+    @Transactional
+	@Modifying
+	@Query(value="update adoptboard set ischeck=ischeck-1 where num=:num", nativeQuery = true)
+	void downIsCheck(@Param("num") int num);
 }

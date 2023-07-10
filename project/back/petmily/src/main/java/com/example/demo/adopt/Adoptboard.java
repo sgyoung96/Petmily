@@ -52,12 +52,16 @@ public class Adoptboard {
 	
 	@Column(nullable=true)
 	private int likecnt; //좋아요 수
+	@Column(nullable=true)
 	private int cnt; // 조회수
-	private int isCheck; //분양여부
+	@Column(nullable=true)
+	private int ischeck; //분양여부
 	
 	@PrePersist
 	public void preprocess() {
 		w_date = new Date();	// 현재 날짜 생성
 		likecnt = 0;
+		cnt = 0;
+		ischeck = 0;
 	}
 }
