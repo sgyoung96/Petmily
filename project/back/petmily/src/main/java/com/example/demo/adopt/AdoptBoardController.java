@@ -340,7 +340,6 @@ public class AdoptBoardController {
 		Map map = new HashMap<>();
 		try {
 			AdoptBoardDto dto = service.getDetail(num);
-			System.out.println("##########################################"+ dto.getIscheck());
 			if(dto.getIscheck() == 0) {
 				service.upIsCheck(num);
 			}else {
