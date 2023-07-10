@@ -241,7 +241,7 @@ export default {
       this.$router.push('/guide'); // TODO : 수정해야함
     },
     contact_us() { // 고객센터 ; 메일 발송 및 FAQ
-      alert('경로 추가 및 페이지 작업 필요');
+      this.$router.push('/contactus');
     },
     login() { // 로그인
       if (sessionStorage.getItem('loginFlag') == 'kakao') {
