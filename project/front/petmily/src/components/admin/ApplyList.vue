@@ -135,6 +135,33 @@ export default {
 </script>
   <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
+.pagination {
+  display: inline-block;
+  margin-top: 20px;
+  margin-bottom: 20px;
+}
+
+.page-item {
+  display: inline-block;
+  margin-right: 5px;
+}
+
+.page-item a {
+  color: black;
+  padding: 5px 10px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  text-decoration: none;
+}
+
+.page-item a:hover {
+  background-color: #f2f2f2;
+}
+
+.page-item.active a {
+  background-color: rgb(244, 191, 79);
+  color: white;
+}
 .form-container {
   display: block;
   position: relative;

@@ -5,6 +5,8 @@ import java.util.ArrayList;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.example.demo.diaryboard.Diaryboard;
+import com.example.demo.diaryboard.DiaryboardDto;
 import com.example.demo.member.Member;
 import com.example.demo.volboard.Volboard;
 import com.example.demo.volboard.VolboardDto;
@@ -98,6 +100,17 @@ public class AdoptBoardService {
 		Member m = new Member(id, "", "", "", "", null, "", "", "", null);
 		ArrayList<Adoptboard> list = dao.findById(m);
 		ArrayList<AdoptBoardDto> dtolist = new ArrayList<>();
+		for (Adoptboard v : list) {
+			dtolist.add(new AdoptBoardDto(v.getNum(), v.getId(), v.getTitle(), v.getContent(), v.getCategory(),
+					v.getGender(), v.getW_date(), v.getAddress(), v.getPic1(), v.getPic2(), v.getLikecnt(), v.getCnt(),
+					v.getIscheck(), null));
+		}
+		return dtolist;
+	}
+	
+	public ArrayList<AdoptBoardDto> getByAddress(String address) {
+		ArrayList<Adoptboard> list = dao.findByAddressContaining(address);
+		ArrayList<AdoptBoardDto> dtolist = new ArrayList<AdoptBoardDto>();
 		for (Adoptboard v : list) {
 			dtolist.add(new AdoptBoardDto(v.getNum(), v.getId(), v.getTitle(), v.getContent(), v.getCategory(),
 					v.getGender(), v.getW_date(), v.getAddress(), v.getPic1(), v.getPic2(), v.getLikecnt(), v.getCnt(),

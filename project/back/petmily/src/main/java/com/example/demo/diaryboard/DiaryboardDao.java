@@ -14,7 +14,6 @@ import java.util.List;
 
 @Repository
 public interface DiaryboardDao extends JpaRepository<Diaryboard, Integer> {
-	ArrayList<Diaryboard> findByIdContaining(Member id);
 	ArrayList<Diaryboard> findByTitleContaining(String title);
 	ArrayList<Diaryboard> findAllByOrderByNumDesc();
 	ArrayList<Diaryboard> findAllByOrderByLikecntDesc();

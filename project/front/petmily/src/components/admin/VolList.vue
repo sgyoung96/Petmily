@@ -5,7 +5,6 @@
       <div class="form-container">
 
         <div class="list-container">
-          <p><label class="section01">SECTION 1</label></p>
           <p><label class="section01-title"><u>
             <span>봉사모집게시판현황</span>
             <button @click="$router.push('/volboardadd')" style="font-size: 17px; text-decoration:none; margin-left:800px;">글등록</button>
@@ -181,6 +180,7 @@ export default {
 </script>
 
 <style scoped>
+
 .form-container {
   display: block;
   position: relative;
