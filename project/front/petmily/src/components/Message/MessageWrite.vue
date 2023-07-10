@@ -1,19 +1,27 @@
 <template>
   <div id="messagewrite">
- 
+    <div class="wrapper">
         <div class="message_area">
 
+          
+          <div class="input_box">
+            <p style="font-weight:bold"> Send Message</p>  
+            <hr style="display:flex">
+          </div>
+          
           <!-- 보내는 사람 -->
+
           <div class="input_box">
           <input type="hidden" v-model="sender" readonly /><br />
           </div>
 
-          <div class="input_box">
-            <input type="checkbox" v-model="isAdmin">관리자에게 쪽지 보내기
-          </div>
+          
           <div class="input_box" v-show="input_reciever">
            <input class="input_txt" type="text" v-model="reciever" @input="submitAutoComplete" placeholder="받는사람" /><br />
           </div>
+          <div class="input_checkbox">
+            <input type="checkbox" v-model="isAdmin">관리자에게 쪽지 보내기
+          </div> 
 
           <div class="select"  v-show="input_reciever">
             <ul class="autocomplete " :class="{'disabled':tf}">
@@ -26,11 +34,13 @@
           </div>
 
           <div class="input_box">
-          <textarea class="input_txtarea" v-model="content" cols="50" rows="10"  placeholder="MESSAGE"></textarea>
+          <textarea class="input_txtarea" v-model="content" cols="50" rows="5"  placeholder="MESSAGE"></textarea>
           </div>
 
-          <button @click="send">쪽지보내기</button><br />
+          <button class="message_botton" style="background-color:rgb(255, 214, 91);" @click="send">쪽지보내기</button><br />
+          <button class="message_botton" @click="$emit('close')">취소</button>
         </div>
+     </div>   
   </div>
 </template>
 
@@ -170,6 +180,7 @@ export default {
               self.content = "";
               self.reciever = "";
               self.isAdmin = false;
+              self.$emit('close')
             } else {
               alert("쪽지 보내기 실패");
             }
@@ -188,17 +199,34 @@ export default {
 </script>
 
 <style scoped>
-
+.wrapper {
+  background-color: rgba(0, 0, 0, 0.5);
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 99999;
+}
 
 .message_area {
     margin: 0 auto;
-    padding: 58px 10px 60px 10px;
-    width: 400px;
- 
+    padding: 20px 20px 60px 20px;
+    width: 420px;
+    background-color:white;
     border-radius: 20px;
 
  
 }
+/* .mtitle{
+  display: block;
+  float:left;
+  margin-bottom:10px;
+
+} */
 
 .input_txt{
   width: 100%;
@@ -218,8 +246,22 @@ export default {
   border:1px solid black;
   outline-offset: 0;
   outline: none;
-  color:rgb(198, 198, 198); 
+  border:none;border-right:0px; border-top:0px; border-left:0px; 
+  border-bottom : 1px solid;
  
+  
+}
+
+.input_checkbox{
+  float:right;
+}
+input::placeholder {
+  color: rgb(209, 209, 209);
+  
+}
+
+.input_txtarea::placeholder {
+  color: rgb(209, 209, 209);
   
 }
 
@@ -264,5 +306,15 @@ ul, li{
     background-color: rgb(244, 191, 79);
 }
 
+.message_botton{
+  width : 100%;
+  height: 40px;
+  border-radius: 10px;
+  border:0px;
+  background-color:rgb(222, 222, 222);
+  color:white;
+  margin-top:20px;
+  font-weight: bold;
+}
 </style>
  

@@ -2,16 +2,22 @@
   <div class="MessageModal">
     <div class="wrapper">
         <div class="container">
-          
-        
-                <h4> {{reciever}}에게 답장 쪽지 보내기</h4>
+            
+                <div class="mtitle">
+                  <p style="font-weight:bold"> Send Message To {{reciever}} </p>  
+                  <hr style="display:flex">
+                </div>
+
                 <input type="hidden" v-model="sender">
                 <input type="hidden" v-model="reciever">
-                제목:<input type="text" v-model="title">
-                내용:<textarea class="input_txt" v-model="content" cols="30" rows="5"></textarea>
-            
-                <button @click="$emit('close')">취소</button>
-                <button @click="send">쪽지보내기</button>
+
+                <div class="message_box">
+                  <input class="input_box" type="text" v-model="title" placeholder="제목">
+                  <textarea class="input_txt" v-model="content" cols="30" rows="5" placeholder="message"></textarea>
+              
+                  <button class="message_botton" style="margin-top:20px" @click="$emit('close')">취소</button>
+                  <button class="message_botton" style="background-color:rgb(255, 214, 91);" @click="send">쪽지보내기</button>
+                </div> 
            
         </div>
     </div>
@@ -72,10 +78,15 @@ export default{
 </script>
 <style scoped>
 
+.message_box{
+  width: 400px;
+  margin:0 auto;
+
+}
 .container {
   background: #fff;
-  width: 60%;
-  border-radius: 5px;
+  width: 40%;
+  border-radius: 20px;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -95,16 +106,46 @@ export default{
   display: flex;
   justify-content: center;
   align-items: center;
+  z-index: 99999;
+}
+.mtitle{
+  width:100%
+}
+.input_box{
+  margin-top:40px;
+  width:100%;
+   border:none;border-right:0px; border-top:0px; border-left:0px; 
+  border-bottom : 1px solid;
+  outline: none;
 }
 
-.content{
-    padding : 10px 20px;
+.input_txt{
+  width:100%;
+  margin-top:20px;
+   border:none;border-right:0px; border-top:0px; border-left:0px; 
+  border-bottom : 1px solid;
+  outline: none;
 }
-.footer{
-    background: #ccc;
-    padding: 10px;
-    text-align: right;
 
+input::placeholder {
+  color: rgb(209, 209, 209);
+  
 }
+
+textarea::placeholder {
+  color: rgb(209, 209, 209);
+  
+}
+.message_botton{
+  width : 100%;
+  height: 40px;
+  border-radius: 10px;
+  border:0px;
+  background-color:rgb(222, 222, 222);
+  color:white;
+  margin-bottom:20px;
+  font-weight: bold;
+}
+
 </style>
 
