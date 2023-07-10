@@ -1,9 +1,11 @@
 <template>
+  <img id="fadeout_text" class="head-text fade-out" src="../assets/images/문구_01.png" />
+  <div id="fadeout_bg" class="bg_fadeout"></div>
   <div class="home">
-      <div class="container2">
-  <img class="picture left" src="../assets/images/banner_top_cat_02.jpg" @click="all_cats()">
-  <img class="picture right" src="../assets/images/banner_top_dog_01.jpg" @click="all_dogs()">
-</div>
+    <div class="container2">
+      <img class="picture left" src="../assets/images/banner_top_cat_02.jpg" @click="all_cats()">
+      <img class="picture right" src="../assets/images/banner_top_dog_01.jpg" @click="all_dogs()">
+    </div>
       <!-- <div id="carouselExampleInterval" class="carousel slide" data-bs-ride="carousel">
         <div class="carousel-inner" style="padding-bottom:20px">
           <div class="carousel-item active" data-bs-interval="3000">
@@ -356,6 +358,7 @@ export default {
     }
   },
   created: function () {
+    this.fadeoutAnim();
     this.loginId = sessionStorage.getItem('loginId')
     const self = this;
     self.$axios.get('http://localhost:8082/dboard/ol')//+self.loginId
@@ -596,12 +599,56 @@ export default {
           }
         }
       });
+    },
+    fadeoutAnim() {
+      // setInterval(() => {
+      //   // fadeout_text, fadeout_bg
+      //   document.getElementById('fadeout_text').style = 'display: none;';
+      //   document.getElementById('fadeout_bg').style = 'display: none;';
+      // }, 3000);
+      setTimeout(function() {
+        document.getElementById('fadeout_text').style = 'display: none;';
+        document.getElementById('fadeout_bg').style = 'display: none;';
+      }, 3000);
     }
   }
 }
 </script>
 
 <style scoped>
+.bg_fadeout {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background: #000;
+  opacity: 30%;
+  z-index: 9;
+  animation: fadeout 3s;
+}
+
+.head-text {
+  position: absolute;
+  width: 100%;
+  height: auto;
+  z-index: 10;
+  transform: translateX(-50%);
+  margin-top: 10%;
+  animation: fadein 3s;
+}
+
+@keyframes fadein {
+  0% { opacity: 0; }
+  50% { opacity: 1; }
+  100% { opacity: 0;}
+}
+@keyframes fadeout {
+  0% { opacity: 0; }
+  50% { opacity: 0.5; }
+  100% { opacity: 0;}
+}
+
+/* ////////////////////////  */
+
 .img-box {
   border: 1px solid silver;
   cursor: pointer;

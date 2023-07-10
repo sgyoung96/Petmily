@@ -442,7 +442,7 @@ export default {
   position: sticky;
   top:0;
   background-color: white;
-  z-index:1;
+  z-index:1000;
   width: 100%;
   height: 150px;
   border-bottom: 3px solid rgb(244, 191, 79);
