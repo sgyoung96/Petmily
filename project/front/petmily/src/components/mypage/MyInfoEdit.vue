@@ -195,14 +195,30 @@ export default {
     }
   },
   created: function () {
-    this.getUserInfo();
+    this.chkKakaoValidatoion();
   },
   methods: {
+    chkKakaoValidatoion() {
+      if (sessionStorage.getItem('loginFlag') == 'kakao') {
+        const self = this;
+        self.$axios.get('http://localhost:8082/members/' + self.id).then (function(rs) {
+          console.log(rs.data.dto);
+        
+          if (rs.data.dto == null) {
+            self.$router.push({name:'KakaoAdditionalForm', query:{kakaoId: sessionStorage.getItem('loginId'), kakaoName: sessionStorage.getItem('kakaoName')}});
+          } else {
+              self.getUserInfo();
+          }
+        });
+      } else {
+        this.getUserInfo();
+      }
+    },
     getUserInfo() {
         const moment = require('moment');
         //let token = sessionStorage.getItem('token');
         const self = this;
-        this.$axios.get('http://localhost:8082/members/' + this.id)
+        self.$axios.get('http://localhost:8082/members/' + self.id)
         .then(function(res){
             if (res.status == 200) {
                 let dto = res.data.dto

@@ -1,6 +1,6 @@
 <template>
   
-  <div v-if="showSvg">
+  <div v-if="showSvg"  @click="showDivs">
     <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
     <svg viewBox="-150 0 1000 20" style="position: absolute; top: 0; left: 0; z-index: 9999;">
       <text>PETMILY</text>
@@ -13,7 +13,7 @@
       <img src="@/assets/images/family.jpg" alt="가족강아지 이미지" style="width: 100%; height: 500px; padding-bottom: 10px;">
       <p>PETMILY의 의미는 반려동물(PET) + 가족(FAMILY)의 합성어로 반려동물은 가족이라는 의미를 가지고 있습니다</p>
       <p>PETMILY에서는 해당 모토를 유지하며 반려동물과 고객분의 행복하고 올바른 반려동물문화를 지향하고 있으며</p>
-      <p>유기동물들을 구조하고 보호 및 관리하며 새로운 가족들을 찾아주고 있습니다</p>
+      <p>유기동물들을 구조하고 보호 및 관리하며 새로운 가족들을 찾아주고 있으며</p>
 
       <hr>
 
@@ -69,7 +69,6 @@
     </div>
   </div>
       
-      <hr>
       <p>더 궁금하신게 있다면 아래 연락처로 연락해주시면 성심성의껏 돕겠습니다</p>
       <img src="@/assets/images/call.png" alt="전화기 이미지" style="width: 20px; height: 20px;">
       <p style="display: inline; padding-left: 10px;">전화번호 : 257-pet-mily</p>
@@ -96,7 +95,11 @@
       </ul>
       <br>
 
+      <hr>
       
+      <h3><span style="color: #f0cf81; padding: bottom 20px;"><strong></strong>펫밀리의 모토</span></h3>
+      
+        
     </div>
   </div>
 </template>
@@ -140,6 +143,11 @@ methods: {
   gotogroups() {
     this.$router.push({ name: 'Groups'});
   },
+
+  showDivs() {
+    this.showSvg = false;
+    this.showDiv = true;
+  }
   
 }
 };

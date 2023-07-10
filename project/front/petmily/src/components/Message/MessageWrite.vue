@@ -1,33 +1,36 @@
 <template>
   <div id="messagewrite">
-    <div class="message_area">
-      <h2>쪽지보내기</h2>
+ 
+        <div class="message_area">
 
-      <!-- 보내는 사람 -->
-      <div class="input_box">
-       <input type="hidden" v-model="sender" readonly /><br />
-      </div>
+          <!-- 보내는 사람 -->
+          <div class="input_box">
+          <input type="hidden" v-model="sender" readonly /><br />
+          </div>
 
-      <div class="input_box">
-        받는이 : <input class="input_txt" type="text" v-model="reciever" @input="submitAutoComplete" /><br />
-      </div>
+          <div class="input_box">
+            <input type="checkbox" v-model="isAdmin">관리자에게 쪽지 보내기
+          </div>
+          <div class="input_box" v-show="input_reciever">
+           <input class="input_txt" type="text" v-model="reciever" @input="submitAutoComplete" placeholder="받는사람" /><br />
+          </div>
 
-      <div class="select">
-        <ul class="autocomplete " :class="{'disabled':tf}">
-          <li><button class="autocompletebtn" @mousedown="searchSkillAdd(res)" style="cursor:pointer" :id="i" v-for="(res,i) in result" :key="i">{{res}}</button></li>
-        </ul>
-      </div>
+          <div class="select"  v-show="input_reciever">
+            <ul class="autocomplete " :class="{'disabled':tf}">
+              <li><button class="autocompletebtn" @mousedown="searchSkillAdd(res)" style="cursor:pointer" :id="i" v-for="(res,i) in result" :key="i">{{res}}</button></li>
+            </ul>
+          </div>
 
-      <div class="input_box">
-      제목 : <input class="input_txt" type="text" v-model="title" />
-      </div>
+          <div class="input_box">
+          <input class="input_txt" type="text" v-model="title"  placeholder="TITLE"/>
+          </div>
 
-      <div class="input_box">
-      내용 : <textarea class="input_txtarea" v-model="content" cols="50" rows="10"></textarea>
-      </div>
+          <div class="input_box">
+          <textarea class="input_txtarea" v-model="content" cols="50" rows="10"  placeholder="MESSAGE"></textarea>
+          </div>
 
-      <button @click="send">쪽지보내기</button><br />
-    </div>
+          <button @click="send">쪽지보내기</button><br />
+        </div>
   </div>
 </template>
 
@@ -44,11 +47,23 @@ export default {
       tf:true,
       skills: [],
       result: [],
+      isAdmin: false,
+      input_reciever:true
       
     };
   },
 
   watch:{
+    isAdmin(value){
+      if(value){
+        this.reciever='admin' 
+        this.input_reciever=false;
+
+      }else{
+        this.reciever=''
+        this.input_reciever=true;
+      }
+    }
    
   },
 
@@ -81,16 +96,16 @@ export default {
 
      submitAutoComplete() {
 
-     //const autocomplete = document.querySelector(".autocomplete");
+     
       if (this.reciever) {
         self.tf=false;
-       // autocomplete.classList.remove("disabled");
+       
         this.result = this.skills.filter((skill) => {
           return skill.match(new RegExp("^" + this.reciever, "i"));
         });
       } else {
         self.tf=true;
-        //autocomplete.classList.add("disabled");
+        
       }
     },
 
@@ -123,12 +138,7 @@ export default {
       }
 
 
-      //const autocomplete = document.querySelector(".autocomplete");
-        // self.reciever = res
-        //    self.tf=true;
-          //autocomplete.classList.add("disabled");
-          
-        
+
     },
 
 
@@ -136,11 +146,20 @@ export default {
       //쪽지보내기
       const self = this;
       const form = new FormData();
+      this.loginId = sessionStorage.getItem("loginId");
       form.append("sender", self.sender);
       form.append("reciever", self.reciever);
       form.append("title", self.title);
       form.append("content", self.content);
-
+      if( this.loginId === self.reciever){
+        alert('수신자를 확인해 주세요')
+        self.reciever='';
+        return
+      }
+      if(self.reciever===''||self.title===''||self.content===''){
+        alert('메세지를 작성해주세요')
+        return
+      }
       self.$axios
         .post("http://localhost:8082/message", form)
         .then(function (res) {
@@ -150,6 +169,7 @@ export default {
               self.title = "";
               self.content = "";
               self.reciever = "";
+              self.isAdmin = false;
             } else {
               alert("쪽지 보내기 실패");
             }
@@ -158,39 +178,49 @@ export default {
           }
         });
     },
+
+    adminmessage(){
+      self.reciever='admin';
+
+    }
   },
 };
 </script>
 
 <style scoped>
 
-/* .input_box {
-  
-    padding: 0 0 40px;
-    position: relative;
-} */
+
 .message_area {
     margin: 0 auto;
-    padding: 58px 0 160px;
+    padding: 58px 10px 60px 10px;
     width: 400px;
-   
+ 
+    border-radius: 20px;
+
+ 
 }
 
 .input_txt{
   width: 100%;
   height: 40px;
   border:1px solid black;
+  margin-top: 20px;
   outline-offset: 0;
   outline: none;
   color:black;
+  border:none;border-right:0px; border-top:0px; border-left:0px; 
+  border-bottom : 1px solid;
 }
 
 .input_txtarea{
+  margin-top: 20px;
   width: 100%;
   border:1px solid black;
   outline-offset: 0;
   outline: none;
-  color:black;
+  color:rgb(198, 198, 198); 
+ 
+  
 }
 
 ul, li{
@@ -206,7 +236,7 @@ ul, li{
     border-radius: 10px;
     overflow: hidden;
     background-color: white;
-    width: 400px;
+    width: 380px;
     /* display: none; */
 
     
@@ -221,7 +251,7 @@ ul, li{
 
 .autocomplete li button {
     display: block;
-    width: 380px;
+    width: 360px;
     background-color: #fff;
     border-top: none;
     margin: 8px;
@@ -233,13 +263,6 @@ ul, li{
 .autocomplete li button:hover {
     background-color: rgb(244, 191, 79);
 }
-/* .butautocompletebtnton{
-    border: initial;
-    border-radius: initial;
-    background-color: initial;
-    margin: 0;
-    padding: 0;
-    text-align: initial;
-} */
+
 </style>
  

@@ -9,11 +9,15 @@
     <div id="messagereciever">
 
       <div class="message-list">
-        
+        <div class="menu">
+          <!-- <button @click="read"></button> -->
+          <span class="material-symbols-outlined" @click="read" :class="{ active: activeMenu ==='read' }"  >drafts<span class="messagemenu">읽은쪽지</span></span>
+          <!-- <button @click="unread">읽지 않은 메일</button> -->
+          <span class="material-symbols-outlined" @click="unread" :class="{ active: activeMenu ==='unread' }">mail<span class="messagemenu">안읽은쪽지</span></span>
+          <span class="material-symbols-outlined" @click="all" :class="{ active: activeMenu ==='all' }"><span class="messagemenu">전체</span></span>
+      
+        </div>
 
-        <button @click="read">읽은 메일</button>
-        <button @click="unread">읽지 않은 메일</button>
-        <button @click="all">전체</button><br/>
         <div class="search">
           <select v-model="select" >
             <option value = "title">제목</option>
@@ -30,6 +34,8 @@
           
 
           <!-- 쪽지목록 -->
+        
+            
            <div class="message" v-for="message in paginatedList " :key="message.num">
 
             <div class="message-header">
@@ -71,7 +77,9 @@
                   <button class="message-delete" @click="del(message.num)">delete</button>
               </div>    
             </div>
-        </div>
+           </div>
+
+        <div class="nomessage" v-if="nomessage !==''">{{nomessage}}</div>
 
         <!-- 페이징 -->
         <div>
@@ -96,24 +104,30 @@
               </a>
             </li>
           </ul>
-        </div>
+        
+      </div>
 
 
       <!-- 쪽지 내용 읽기 모달창 -->
       <div class="black-bg" v-if="modalOpen === true">
         <div class="white-bg">
-          <h3>{{ title }}</h3>
-            <span class="modal-box-profile" style="background: #black">
+          
+            <div class="modal-box-profile" style="background: #black">
               <img
                 class="modal-profile" @error="replaceImg"
                 :src="'http://localhost:8082/members/imgs/' + sender"/>
-            </span>
-            <div class="modal-box-content">
-              <div class="modal-box-sender">보낸사람 : {{ sender }}</div>
-              <div class="modal-box-date">내용 : {{ content }}</div>
-              <div class="modal-box-content">{{ senddt }}</div>
             </div>
-          <button v-on:click="readcheck(num)" class="modal-exit-btn">확인</button>
+            
+            <div class="modal-box">
+              <div class="modal-box-title">{{ title }}</div>
+              <div class="modal-box-content"> {{ content }}</div>
+              <div class="modal-box-sender">From. {{ sender }}</div>
+             
+            </div>
+            <div class="modal-box-bottom">
+              <button v-on:click="readcheck(num)" class="modal-exit-btn">확인</button>
+              <div class="modal-box-date">{{ senddt }}</div>
+            </div>
         </div>
       </div>
     </div>
@@ -160,7 +174,9 @@ export default {
       block:5,
       blockArray :[],
       blocknum:0,
-      cnt:0
+      cnt:0,
+      activeMenu: "",
+      nomessage:''
       
       
     };
@@ -272,6 +288,7 @@ export default {
               .then(function (res) {
                 if (res.status == 200) {
                   self.list = res.data.list;
+                  
                 } else {
                   alert("에러코드 :" + res.status);
                 }
@@ -301,8 +318,13 @@ export default {
       .get("http://localhost:8082/message/sendcheck/" + self.loginId + "/" + 1)
       .then(function (res) {
         if (res.status == 200) {
+          if(res.data.list.length === 0){
+            self.nomessage= '메세지가 없습니다'
+          }else{
+            self.nomessage= ''
+          }
           self.list = res.data.list;
-          
+          self.activeMenu = "read";
         } else {
           alert("에러코드 :" + res.status);
         }
@@ -315,7 +337,13 @@ export default {
       .get("http://localhost:8082/message/sendcheck/" + self.loginId + "/" + 0)
       .then(function (res) {
         if (res.status == 200) {
+          if(res.data.list.length === 0){
+            self.nomessage= '메세지가 없습니다'
+          }else{
+            self.nomessage= ''
+          }
           self.list = res.data.list;
+          self.activeMenu = "unread";
         } else {
           alert("에러코드 :" + res.status);
         }
@@ -367,7 +395,13 @@ export default {
       .get("http://localhost:8082/message/reciever/" + self.loginId)
       .then(function (res) {
         if (res.status == 200) {
+          if(res.data.list.length === 0){
+            self.nomessage= '메세지가 없습니다'
+          }else{
+            self.nomessage= ''
+          }
           self.list = res.data.list;
+          self.activeMenu = "all";
           
         } else {
           alert("에러코드 :" + res.status);
@@ -411,13 +445,42 @@ export default {
 </script>
 
 <style scoped>
+
+.material-symbols-outlined{
+  cursor: pointer;
+  display:flex;
+  align-items: center;
+  margin-left:15px;
+
+}
+
+.active {
+  color: rgb(244, 191, 79);
+  font-weight: bold;
+}
+
+.menu{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top:30px;
+  margin-left:220px;
+  color:#cfcfcf;
+}
+.messagemenu{
+  
+  font-size:15px;
+  align-items: center;
+  justify-content: center;
+
+}
 .black-bg {
   display: flex;
   justify-content: center;
   align-items: center;
   width: 100%;
   height: 100%;
-  background-color: rgba(0, 0, 0, 0.432);
+  background-color: rgba(0, 0, 0, 0.668);
   position: fixed;
   top: 0;
   left: 0;
@@ -428,20 +491,15 @@ export default {
 }
 
 .white-bg {
-  width: 40%;
+  position:relative;
+  width: 30%;
   background-color: #fbf8f4;
   padding: 20px;
   border-radius: 40px;
 
 }
 
-.modal-exit-btn {
-  margin-top: 30px;
-}
 
-.modal-exit-btn:hover {
-  cursor: pointer;
-}
 
 .box-profile {
   display: block;
@@ -458,8 +516,57 @@ export default {
   object-fit: cover;
   cursor: pointer;
 }
+.modal-box{
+  display:flex;
+  margin-left:90px;
+   flex-direction: column;
+}
+.modal-box-title{
+  display:block;
+  width:100%;
+  text-align: left;
+  font-weight: bold;
+  font-size:22px;
+}
+.modal-box-content{
 
+ display:block;
+ margin-top: 10px;
+ width:100%;
+ text-align: left;  
+}
+.modal-box-sender{
+ display:block;
+ margin-top: 10px;
+ width:100%;
+ text-align: right; 
+}
+
+.modal-box-bottom{
+  display:flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.modal-exit-btn {
+margin-left: 200px;
+border:0px;
+padding:5px 10px 5px 10px;
+border-radius: 10px;
+ 
+}
+
+.modal-exit-btn:hover {
+  cursor: pointer;
+}
+.modal-box-date{
+  margin-left: auto;
+ 
+}
 .modal-box-profile {
+  position: absolute;
+  top:-60px;
+  left:-60px;
   display: block;
   width: 150px;
   height: 150px; 
@@ -476,11 +583,13 @@ export default {
   object-fit: cover;
   cursor: pointer;
 }
-.modal-box-content{
-  margin-left:160px;
 
+.nomessage{
+  font-weight: bold;
+  color: #a3a3a3;
+  font-size:large;
+  margin-bottom: 20px;
 }
-
 .message-list{
   margin-bottom: 40px;
 }
@@ -491,6 +600,7 @@ export default {
   border:2px solid  rgb(244, 191, 79);
   margin-bottom: 30px;
   border-radius: 20px;
+  overflow: hidden;
 
 }
 .message:hover {
@@ -503,7 +613,7 @@ export default {
   background-color: rgb(244, 191, 79);
   justify-content: space-between;
   padding:5px;
-   border-radius: 20px 20px 0px 0px;
+ 
 
 }
 .message-profile{
@@ -595,7 +705,7 @@ export default {
   z-index: 0;
 }
 .search{
-  margin-top:30px;
+  margin-top:10px;
 }
 input{
    width:250px;

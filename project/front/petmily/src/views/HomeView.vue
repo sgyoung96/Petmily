@@ -1,7 +1,10 @@
 <template>
   <div class="home">
-    <div class="container">
-      <div id="carouselExampleInterval" class="carousel slide" data-bs-ride="carousel">
+      <div class="container2">
+  <img class="picture left" src="../assets/images/banner_top_cat_02.jpg" @click="all_cats()">
+  <img class="picture right" src="../assets/images/banner_top_dog_01.jpg" @click="all_dogs()">
+</div>
+      <!-- <div id="carouselExampleInterval" class="carousel slide" data-bs-ride="carousel">
         <div class="carousel-inner" style="padding-bottom:20px">
           <div class="carousel-item active" data-bs-interval="3000">
             <img src="../assets/images/top_banner_cat_01.jpg" class="d-block w-100" alt="...">
@@ -30,23 +33,20 @@
           <span class="carousel-control-next-icon" aria-hidden="true"></span>
           <span class="visually-hidden">Next</span>
         </button>
-      </div>
+      </div> -->
 
       <div id="app">
         <!-- ... Existing code ... -->
 
-        <div class="form-group">
+        <!-- <div class="form-group">
           <input type="hidden" class="form-control" v-model="videoUrl">
-        </div>
+        </div> -->
 
         <!-- Display YouTube video -->
         <!-- Display YouTube video -->
         <div class="form-group">
           <div v-if="isValidVideoUrl">
-            <iframe :src="embeddedVideoUrl" width="1290" height="700" frameborder="0" allowfullscreen></iframe>
-          </div>
-          <div v-else>
-            <p>유효한 YouTube 동영상 URL을 입력하세요.</p>
+            <iframe :src="embeddedVideoUrl" width="50%" height="400px" frameborder="0" allowfullscreen></iframe>
           </div>
         </div>
 
@@ -67,7 +67,7 @@
           </div>
         </div>
       </div>
-
+      <div class="container">
       <div style="display:flex">
         <div v-for="dboard in arr" :key="dboard.num">
           <div class="img-box" v-on:click="$event => detail(dboard.num)">
@@ -302,15 +302,13 @@
       <div>
         <img src="../assets/images/dboardpic2.jpg" style="width: 40%; height: 200px; margin-bottom: 20px;">
       </div>
-    </div>
-
+</div>
   </div>
 </template>
 
 <script>
 import Chart from 'chart.js/auto';
 import axios from 'axios';
-
 export default {
   name: 'HomeView',
   data() {
@@ -448,6 +446,12 @@ export default {
       });
   },
   methods: {
+    all_dogs() { // 강아지
+      this.$router.push('/apidog');
+    },
+    all_cats() { // 고양이
+      this.$router.push('/apicat');
+    },
     fetchData2() {
 
 
@@ -635,7 +639,62 @@ export default {
   height: auto;
 }
 
-img {
-  height: 500px;
+.container2 {
+  position: relative;
+  width: 100%;
+  height: 550px;
+  overflow: hidden;
 }
+
+.picture {
+  position: absolute;
+  top: 0;
+  width: 100%;
+  height: 550px;
+  animation-duration: 3s;
+  animation-timing-function: ease-out;
+  animation-fill-mode: forwards;
+}
+
+.left {
+  left: 0;
+  animation-name: slideInLeft;
+  animation-delay: 0s;
+  clip-path: polygon(0 0, 66% 0, 100% 100%, 0% 100%, 0 100%);
+  cursor: pointer;
+}
+
+.right {
+  right: 50px;
+  animation-name: slideInRight;
+  animation-delay: 0s;
+  clip-path: polygon(0 0, 100% 0, 100% 100%, 33% 100%, 0 0%);
+  cursor: pointer;
+}
+
+@keyframes slideInLeft {
+  0% {
+    transform: translateX(-100%);
+  }
+  50% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(-25%);
+  }
+}
+
+@keyframes slideInRight {
+  0% {
+    transform: translateX(100%);
+  }
+  50% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(30%);
+  }
+}
+
+
 </style>
