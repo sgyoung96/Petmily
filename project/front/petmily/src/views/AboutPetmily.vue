@@ -1,6 +1,6 @@
 <template>
   
-  <div v-if="showSvg">
+  <div v-if="showSvg"  @click="showDivs">
     <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
     <svg viewBox="-150 0 1000 20" style="position: absolute; top: 0; left: 0; z-index: 9999;">
       <text>PETMILY</text>
@@ -69,7 +69,6 @@
     </div>
   </div>
       
-      <hr>
       <p>더 궁금하신게 있다면 아래 연락처로 연락해주시면 성심성의껏 돕겠습니다</p>
       <img src="@/assets/images/call.png" alt="전화기 이미지" style="width: 20px; height: 20px;">
       <p style="display: inline; padding-left: 10px;">전화번호 : 257-pet-mily</p>
@@ -140,6 +139,11 @@ methods: {
   gotogroups() {
     this.$router.push({ name: 'Groups'});
   },
+
+  showDivs() {
+    this.showSvg = false;
+      this.showDiv = true;
+  }
   
 }
 };
