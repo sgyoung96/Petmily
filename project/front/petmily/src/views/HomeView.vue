@@ -10,10 +10,6 @@
     <div id="app">
       <!-- ... Existing code ... -->
 
-      <!-- <div class="form-group">
-        <input type="hidden" class="form-control" v-model="videoUrl">
-      </div> -->
-
       <div id="top_02" class="top_02">
         <p>당신만을 바라보는 반려견 유기 횟수 10만 마리</p>
       </div>
@@ -642,21 +638,19 @@ export default {
 #app {
   display: relative;
   width: 100%;
-  height: 3000px;
   justify-content: center;
 }
 
 .top_02 {
   position: relative;
   width: 100%;
-  height: 800px;
   justify-content: center;
   vertical-align: middle;
   background: white;
 }
 
 .top_02 p {
-  margin-top: 200px;
+  margin-top: 400px;
   color: black;
   font-family: 'IBMPlexSansKR-Bold';
   font-size: 20px;
@@ -676,11 +670,9 @@ export default {
 }
 
 .form-group {
-  display: relative;
-  margin-top: 800px;
+  margin-top: 400px;
   position: relative;
   width: 100%;
-  height: 1000px;
   justify-content: center;
 }
 
@@ -719,7 +711,6 @@ export default {
 
 .container {
   width: 100%;
-  height: 1000px;
 }
 
 .container2 {
@@ -730,7 +721,7 @@ export default {
 }
 
 .picture {
-  position: relative;
+  position: absolute;
   top: 0;
   width: 100%;
   height: 550px;
