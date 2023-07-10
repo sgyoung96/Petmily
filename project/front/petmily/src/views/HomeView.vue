@@ -1,8 +1,8 @@
 <template>
   <div class="home">
       <div class="container2">
-  <img class="picture left" src="../assets/images/top_banner_cat_01.jpg" @click="all_cats()">
-  <img class="picture right" src="../assets/images/top_banner_dog_01.jpg" @click="all_dogs()">
+  <img class="picture left" src="../assets/images/banner_top_cat_02.jpg" @click="all_cats()">
+  <img class="picture right" src="../assets/images/banner_top_dog_01.jpg" @click="all_dogs()">
 </div>
       <!-- <div id="carouselExampleInterval" class="carousel slide" data-bs-ride="carousel">
         <div class="carousel-inner" style="padding-bottom:20px">
