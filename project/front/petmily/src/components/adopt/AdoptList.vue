@@ -1,5 +1,5 @@
 <template>
-  <img class="t-img" src="../../assets/images/강고1.png">
+  <img class="t-img" src="../../assets/images/강고.png">
 <div class="d-title">
   <h4 style="text-align: center;"><strong><span style="color:rgb(156, 156, 39)">PETMILY</span>
       &nbsp;<span style="color:rgb(244, 191, 79);">ADOPT</span></strong></h4>

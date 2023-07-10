@@ -47,6 +47,10 @@
         ※ 분양받을 목적 이외의 사항으로 분양글 등록 회원에게 연락,문자 등을 보내실 경우 법적 조치를 받으실 수 있습니다.<br/>
       </span>
       </div>
+      <div class="likebnt" @click="likebtn(dto.num)">
+      <img class="likeimg" src="../../assets/images/찬하트.png">
+      {{dto.likecnt}}
+      </div>
       <div>
       </div>
       <div v-if="showModal" class="edit-form">
@@ -227,7 +231,6 @@ button:hover {
 
 .box-content {
   padding: 50px;
-  border-bottom: solid 2px lightgrey;
   text-align: left;
   display:flex;
   flex-direction: column;
@@ -244,6 +247,15 @@ button:hover {
   justify-content: left;
 }
 
+.likeimg{
+  width:30px;
+  height:30px;
+}
+.likebnt{
+  padding-bottom:50px;
+  border-bottom: solid 2px lightgrey;
+  cursor:pointer;
+}
 .d-btn {
   margin-top: 10px;
   margin-bottom: 10px;
@@ -341,61 +353,49 @@ export default {
       e.target.src = img;
     },
     likebtn(num) {
-      alert(this.id)
-      if(this.id == null){
-        alert('로그인 후 이용가능합니다.')
-      }else{
-      this.$axios.get('http://localhost:8082/adoptliketable/' + this.id + '/' + num)
-        .then(response => {
-          if (response.status == 200) {
-            if (response.data.flag) {
-              let formData = new FormData();
-              formData.append('id', this.id)
-              formData.append('num', num)
-              this.$axios.post('http://localhost:8082/adoptliketable', formData)
-                .then(response => {
-                  if (response.status == 200) {
-                    this.$axios.get('http://localhost:8082/adopt/likeup/' + num)
-                      .then(response => {
-                        if (response.status == 200) {
-                          alert('좋아요 수 1 추가')
-                        }
-                      })
-                  } else {
-                    alert('에러페이지')
-                  }
-                })
-            } else {
-              let formData = new FormData();
-              formData.append('id', this.id)
-              formData.append('num', num)
-              this.$axios.delete('http://localhost:8082/adoptliketable', {
-                data: formData
-              })
-                .then(response => {
-                  if (response.status === 200) {
-                    this.$axios.get('http://localhost:8082/adopt/likedown/' + num)
-                      .then(response => {
-                        if (response.status === 200) {
-                          alert('좋아요 수 1 감소');
-                        }
-                      })
-                      .catch(error => {
-                        console.error(error);
-                        alert('좋아요 수 감소 중에 오류가 발생했습니다.');
-                      });
-                  }
-                })
-                .catch(error => {
-                  console.error(error);
+  if (this.id == null) {
+    alert('로그인 후 이용 가능합니다.');
+  } else {
+    this.$axios.get('http://localhost:8082/liketable/' + this.id + '/' + num)
+      .then(response => {
+        if (response.status == 200) {
+          if (response.data.flag) {
+            let formData = new FormData();
+            formData.append('id', this.id);
+            formData.append('num', num);
+            this.$axios.post('http://localhost:8082/liketable', formData)
+              .then(response => {
+                if (response.status == 200) {
+                  this.dto.likecnt++;
+                  alert('좋아요 수 1 추가');
+                } else {
+                  alert('에러 페이지');
+                }
+              });
+          } else {
+            let formData = new FormData();
+            formData.append('id', this.id);
+            formData.append('num', num);
+            this.$axios.delete('http://localhost:8082/liketable', {
+              data: formData
+            })
+              .then(response => {
+                if (response.status === 200) {
+                  this.dto.likecnt--;
+                  alert('좋아요 수 1 감소');
+                } else {
                   alert('삭제 요청 중에 오류가 발생했습니다.');
-                });
-
-            }
+                }
+              })
+              .catch(error => {
+                console.error(error);
+                alert('좋아요 수 감소 중에 오류가 발생했습니다.');
+              });
           }
-        })
-      }
-    },
+        }
+      });
+  }
+},
     editfunc(num) {
       let formData = new FormData();
       const self = this
