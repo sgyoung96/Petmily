@@ -5,6 +5,30 @@
       &nbsp;<span style="color:rgb(244, 191, 79);">ADOPT</span></strong></h4>
 </div>
 <div class="d-all">
+  <div class="cnt-list">
+  <div v-for="(adopt, index) in list" :key="adopt.num">
+    <div v-if="index < 16" class="list-all" v-on:click="$event => detail(adopt.num)" @mouseover="zoomIn" @mouseleave="zoomOut">
+      <a><img class="list-img" :src="'http://localhost:8082/adopt/imgs/' + adopt.num + '/1'"></a>
+      <div class="b-txt">
+        <div class="b-title">
+          {{ adopt.title }}
+        </div>
+        <div class="b-id">
+          <span>
+            작성자: {{ adopt.id.id }}
+          </span>
+          <span>
+            <img class="l-img" src="../../assets/images/heart.png" style="width: 15px; height: 15px;">{{ adopt.likecnt }}
+          </span>
+        </div>
+      </div>
+    </div>
+    <div v-if="(index + 1) % 8 === 0 && (index + 1) < 16">
+      <br>
+    </div>
+  </div>
+</div>
+
   <div id="slider">
     <div v-for="(adopt, index) in paginatedList" :key="adopt.num" class="slider-item"
       :class="{ 'new-row': index % itemsPerRow === 0 }">
@@ -98,6 +122,12 @@ created: function () {
   });
 },
 methods: {
+  zoomIn(event) {
+    event.currentTarget.style.transform = 'scale(1.1)';
+  },
+  zoomOut(event) {
+    event.currentTarget.style.transform = 'scale(1.0)';
+  },
   detail: function(num) {
     this.$router.push({name: 'AdoptDetail', query: {num: num}})
   },
@@ -143,6 +173,31 @@ margin-bottom: 10px;
 .d-all {
 padding-left: 150px;
 padding-right: 150px;
+}
+
+.cnt-list{
+  display:flex;
+  flex-wrap: wrap;
+  border: 1px solid silver;
+  padding:5px;
+  border-radius: 10px;
+  box-shadow: rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px;
+  cursor:pointer;
+  margin-bottom:20px;
+}
+
+.list-all{
+  margin:4px;
+  border:1px solid silver;
+  border-radius: 10px;
+  box-shadow: rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px;
+  
+}
+
+.list-img{
+  width: 140px;
+  height:100px;
+  border-radius: 10px 10px 0px 0px;
 }
 
 .img-box {

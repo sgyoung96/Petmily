@@ -17,9 +17,8 @@
           
         </div>
       
-        <div class="box-logo">
-         
-          <img @click="gotoMain()" class="petmily-logo" src="./assets/logo_petmily.png" />
+        <div class="box-logo" @click="gotoMain()">
+          <Vue3Lottie :animationData="AstronautJSON" :height="120" :width="200" :speed="0.5" />
         </div>
 
         <div class="box-mypage">
@@ -109,7 +108,8 @@ import img from "@/assets/imgs/mypage_sample.jpg";
 import './assets/fonts/BagleFatOne.css';
 import './assets/fonts/IBMPlexSansKR.css';
 import NotifyBox from './components/notify/NotifyList.vue';
-
+import { Vue3Lottie } from 'vue3-lottie'
+import AstronautJSON from './assets/펫밀리로고.json'
 export default {
   
   data () {
@@ -126,6 +126,7 @@ export default {
       emit: '',
       isclicked: false,
       childNumList: [],
+      AstronautJSON
     }
   },
   beforeMount: function() {
@@ -417,6 +418,7 @@ export default {
     },
   },
   components: {
+    Vue3Lottie,
     NotifyBox
   }
 }
@@ -437,15 +439,18 @@ export default {
 
 /* 헤더 전체 영역 */
 .pet-header {
-  position: relative;
+  position: sticky;
+  top:0;
+  background-color: white;
+  z-index:1;
   width: 100%;
-  height: 200px;
+  height: 150px;
   border-bottom: 3px solid rgb(244, 191, 79);
 }
 
 .pet-box-up {
   width: 100%;
-  height: 170px;
+  height: 120px;
   display: flex;
   justify-content: space-between;
   padding-left: 50px;
@@ -454,11 +459,11 @@ export default {
 
 .box-member {
   width: 300px;
-  height: 170px;
+  height: 120px;
   display: flex;
   justify-content: flex-start;
   padding: 10px;
-  margin-top: 50px;
+  margin-top: 40px;
 }
 
 .box-member > div span {
@@ -470,7 +475,8 @@ export default {
 
 .box-logo {
   height: 150px;
-  padding-top: 25px;
+  padding-top: 5px;
+  cursor: pointer;
 }
 
 .petmily-logo {
@@ -481,11 +487,11 @@ export default {
 
 .box-mypage {
   width: 300px;
-  height: 170px;
+  height: 110px;
   display: flex;
   justify-content: flex-end;
   padding: 10px;
-  margin-top: 50px;
+  margin-top: 30px;
 }
 
 .box-mypage > img {
