@@ -32,48 +32,25 @@
 
 
 
-
-
-
-
-
-
-    <div class="container text-center box-chart">
-      <div class="row">
-        <div class="col">
-          <canvas id="PieChart" width="1" height="1"></canvas>
-          <!--{{ formatDate(this.sysdate) }}-->
-          <p class="txt-today">오늘 들어온 아가들</p>
-        </div>
-        <div class="col">
-          <canvas id="BarChart" width="50px" height="50px"></canvas>
-          <div>{{ t1 }}</div>
-          <div>{{ t2 }}</div>
-          <div>{{ t3 }}</div>
-        </div>
+    
+    <div class="container-chart">
+      <div>
+        <canvas id="PieChart" width="400" height="400"></canvas>
+        <!--{{ formatDate(this.sysdate) }}-->
+        <p class="txt-today">유기 반려 동물 비율</p>
+      </div>
+      <div>
+        <canvas id="BarChart" width="400" height="400"></canvas>
+        <p class="txt-today">새 가족을 기다리는 아가들</p>
       </div>
     </div>
 
-
-    <div class="container text-center box-chart2">
-      <div class="row">
-        <div class="col">
-          <canvas id="PieChart" width="1" height="1"></canvas>
-          <!--{{ formatDate(this.sysdate) }}-->
-        </div>
-        <div class="col">
-          <canvas id="BarChart" width="100px" height="100px"></canvas>
-          <div>{{ t1 }}</div>
-          <div>{{ t2 }}</div>
-          <div>{{ t3 }}</div>
-        </div>
-      </div>
+    <div class="box-bg-cat-dog">
+      <img class="bg-cat-dog" src="../assets/images/댕냥.png" />
     </div>
 
-
-      
-    <div class="container box-dbboard">
-      <div style="display:flex">
+    <div class="container-dash-board">
+      <div class="box-dbboard">
         <div v-for="dboard in arr" :key="dboard.num">
           <div class="img-box" v-on:click="$event => detail(dboard.num)">
             <a><img class="b-img" :src="'http://localhost:8082/dboard/imgs/' + dboard.num + '/1'"></a>
@@ -94,11 +71,7 @@
           </div>
         </div>
       </div>
-
-      
-
-
-      <div class="box-board box-atboard">
+      <div class="box-atboard">
         <div v-for="dboard in arr2" :key="dboard.num">
           <div class="img-box" v-on:click="$event => detail2(dboard.num)">
             <a><img class="b-img" :src="'http://localhost:8082/adopt/imgs/' + dboard.num + '/1'"></a>
@@ -119,168 +92,167 @@
           </div>
         </div>
       </div>
-
+    </div>
+  </div>
     
-      <div class="container text-center box-walking">
+  <div class="container text-center box-walking">
 
-        <div class="row">
-          <div class="col-7">
-            <table class="table" v-if="witems.length">
-              <thead>
-                <tr>
-                  <th scope="col">#{{ this.date }}일자 산책</th>
-                  <th scope="col" v-if="witems.length">{{ witems[0].fcstTime }}시</th>
-                  <th scope="col" v-if="witems.length">{{ witems[12].fcstTime }}시</th>
-                  <th scope="col" v-if="witems.length">{{ witems[24].fcstTime }}시</th>
-                  <th scope="col" v-if="witems.length">{{ witems[36].fcstTime }}시</th>
-                  <th scope="col" v-if="witems.length">{{ witems[48].fcstTime }}시</th>
-                </tr>
-              </thead>
-              <tbody v-if="witems.length">
-                <tr>
-                  <th scope="row">기온</th>
-                  <td>{{ witems[0].fcstValue }}℃</td>
-                  <td>{{ witems[12].fcstValue }}℃</td>
-                  <td>{{ witems[24].fcstValue }}℃</td>
-                  <td>{{ witems[36].fcstValue }}℃</td>
-                  <td>{{ witems[48].fcstValue }}℃</td>
-                </tr>
-                <tr>
-                  <th scope="row">날씨</th>
-                  <td v-if="witems.length">
-                    <span v-if="witems[9].fcstValue != '강수없음'">☔</span>
-                    <span v-else>
-                      <span v-if="witems[5].fcstValue === '1'">🌞</span>
-                      <span v-else-if="witems[5].fcstValue === '3'">⛅</span>
-                      <span v-else-if="witems[5].fcstValue === '4'">☁</span>
-                    </span>
-                  </td>
-                  <td v-if="witems.length">
-                    <span v-if="witems[21].fcstValue != '강수없음'">☔</span>
-                    <span v-else>
-                      <span v-if="witems[17].fcstValue === '1'">🌞</span>
-                      <span v-else-if="witems[17].fcstValue === '3'">⛅</span>
-                      <span v-else-if="witems[17].fcstValue === '4'">☁</span>
-                    </span>
-                  </td>
-                  <td v-if="witems.length">
-                    <span v-if="witems[33].fcstValue != '강수없음'">☔</span>
-                    <span v-else>
-                      <span v-if="witems[29].fcstValue === '1'">🌞</span>
-                      <span v-else-if="witems[29].fcstValue === '3'">⛅</span>
-                      <span v-else-if="witems[29].fcstValue === '4'">☁</span>
-                    </span>
-                  </td>
-                  <td v-if="witems.length">
-                    <span v-if="witems[45].fcstValue != '강수없음'">☔</span>
-                    <span v-else>
-                      <span v-if="witems[41].fcstValue === '1'">🌞</span>
-                      <span v-else-if="witems[41].fcstValue === '3'">⛅</span>
-                      <span v-else-if="witems[41].fcstValue === '4'">☁</span>
-                    </span>
-                  </td>
-                  <td v-if="witems.length">
-                    <span v-if="witems[45].fcstValue != '강수없음'">☔</span>
-                    <span v-else>
-                      <span v-if="witems[41].fcstValue === '1'">🌞</span>
-                      <span v-else-if="witems[41].fcstValue === '3'">⛅</span>
-                      <span v-else-if="witems[41].fcstValue === '4'">☁</span>
-                    </span>
-                  </td>
-                </tr>
-                <tr>
-                  <th scope="row">강수량</th>
-                  <td v-if="witems.length">{{ witems[9].fcstValue }}</td>
-                  <td v-if="witems.length">{{ witems[21].fcstValue }}</td>
-                  <td v-if="witems.length">{{ witems[33].fcstValue }}</td>
-                  <td v-if="witems.length">{{ witems[45].fcstValue }}</td>
-                  <td v-if="witems.length">{{ witems[45].fcstValue }}</td>
-                </tr>
-                <tr>
-                  <th scope="row">갱얼쥐 산책</th>
-                  <td>
-                    <span v-if="witems[0].fcstValue < '18'">양호🐾</span>
-                    <span v-else-if="witems[0].fcstValue >= '18' && witems[0].fcstValue < '26'">약간주의💦</span>
-                    <span v-else-if="witems[0].fcstValue >= '26' && witems[0].fcstValue < '29'">주의🚨</span>
-                    <span v-else-if="witems[0].fcstValue >= '29' && witems[0].fcstValue < '32'">위험🔥</span>
-                    <span v-else-if="witems[0].fcstValue >= '32'">매우위험🚷</span>
-                  </td>
-                  <td>
-                    <span v-if="witems[12].fcstValue < '18'">양호🐾</span>
-                    <span v-else-if="witems[12].fcstValue >= '18' && witems[12].fcstValue < '26'">약간주의💦</span>
-                    <span v-else-if="witems[12].fcstValue >= '26' && witems[12].fcstValue < '29'">주의🚨</span>
-                    <span v-else-if="witems[12].fcstValue >= '29' && witems[12].fcstValue < '32'">위험🔥</span>
-                    <span v-else-if="witems[12].fcstValue >= '32'">매우위험🚷</span>
-                  </td>
-                  <td>
-                    <span v-if="witems[24].fcstValue < '18'">양호🐾</span>
-                    <span v-else-if="witems[24].fcstValue >= '18' && witems[48].fcstValue < '26'">약간주의💦</span>
-                    <span v-else-if="witems[24].fcstValue >= '26' && witems[24].fcstValue < '29'">주의🚨</span>
-                    <span v-else-if="witems[24].fcstValue >= '29' && witems[24].fcstValue < '32'">위험🔥</span>
-                    <span v-else-if="witems[24].fcstValue >= '32'">매우위험🚷</span>
-                  </td>
-                  <td>
-                    <span v-if="witems[36].fcstValue < '18'">양호🐾</span>
-                    <span v-else-if="witems[36].fcstValue >= '18' && witems[36].fcstValue < '26'">약간주의💦</span>
-                    <span v-else-if="witems[36].fcstValue >= '26' && witems[36].fcstValue < '29'">주의🚨</span>
-                    <span v-else-if="witems[36].fcstValue >= '29' && witems[36].fcstValue < '32'">위험🔥</span>
-                    <span v-else-if="witems[36].fcstValue >= '32'">매우위험🚷</span>
-                  </td>
-                  <td>
-                    <span v-if="witems[48].fcstValue < '18'">양호🐾</span>
-                    <span v-else-if="witems[48].fcstValue >= '18' && witems[48].fcstValue < '26'">약간주의💦</span>
-                    <span v-else-if="witems[48].fcstValue >= '26' && witems[48].fcstValue < '29'">주의🚨</span>
-                    <span v-else-if="witems[48].fcstValue >= '29' && witems[48].fcstValue < '32'">위험🔥</span>
-                    <span v-else-if="witems[48].fcstValue >= '32'">매우위험🚷</span>
-                  </td>
-                </tr>
-              </tbody>
-              <tbody v-else>
-                <tr>
-                  <td colspan="6">데이터가 없습니다.</td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
-          <div class="col-5">
-            <table class="table">
-              <thead>
-                <tr>
-                  <th scope="row">#</th>
-                  <th scope="col">여름철산책정도</th>
-                  <th scope="col">기온</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr class="table-info">
-                  <th scope="row">1</th>
-                  <th>양호🐾</th>
-                  <th>18℃미만</th>
-                </tr>
-                <tr class="table-primary">
-                  <th scope="row">2</th>
-                  <th>약간주의💦</th>
-                  <th>18℃이상 26℃미만</th>
-                </tr>
-                <tr class="table-warning">
-                  <th scope="row">3</th>
-                  <th>주의🚨</th>
-                  <th>26℃이상 29℃미만</th>
-                </tr>
-                <tr class="table-danger">
-                  <th scope="row">4</th>
-                  <th>위험🔥</th>
-                  <th>29℃이상 32℃미만</th>
-                </tr>
-                <tr class="table-secondary">
-                  <th scope="row">5</th>
-                  <th>매우위험🚷</th>
-                  <th>32℃이상</th>
-                </tr>
-              </tbody>
-            </table>
-          </div>
-        </div>
+    <div class="row">
+      <div class="col-7">
+        <table class="table" v-if="witems.length">
+          <thead>
+            <tr>
+              <th scope="col">#{{ this.date }}일자 산책</th>
+              <th scope="col" v-if="witems.length">{{ witems[0].fcstTime }}시</th>
+              <th scope="col" v-if="witems.length">{{ witems[12].fcstTime }}시</th>
+              <th scope="col" v-if="witems.length">{{ witems[24].fcstTime }}시</th>
+              <th scope="col" v-if="witems.length">{{ witems[36].fcstTime }}시</th>
+              <th scope="col" v-if="witems.length">{{ witems[48].fcstTime }}시</th>
+            </tr>
+          </thead>
+          <tbody v-if="witems.length">
+            <tr>
+              <th scope="row">기온</th>
+              <td>{{ witems[0].fcstValue }}℃</td>
+              <td>{{ witems[12].fcstValue }}℃</td>
+              <td>{{ witems[24].fcstValue }}℃</td>
+              <td>{{ witems[36].fcstValue }}℃</td>
+              <td>{{ witems[48].fcstValue }}℃</td>
+            </tr>
+            <tr>
+              <th scope="row">날씨</th>
+              <td v-if="witems.length">
+                <span v-if="witems[9].fcstValue != '강수없음'">☔</span>
+                <span v-else>
+                  <span v-if="witems[5].fcstValue === '1'">🌞</span>
+                  <span v-else-if="witems[5].fcstValue === '3'">⛅</span>
+                  <span v-else-if="witems[5].fcstValue === '4'">☁</span>
+                </span>
+              </td>
+              <td v-if="witems.length">
+                <span v-if="witems[21].fcstValue != '강수없음'">☔</span>
+                <span v-else>
+                  <span v-if="witems[17].fcstValue === '1'">🌞</span>
+                  <span v-else-if="witems[17].fcstValue === '3'">⛅</span>
+                  <span v-else-if="witems[17].fcstValue === '4'">☁</span>
+                </span>
+              </td>
+              <td v-if="witems.length">
+                <span v-if="witems[33].fcstValue != '강수없음'">☔</span>
+                <span v-else>
+                  <span v-if="witems[29].fcstValue === '1'">🌞</span>
+                  <span v-else-if="witems[29].fcstValue === '3'">⛅</span>
+                  <span v-else-if="witems[29].fcstValue === '4'">☁</span>
+                </span>
+              </td>
+              <td v-if="witems.length">
+                <span v-if="witems[45].fcstValue != '강수없음'">☔</span>
+                <span v-else>
+                  <span v-if="witems[41].fcstValue === '1'">🌞</span>
+                  <span v-else-if="witems[41].fcstValue === '3'">⛅</span>
+                  <span v-else-if="witems[41].fcstValue === '4'">☁</span>
+                </span>
+              </td>
+              <td v-if="witems.length">
+                <span v-if="witems[45].fcstValue != '강수없음'">☔</span>
+                <span v-else>
+                  <span v-if="witems[41].fcstValue === '1'">🌞</span>
+                  <span v-else-if="witems[41].fcstValue === '3'">⛅</span>
+                  <span v-else-if="witems[41].fcstValue === '4'">☁</span>
+                </span>
+              </td>
+            </tr>
+            <tr>
+              <th scope="row">강수량</th>
+              <td v-if="witems.length">{{ witems[9].fcstValue }}</td>
+              <td v-if="witems.length">{{ witems[21].fcstValue }}</td>
+              <td v-if="witems.length">{{ witems[33].fcstValue }}</td>
+              <td v-if="witems.length">{{ witems[45].fcstValue }}</td>
+              <td v-if="witems.length">{{ witems[45].fcstValue }}</td>
+            </tr>
+            <tr>
+              <th scope="row">갱얼쥐 산책</th>
+              <td>
+                <span v-if="witems[0].fcstValue < '18'">양호🐾</span>
+                <span v-else-if="witems[0].fcstValue >= '18' && witems[0].fcstValue < '26'">약간주의💦</span>
+                <span v-else-if="witems[0].fcstValue >= '26' && witems[0].fcstValue < '29'">주의🚨</span>
+                <span v-else-if="witems[0].fcstValue >= '29' && witems[0].fcstValue < '32'">위험🔥</span>
+                <span v-else-if="witems[0].fcstValue >= '32'">매우위험🚷</span>
+              </td>
+              <td>
+                <span v-if="witems[12].fcstValue < '18'">양호🐾</span>
+                <span v-else-if="witems[12].fcstValue >= '18' && witems[12].fcstValue < '26'">약간주의💦</span>
+                <span v-else-if="witems[12].fcstValue >= '26' && witems[12].fcstValue < '29'">주의🚨</span>
+                <span v-else-if="witems[12].fcstValue >= '29' && witems[12].fcstValue < '32'">위험🔥</span>
+                <span v-else-if="witems[12].fcstValue >= '32'">매우위험🚷</span>
+              </td>
+              <td>
+                <span v-if="witems[24].fcstValue < '18'">양호🐾</span>
+                <span v-else-if="witems[24].fcstValue >= '18' && witems[48].fcstValue < '26'">약간주의💦</span>
+                <span v-else-if="witems[24].fcstValue >= '26' && witems[24].fcstValue < '29'">주의🚨</span>
+                <span v-else-if="witems[24].fcstValue >= '29' && witems[24].fcstValue < '32'">위험🔥</span>
+                <span v-else-if="witems[24].fcstValue >= '32'">매우위험🚷</span>
+              </td>
+              <td>
+                <span v-if="witems[36].fcstValue < '18'">양호🐾</span>
+                <span v-else-if="witems[36].fcstValue >= '18' && witems[36].fcstValue < '26'">약간주의💦</span>
+                <span v-else-if="witems[36].fcstValue >= '26' && witems[36].fcstValue < '29'">주의🚨</span>
+                <span v-else-if="witems[36].fcstValue >= '29' && witems[36].fcstValue < '32'">위험🔥</span>
+                <span v-else-if="witems[36].fcstValue >= '32'">매우위험🚷</span>
+              </td>
+              <td>
+                <span v-if="witems[48].fcstValue < '18'">양호🐾</span>
+                <span v-else-if="witems[48].fcstValue >= '18' && witems[48].fcstValue < '26'">약간주의💦</span>
+                <span v-else-if="witems[48].fcstValue >= '26' && witems[48].fcstValue < '29'">주의🚨</span>
+                <span v-else-if="witems[48].fcstValue >= '29' && witems[48].fcstValue < '32'">위험🔥</span>
+                <span v-else-if="witems[48].fcstValue >= '32'">매우위험🚷</span>
+              </td>
+            </tr>
+          </tbody>
+          <tbody v-else>
+            <tr>
+              <td colspan="6">데이터가 없습니다.</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="col-5">
+        <table class="table">
+          <thead>
+            <tr>
+              <th scope="row">#</th>
+              <th scope="col">여름철산책정도</th>
+              <th scope="col">기온</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr class="table-info">
+              <th scope="row">1</th>
+              <th>양호🐾</th>
+              <th>18℃미만</th>
+            </tr>
+            <tr class="table-primary">
+              <th scope="row">2</th>
+              <th>약간주의💦</th>
+              <th>18℃이상 26℃미만</th>
+            </tr>
+            <tr class="table-warning">
+              <th scope="row">3</th>
+              <th>주의🚨</th>
+              <th>26℃이상 29℃미만</th>
+            </tr>
+            <tr class="table-danger">
+              <th scope="row">4</th>
+              <th>위험🔥</th>
+              <th>29℃이상 32℃미만</th>
+            </tr>
+            <tr class="table-secondary">
+              <th scope="row">5</th>
+              <th>매우위험🚷</th>
+              <th>32℃이상</th>
+            </tr>
+          </tbody>
+        </table>
       </div>
     </div>
   </div>
@@ -548,7 +520,7 @@ export default {
           labels: labels,
           datasets: [
             {
-              label: '최근 6일간 들어온 아가들 추이',
+              label: '오늘 들어온 아가들',
               data: data,
               backgroundColor: [
                 'rgba(255, 99, 132, 0.7)',
@@ -644,7 +616,11 @@ export default {
 }
 
 .home {
-  background: linear-gradient(to bottom, #000000 0%, #000000 25%, rgb(244, 191, 79) 40%, #c9d4d2 60%, white 100%);
+  background: linear-gradient(to bottom, #000000 0%, #000000 30%, rgb(244, 191, 79) 40%, #c9d4d2 60%, white 100%);
+  position: relative;
+  display: block;
+  width: 100%;
+  justify-content: center;
 }
 
 #app {
@@ -727,17 +703,6 @@ export default {
   height: 15px;
 }
 
-.container {
-  width: 100%;
-}
-
-.box-chart {
-  position: relative;
-  margin-top: 400px;
-  width: 80%;
-  height: 350px;
-}
-
 .container2 {
   background: #000;
   position: relative;
@@ -796,10 +761,14 @@ export default {
   }
 }
 
-.box-chart, .box-chart2 {
-  display: block;
+.container-chart {
+  padding-left: 100px;
   position: relative;
+  display: flex;
   width: 70%;
+  justify-content: center;
+  margin-top: 400px;
+  z-index: 2;
 }
 
 .txt-today {
@@ -814,5 +783,37 @@ export default {
   display: block;
   position: relative;
   width: 90%;
+}
+
+.container-dash-board {
+  display: flex;
+  position: relative;
+  width: 100%;
+  justify-content: space-between;
+}
+
+.box-dbboard, .box-atboard {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  margin-top: 400px;
+  position: relative;
+  justify-content: center;
+  width: 50%;
+}
+
+.box-bg-cat-dog {
+  width: 600px;
+  height: 600px;
+  overflow: hidden;
+  transform: translateX(100px) translateY(-400px);
+  position: absolute;
+  display: inline;
+  z-index: 1;
+}
+
+.bg-cat-dog {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
 }
 </style>
