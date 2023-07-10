@@ -1,9 +1,7 @@
 <template>
   <div id="messagewrite">
-    <div class="message_line">
-      <div class="message_inline">
+ 
         <div class="message_area">
-          <h2>쪽지보내기</h2>
 
           <!-- 보내는 사람 -->
           <div class="input_box">
@@ -33,8 +31,6 @@
 
           <button @click="send">쪽지보내기</button><br />
         </div>
-      </div>  
-    </div>
   </div>
 </template>
 
@@ -100,16 +96,16 @@ export default {
 
      submitAutoComplete() {
 
-     //const autocomplete = document.querySelector(".autocomplete");
+     
       if (this.reciever) {
         self.tf=false;
-       // autocomplete.classList.remove("disabled");
+       
         this.result = this.skills.filter((skill) => {
           return skill.match(new RegExp("^" + this.reciever, "i"));
         });
       } else {
         self.tf=true;
-        //autocomplete.classList.add("disabled");
+        
       }
     },
 
@@ -142,12 +138,7 @@ export default {
       }
 
 
-      //const autocomplete = document.querySelector(".autocomplete");
-        // self.reciever = res
-        //    self.tf=true;
-          //autocomplete.classList.add("disabled");
-          
-        
+
     },
 
 
@@ -198,28 +189,7 @@ export default {
 
 <style scoped>
 
-/* .input_box {
-  
-    padding: 0 0 40px;
-    position: relative;
-} */
 
-/* .message_line{
-  margin: 0 auto;
-  border:1px solid black;
-  padding:20px;
-  width: 440px;
-  border: 5px solid #efefef;
-  border-radius: 10px;
-  background-color: rgb(244, 191, 79);;
-}
-
-.message_inline{
-  background-color: rgb(244, 191, 79);;
-  margin : 10px;
-  padding:20px;
-  margin: 0 auto;
-} */
 .message_area {
     margin: 0 auto;
     padding: 58px 10px 60px 10px;
@@ -293,13 +263,6 @@ ul, li{
 .autocomplete li button:hover {
     background-color: rgb(244, 191, 79);
 }
-/* .butautocompletebtnton{
-    border: initial;
-    border-radius: initial;
-    background-color: initial;
-    margin: 0;
-    padding: 0;
-    text-align: initial;
-} */
+
 </style>
  

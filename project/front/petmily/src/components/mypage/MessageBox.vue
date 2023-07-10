@@ -24,6 +24,12 @@
       </div>
     </div>
   </div>
+
+
+
+
+
+
 </template>
 
 <script>
@@ -59,6 +65,7 @@ export default {
       this.showMessageWrite = true;
       this.showMessageSender = false;
       this.showMessageReciever = false;
+     
     },
     cntcheck(){
        const self = this;
@@ -88,7 +95,21 @@ export default {
 </script>
   
 <style scoped>
-
+.black-bg {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.668);
+  position: fixed;
+  top: 0;
+  left: 0;
+  padding: 20px;
+  z-index: 9999;
+ 
+ 
+}
 .container {
     padding-top: 50px;
     padding-bottom: 100px;
