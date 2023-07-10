@@ -14,7 +14,7 @@ public class AdoptliketableService {
 	
 	AdoptliketableDto getDuplicate(String id, int num) {
 		Member m = new Member(id,"","","","",null,"","","",null);
-		Adoptboard d = new Adoptboard(num,null,null,null,null,null,null,"","","",0);
+		Adoptboard d = new Adoptboard(num,null,null,null,null,null,null,"","","",0,0,0);
 		Adoptliketable dto = dao.findByIdAndNum(m, d);
 		if(dto == null) {
 			return null;
@@ -29,7 +29,7 @@ public class AdoptliketableService {
 	
 	void deleteById(String id, int num) {
 		Member m = new Member(id,"","","","",null,"","","",null);
-		Adoptboard d = new Adoptboard(num,null,null,null,null,null,null,"","","",0);
+		Adoptboard d = new Adoptboard(num,null,null,null,null,null,null,"","","",0,0,0);
 		dao.deleteByIdAndNum(m, d);
 	}
 	

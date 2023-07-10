@@ -35,4 +35,9 @@ public interface AdoptBoardDao extends JpaRepository<Adoptboard, Integer> {
     @Transactional
     @Query(value = "SELECT COUNT(*) FROM Adoptboard WHERE id = :id")
     int countById(@Param("id") Member id);
+    
+    @Transactional
+	@Modifying
+	@Query(value="update adoptboard set cnt=cnt+1 where num=:num", nativeQuery = true)
+	void updateCnt(@Param("num") int num);
 }

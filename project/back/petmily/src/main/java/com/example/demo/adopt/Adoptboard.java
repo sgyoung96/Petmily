@@ -52,6 +52,8 @@ public class Adoptboard {
 	
 	@Column(nullable=true)
 	private int likecnt; //좋아요 수
+	private int cnt; // 조회수
+	private int isCheck; //분양여부
 	
 	@PrePersist
 	public void preprocess() {

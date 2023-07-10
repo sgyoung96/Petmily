@@ -23,7 +23,7 @@ public class AdoptBoardService {
 		ArrayList<Adoptboard> list = (ArrayList<Adoptboard>) dao.findAll();
 		ArrayList<AdoptBoardDto> list2 = new ArrayList<AdoptBoardDto>();
 		for (Adoptboard adoptBoard : list) {
-			list2.add(new AdoptBoardDto(adoptBoard.getNum(), adoptBoard.getId(), adoptBoard.getTitle(), adoptBoard.getContent(), adoptBoard.getCategory(), adoptBoard.getGender(), adoptBoard.getW_date(), adoptBoard.getAddress(), adoptBoard.getPic1(), adoptBoard.getPic2(), adoptBoard.getLikecnt(),null));
+			list2.add(new AdoptBoardDto(adoptBoard.getNum(), adoptBoard.getId(), adoptBoard.getTitle(), adoptBoard.getContent(), adoptBoard.getCategory(), adoptBoard.getGender(), adoptBoard.getW_date(), adoptBoard.getAddress(), adoptBoard.getPic1(), adoptBoard.getPic2(), adoptBoard.getLikecnt(),adoptBoard.getCnt(), adoptBoard.getIsCheck() ,null));
 		}
 		return list2;
 	}
@@ -36,7 +36,7 @@ public class AdoptBoardService {
 		ArrayList<Adoptboard> list = (ArrayList<Adoptboard>) dao.findAllByOrderByLikecntDesc();
 		ArrayList<AdoptBoardDto> list2 = new ArrayList<AdoptBoardDto>();
 		for (Adoptboard adoptBoard : list) {
-			list2.add(new AdoptBoardDto(adoptBoard.getNum(), adoptBoard.getId(), adoptBoard.getTitle(), adoptBoard.getContent(), adoptBoard.getCategory(), adoptBoard.getGender(), adoptBoard.getW_date(), adoptBoard.getAddress(), adoptBoard.getPic1(), adoptBoard.getPic2(), adoptBoard.getLikecnt(),null));
+			list2.add(new AdoptBoardDto(adoptBoard.getNum(), adoptBoard.getId(), adoptBoard.getTitle(), adoptBoard.getContent(), adoptBoard.getCategory(), adoptBoard.getGender(), adoptBoard.getW_date(), adoptBoard.getAddress(), adoptBoard.getPic1(), adoptBoard.getPic2(), adoptBoard.getLikecnt(),adoptBoard.getCnt(),adoptBoard.getIsCheck(),null));
 		}
 		return list2;
 	}
@@ -51,7 +51,7 @@ public class AdoptBoardService {
 		if (adoptBoard == null) {
 			return null;
 		}
-		return new AdoptBoardDto(adoptBoard.getNum(), adoptBoard.getId(), adoptBoard.getTitle(), adoptBoard.getContent(), adoptBoard.getCategory(), adoptBoard.getGender(), adoptBoard.getW_date(), adoptBoard.getAddress(), adoptBoard.getPic1(), adoptBoard.getPic2(), adoptBoard.getLikecnt(),null);
+		return new AdoptBoardDto(adoptBoard.getNum(), adoptBoard.getId(), adoptBoard.getTitle(), adoptBoard.getContent(), adoptBoard.getCategory(), adoptBoard.getGender(), adoptBoard.getW_date(), adoptBoard.getAddress(), adoptBoard.getPic1(), adoptBoard.getPic2(), adoptBoard.getLikecnt(),adoptBoard.getCnt(),adoptBoard.getIsCheck(),null);
 	}
 	
 	/**
@@ -60,7 +60,7 @@ public class AdoptBoardService {
 	 * @return
 	 */
 	public int add(AdoptBoardDto dto) {
-		Adoptboard adoptBoard = dao.save(new Adoptboard(dto.getNum(), dto.getId(), dto.getTitle(), dto.getContent(), dto.getCategory(), dto.getGender(), dto.getW_date(), dto.getAddress(), dto.getPic1(), dto.getPic2(),dto.getLikecnt()));
+		Adoptboard adoptBoard = dao.save(new Adoptboard(dto.getNum(), dto.getId(), dto.getTitle(), dto.getContent(), dto.getCategory(), dto.getGender(), dto.getW_date(), dto.getAddress(), dto.getPic1(), dto.getPic2(),dto.getLikecnt(), dto.getCnt(), dto.getIsCheck()));
 		return adoptBoard.getNum();
 	}
 	
@@ -81,7 +81,7 @@ public class AdoptBoardService {
 		ArrayList<Adoptboard> list = dao.findById(m);
 		ArrayList<AdoptBoardDto> dtolist = new ArrayList<>();
 		for(Adoptboard v : list) {
-			dtolist.add(new AdoptBoardDto(v.getNum(), v.getId(), v.getTitle(), v.getContent(), v.getCategory(), v.getGender(), v.getW_date(), v.getAddress(), v.getPic1(), v.getPic2(), v.getLikecnt(), null));
+			dtolist.add(new AdoptBoardDto(v.getNum(), v.getId(), v.getTitle(), v.getContent(), v.getCategory(), v.getGender(), v.getW_date(), v.getAddress(), v.getPic1(), v.getPic2(), v.getLikecnt(), v.getCnt(), v.getIsCheck(), null));
 		}
 		return dtolist;
 	}
