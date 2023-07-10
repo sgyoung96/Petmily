@@ -28,28 +28,38 @@
     </div>
   </div>
 </div>
-
-  <div id="slider">
-    <div v-for="(adopt, index) in paginatedList" :key="adopt.num" class="slider-item"
-      :class="{ 'new-row': index % itemsPerRow === 0 }">
-      <div class="img-box" v-on:click="$event => detail(adopt.num)">
-        <a><img class="b-img" :src="'http://localhost:8082/adopt/imgs/' +adopt.num+ '/1'"></a>
-        <div class="b-txt">
-          <div class="b-title">
-            {{ adopt.title }}
-          </div>
-          <div class="b-id">
-            <span>
-              작성자 : {{ adopt.id.id }}
-            </span>
-            <span>
-              <img class=l-img src="../../assets/images/heart.png" style="width: 15px; height: 15px;">{{ adopt.likecnt }}
-            </span>
-          </div>
-        </div>
+<div class="banner">
+        <img src="../../assets/images/배너.png">&nbsp;
       </div>
+    <div>
+      <table class="table">
+  <thead>
+    <tr>
+      <th scope="col">분양중</th>
+      <th scope="col">사진</th>
+      <th scope="col">동물종류</th>
+      <th scope="col">상세설명</th>
+      <th scope="col">구분</th>
+      <th scope="col">분양지역</th>
+      <th scope="col">작성일</th>
+      <th scope="col">조회수</th>
+    </tr>
+  </thead>
+  <tbody class="table-group-divider">
+    <tr v-for="(adopt) in paginatedList" :key="adopt.num" v-on:click="$event => detail(adopt.num)" style="cursor:pointer; vertical-align:middle">
+      <td><span v-if="adopt.ischeck==0">분양중</span><span v-else>분양완료</span></td>
+      <td><img class="b-img" :src="'http://localhost:8082/adopt/imgs/' +adopt.num+ '/1'"></td>
+      <td>{{ adopt.category }}</td>
+      <td>{{ adopt.title }}</td>
+      <td>{{ adopt.gender }}</td>
+      <td>{{adopt.address}}</td>
+      <td>{{ formatDateTime(adopt.w_date)}}</td>
+      <td>{{ adopt.cnt }}</td>
+    </tr>
+  </tbody>
+</table>
+      
     </div>
-  </div>
   <div class="list-box">
     <span>
       <button @click="goToFullList">전체목록</button>
@@ -95,7 +105,7 @@ data () {
     itemsPerRow: 4,
     searchKeyword: '',
     currentPage: 1,
-    pageSize: 12
+    pageSize: 15
     
   }
   
@@ -128,9 +138,27 @@ methods: {
   zoomOut(event) {
     event.currentTarget.style.transform = 'scale(1.0)';
   },
-  detail: function(num) {
-    this.$router.push({name: 'AdoptDetail', query: {num: num}})
-  },
+  formatDateTime(dateTime) {
+  const dateObj = new Date(dateTime);
+  const year = dateObj.getFullYear();
+  const month = ("0" + (dateObj.getMonth() + 1)).slice(-2);
+  const day = ("0" + dateObj.getDate()).slice(-2);
+
+  return `${year}년 ${month}월 ${day}일`;
+},
+detail(num) {
+  this.$router.push({ name: 'AdoptDetail', query: { num: num } });
+  const self = this;
+  self.$axios.get('http://localhost:8082/adopt/cnt/' + num).then(function (res) {
+    if (res.status === 200) {
+      console.log(res.data.flag);
+      // 윈도우 팝업 창 열기
+    } else {
+      alert('에러');
+    }
+  });
+},
+
   previousPage() {
       if (this.currentPage > 1) {
         this.currentPage--;
@@ -151,6 +179,94 @@ components: {
 }
 </script>
 <style scoped>
+.banner{
+  border: solid #e5e7eb;
+  border-radius: 20px;
+  margin-bottom: 50px;
+  float:center;
+  background-color:white;
+  padding:24px 63px;
+  display:flex;
+  justify-content: center;
+}
+
+.banner img{
+  height:100px;
+  width: 900px;
+}
+.search-box {
+  margin-bottom: 30px;
+  text-align: center;
+}
+
+.search-box input[type="text"] {
+  width: 300px;
+  height: 30px;
+  padding: 5px;
+  font-size: 14px;
+  border: 1px solid #ccc;
+  border-radius: 10px;
+}
+
+.search-box button {
+  width: 80px;
+  height: 30px;
+  color: white;
+  border: none;
+  border-radius: 10px;
+  background-color: rgb(244, 191, 79);
+  font-family: 'IBMPlexSansKR-Bold';
+  font-size: 15px;
+  margin-left: 5px;
+}
+
+.search-box button:hover {
+  background-color: rgb(235, 156, 39);
+  cursor: pointer;
+}
+button{
+  width: 100px;
+    color: white;
+    height: 30px;
+    border: 1px solid rgb(244, 191, 79);
+    border-radius: 20px;
+    background-color: rgb(244, 191, 79);
+    font-family: 'IBMPlexSansKR-Bold';
+    font-size: 15px;
+    padding-top: 2px;
+    margin-right: 5px;
+}
+button:hover {
+  background-color: rgb(235, 156, 39);
+  cursor: pointer;
+}
+.pagination {
+  display: inline-block;
+  margin-top: 20px;
+  margin-bottom: 20px;
+}
+
+.page-item {
+  display: inline-block;
+  margin-right: 5px;
+}
+
+.page-item a {
+  color: black;
+  padding: 5px 10px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  text-decoration: none;
+}
+
+.page-item a:hover {
+  background-color: #f2f2f2;
+}
+
+.page-item.active a {
+  background-color: rgb(244, 191, 79);
+  color: white;
+}
 .t-img {
 width: 85%;
 height: 500px;
@@ -206,8 +322,8 @@ cursor: pointer;
 }
 
 .b-img {
-  width: 293px;
-  height:200px;
+  width: 60px;
+  height:50px;
 }
 
 .b-txt {

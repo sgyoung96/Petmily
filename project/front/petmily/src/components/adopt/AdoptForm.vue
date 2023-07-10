@@ -72,6 +72,8 @@ export default {
         gender: '',
         category: '',
         radioValues:'',
+        cnt:0,
+        ischeck:0
     }
   },
   created: function () {
@@ -106,6 +108,8 @@ export default {
         formData.append('gender', this.gender);
         formData.append('address', this.address);
         formData.append('w_date', new Date())
+        formData.append('cnt', 0)
+        formData.append('isCheck', 0)
         formData.append('f[0]', file1.files[0]);
         formData.append('f[1]', file2.files[0]);
 
