@@ -94,6 +94,18 @@
       }
     },
     methods:{
+      chkKakaoValidatoion() {
+        if (sessionStorage.getItem('loginFlag') == 'kakao') {
+          const self = this;
+          self.$axios.get('http://localhost:8082/members/' + self.writer).then (function(rs) {
+            console.log(rs.data.dto);
+          
+            if (rs.data.dto == null) {
+              self.$router.push({name:'KakaoAdditionalForm', query:{kakaoId: sessionStorage.getItem('loginId'), kakaoName: sessionStorage.getItem('kakaoName')}});
+            }
+          });
+        }
+      },
       add(){
         const self = this
         const moment = require('moment');
@@ -201,6 +213,7 @@
     },
       },
     created:function(){//이 컴포넌트가 시작될때 실행되는 함수
+      this.chkKakaoValidatoion();
     }
   }
   </script>

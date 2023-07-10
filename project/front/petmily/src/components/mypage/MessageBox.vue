@@ -2,7 +2,7 @@
   <div>
     <div class="container">
       <div class="msgbox_area">
-        <h1>message box</h1>
+     
         
         <div class="mbtns">
          
@@ -98,8 +98,8 @@ export default {
   width: 400px;
   display: flex;
   justify-content: space-between;
-  margin-top: 20px;
-  margin-bottom: 20px;
+  margin-top: 10px;
+  margin-bottom: 60px;
   margin-left: auto;
   margin-right: auto;
  

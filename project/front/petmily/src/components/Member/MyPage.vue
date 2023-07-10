@@ -96,9 +96,8 @@ export default {
     }
   },
   created: function () {
+    this.chkKakaoValidatoion(); // 카카오 회원가입 체크
     this.initTabs();
-    this.getUserInfo();
-    
   },
   mounted: function() {
     this.getWatch();
@@ -109,6 +108,22 @@ export default {
     this.getMessage();
   },
   methods: {
+    chkKakaoValidatoion() {
+      if (sessionStorage.getItem('loginFlag') == 'kakao') {
+        const self = this;
+        self.$axios.get('http://localhost:8082/members/' + self.id).then (function(rs) {
+          console.log(rs.data.dto);
+        
+          if (rs.data.dto == null) {
+            self.$router.push({name:'KakaoAdditionalForm', query:{kakaoId: sessionStorage.getItem('loginId'), kakaoName: sessionStorage.getItem('kakaoName')}});
+          } else {
+            self.getUserInfo();
+          }
+        });
+      } else {
+        this.getUserInfo();
+      }
+    },
     initTabs() {
       const tabList = document.querySelectorAll('.tab_menu .list .tab-li');
       const contents = document.querySelectorAll('.tab_menu .cont_area .cont')
@@ -136,39 +151,43 @@ export default {
       }
     },
     getUserInfo() {
-        const moment = require('moment');
-        //let token = sessionStorage.getItem('token');
-        const self = this;
-        this.$axios.get('http://localhost:8082/members/' + this.id)
-        .then(function(res){
-            if (res.status == 200) {
-                let dto = res.data.dto
-                if (dto != null) { 
-                    console.log(dto);
-                    //this.id = dto.id
-                    self.name = dto.name
-                    self.email = dto.email
-                    self.birth = moment(dto.birth).format('L');
-                    self.gender = dto.gender
-                    self.phone = dto.phone
-                    self.address = dto.address
+      const moment = require('moment');
+      //let token = sessionStorage.getItem('token');
+      const self = this;
+      self.$axios.get('http://localhost:8082/members/' + self.id)
+      .then(function(res){
+          if (res.status == 200) {
+            let dto = res.data.dto
+            if (dto != null) { 
+              console.log(dto);
+              //this.id = dto.id
+              self.name = dto.name
+              self.email = dto.email
+              self.birth = moment(dto.birth).format('L');
+              self.gender = dto.gender
+              self.phone = dto.phone
+              self.address = dto.address
 
-                    self.setBaseInfo();
-                } else {
-                    alert('없는 아이디 이거나 만료된 토큰')
-                }
+              self.setBaseInfo();
             } else {
-                alert('에러코드 :' + res.status)
+              alert('없는 아이디 이거나 만료된 토큰')
             }
-        });
+          } else {
+              alert('에러코드 :' + res.status)
+          }
+      });
     },
     setBaseInfo() {
-        document.getElementById('login_name').innerText = this.name;
-        document.getElementById('name').innerText = this.name;
+      const self = this;
+      if (sessionStorage.getItem('loginFlag') == 'kakao') {
+        self.name = sessionStorage.getItem('kakaoName');
+      }
+      document.getElementById('login_name').innerText = self.name;
+      document.getElementById('name').innerText = self.name;
     },
     getWatch(){
       const self = this
-      self.$axios.get('http://localhost:8082/watchlist/id/' + this.id)
+      self.$axios.get('http://localhost:8082/watchlist/id/' + self.id)
       .then(function(res){
         if(res.status == 200){
           self.watch = res.data.dto

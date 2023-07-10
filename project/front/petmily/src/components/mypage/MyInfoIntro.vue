@@ -27,9 +27,21 @@ export default {
     }
   },
   created: function () {
-      
+      this.chkKakaoValidatoion();
   },
   methods: {
+    chkKakaoValidatoion() {
+      if (sessionStorage.getItem('loginFlag') == 'kakao') {
+        const self = this;
+        self.$axios.get('http://localhost:8082/members/' + self.id).then (function(rs) {
+          console.log(rs.data.dto);
+        
+          if (rs.data.dto == null) {
+            self.$router.push({name:'KakaoAdditionalForm', query:{kakaoId: sessionStorage.getItem('loginId'), kakaoName: sessionStorage.getItem('kakaoName')}});
+          }
+        });
+      }
+    },
     chkPw() {
         this.getMemInfo();
     },
