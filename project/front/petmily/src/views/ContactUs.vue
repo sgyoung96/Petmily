@@ -12,7 +12,7 @@
     alt="컨택트 이미지"
     style="width: 100%; padding-bottom: 10px; position: relative;"
   />
-  <div class="wrapper">Contact us</div>
+  <div class="wrapper1">Contact us</div>
   <div class="wrapper2" sytle="font-size:50px;display:block">about petmily</div>
   </div>
  
@@ -214,7 +214,7 @@ p {
 img{
    z-index:-1;
 }
-.wrapper {
+.wrapper1 {
   display: block;
   font-family: "IBMPlexSansKR-Bold";
   color:rgba(255, 255, 255, 0.374);

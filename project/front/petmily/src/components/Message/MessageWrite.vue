@@ -1,6 +1,6 @@
 <template>
   <div id="messagewrite">
-    <div class="wrapper">
+    <div class="wrapper2">
         <div class="message_area">
 
           
@@ -199,7 +199,7 @@ export default {
 </script>
 
 <style scoped>
-.wrapper {
+.wrapper2 {
   background-color: rgba(0, 0, 0, 0.5);
   position: fixed;
   width: 100%;

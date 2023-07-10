@@ -1,4 +1,4 @@
-<template>
+<template>ssage_area
   <div class="MessageModal">
     <div class="wrapper">
         <div class="container">
@@ -99,10 +99,10 @@ export default{
 .wrapper {
   background-color: rgba(0, 0, 0, 0.5);
   position: fixed;
-  width: 100%;
+  max-width: 100%;
   height: 100%;
-  top: 0;
-  left: 0;
+  top:0;
+  left:0;
   display: flex;
   justify-content: center;
   align-items: center;
