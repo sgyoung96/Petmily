@@ -11,8 +11,11 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+
+import com.example.demo.diarycomment.DiarycommentDto;
 
 /**
  * 1. 해당 게시글 댓글 전체 검색 2. 댓글 입력 4. 댓글 삭제
@@ -49,9 +52,27 @@ public class AdoptCommentController {
 	 */
 	@PostMapping("")
 	public Map add(AdoptCommentDto dto) {
-		Adoptcomment adoptComment = service.add(dto);
+		AdoptCommentDto adoptComment = service.save(dto);
 		Map map = new HashMap();
 		map.put("dto", adoptComment);
+		return map;
+	}
+	
+	@PutMapping("")
+	public Map edit(AdoptCommentDto dto) {
+		AdoptCommentDto c = service.getByNum2(dto.getAb_num());
+		c.setContent(dto.getContent());
+		c.setW_date(dto.getW_date());
+		Map map = new HashMap();
+		AdoptCommentDto dto2 = null;
+		boolean flag = true;
+		try {
+			dto2 = service.save(c);
+		} catch (Exception e) {
+			flag = false;
+		}
+		map.put("flag", flag);
+		map.put("dto", dto2);
 		return map;
 	}
 

@@ -112,46 +112,52 @@
           });
         }
       },
-      add(){
-        const self = this
-        const moment = require('moment');
-        const voldate = moment(self.vol_date).format('L');
-        const deadline = moment(self.deadline).format('L');
+      add() {
+  const self = this;
+  const moment = require('moment');
+  const currentDate = moment();
+  const voldate = moment(self.vol_date).format('L');
+  const deadline = moment(self.deadline).format('L');
 
-        var address = self.roadAddress
-        address += self.detailAddress 
-        if(self.extraAddress != ''){
-        address += "," + self.extraAddress
+  // 현재 시간과 비교하여 voldate와 deadline이 현재 시간보다 앞에 있는지 확인
+  if (moment(voldate).isSameOrAfter(currentDate) && moment(deadline).isSameOrAfter(currentDate)) {
+    var address = self.roadAddress;
+    address += self.detailAddress;
+    if (self.extraAddress != '') {
+      address += ',' + self.extraAddress;
+    }
+
+    let formData = new FormData();
+    formData.append('writer', this.writer);
+    formData.append('title', this.title);
+    formData.append('content', this.content);
+    formData.append('vol_number', this.vol_number);
+    formData.append('w_date', new Date());
+    formData.append('vol_date', voldate);
+    formData.append('deadline', deadline);
+    formData.append('place', this.place);
+    formData.append('address', address);
+    formData.append('count', 0);
+    formData.append('cnt', 0);
+    const file1 = document.getElementById('f1');
+    const file2 = document.getElementById('f2');
+
+    formData.append('f[0]', file1.files[0]);
+    formData.append('f[1]', file2.files[0]);
+
+    self.$axios
+      .post('http://localhost:8082/volboard', formData, { headers: { 'Content-Type': 'multipart/form-data' } })
+      .then(function(res) {
+        if (res.status == 200) {
+          self.$router.push('/volboardhome');
+        } else {
+          alert('에러코드:' + res.status);
         }
-
-        let formData = new FormData();
-        formData.append('writer', this.writer)
-        formData.append('title', this.title)
-        formData.append('content', this.content)
-        formData.append('vol_number', this.vol_number)
-        formData.append('w_date', new Date())
-        formData.append('vol_date', voldate)
-        formData.append('deadline', deadline)
-        formData.append('place', this.place)
-        formData.append('address', address)
-        formData.append('count', 0)
-        formData.append('cnt', 0)
-        const file1 = document.getElementById('f1')
-        const file2 = document.getElementById('f2')
-        
-        formData.append('f[0]', file1.files[0]);
-        formData.append('f[1]', file2.files[0]);
-        
-        
-        self.$axios.post('http://localhost:8082/volboard', formData, {headers:{"Content-Type":"multipart/form-data"}})
-        .then(function(res){
-          if(res.status == 200){
-            self.$router.push('/volboardhome')
-          }else{
-            alert("에러코드:" + res.status)
-          }
-        })
-      },
+      });
+  } else {
+    alert('봉사일자와 봉사마감일은 현재 시간 이후로 설정해야 합니다.');
+  }
+},
       execDaumPostcode(){
     const element_wrap =  this.$refs.wrap;
     
