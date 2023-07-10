@@ -50,8 +50,9 @@
     </div>
 
     <div class="container-dash-board">
-      <div class="box-dbboard">
-        <div v-for="dboard in arr" :key="dboard.num">
+      <div>
+        <p>새 반려을 찾고 있어요</p>
+        <div  class="box-dbboard" v-for="dboard in arr" :key="dboard.num">
           <div class="img-box" v-on:click="$event => detail(dboard.num)">
             <a><img class="b-img" :src="'http://localhost:8082/dboard/imgs/' + dboard.num + '/1'"></a>
             <div class="b-txt">
@@ -71,8 +72,9 @@
           </div>
         </div>
       </div>
-      <div class="box-atboard">
-        <div v-for="dboard in arr2" :key="dboard.num">
+      <div>
+        <p>우리 아가 잘 지내고 있어요</p>
+        <div class="box-atboard" v-for="dboard in arr2" :key="dboard.num">
           <div class="img-box" v-on:click="$event => detail2(dboard.num)">
             <a><img class="b-img" :src="'http://localhost:8082/adopt/imgs/' + dboard.num + '/1'"></a>
             <div class="b-txt">
@@ -790,6 +792,13 @@ export default {
   position: relative;
   width: 100%;
   justify-content: space-between;
+}
+
+.container-dash-board p {
+  font-family: 'IBMPlexSansKR-Medium';
+  font-size: 13px;
+  color: black;
+  margin-bottom: 10px;
 }
 
 .box-dbboard, .box-atboard {
