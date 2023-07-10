@@ -144,6 +144,8 @@ export default {
           
             if (rs.data.dto == null) {
               self.$router.push({name:'KakaoAdditionalForm', query:{kakaoId: sessionStorage.getItem('loginId'), kakaoName: sessionStorage.getItem('kakaoName')}});
+            } else {
+              location.href = '/';
             }
           });
         }
