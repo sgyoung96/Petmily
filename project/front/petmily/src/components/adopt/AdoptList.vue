@@ -138,9 +138,10 @@ methods: {
   zoomOut(event) {
     event.currentTarget.style.transform = 'scale(1.0)';
   },
-  detail: function(num) {
-    this.$router.push({name: 'AdoptDetail', query: {num: num}})
-  },
+  detail(num) {
+  const url = this.$router.resolve({ name: 'AdoptDetail', query: { num: num } }).href;
+  window.open(url, '_blank', 'width=800,height=1000');
+},
   previousPage() {
       if (this.currentPage > 1) {
         this.currentPage--;
@@ -169,6 +170,7 @@ components: {
   background-color:white;
   padding:24px 63px;
   display:flex;
+  justify-content: center;
 }
 
 .banner img{
