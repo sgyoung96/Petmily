@@ -75,6 +75,9 @@
           <router-link to="/diaryboardhome" class="badge text-bg-secondary" style="font-size: 17px;">목록으로</router-link>
         </div>
         <div>
+          <span v-if="dto.ischeck==1">분양완료</span>
+          <span v-else>분양중</span>
+          <button @click="adoptbtn(dto.num)">분양신청</button>
           <button @click="likebtn(dto.num)">좋아요</button>
           <span v-on:click="edit()" class="badge text-bg-secondary" style="font-size: 17px;">수정하기</span>
           <button v-on:click="boarddelete">삭제하기</button>
@@ -269,6 +272,15 @@ export default {
     this.commentlist();
   },
   methods: {
+    adoptbtn(num){
+      const self = this
+      self.$axios.get('http://localhost:8082/adopt/ischeck/'+ num)
+        .then(function (res){
+          if(res.status == 200){
+            alert(res.data.flag) 
+          }
+        })
+    },
     editcancle() {
       this.showModal = false;
     },
