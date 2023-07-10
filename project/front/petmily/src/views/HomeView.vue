@@ -596,7 +596,7 @@ export default {
         if (imgBannerHeight / 2 < window.scrollY) {
           document.getElementById('top_02').classList.add('active');
           setTimeout(function() {
-            window.scrollTo(imgBannerHeight, imgBannerHeight * 2);
+            //window.scrollTo(imgBannerHeight, imgBannerHeight * 2);
           }, 6000)
         }
 
