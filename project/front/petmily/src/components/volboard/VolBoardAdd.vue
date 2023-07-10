@@ -1,10 +1,15 @@
 <template>
+  <div>
+    
+  </div>
     <div class="d-all">
     <div class="d-title">
+      
       <h4 style="text-align: center;"><strong><span style="color:rgb(156, 156, 39)">PETMILY</span>
           &nbsp;<span style="color:rgb(244, 191, 79);">VOLUNTEER</span></strong></h4>
     </div>
-    <div class="d-box">
+    <div class="d-box" style="text-align: center;">
+      <img src="https://media.tenor.com/Eo-EZ0G_-qoAAAAC/samoyed-dog.gif" style="width:360px; height: 270px; margin-bottom: 20px;">
       <table class="box-title">
   <tr>
     <td>작성자:</td>
