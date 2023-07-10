@@ -27,6 +27,27 @@
           </div>
       </div>
 
+      <div id="app">
+        <!-- ... Existing code ... -->
+
+        <div class="form-group">
+          <input type="hidden" class="form-control" v-model="videoUrl">
+        </div>
+
+        <!-- Display YouTube video -->
+        <!-- Display YouTube video -->
+        <div class="form-group">
+          <div v-if="isValidVideoUrl">
+            <iframe :src="embeddedVideoUrl" width="1290" height="700" frameborder="0" allowfullscreen></iframe>
+          </div>
+          <div v-else>
+            <p>유효한 YouTube 동영상 URL을 입력하세요.</p>
+          </div>
+        </div>
+
+        <!-- ... Existing code ... -->
+      </div>
+
       <div class="rounded">
           <p class="hash-tit">
               #
@@ -110,8 +131,27 @@
 <script>
 export default {
   name: 'ImgSl',
+
+  data() {
+    return{
+      videoUrl: 'https://www.youtube.com/watch?v=yYKrcrUoFnY',
+    }
+  },
+
   mounted() {
       this.initSlider();
+  },
+  computed: {
+    embeddedVideoUrl() {
+      // Extract video ID from the URL
+      const videoId = this.extractVideoId(this.videoUrl);
+      // Create the embedded video URL
+      return `https://www.youtube.com/embed/${videoId}`;
+    },
+    isValidVideoUrl() {
+      // Validate the YouTube video URL
+      return this.extractVideoId(this.videoUrl) !== null;
+    }
   },
   methods: {
       initSlider() {
@@ -154,6 +194,13 @@ export default {
               next.click();
           });
       },
+      extractVideoId(url) {
+      // Regular expression to extract the video ID from YouTube URL
+      const regex = /[?&]v=([^&#]+)/;
+      const match = url.match(regex);
+
+      return match ? match[1] : null;
+    },
   },
 };
 </script>
