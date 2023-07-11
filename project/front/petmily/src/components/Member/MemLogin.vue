@@ -47,6 +47,9 @@ export default {
       loginFlag: ''
     }
   },
+  mounted() {
+    window.scrollTo({ top: 0, behavior: 'auto' });
+  },
   methods:{
     login(){ // 로그인
       const self = this;

@@ -71,7 +71,7 @@
             v-on:click="modal(comment.id.id)">
             </div>
             <div style="width:900px">
-              <span>{{ comment.id.id }}</span>&nbsp;<span style="font-size: small; color:grey">{{
+              <span>{{ comment.id.name }}({{ comment.id.id }})</span>&nbsp;<span style="font-size: small; color:grey">{{
                 formatDate(comment.w_date) }}</span><br />
               <div v-if="!comment.editMode"><div v-if="dto.content" v-html="convertNewlines(comment.content)"></div></div>
               <div v-if="comment.editMode" class="c-editForm">
@@ -175,6 +175,7 @@ button:hover {
 .d-all {
   padding-left: 150px;
   padding-right: 150px;
+  font-family: 'IBMPlexSansKR-Bold';
 }
 
 .box-title {
