@@ -1,6 +1,5 @@
 <template>
   <div class="box-container">
-    <img class="t-img" src="../../assets/images/배경.png">
     <div class="d-title">
       <h4 style="text-align: center;"><strong><span style="color:rgb(156, 156, 39)">PETMILY</span>
           &nbsp;<span style="color:rgb(244, 191, 79);">DIARY</span></strong></h4>

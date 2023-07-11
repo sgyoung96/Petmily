@@ -95,6 +95,9 @@ export default {
         this.$data.num = this.$route.query.num;
         this.fetchApplyFormData();
     },
+    mounted() {
+    window.scrollTo({ top: 0, behavior: 'auto' });
+  },
     methods: {
         fetchApplyFormData() {
             const self = this;

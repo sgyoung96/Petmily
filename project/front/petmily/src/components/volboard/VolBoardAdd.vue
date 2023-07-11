@@ -101,6 +101,9 @@ export default {
       pic2: ''
     }
   },
+  mounted() {
+    window.scrollTo({ top: 0, behavior: 'auto' });
+  },
   methods: {
     chkKakaoValidatoion() {
       if (sessionStorage.getItem('loginFlag') == 'kakao') {

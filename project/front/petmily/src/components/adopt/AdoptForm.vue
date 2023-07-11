@@ -83,6 +83,9 @@ export default {
   created: function () {
     this.chkKakaoValidatoion();
   },
+  mounted() {
+    window.scrollTo({ top: 0, behavior: 'auto' });
+  },
   methods: {
     chkKakaoValidatoion() {
       if (sessionStorage.getItem('loginFlag') == 'kakao') {

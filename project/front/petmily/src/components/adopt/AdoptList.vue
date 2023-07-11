@@ -122,6 +122,9 @@ data () {
   }
   
 },
+mounted() {
+    window.scrollTo({ top: 0, behavior: 'auto' });
+  },
 computed: {
     totalPages() {
       return Math.ceil(this.list.length / this.pageSize);

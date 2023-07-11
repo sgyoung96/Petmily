@@ -1,6 +1,5 @@
 <template>
   <div class="box-container">
-    <img class="t-img" src="../../assets/images/강고.png">
     <div class="d-title">
       <h4 style="text-align: center;"><strong><span style="color:rgb(156, 156, 39)">PETMILY</span>
           &nbsp;<span style="color:rgb(244, 191, 79);">ADOPT</span></strong></h4>
@@ -105,7 +104,7 @@
                 :src="'http://localhost:8082/members/imgs/' + comment.id.id" v-on:click="modal(comment.id.id)">
             </div>
             <div style="width:900px">
-              <span>{{ comment.id.id }}</span>&nbsp;
+              <span>{{comment.id.name}}({{ comment.id.id }})</span>&nbsp;
               <span style="font-size: small; color:grey">{{ formatDate(comment.w_date) }}</span><br />
               <div v-if="!comment.editMode">{{ comment.content }}</div>
               <div v-if="comment.editMode" class="c-editForm">
@@ -349,6 +348,9 @@ export default {
   created() {
     this.boarddetail();
     this.commentlist();
+  },
+  mounted() {
+    window.scrollTo({ top: 0, behavior: 'auto' });
   },
   methods: {
     convertNewlines(text) {

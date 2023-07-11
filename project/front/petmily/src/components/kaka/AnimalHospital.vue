@@ -257,6 +257,7 @@ export default {
     };
   },
   mounted() {
+    window.scrollTo({ top: 0, behavior: 'auto' });
     const mapElement = document.getElementById("map");
     if (window.kakao && window.kakao.maps && mapElement) {
       setTimeout(() => {
