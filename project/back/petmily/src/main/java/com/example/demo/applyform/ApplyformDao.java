@@ -22,6 +22,8 @@ public interface ApplyformDao extends JpaRepository<Applyform, Integer> {
 	ArrayList<Applyform> findByIscheck(int ischeck);
 	List<Applyform> findAllByOrderByIscheckAsc();
 	
+	ArrayList<Applyform> findByIdAndIscheck(Member id, int ischeck);
+	
 	@Transactional
 	@Modifying
 	@Query(value="update applyform set ischeck=1 where num=:num", nativeQuery=true)

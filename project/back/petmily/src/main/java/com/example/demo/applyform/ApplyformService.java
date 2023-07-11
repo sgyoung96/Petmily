@@ -71,17 +71,15 @@ public class ApplyformService {
 	
 	// 맴버 ID와 check로 검색
 	public ArrayList<ApplyformDto> searchByMemberIdAndCheck(String id, int check) {
-	    ArrayList<ApplyformDto> list1 = findByMemberId(id);
-	    ArrayList<ApplyformDto> list2 = findByCheck(check);
-	    ArrayList<ApplyformDto> resultList = new ArrayList<>();
-
-	    for (ApplyformDto dto : list1) {
-	        if (list2.contains(dto)) {
-	            resultList.add(dto);
-	        }
-	    }
-
-	    return resultList;
+		Member m = new Member(id, "", "", "", "", null, "", "", "", null);
+		ArrayList<Applyform> list = dao.findByIdAndIscheck(m, check);
+		ArrayList<ApplyformDto> list2 = new ArrayList<>();
+		for (Applyform a : list) {
+			list2.add(new ApplyformDto(a.getNum(), a.getId(), a.getWdate(), a.getAgreement(), a.getAnother(),
+					a.getReason(), a.getFeeding(), a.getIscheck(), a.getKindCd(), a.getSexCd(), a.getAge(),
+					a.getColorCd(), a.getNeuterYn(), a.getCareNm(), a.getCareAddr(), a.getPopfile()));
+		}
+		return list2;
 	}
 	// check로 검색
 	public ArrayList<ApplyformDto> findByCheck(int check) {

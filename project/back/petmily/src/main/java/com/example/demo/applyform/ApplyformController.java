@@ -111,9 +111,11 @@ public class ApplyformController {
 	 
 	 
 	@GetMapping("/search/{id}/{check}")
-	public ArrayList<ApplyformDto> searchByMemberIdAndCheck(@PathVariable("id") String id, @PathVariable("check") int check) {
+	public Map searchByMemberIdAndCheck(@PathVariable("id") String id, @PathVariable("check") int check) {
 	    ArrayList<ApplyformDto> resultList = service.searchByMemberIdAndCheck(id, check);
-	    return resultList;
+	    Map map = new HashMap<>();
+	    map.put("list", resultList);
+	    return map;
 	}
 	
 		//check로 검색
