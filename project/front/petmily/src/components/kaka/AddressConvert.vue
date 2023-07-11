@@ -6,7 +6,7 @@
         <div v-for="(vboardGroup, index) in groupedItems" :key="index" class="carousel-item" :class="{ 'active': index === 0 }">
           <div class="d-flex">
             <div v-for="(vboard, innerIndex) in vboardGroup" :key="innerIndex" class="mx-auto" :class="{ 'd-none': innerIndex >= 3 }">
-              <div style="background-color:white; text-align:left; font-weight: 500; width:240px; height:275px; border-radius: 10px;">
+              <div @click="goDetail(vboard.num, vboard.address)" style="cursor: pointer; background-color:white; text-align:left; font-weight: 500; width:240px; height:275px; border-radius: 10px;">
                 <div style="width:240px; height:20px; background-color:#789e20; border-top-left-radius:10px; border-top-right-radius:10px;">
                 </div>
                 <div class="box-white" style=" padding-left: 10px; padding-right: 10px; ">
@@ -67,6 +67,21 @@ export default {
   methods: {
     moreVol() {
       this.$router.push('/volboardhome');
+    },
+    goDetail(num, address) {
+      console.log(num + 'address: ' + address);
+      const self = this;
+      self.$axios.get('http://localhost:8082/volboard/cnt/' + num)
+        .then(function (res) {
+          if (res.status == 200) {
+            self.$router.push({
+              name: 'VolBoardDetail',
+              query: { num: num, address: address },
+            })
+          }else{
+            alert('디테일에러')
+          }
+        })
     },
     checkListLength() {
       if (this.list.length === 0) {
