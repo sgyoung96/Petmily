@@ -1,7 +1,17 @@
 <template>
-  <div>
-    <img src="../../assets/images/고양.png" style="width: 100%; height: 600px; margin-bottom: 20px;">
+  <div style="position: relative">
+    <img
+      src="../../assets/images/강고.png"
+      alt="컨택트 이미지"
+      style="width: 100%; padding-bottom: 10px; position: relative"
+    />
+    <div class="wrapper1">VOLUNTEER
+</div>
+    <div class="wrapper2" sytle="font-size:50px;display:block">
+      about petmily
+    </div>
   </div>
+  <div style="font-family: 'IBMPlexSansKR-Bold';">
   <div class="v-title" @click="goHome" style="cursor: pointer;">
     <h4 style="text-align: center;"><strong><span style="color:rgb(156, 156, 39)">PETMILY</span>
         &nbsp;<span style="color:rgb(244, 191, 79);">VOLUNTEER</span></strong></h4>
@@ -31,7 +41,7 @@
           모집인원<br />({{ vboard.count }} / {{ vboard.vol_number }})
         </div>
       </div>
-
+</div>
     </div>
   </div>
   <ul class="pagination" style="display: inline-block">
@@ -154,6 +164,36 @@ export default {
 </script>
 
 <style scoped>
+img {
+  z-index: -1;
+}
+.wrapper1 {
+  display: block;
+  font-family: "IBMPlexSansKR-Bold";
+  color: rgba(255, 255, 255, 0.374);
+  position: absolute;
+  font-size: 120px;
+  width: 100%;
+  top: 40px;
+  text-align: left;
+  left: 50px;
+
+  z-index: 0;
+}
+
+.wrapper2 {
+  display: block;
+  font-family: "IBMPlexSansKR-Bold";
+  color: rgba(255, 255, 255, 0.374);
+  position: absolute;
+  font-size: 60px;
+  width: 100%;
+  top: 160px;
+  text-align: left;
+  left: 50px;
+
+  z-index: 0;
+}
 .pagination {
   display: inline-block;
   margin-top: 20px;

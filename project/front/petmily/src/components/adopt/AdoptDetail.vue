@@ -215,6 +215,7 @@ button:hover {
 .d-all {
   padding-left: 150px;
   padding-right: 150px;
+  font-family: 'IBMPlexSansKR-Bold';
 }
 
 .box-title {

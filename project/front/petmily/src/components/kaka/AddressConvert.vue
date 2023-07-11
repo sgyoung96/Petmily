@@ -13,7 +13,7 @@
                   <div class="txt-align">
                     <em style="color:#789e20; font-weight:900; font-size:30px;">유기견봉사</em><span style="margin-top: 20px;">({{ slice2(vboard.address) }})</span><br/>
                   </div>
-                  <div style="margin-top: 10px; margin-left: 9px;"><a style="font-size:17px; font-weight:600;">{{ vboard.title }}</a></div>
+                  <div style="margin-top: 10px; margin-left: 9px;"><a style="font-size:17px; font-weight:600;">{{ vboard.title.length > 12 ? vboard.title.substring(0, 12) + '...' : vboard.title }}</a></div>
                   <dl style="margin-top: 20px;">
                     <dt>모집인원: {{ vboard.vol_number }} </dt>
                   </dl>

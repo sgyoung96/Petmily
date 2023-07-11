@@ -106,6 +106,7 @@ button:hover {
   padding-left: 200px;
   padding-right: 200px;
   padding-bottom: 150px;
+  font-family: 'IBMPlexSansKR-Bold';
 }
 
 #map {

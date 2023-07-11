@@ -1,5 +1,16 @@
 <template>
-  <img class="t-img" src="../../assets/images/배경.png">
+  <div style="position: relative">
+    <img
+      src="../../assets/images/배경.png"
+      alt="컨택트 이미지"
+      style="width: 100%; height:700px; padding-bottom: 10px; position: relative"
+    />
+    <div class="wrapper1">DIARYBOARD
+</div>
+    <div class="wrapper2" sytle="font-size:50px;display:block">
+      about petmily
+    </div>
+  </div>
   <div class="d-title">
     <h4 style="text-align: center;"><strong><span style="color:rgb(156, 156, 39)">PETMILY</span>
         &nbsp;<span style="color:rgb(244, 191, 79);">DIARY</span></strong></h4>
@@ -63,6 +74,36 @@
 </template>
 <style scoped>
 @import url('https://fonts.googleapis.com/css2?family=Single+Day&display=swap');
+img {
+  z-index: -1;
+}
+.wrapper1 {
+  display: block;
+  font-family: "IBMPlexSansKR-Bold";
+  color: rgba(255, 255, 255, 0.374);
+  position: absolute;
+  font-size: 120px;
+  width: 100%;
+  top: 40px;
+  text-align: left;
+  left: 50px;
+
+  z-index: 0;
+}
+
+.wrapper2 {
+  display: block;
+  font-family: "IBMPlexSansKR-Bold";
+  color: rgba(255, 255, 255, 0.374);
+  position: absolute;
+  font-size: 60px;
+  width: 100%;
+  top: 160px;
+  text-align: left;
+  left: 50px;
+
+  z-index: 0;
+}
 button{
   width: 100px;
     color: white;
