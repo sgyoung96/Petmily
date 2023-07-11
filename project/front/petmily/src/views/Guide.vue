@@ -128,8 +128,10 @@
         </div>
       </div>
     </div>
-    <div class="row">
-      <div class="col-7">
+
+    <div class="row" style="margin-left: 50px; margin-right: 50px; justify-content:center; border-style:1px solid black; padding:5px;">
+      <h1 style="font-weight:700;">🐶강아지 산책 가이드🐾</h1>
+      <div class="col-6">
         <table class="table" v-if="witems.length">
           <thead>
             <tr>
@@ -247,7 +249,7 @@
           </tbody>
         </table>
       </div>
-      <div class="col-5">
+      <div class="col-4" style="margin-left: 20px;">
         <table class="table">
           <thead>
             <tr>
