@@ -89,6 +89,8 @@ export default {
     };
   },
   mounted() {
+    window.scrollTo({ top: 0, behavior: 'auto' });
+    
     if (window.kakao && window.kakao.maps) {
       this.loadMap();
     } else {

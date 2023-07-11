@@ -152,8 +152,8 @@ export default {
         formData.append('cnt', 0);
 
 
-        formData.append('f[0]', file1.files[0]);
-        formData.append('f[1]', file2.files[0]);
+        formData.append('f[0]', file1[0]);
+        formData.append('f[1]', file2[0]);
 
         self.$axios
           .post('http://localhost:8082/volboard', formData, { headers: { 'Content-Type': 'multipart/form-data' } })

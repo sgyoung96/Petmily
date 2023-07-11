@@ -157,6 +157,9 @@ export default {
     this.pageNo = parseInt(pageNo);
     this.fetchData(orgCd);
   },
+  mounted() {
+    window.scrollTo({ top: 0, behavior: 'auto' });
+  },
   watch: {
     picked: function () {
       if (this.picked.length == 2) {

@@ -77,7 +77,7 @@
     <footer class="footer">
       <div id="footer" class="footer_wrap clearfix">
         <div class="wrapper clearfix">
-          <div class="foot_wrap" >
+          <div class="foot_wrap">
             <div class="foot_logo">
               <img src="@/assets/logo_petmily.png" alt="펫밀리 로그" style="width:120px; height:80px; margin-left:70px; " >
             </div>
@@ -568,13 +568,12 @@ li:hover {
 }
 
 .footer_wrap {
-    background-color: #c9d4d2;
-    position: relative;
-    width: 100%;
-    font-weight: 300;
-    text-align: left;
-    padding: 30px 0;
-    font-size: 14px;
+  padding-top: 50px;
+  position: relative;
+  width: 100%;
+  font-weight: 300;
+  text-align: left;
+  font-size: 14px;
 }
 
 .wrapper {

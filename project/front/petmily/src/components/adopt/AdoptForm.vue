@@ -119,8 +119,8 @@ export default {
         formData.append('w_date', new Date())
         formData.append('cnt', 0)
         formData.append('isCheck', 0)
-        formData.append('f[0]', file1.files[0]);
-        formData.append('f[1]', file2.files[0]);
+        formData.append('f[0]', file1[0]);
+        formData.append('f[1]', file2[0]);
 
         const self = this;
         self.$axios.post('http://localhost:8082/adopt', formData, {
