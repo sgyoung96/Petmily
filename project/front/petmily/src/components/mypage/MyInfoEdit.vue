@@ -154,6 +154,7 @@
 </template>
 
 <script>
+import img from "@/assets/images/icon-no-profile.png";
 
 export default {
   name: 'MyInfoEdit',
@@ -508,6 +509,9 @@ export default {
           alert('에러코드:' + res.status)
         }
       });
+    },
+    replaceImg(e) {
+      e.target.src = img;
     },
   },
   components: {
