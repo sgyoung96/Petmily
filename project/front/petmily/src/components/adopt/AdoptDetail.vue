@@ -14,7 +14,7 @@
           </tr>
           <tr>
             <th>등록인</th>
-            <td colspan="3">{{ dto.id.id }}</td>
+            <td colspan="3">{{ dto.id.name }}({{ dto.id.id }})</td>
           </tr>
           <tr>
             <th>분양동물</th>
