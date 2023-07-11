@@ -505,6 +505,9 @@ export default {
         });
     },
     commentadd() {
+      if(this.id == null){
+        alert('로그인 후 댓글작성이 가능합니다.')
+      }else{
       const formData = new FormData();
       formData.append('num', this.num);
       formData.append('id', this.id);
@@ -524,6 +527,7 @@ export default {
             alert('에러코드:' + response.status);
           }
         });
+      }
     },
     showEditForm(comment) {
       comment.editMode = !comment.editMode;

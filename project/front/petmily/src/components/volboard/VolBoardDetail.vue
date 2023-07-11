@@ -9,7 +9,7 @@
         <button @click="$router.push('/volboardhome')" style="font-size: 17px; text-decoration: none;">목록으로</button>
       </div>
       <div style="float:right">
-        <button @click="apply" style="font-size: 17px; cursor: pointer;">신청하기</button>
+        <button @click="apply" style="font-size: 17px; cursor: pointer;" v-if="calculateDateDifference(dto.deadline).difference >= 0">신청하기</button>
 <button @click="addwatch(dto.num)" style="font-size: 17px; cursor: pointer;">♡관심목록</button>
 <button v-if="this.loginId==='admin'" @click="del(dto.num)" style="font-size: 17px; cursor: pointer;">삭제</button>
       </div>
@@ -244,6 +244,10 @@ convertNewlines(text) {
     }, 
     addwatch(num) {
   let id = this.loginId;
+  if(id==null){
+    alert('로그인 후 관심목록에 추가 가능합니다.')
+    return;
+  }
   let formData = new FormData();
   formData.append('id', id);
   formData.append('num', num);
@@ -274,6 +278,10 @@ convertNewlines(text) {
 },
 apply() {
 const self = this;
+  if(self.loginId == null){
+    alert("로그인 후 신청가능합니다")
+    return;
+  }
     if (self.dto.vol_number <= self.count) {
       alert("봉사신청인원이 초과하였습니다.");
     } else {
