@@ -73,8 +73,8 @@
             </tr>
         </table>
     </div>
-    <button @click="edit_form()" style="background-color:#FFD65B; border-radius:10px;">수정</button>
-    <button @click="delete_form(num)" style="background-color:#FFD65B; border-radius:10px;">삭제</button>
+    <button @click="edit_form()" class="txt-form">수정</button>
+    <button @click="delete_form(num)" class="txt-form">삭제</button>
 </template>
 
 <script>
@@ -213,4 +213,17 @@ a {
 
 #block {
     border: #42b983;
+    
+}
+
+.txt-form {
+  width: 50px;
+  height: 30px;
+  font-family: 'IBMPlexSansKR-Bold';
+  font-size: 18px;
+  background-color: rgb(244, 191, 79);
+  border-radius: 30px;
+  color: white;
+  cursor: pointer;
+  border-color: white;
 }</style>
