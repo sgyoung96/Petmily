@@ -57,6 +57,7 @@ import ExitService from '@/components/mypage/ExitService.vue'
 import MyInfoIntro from '@/components/mypage/MyInfoIntro'
 import MyInfoEdit from '@/components/mypage/MyInfoEdit.vue'
 import AlertBox from '@/components/mypage/AlertBox.vue'
+import MyVolList from '@/components/mypage/MyVolList.vue'
 
 
 const routes = [
@@ -333,6 +334,11 @@ const routes = [
     path: '/contactus',
     name: 'ContactUs',
     component: ContactUs
+  },
+  {
+    path: '/mypage/vollist',
+    name: 'MyVolList',
+    component: MyVolList
   }
 
 ]
