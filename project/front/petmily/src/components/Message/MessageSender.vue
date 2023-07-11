@@ -448,7 +448,7 @@ computed: {
   height: 100%;
   background-color: white;
   object-fit: cover;
-  cursor: pointer;
+  
 }
 .modal-box{
   display:flex;
