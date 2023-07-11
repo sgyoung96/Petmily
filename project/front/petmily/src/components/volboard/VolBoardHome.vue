@@ -1,6 +1,6 @@
 <template>
   <div>
-    <img src="../../assets/images/vboard2.jpg" style="width: 85%; height: 500px; margin-bottom: 20px;">
+    <img src="../../assets/images/고양.png" style="width: 100%; height: 600px; margin-bottom: 20px;">
   </div>
   <div class="v-title" @click="goHome" style="cursor: pointer;">
     <h4 style="text-align: center;"><strong><span style="color:rgb(156, 156, 39)">PETMILY</span>

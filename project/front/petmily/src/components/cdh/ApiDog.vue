@@ -1,72 +1,90 @@
 <template>
-  <div id="p" class="col-1">
-  </div>
-  <div class="col-10"
-    style="border: solid #e5e7eb; border-radius: 20px; margin-top: 50px; position: relative; margin-left: 130px; text-align: left; background-color:white;">
-    
-
+  <div class=box-background>
     <div>
-
       <div class="box-places">
         <div class="chk-places">
-          <input type="checkbox" id="chk-places" name="chk-01"  v-model="chk_title" ><div class="box-chk-01" v-on:click="PlacetoggleButtons"><label for="chk-places" ><span class="chk-01">전체시도조회</span></label></div>
+          <input type="checkbox" id="chk-places" name="chk-01" v-model="chk_title">
+          <div class="box-chk-01" v-on:click="PlacetoggleButtons"><label for="chk-places"><span
+                class="chk-01">전체시도조회</span></label></div>
         </div>
         <div v-if="showPlaceButtons">
           <div class="box-place-container">
-            <div class="radio-all-place box-radio chk-all"  v-on:click="chkRadiobtn(99)"><input type="radio" id="place_all" name="ipt-radio-place" v-on:click="PlaceAll" class="ipt-radio-place" ><label for="place_all" class="lbl-place-all"><span class="span-place-all">전체</span></label></div>
-            <div v-for="(button, index) in placeButtons" :key="index"  >
-              <div v-on:click="button.onClick" class="place" ><input type="radio" :id="index"  :value="index" name="ipt-radio-place" class="ipt-radio-place"><label v-on:click="chkRadiobtn(index)" :for="index" class="lbl-place chk-lbl"><span class="span-place">{{ button.label }} </span></label></div>
+            <div class="radio-all-place box-radio chk-all" v-on:click="chkRadiobtn(99)"><input type="radio" id="place_all"
+                name="ipt-radio-place" v-on:click="PlaceAll" class="ipt-radio-place"><label for="place_all"
+                class="lbl-place-all"><span class="span-place-all">전체</span></label></div>
+            <div v-for="(button, index) in placeButtons" :key="index">
+              <div v-on:click="button.onClick" class="place"><input type="radio" :id="index" :value="index"
+                  name="ipt-radio-place" class="ipt-radio-place"><label v-on:click="chkRadiobtn(index)" :for="index"
+                  class="lbl-place chk-lbl"><span class="span-place">{{ button.label }} </span></label></div>
             </div>
           </div>
         </div>
       </div>
 
-      <div class="box-yn"> 
+      <div class="box-yn">
         <div class="chk-yn">
           <div class="chk_neuter">
             <div>
-              <input type="checkbox" id="chk_neuter" name="chk-01" v-model="chk_title" ><div class="box-chk-01" v-on:click="NeutertoggleButtons"><label for="chk_neuter" ><span class="chk-01">중성화여부</span></label></div>
+              <input type="checkbox" id="chk_neuter" name="chk-01" v-model="chk_title">
+              <div class="box-chk-01" v-on:click="NeutertoggleButtons"><label for="chk_neuter"><span
+                    class="chk-01">중성화여부</span></label></div>
             </div>
           </div>
           <div v-if="showNeuterButtons">
             <div class="Neuter-container">
-              <div class="place yn"><input type="radio" id="neuter_all" v-model="picked" value="all"  name="radio-neuter" class="Neuter-button" ><label v-on:click="NeuterAll, chkRadiobtn('all')" class="lbl-place lbl-yn" for="neuter_all"><span class="span-place">전체</span></label></div>
-              <div class="place yn"><input type="radio" id="neuter_y" v-model="picked" value="O" name="radio-neuter" class="Neuter-button" ><label v-on:click="NeuterAll, chkRadiobtn('y')" class="lbl-place lbl-yn" for="neuter_y"><span class="span-place">중성화O</span></label></div>
-              <div class="place yn"><input type="radio" id="neuter_n" v-model="picked" value="X"  name="radio-neuter" class="Neuter-button" ><label v-on:click="NeuterAll, chkRadiobtn('n')" class="lbl-place lbl-yn" for="neuter_n"><span class="span-place">중성화X</span></label></div>
-              <div class="place yn"><input type="radio" id="neuter_x" v-model="picked" value="??" name="radio-neuter" class="Neuter-button" ><label v-on:click="NeuterAll, chkRadiobtn('x')" class="lbl-place lbl-yn" for="neuter_x"><span class="span-place">확인불가</span></label></div>
+              <div class="place yn"><input type="radio" id="neuter_all" v-model="picked" value="all" name="radio-neuter"
+                  class="Neuter-button"><label v-on:click="NeuterAll, chkRadiobtn('all')" class="lbl-place lbl-yn"
+                  for="neuter_all"><span class="span-place">전체</span></label></div>
+              <div class="place yn"><input type="radio" id="neuter_y" v-model="picked" value="O" name="radio-neuter"
+                  class="Neuter-button"><label v-on:click="NeuterAll, chkRadiobtn('y')" class="lbl-place lbl-yn"
+                  for="neuter_y"><span class="span-place">중성화O</span></label></div>
+              <div class="place yn"><input type="radio" id="neuter_n" v-model="picked" value="X" name="radio-neuter"
+                  class="Neuter-button"><label v-on:click="NeuterAll, chkRadiobtn('n')" class="lbl-place lbl-yn"
+                  for="neuter_n"><span class="span-place">중성화X</span></label></div>
+              <div class="place yn"><input type="radio" id="neuter_x" v-model="picked" value="??" name="radio-neuter"
+                  class="Neuter-button"><label v-on:click="NeuterAll, chkRadiobtn('x')" class="lbl-place lbl-yn"
+                  for="neuter_x"><span class="span-place">확인불가</span></label></div>
             </div>
           </div>
         </div>
       </div>
 
       <label v-on:click="search" class="btn-search"><span>검색</span></label>
-      
+
     </div>
 
   </div>
-  <div id="app" style="margin-top:50px; ">
     <div class="grid-container">
       <div v-for="item in items" :key="item.desertionNo" class="grid-item">
-        <div class="card">
-          <div>
+        <div class="card" @mouseover="zoomIn" @mouseleave="zoomOut">
             <img :src="item.popfile" :alt="item.careNm" @click="handleItemClick(item.desertionNo, item.careAddr)"
-              style="cursor: pointer; width: 250px; height: 200px; ">
+              style="cursor: pointer; width: 250px; height: 180px; border-radius: 10px 10px 0px 0px;">
+              <div class="card-content">
+          <div class="card-head">
+              <div class="card-name">{{ item.kindCd }}
+            <span v-if="item.sexCd === 'M'"><img src="@/assets/images/boy.png" alt="수컷 이미지"></span>
+            <span v-else-if="item.sexCd === 'F'"><img src="@/assets/images/girl.png" alt="암컷 이미지"></span>
+            <span v-else><img src="@/assets/images/nosex.png" alt="미상 이미지"></span>
           </div>
-          <div class="info-item info-left" style="font-family: IBMPlexSansKR-Bold; text-align: left;">{{ item.kindCd }}
-            <span style="padding-left: 8px" v-if="item.sexCd === 'M'"><img src="@/assets/images/boy.png" alt="수컷 이미지"></span>
-            <span style="padding-left: 8px" v-else-if="item.sexCd === 'F'"><img src="@/assets/images/girl.png" alt="암컷 이미지"></span>
-            <span style="padding-left: 8px" v-else><img src="@/assets/images/nosex.png" alt="미상 이미지"></span>
+          <div class="card-day">
+            {{ item.noticeSdt }}
           </div>
-          <div style="text-align: left;">
-            <img src="@/assets/images/careAddr.png" alt="보호장소 이미지">
-            <h5 style="display: inline;"><span>{{ item.noticeNo }}</span></h5>
-            <br>
-            <img src="@/assets/images/cal.png" alt="보호장소 이미지">
-            <h5 style="display: inline;"><span>{{ item.noticeSdt }} ~ {{ item.noticeEdt }}</span></h5>
+        </div>
+        <div class="card-notice">
+        {{ item.noticeNo }}
+      </div>
+          <div style="text-align: left; font-size:15px; display:flex">
+            <div style="margin-right:5px">
+            <img src="@/assets/images/careAddr.png">
           </div>
-          <hr>
-
-          <div class="item-info" style="text-align: left;">
+            <div style="margin-top:3px; text-align:left;">
+              {{ item.happenPlace.length > 15 ? item.happenPlace.substring(0, 15) + '...' : item.happenPlace }}
+            </div>
+          </div>
+          <div style="text-align:left; font-size:samll; height:65px;">
+          {{ item.specialMark.length > 33 ? item.specialMark.substring(0, 33) + '...' : item.specialMark }}
+        </div>
+          <div class="item-info" style="text-align: left; border-top : 1px solid silver; po:bottom;">
             <div id="orgNm">
               {{ item.orgNm }}
             </div>
@@ -84,9 +102,9 @@
             </div>
           </div>
         </div>
+        </div>
       </div>
     </div>
-  </div>
   <div style="margin-top: 2%;">
     <button v-on:click="previousPage" class="custom-button">이전</button>
     <button v-for="pageNumber in displayedPages" :key="pageNumber" v-on:click="goToPage(pageNumber)"
@@ -146,6 +164,12 @@ export default {
     }
   },
   methods: {
+    zoomIn(event) {
+    event.currentTarget.style.transform = 'scale(1.05)';
+  },
+  zoomOut(event) {
+    event.currentTarget.style.transform = 'scale(1)';
+  },
     fetchData(orgCd, neuter_yn) {
     let apiUrl;
     if (orgCd && neuter_yn) {
@@ -367,28 +391,74 @@ export default {
 </script>
 
 <style scoped>
- .custom-button {
-    background-color: #f0cf81; /* 배경색 설정 */
-    border: none; /* 테두리 제거 */
-    color: white; /* 텍스트 색상 설정 */
-    padding: 10px 20px; /* 안쪽 여백 설정 */
-    text-align: center; /* 텍스트 가운데 정렬 */
-    text-decoration: none; /* 밑줄 제거 */
-    display: inline-block; /* 인라인 요소로 표시 */
-    font-size: 16px; /* 폰트 크기 설정 */
-    margin: 4px 2px; /* 외부 여백 설정 */
-    cursor: pointer; /* 커서 포인터로 변경 */
-    border-radius: 4px; /* 모서리를 둥글게 설정 */
-  }
+.custom-button {
+  background-color: #f0cf81;
+  /* 배경색 설정 */
+  border: none;
+  /* 테두리 제거 */
+  color: white;
+  /* 텍스트 색상 설정 */
+  padding: 10px 20px;
+  /* 안쪽 여백 설정 */
+  text-align: center;
+  /* 텍스트 가운데 정렬 */
+  text-decoration: none;
+  /* 밑줄 제거 */
+  display: inline-block;
+  /* 인라인 요소로 표시 */
+  font-size: 16px;
+  /* 폰트 크기 설정 */
+  margin: 4px 2px;
+  /* 외부 여백 설정 */
+  cursor: pointer;
+  /* 커서 포인터로 변경 */
+  border-radius: 4px;
+  /* 모서리를 둥글게 설정 */
+}
+
 img {
   width: 20px;
   height: 20px;
 }
+
 .card {
   border-radius: 10px;
-  /* 모서리를 둥글게 만듭니다 */
-  /* 다른 스타일을 추가로 적용할 수 있습니다 */
-  position: relative;
+  width:250px;
+  height:390px;
+  box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 1px 3px 1px;
+}
+
+.card-content{
+padding:10px;
+}
+
+.card-content img{
+  width:15px;
+  height:15px;
+}
+.card-head{
+  display:flex;
+  justify-content: space-between;
+}
+
+.card-name{
+  font-family: IBMPlexSansKR-Bold;
+  text-align: left;
+  font-size:large;
+}
+
+
+
+.card-day{
+  margin-top:5px;
+  font-size:small;
+  color:silver;
+}
+
+.card-notice{
+  font-size:small;
+  color:silver;
+  text-align: left;
 }
 
 .place-container {
@@ -401,7 +471,7 @@ img {
 .place-container:focus {
   display: grid;
   grid-template-columns: repeat(7, 1fr);
-  padding: 0;  
+  padding: 0;
 }
 
 .Neutered-container {
@@ -413,7 +483,8 @@ img {
 
 .grid-container {
   display: grid;
-  margin-left: 150px;
+  margin-top:50px;
+  margin-left: 200px;
   margin-right: 200px;
   grid-template-columns: repeat(4, 1fr);
   grid-template-rows: repeat(6, 1fr);
@@ -429,8 +500,7 @@ img {
 }
 
 .item-info {
-  display: center;
-
+  display: left;
   /* 줄 바꿈 방지 */
 }
 
@@ -459,8 +529,10 @@ img {
   display: inline-block;
   margin-right: 10px;
   background-color: rgb(242, 170, 83);
-  padding: 5px; /* 상자 안의 내용과 여백을 조정할 수 있음 */
-  border-radius: 5px; /* 상자의 모서리를 둥글게 만듦 */
+  padding: 5px;
+  /* 상자 안의 내용과 여백을 조정할 수 있음 */
+  border-radius: 5px;
+  /* 상자의 모서리를 둥글게 만듦 */
   box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
   color: white;
   font-size: 5px;
@@ -470,8 +542,10 @@ img {
   display: inline-block;
   margin-right: 10px;
   background-color: rgb(203, 155, 248);
-  padding: 5px; /* 상자 안의 내용과 여백을 조정할 수 있음 */
-  border-radius: 5px; /* 상자의 모서리를 둥글게 만듦 */
+  padding: 5px;
+  /* 상자 안의 내용과 여백을 조정할 수 있음 */
+  border-radius: 5px;
+  /* 상자의 모서리를 둥글게 만듦 */
   box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
   color: white;
   font-size: 5px;
@@ -481,8 +555,10 @@ img {
   display: inline-block;
   margin-right: 10px;
   background-color: rgb(199, 97, 129);
-  padding: 5px; /* 상자 안의 내용과 여백을 조정할 수 있음 */
-  border-radius: 5px; /* 상자의 모서리를 둥글게 만듦 */
+  padding: 5px;
+  /* 상자 안의 내용과 여백을 조정할 수 있음 */
+  border-radius: 5px;
+  /* 상자의 모서리를 둥글게 만듦 */
   box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
   color: white;
   font-size: 5px;
@@ -492,8 +568,10 @@ img {
   display: inline-block;
   margin-right: 10px;
   background-color: rgb(125, 182, 243);
-  padding: 5px; /* 상자 안의 내용과 여백을 조정할 수 있음 */
-  border-radius: 5px; /* 상자의 모서리를 둥글게 만듦 */
+  padding: 5px;
+  /* 상자 안의 내용과 여백을 조정할 수 있음 */
+  border-radius: 5px;
+  /* 상자의 모서리를 둥글게 만듦 */
   box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
   color: white;
   font-size: 5px;
@@ -508,6 +586,9 @@ img {
   padding-top: 10px;
 }
 
+.box-background{
+  border: solid #e5e7eb; border-radius: 20px; margin-top: 50px; position: relative; margin-left: 130px; margin-right: 130px; text-align: left; background-color:white;
+}
 .box-places {
   padding-left: 10px;
 }
@@ -624,7 +705,10 @@ input[type="checkbox"] {
   cursor: pointer;
 }
 
-.lbl-place-all, .lbl-place, .chk-places, .chk_neuter {
+.lbl-place-all,
+.lbl-place,
+.chk-places,
+.chk_neuter {
   cursor: pointer;
 }
 

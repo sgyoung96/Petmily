@@ -1,10 +1,5 @@
 <template>
-  <div id="p" class="col-1">
-  </div>
-  <div class="col-10"
-    style="border: solid #e5e7eb; border-radius: 20px; margin-top: 50px; position: relative; margin-left: 130px; text-align: left; background-color:white;">
-
-
+  <div class=box-background>
     <div>
       <div class="box-places">
         <div class="chk-places">
@@ -59,29 +54,37 @@
     </div>
 
   </div>
-  <div id="app" style="margin-top:50px; ">
     <div class="grid-container">
       <div v-for="item in items" :key="item.desertionNo" class="grid-item">
-        <div class="card">
-          <div>
+        <div class="card" @mouseover="zoomIn" @mouseleave="zoomOut">
             <img :src="item.popfile" :alt="item.careNm" @click="handleItemClick(item.desertionNo, item.careAddr)"
-              style="cursor: pointer; width: 250px; height: 200px; ">
+              style="cursor: pointer; width: 250px; height: 180px; border-radius: 10px 10px 0px 0px;">
+              <div class="card-content">
+          <div class="card-head">
+              <div class="card-name">{{ item.kindCd }}
+            <span v-if="item.sexCd === 'M'"><img src="@/assets/images/boy.png" alt="수컷 이미지"></span>
+            <span v-else-if="item.sexCd === 'F'"><img src="@/assets/images/girl.png" alt="암컷 이미지"></span>
+            <span v-else><img src="@/assets/images/nosex.png" alt="미상 이미지"></span>
           </div>
-          <div class="info-item info-left" style="font-family: IBMPlexSansKR-Bold; text-align: left;">{{ item.kindCd }}
-            <span style="padding-left: 8px" v-if="item.sexCd === 'M'"><img src="@/assets/images/boy.png" alt="수컷 이미지"></span>
-            <span style="padding-left: 8px" v-else-if="item.sexCd === 'F'"><img src="@/assets/images/girl.png" alt="암컷 이미지"></span>
-            <span style="padding-left: 8px" v-else><img src="@/assets/images/nosex.png" alt="미상 이미지"></span>
+          <div class="card-day">
+            {{ item.noticeSdt }}
           </div>
-          <div style="text-align: left;">
-            <img src="@/assets/images/careAddr.png" alt="보호장소 이미지">
-            <h5 style="display: inline;"><span>{{ item.noticeNo }}</span></h5>
-            <br>
-            <img src="@/assets/images/cal.png" alt="보호장소 이미지">
-            <h5 style="display: inline;"><span>{{ item.noticeSdt }} ~ {{ item.noticeEdt }}</span></h5>
+        </div>
+        <div class="card-notice">
+        {{ item.noticeNo }}
+      </div>
+          <div style="text-align: left; font-size:15px; display:flex">
+            <div style="margin-right:5px">
+            <img src="@/assets/images/careAddr.png">
           </div>
-          <hr>
-
-          <div class="item-info" style="text-align: left;">
+            <div style="margin-top:3px; text-align:left;">
+              {{ item.happenPlace.length > 15 ? item.happenPlace.substring(0, 15) + '...' : item.happenPlace }}
+            </div>
+          </div>
+          <div style="text-align:left; font-size:samll; height:65px;">
+          {{ item.specialMark.length > 33 ? item.specialMark.substring(0, 33) + '...' : item.specialMark }}
+        </div>
+          <div class="item-info" style="text-align: left; border-top : 1px solid silver; po:bottom;">
             <div id="orgNm">
               {{ item.orgNm }}
             </div>
@@ -99,9 +102,10 @@
             </div>
           </div>
         </div>
+        </div>
       </div>
     </div>
-  </div>
+
   <div style="margin-top: 2%;">
     <button v-on:click="previousPage(orgCd, neuter_yn)" class="custom-button">이전</button>
     <button v-for="pageNumber in displayedPages" :key="pageNumber" v-on:click="goToPage(pageNumber, orgCd, neuter_yn)"
@@ -161,6 +165,12 @@ export default {
     }
   },
   methods: {
+    zoomIn(event) {
+    event.currentTarget.style.transform = 'scale(1.05)';
+  },
+  zoomOut(event) {
+    event.currentTarget.style.transform = 'scale(1)';
+  },
     fetchData(orgCd, neuter_yn) {
       let apiUrl;
       if (orgCd && neuter_yn) {
@@ -415,7 +425,42 @@ img {
 
 .card {
   border-radius: 10px;
-  position: relative;
+  width:250px;
+  height:390px;
+  box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 1px 3px 1px;
+}
+
+.card-content{
+padding:10px;
+}
+
+.card-content img{
+  width:15px;
+  height:15px;
+}
+.card-head{
+  display:flex;
+  justify-content: space-between;
+}
+
+.card-name{
+  font-family: IBMPlexSansKR-Bold;
+  text-align: left;
+  font-size:large;
+}
+
+
+
+.card-day{
+  margin-top:5px;
+  font-size:small;
+  color:silver;
+}
+
+.card-notice{
+  font-size:small;
+  color:silver;
+  text-align: left;
 }
 
 .place-container {
@@ -440,7 +485,8 @@ img {
 
 .grid-container {
   display: grid;
-  margin-left: 150px;
+  margin-top:50px;
+  margin-left: 200px;
   margin-right: 200px;
   grid-template-columns: repeat(4, 1fr);
   grid-template-rows: repeat(6, 1fr);
@@ -456,8 +502,7 @@ img {
 }
 
 .item-info {
-  display: center;
-
+  display: left;
   /* 줄 바꿈 방지 */
 }
 
@@ -543,6 +588,9 @@ img {
   padding-top: 10px;
 }
 
+.box-background{
+  border: solid #e5e7eb; border-radius: 20px; margin-top: 50px; position: relative; margin-left: 130px; margin-right: 130px; text-align: left; background-color:white;
+}
 .box-places {
   padding-left: 10px;
 }

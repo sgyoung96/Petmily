@@ -22,18 +22,18 @@
           <div style="border-top:1px solid lightgrey; margin-top:5px; margin-bottom:5px"></div>
           <div v-if="item.weekOprStime && item.weekOprEtime && item.weekOprStime!== ':' && item.weekOprEtime!== ':'">
             <span
-              style="border-top: 1px solid lightgrey; border-radius: 10px 10px 10px 10px; background-color: skyblue; color: white; padding: 5px; font-size: x-small;">
+              style="border-top: 1px solid lightgrey; border-radius: 5px; background-color: rgb(78, 181, 222); color: white; padding: 5px; font-size: x-small;">
               <strong>평일운영시간:</strong> {{ item.weekOprStime }}~{{ item.weekOprEtime }}
           </span>
           </div>
           <div v-if="item.weekendOprStime && item.weekendOprEtime && item.weekendOprStime!== ':' && item.weekendOprEtime!== ':'">
             <span
-              style="border-radius: 10px 10px 10px 10px; background-color: rgb(255, 134, 134); color: white; padding: 5px; font-size: x-small;">
+              style="border-radius: 5px; background-color: rgb(246, 98, 98); color: white; padding: 5px; font-size: x-small;">
               <strong>주말운영시간:</strong> {{ item.weekendOprStime }}~{{ item.weekendOprEtime }}
             </span>
           </div>
           <div v-if="item.closeDay && item.closeDay !== '0'">
-  <span style="border-radius: 10px; background-color: rgb(255, 134, 134); color: white; padding: 5px; font-size: x-small;">
+  <span style="border-radius: 5px; background-color: rgb(246, 98, 98); color: white; padding: 5px; font-size: x-small;">
     <strong>{{ item.closeDay }}휴무</strong>
   </span>
 </div>
