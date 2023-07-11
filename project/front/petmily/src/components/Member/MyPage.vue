@@ -101,6 +101,7 @@ export default {
     this.initTabs();
   },
   mounted: function() {
+    window.scrollTo({ top: 0, behavior: 'auto' });
     this.getWatch();
     this.getLike();
     this.getBoards();
