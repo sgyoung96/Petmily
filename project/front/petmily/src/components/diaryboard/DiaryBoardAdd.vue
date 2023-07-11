@@ -5,7 +5,7 @@
           &nbsp;<span style="color:rgb(244, 191, 79);">DIARY</span></strong></h4>
     </div>
     <div class="d-box" style="text-align: center;">
-      <img src="https://media2.giphy.com/media/3ov9jQGg5J9LGVbBKg/giphy.gif?cid=ecf05e47nipfu9pzm7cfepksrg0i23fgcot04lqgxx8fkdg6&ep=v1_gifs_related&rid=giphy.gif&ct=g" style="width:500px; height: 280px; margin-bottom: 20px;">
+      <img src="https://media2.giphy.com/media/3ov9jQGg5J9LGVbBKg/giphy.gif?cid=ecf05e47nipfu9pzm7cfepksrg0i23fgcot04lqgxx8fkdg6&ep=v1_gifs_related&rid=giphy.gif&ct=g" style="width:500px; height: 280px; margin-bottom: 20px; border-radius:20px">
       <div style="border-bottom: solid black 2px; margin-bottom:15px; width: 80%; text-align: left; font-weight: 900; font-size:36px; font-family: 'Jua', sans-serif;">입양일지 글쓰기</div>
       <div class="box-title">
         <input type="text" id="id" v-model="id" readonly style="margin-bottom:5px"><br/>
@@ -19,22 +19,35 @@
         <textarea id="content" v-model="content" rows="25" cols="130" style="resize: none;">
         </textarea>
       </div>
-      <tr>
-        <th>이미지1</th>
-        <td><input type="file" id="pic1"></td>
-      </tr>
-      <tr>
-        <th>이미지2</th>
-        <td><input type="file" id="pic2"></td>
-      </tr>
-      <tr>
-        <th>등록</th>
-        <td><button v-on:click="add" style="text-align: left;">등록</button></td>
-      </tr>
+<div style="display:flex; justify-content: space-between;">
+  <div style="display:flex; flex-direction: column;">
+<input type="file" id="pic1">
+<input type="file" id="pic2">
+</div>
+<div>
+<button v-on:click="add">등록</button>
+</div>
+</div>
     </div>
   </div>
 </template>
 <style scoped>
+button{
+  width: 100px;
+    color: white;
+    height: 30px;
+    border: 1px solid rgb(244, 191, 79);
+    border-radius: 20px;
+    background-color: rgb(244, 191, 79);
+    font-family: 'IBMPlexSansKR-Bold';
+    font-size: 15px;
+    padding-top: 2px;
+    margin-right: 5px;
+}
+button:hover {
+  background-color: rgb(235, 156, 39);
+  cursor: pointer;
+}
 .d-all {
   margin-left: 150px;
   margin-right: 150px;

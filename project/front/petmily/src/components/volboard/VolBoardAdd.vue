@@ -55,18 +55,15 @@
         <textarea id="content" v-model="content" rows="25" cols="130" style="resize: none;">
         </textarea>
       </div>
-      <tr>
-        <th>이미지1</th>
-        <td><input type="file" id="f1"></td>
-      </tr>
-      <tr>
-        <th>이미지2</th>
-        <td><input type="file" id="f2"></td>
-      </tr>
-      <tr>
-        <th>등록</th>
-        <td><button v-on:click="add">등록</button></td>
-      </tr>
+      <div style="display:flex; justify-content: space-between;">
+  <div style="display:flex; flex-direction: column;">
+<input type="file" id="pic1">
+<input type="file" id="pic2">
+</div>
+<div>
+<button v-on:click="add">등록</button>
+</div>
+</div>
     </div>
   </div>
     
@@ -230,6 +227,22 @@
   }
   </script>
   <style scoped>
+  button{
+  width: 100px;
+    color: white;
+    height: 30px;
+    border: 1px solid rgb(244, 191, 79);
+    border-radius: 20px;
+    background-color: rgb(244, 191, 79);
+    font-family: 'IBMPlexSansKR-Bold';
+    font-size: 15px;
+    padding-top: 2px;
+    margin-right: 5px;
+}
+button:hover {
+  background-color: rgb(235, 156, 39);
+  cursor: pointer;
+}
 .d-all {
   margin-left: 150px;
   margin-right: 150px;
