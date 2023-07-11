@@ -41,6 +41,9 @@ export default {
         self.dto = rs.data.dto;
     })
   },
+  mounted() {
+    window.scrollTo({ top: 0, behavior: 'auto' });
+  },
   methods: {
     addPost: function() {
       //alert('test') // 테스트용 알럿

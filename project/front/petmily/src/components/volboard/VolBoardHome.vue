@@ -80,6 +80,9 @@ export default {
       searchKeyword: ''
     }
   },
+  mounted() {
+    window.scrollTo({ top: 0, behavior: 'auto' });
+  },
   computed: {
     totalPages() {
       return Math.ceil(this.list.length / this.pageSize);
@@ -177,7 +180,6 @@ img {
   top: 40px;
   text-align: left;
   left: 50px;
-
   z-index: 0;
 }
 

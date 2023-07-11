@@ -84,6 +84,9 @@ export default {
       return this.list.slice(startIndex, endIndex);
     }
   },
+  mounted() {
+    window.scrollTo({ top: 0, behavior: 'auto' });
+  },
   methods: {
     del: function(num) {
   const self = this;

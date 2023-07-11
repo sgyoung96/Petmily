@@ -85,6 +85,9 @@ export default {
       searchTerm: '' // 검색어
     }
   },
+  mounted() {
+    window.scrollTo({ top: 0, behavior: 'auto' });
+  },
   created() {
     const self = this;
     self.$axios.get('http://localhost:8082/Applyform/getAllbyischeck')
