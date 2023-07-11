@@ -2,124 +2,136 @@
   
   <div v-if="showSvg"  @click="showDivs">
     <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
-    <svg viewBox="-150 0 1000 20" style="position: absolute; top: 0; left: 0; z-index: 9999;">
+    <svg viewBox="-150 -60 1000 20" style="position: absolute; top: 0; left: 0; z-index: 9999;">
       <text>PETMILY</text>
     </svg>
   </div>
   <div v-if="showDiv">
-  <div class="col-8" style="margin-left: 250px; text-align: left; margin-top: 30px">
-   
-      <h2><span style="color: #f0cf81;"><strong>PETMILY를 소개합니다</strong></span>&nbsp;</h2>
-      <img src="@/assets/images/family.jpg" alt="가족강아지 이미지" style="width: 100%; height: 500px; padding-bottom: 10px;">
-      <p>PETMILY의 의미는 반려동물(PET) + 가족(FAMILY)의 합성어로 반려동물은 가족이라는 의미를 가지고 있습니다</p>
-
-      <hr>
-      
-      <h3><span style="color: #f0cf81; padding: bottom 20px;"><strong></strong>펫밀리의 모토</span></h3>
-      <div class="wrapper">
-            <div class="sub-title wowrap">
-              <p class="title_bold wow fadeInUp" data-wow-delay="0.25s" style="visibility: visible; animation-delay: 0.25s; animation-name: fadeInUp;">MOTTO</p>
-            </div>
-            <ul class="promise_list clearfix wowrap" style="margin-left:140px;">
-              <div class="wow fadeInUp" data-wow-delay="0s" style="visibility: visible; animation-delay: 0s; animation-name: fadeInUp;">
-                <img src="@/assets/images/봉사.png" alt="봉사" style="width: 100px; height: 100px; padding-bottom: 10px;">
-                <p class="tit">봉사</p>
-                <p class="txt">주기적인 유기동물보호소 봉사와 후원으로 사회적 공헌 및 활동</p>
-              </div>
-              <div class="wow fadeInUp" data-wow-delay="0.25s" style="visibility: visible; animation-delay: 0.25s; animation-name: fadeInUp;">
-                <img src="@/assets/images/전문.png" alt="전문" style="width: 100px; height: 100px; padding-bottom: 10px;">
-                <p class="tit">전문</p>
-                <p class="txt">반려동물 관련분야 전문가들과 유기적인 협력으로 반려문화 선진화에 기여</p>
-              </div>
-              <div class="wow fadeInUp" data-wow-delay="0.5s" style="visibility: visible; animation-delay: 0.5s; animation-name: fadeInUp;">
-                <img src="@/assets/images/소통.png" alt="소통" style="width: 100px; height: 100px; padding-bottom: 10px;">
-                <p class="tit">소통</p>
-                <p class="txt">입양플래너, 수의사 등 전문가와  함께하는 실시간 소통, 지속적인 사후케어서비스</p>
-              </div>
-              <div class="wow fadeInUp" data-wow-delay="0.75s" style="visibility: visible; animation-delay: 0.75s; animation-name: fadeInUp;">
-                <img src="@/assets/images/진심.png" alt="봉사" style="width: 100px; height: 100px; padding-bottom: 10px;">
-                <p class="tit">진심</p>
-                <p class="txt">진실된 마음으로 반려동물과 고객을 대하며, 반려인의 목소리에 귀를 기울이는 자세</p>
-              </div>
-            </ul>
+    <div class="col-8" style="margin-left: 250px; text-align: center; margin-top: 30px">
+    <div class="appear">
+    <h2><span style="color: #f0cf81;"><strong>PETMILY를 소개합니다</strong></span>&nbsp;</h2>
+    <img src="@/assets/images/family.jpg" alt="가족강아지 이미지" style="width: 100%; height: 500px; padding-bottom: 60px; padding-top: 20px">
     
+    <p>PETMILY의 의미는 반려동물(PET) + 가족(FAMILY)의 합성어로 반려동물은 가족이라는 의미를 가지고 있습니다</p>
 
-          </div>
-            
-      <p>PETMILY에서는 해당 모토를 유지하며 반려동물과 고객분의 행복하고 올바른 반려동물문화를 지향하고 있으며</p>
-      <p>유기동물들을 구조하고 보호 및 관리하며 새로운 가족들을 찾아주고 있습니다</p>
+   <hr>
 
-      <hr>
-
-      <img src="@/assets/images/dogwalk.webp" alt="보호소 이미지" style="width: 600px; height: 500px; margin-left: 200px; padding-bottom: 10px;">
-      <p>오늘의 날씨를 알려드려 산책 지향 및 산책 주의사항을 알려드립니다</p>
-      
-      <hr>
-      
-      <h3><span style="color: #f0cf81; padding: bottom 20px;"><strong></strong></span></h3>
-      <img src="@/assets/images/careplace.jpg" @click="gotogroups" alt="보호소 이미지" style="width: 600px; height: 500px; margin-left: 200px; padding-bottom: 10px;">
-      <p>언제 어디서든 치료 및 보호를 받을 수 있게 전국 보호소 및 병원을 알려드리고 있습니다</p>
-      
-      
-      <hr>
-
-      <img src="@/assets/images/dogcat.jpg" @click="gotogroups" alt="내가 원하는 이미지" style="width: 600px; height: 500px; margin-left: 200px; padding-bottom: 10px;">
-      <p>저희 PETMILY에서도 고객분들과 반려동물을 위해 최선을 다할 것입니다</p>
-      <p>변함없이 노력하는 펫밀리가 될 것을 약속 드립니다</p>
-
-      <div class="dog" style="margin-left:1000px; margin-top: -90px;">
-    <div class="dog-body">
-      <div class="dog-tail">
-        <div class="dog-tail">
-          <div class="dog-tail">
-            <div class="dog-tail">
-              <div class="dog-tail">
-                <div class="dog-tail">
-                  <div class="dog-tail">
-                    <div class="dog-tail"></div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-    <div class="dog-torso"></div>
-    <div class="dog-head">
-      <div class="dog-ears">
-        <div class="dog-ear"></div>
-        <div class="dog-ear"></div>
-        <div class="dog-ear"></div>
-      </div>
-      <div class="dog-eyes">
-        <div class="dog-eye"></div>
-        <div class="dog-eye"></div>
-      </div>
-      <div class="dog-muzzle">
-        <div class="dog-tongue"></div>
-      </div>
-      <div class="dog-earline">
-        <div class="dog-earliner"></div>
-        <div class="dog-earliner"></div>
-        <div class="dog-earliner"></div>
-      </div>
-    </div>
   </div>
-      <hr>
-      
-      <h3><span style="color: #f0cf81; padding: bottom 20px;"><strong>사용 API</strong></span></h3>
-      <ul>
-      <li style="font-size: 20px" @click="gotoanimal">전국유기동물 API</li>
-      <li style="font-size: 20px" @click="gotoplace">공간정보(지도) API</li>
-      <li style="font-size: 20px" @click="gotohospital">전국동물병원 API</li>
-      <li style="font-size: 20px" @click="gotochart">그래프 API</li>
-      <li style="font-size: 20px" @click="gotoweather">날씨정보 API</li>
-      </ul>
-      <br>
-        
-    </div>
+
+  <div class="appear">
+   <h3><span style="color: #f0cf81; padding: bottom 20px;"><strong></strong>펫밀리의 사이트 설명</span></h3>
+   <img src="@/assets/images/dogwalk.webp" alt="보호소 이미지" style="width: 300px; height: 300px; margin-left:30px; padding-bottom: 20px; padding-top: 20px">
+   <img src="@/assets/images/careplace.jpg" @click="gotogroups" alt="보호소 이미지" style="width: 300px; height: 300px; padding-bottom: 20px; padding-top: 20px">
+   <img src="@/assets/images/입양사진.jpeg" @click="gotoallpets" alt="보호소 이미지" style="width: 300px; height: 300px; padding-bottom: 20px; padding-top: 20px">
+   <h3><span style="color: #f0cf81; padding: bottom 20px;"><strong></strong></span></h3>
+   <p>오늘의 날씨를 알려드려 산책 지향 및 산책 주의사항을 알려드립니다</p>
+   <p>언제 어디서든 치료 및 보호를 받을 수 있게 전국 보호소 및 병원을 알려드리고 있으며</p>
+   <p>잃어버린 반려동물을 찾거나 반려동물 입양 희망 시 저희 사이트를 통해 찾아보실수 있습니다</p>
+   
+   <hr>
+   
+   </div>
+
+   <div class="appear">
+   <h3><span style="color: #f0cf81; padding: bottom 20px;"><strong></strong>펫밀리의 모토</span></h3>
+   <div class="wrapper">
+         <div class="sub-title wowrap">
+           <p class="title_bold wow fadeInUp" data-wow-delay="0.25s" style="visibility: visible; animation-delay: 0.25s; animation-name: fadeInUp;">MOTTO</p>
+         </div>
+         <ul class="promise_list clearfix wowrap" style="margin-left:140px;">
+           <div class="wow fadeInUp" data-wow-delay="0s" style="visibility: visible; animation-delay: 0s; animation-name: fadeInUp;">
+             <img src="@/assets/images/봉사.png" alt="봉사" style="width: 100px; height: 100px; padding-bottom: 10px;">
+             <p class="tit">봉사</p>
+             <p class="txt">주기적인 유기동물보호소 봉사와 후원으로 사회적 공헌 및 활동</p>
+           </div>
+           <div class="wow fadeInUp" data-wow-delay="0.25s" style="visibility: visible; animation-delay: 0.25s; animation-name: fadeInUp;">
+             <img src="@/assets/images/전문.png" alt="전문" style="width: 100px; height: 100px; padding-bottom: 10px;">
+             <p class="tit">전문</p>
+             <p class="txt">반려동물 관련분야 전문가들과 유기적인 협력으로 반려문화 선진화에 기여</p>
+           </div>
+           <div class="wow fadeInUp" data-wow-delay="0.5s" style="visibility: visible; animation-delay: 0.5s; animation-name: fadeInUp;">
+             <img src="@/assets/images/소통.png" alt="소통" style="width: 100px; height: 100px; padding-bottom: 10px;">
+             <p class="tit">소통</p>
+             <p class="txt">입양플래너, 수의사 등 전문가와  함께하는 실시간 소통, 지속적인 사후케어서비스</p>
+           </div>
+           <div class="wow fadeInUp" data-wow-delay="0.75s" style="visibility: visible; animation-delay: 0.75s; animation-name: fadeInUp;">
+             <img src="@/assets/images/진심.png" alt="봉사" style="width: 100px; height: 100px; padding-bottom: 10px;">
+             <p class="tit">진심</p>
+             <p class="txt">진실된 마음으로 반려동물과 고객을 대하며, 반려인의 목소리에 귀를 기울이는 자세</p>
+           </div>
+         </ul>
+ 
+
+       </div>
+         
+   <p>PETMILY에서는 해당 모토를 유지하며 반려동물과 고객분의 행복하고 올바른 반려동물문화를 지향하고 있으며</p>
+   <p>유기동물들을 구조하고 보호 및 관리하며 새로운 가족들을 찾아주고 있습니다</p>
+   
+   <hr>
+
   </div>
+
+  <div class="appear">
+   <img src="@/assets/images/dogcat.jpg" @click="gotogroups" alt="내가 원하는 이미지" style="width: 600px; height: 500px; padding-bottom: 50px; padding-top: 20px">
+   <p>저희 PETMILY에서도 고객분들과 반려동물을 위해 최선을 다할 것입니다</p>
+   <p>변함없이 노력하는 펫밀리가 될 것을 약속 드립니다</p>
+
+   <div class="dog" style="margin-left:1000px; margin-top: -90px;">
+ <div class="dog-body">
+   <div class="dog-tail">
+     <div class="dog-tail">
+       <div class="dog-tail">
+         <div class="dog-tail">
+           <div class="dog-tail">
+             <div class="dog-tail">
+               <div class="dog-tail">
+                 <div class="dog-tail"></div>
+               </div>
+             </div>
+           </div>
+         </div>
+       </div>
+     </div>
+   </div>
+ </div>
+ <div class="dog-torso"></div>
+ <div class="dog-head">
+   <div class="dog-ears">
+     <div class="dog-ear"></div>
+     <div class="dog-ear"></div>
+     <div class="dog-ear"></div>
+   </div>
+   <div class="dog-eyes">
+     <div class="dog-eye"></div>
+     <div class="dog-eye"></div>
+   </div>
+   <div class="dog-muzzle">
+     <div class="dog-tongue"></div>
+   </div>
+   <div class="dog-earline">
+     <div class="dog-earliner"></div>
+     <div class="dog-earliner"></div>
+     <div class="dog-earliner"></div>
+   </div>
+ </div>
+</div>
+   <hr>
+   
+  </div>
+
+  <div class="appear">
+   <h3><span style="color: #f0cf81;"><strong>사용 API</strong></span></h3>
+   <ul>
+   <li style="font-size: 20px" @click="gotoanimal">전국유기동물 API</li>
+   <li style="font-size: 20px" @click="gotoplace">공간정보(지도) API</li>
+   <li style="font-size: 20px" @click="gotohospital">전국동물병원 API</li>
+   <li style="font-size: 20px" @click="gotochart">그래프 API</li>
+   <li style="font-size: 20px" @click="gotoweather">날씨정보 API</li>
+   </ul>
+   <br>
+  </div>
+ </div>
+</div>
 </template>
 
 <script>
@@ -161,6 +173,10 @@ methods: {
 
   gotogroups() {
     this.$router.push({ name: 'Groups'});
+  },
+
+  gotoallpets() {
+    this.$router.push('/api');
   },
 
   showDivs() {
