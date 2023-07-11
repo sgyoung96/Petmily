@@ -39,7 +39,7 @@
             <img class="profile" @error="replaceImg" :src="'http://localhost:8082/members/imgs/' + message.reciever.id" />
           </div>
           
-          <div class="message-id">{{ message.reciever.id }}</div>
+          <div class="message-id">{{message.reciever.name}}({{ message.reciever.id }})</div>
         </div>
 
         <div class="readcheck" v-if="message.check == 0">
@@ -61,7 +61,8 @@
                     message.reciever.id,
                     message.send_dt,
                     message.title,
-                    message.content
+                    message.content,
+                    message.reciever.name
                   )">{{ message.title }}</a><br />
           </div> 
           <div class="message-date">  
@@ -115,7 +116,7 @@
         <div class="modal-box">
           <div class="modal-box-title">{{ title }}</div>
           <div class="modal-box-content">{{ content }}</div>
-          <div class="modal-box-reciever">To.{{ reciever }}</div>
+          <div class="modal-box-reciever">To.{{name}}({{ reciever }})</div>
           
         </div>
         <div class="modal-box-bottom">
@@ -142,6 +143,7 @@ export default {
       reciever: "",
       senddt: "",
       content: "",
+      name:'',
       value:'',
       select:'title',
       find:'',
@@ -238,12 +240,13 @@ computed: {
           }
         });
     },
-    detail(num, reciever, senddt, title, content) {
+    detail(num, reciever, senddt, title, content, name) {
       this.num = num;
       this.reciever = reciever;
       this.title = title;
       this.senddt = senddt;
       this.content = content;
+      this.name = name;
       this.modalOpen = true;
     },
     

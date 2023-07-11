@@ -6,7 +6,7 @@
 </div>
 <div class="d-all">
   <div class="cnt-list">
-    <div v-for="(adopt, index) in list" :key="adopt.num">
+    <div v-for="(adopt, index) in list2" :key="adopt.num">
     <div v-if="index < 16" class="list-all" v-on:click="$event => detail(adopt.num)" @mouseover="zoomIn" @mouseleave="zoomOut">
       <a><img class="list-img" :src="'http://localhost:8082/adopt/imgs/' + adopt.num + '/1'"></a>
       <div class="b-txt">
@@ -103,11 +103,11 @@ data () {
   return {
     loginId: sessionStorage.getItem('loginId'),
     list:[],
+    list2:[],
     itemsPerRow: 4,
     searchKeyword: '',
     currentPage: 1,
     pageSize: 15
-    
   }
   
 },
@@ -131,6 +131,13 @@ created: function () {
       alert('에러');
     }
   });
+  self.$axios.get('http://localhost:8082/adopt/ol').then(function (res) {
+      if (res.status == 200) {
+        self.list2 = res.data.list;
+      } else {
+        alert('에러');
+      }
+    });
 },
 methods: {
   searchByAddress() {

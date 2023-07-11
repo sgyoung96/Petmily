@@ -144,6 +144,7 @@ export default {
   margin: 0 auto;
   max-width: 1400px;
   margin-bottom: 100px;
+   margin-top: 50px;
 }
 .info_tit {
   margin-bottom: 15px;

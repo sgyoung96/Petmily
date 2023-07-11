@@ -99,7 +99,7 @@ export default {
       this.$axios.get("http://localhost:8082/members/all")
       .then(response =>{
         let registeredUsers = response.data.dto;
-        this.skills = registeredUsers.map(user => user.id);
+        this.skills = registeredUsers.map(user => user.name+"("+user.id+")");
         console.log(this.skills)
       })
       },
@@ -156,8 +156,9 @@ export default {
       const self = this;
       const form = new FormData();
       this.loginId = sessionStorage.getItem("loginId");
+      const reciever = self.reciever.match(/\((.*?)\)/)[1];
       form.append("sender", self.sender);
-      form.append("reciever", self.reciever);
+      form.append("reciever", reciever);
       form.append("title", self.title);
       form.append("content", self.content);
       if( this.loginId === self.reciever){
