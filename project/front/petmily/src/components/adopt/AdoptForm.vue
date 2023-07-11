@@ -43,8 +43,8 @@
       </div>
       <div style="display:flex; justify-content: space-between;">
   <div style="display:flex; flex-direction: column;">
-<input type="file" id="pic1">
-<input type="file" id="pic2">
+<input type="file" id="f1">
+<input type="file" id="f2">
 </div>
 <div>
 <button v-on:click="add">등록</button>
@@ -93,7 +93,7 @@ export default {
     },
 
 
-    addform: function() {
+    add: function() {
 
 
         const file1 = document.getElementById('f1')
