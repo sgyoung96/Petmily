@@ -65,8 +65,8 @@
                   {{ dboard.title }}
                 </div>
                 <div class="b-id">
-                  <span>
-                    작성자: {{ dboard.id.id }}
+                  <span class="span-name">
+                    작성자: {{dboard.id.name}} ({{ dboard.id.id }})
                   </span>
                   <span>
                     <img class="l-img" src="../assets/images/heart.png" style="width: 15px; height: 15px;">{{ dboard.likecnt
@@ -91,8 +91,8 @@
                   {{ dboard.title }}
                 </div>
                 <div class="b-id">
-                  <span>
-                    작성자: {{ dboard.id.id }}
+                  <span class="span-name">
+                    작성자: {{ dboard.id.name }} ({{dboard.id.id}})
                   </span>
                   <span>
                     <img class="l-img" src="../assets/images/heart.png" style="width: 15px; height: 15px;">{{ dboard.likecnt
@@ -859,5 +859,11 @@ export default {
   width: 100%;
   height: 100%;
   object-fit: cover;
+}
+
+.span-name {
+  font-family: 'IBMPlexSansKR-Medium';
+  font-size: 12px;
+  color: black;
 }
 </style>
