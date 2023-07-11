@@ -17,7 +17,10 @@
 </div>
 <div class="d-all">
   <div class="cnt-list">
-    <div v-for="(adopt, index) in list2" :key="adopt.num">
+    <div v-if="list.length === 0">
+    검색된 게시글이 없습니다.
+  </div>
+    <div v-else v-for="(adopt, index) in list2" :key="adopt.num">
     <div v-if="index < 16" class="list-all" v-on:click="$event => detail(adopt.num)" @mouseover="zoomIn" @mouseleave="zoomOut">
       <a><img class="list-img" :src="'http://localhost:8082/adopt/imgs/' + adopt.num + '/1'"></a>
       <div class="b-txt">
@@ -40,10 +43,14 @@
   </div>
 </div>
 <div class="banner">
-        <img src="../../assets/images/배너.png">&nbsp;
+        <img style="  height:100px;
+  width: 900px;  z-index: 0;" src="../../assets/images/배너.png">&nbsp;
       </div>
     <div>
-      <table class="table">
+      <div v-if="list.length === 0">
+    검색된 게시글이 없습니다.
+  </div>
+      <table v-else class="table">
   <thead>
     <tr>
       <th style="width:10%">분양중</th>
@@ -156,7 +163,12 @@ created: function () {
 methods: {
   searchByAddress() {
       const self = this;
-      alert(self.searchKeyword)
+      let address = self.searchKeyword;
+  
+  if (!address) {
+    alert('검색어를 입력해주세요.');
+    return;
+  }
       self.$axios
         .get('http://localhost:8082/adopt/getByAddress/' + self.searchKeyword)
         .then(function (res) {

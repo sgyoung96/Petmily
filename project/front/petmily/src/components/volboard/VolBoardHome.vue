@@ -18,11 +18,19 @@
   </div>
   <div style="padding-left: 150px;padding-right:150px">
     <div class="search-box">
+      <div>
+        <button @click="goToFullList">전체목록</button>
+      </div>
+      <div>
       <input type="text" @keyup.enter="search()" v-model="searchKeyword" placeholder="주소를 입력해주세요">
       <button v-on:click="search()">검색</button>
     </div>
+    </div>
     <div style="border-top:2px solid black; padding-top:10px; margin-top:10px">
-      <div class="vbody" v-for="vboard in list" :key="vboard.num" @click="detail(vboard.num, vboard.address)">
+      <div v-if="list.length === 0">
+    검색된 게시글이 없습니다.
+  </div>
+      <div v-else class="vbody" v-for="vboard in list" :key="vboard.num" @click="detail(vboard.num, vboard.address)">
         <div style="text-align: left;">
           <span class="badge text-bg-danger" style="font-size: 17px;"
             v-if="calculateDateDifference(vboard.deadline).difference < 0">모집마감</span>
@@ -94,21 +102,44 @@ export default {
     }
   },
   methods: {
+    goToFullList() {
+  this.searchKeyword = ''; // Clear the search keyword
+  this.$axios.get('http://localhost:8082/volboard') //+ self.loginId
+    .then((res) => {
+      if (res.status === 200) {
+        this.list = res.data.list;
+        this.currentPage = 1; // Reset the current page to the first page
+      } else {
+        alert('에러코드' + res.status);
+      }
+    })
+    .catch((error) => {
+      console.log(error);
+    });
+
+  this.$router.push('/volboardhome');
+},
     goHome() {
       location.href = '/volboardhome';
     }, 
     search() {
-      const self = this
-      let address = self.searchKeyword
-      self.$axios.get('http://localhost:8082/volboard/address/' + address)
-        .then(function (response) {
-          if (response.status == 200) {
-            self.list = response.data.list
-          } else {
-            alert('에러')
-          }
-        })
-    },
+  const self = this;
+  let address = self.searchKeyword;
+  
+  if (!address) {
+    alert('검색어를 입력해주세요.');
+    return;
+  }
+
+  self.$axios.get('http://localhost:8082/volboard/address/' + address)
+    .then(function (response) {
+      if (response.status == 200) {
+        self.list = response.data.list;
+      } else {
+        alert('에러');
+      }
+    });
+},
     detail(num, address) {
       const self = this
       self.$axios.get('http://localhost:8082/volboard/cnt/' + num)
@@ -225,7 +256,8 @@ img {
 }
 .search-box {
   margin-bottom: 30px;
-  text-align: center;
+  display:flex;
+  justify-content: space-between;
 }
 
 .search-box input[type="text"] {

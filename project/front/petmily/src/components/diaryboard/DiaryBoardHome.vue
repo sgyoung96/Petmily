@@ -18,7 +18,10 @@
   <!-- <img class="m-img" src="../../assets/images/dboardpic.png"> -->
   <div class="d-all">
     <div id="slider">
-      <div v-for="dboard in paginatedList" :key="dboard.num" class="slider-item">
+      <div v-if="list.length === 0">
+    검색된 게시글이 없습니다.
+  </div>
+      <div v-else v-for="dboard in paginatedList" :key="dboard.num" class="slider-item">
         <div class="img-box" @mouseover="zoomIn" @mouseleave="zoomOut" v-on:click="$event => detail(dboard.num)">
           <a><img class="b-img" :src="'http://localhost:8082/dboard/imgs/' + dboard.num + '/1'"></a>
           <div class="b-txt">
@@ -339,7 +342,12 @@ export default {
 
     searchByTitle() {
       const self = this;
-      alert(self.searchKeyword)
+      let title = self.searchKeyword;
+  
+  if (!title) {
+    alert('검색어를 입력해주세요.');
+    return;
+  }
       self.$axios
         .get('http://localhost:8082/dboard/getByTitle/' + self.searchKeyword)
         .then(function (res) {
