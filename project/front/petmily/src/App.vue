@@ -568,13 +568,12 @@ li:hover {
 }
 
 .footer_wrap {
-    background-color: #c9d4d2;
-    position: relative;
-    width: 100%;
-    font-weight: 300;
-    text-align: left;
-    padding: 30px 0;
-    font-size: 14px;
+  padding-top: 50px;
+  position: relative;
+  width: 100%;
+  font-weight: 300;
+  text-align: left;
+  font-size: 14px;
 }
 
 .wrapper {
