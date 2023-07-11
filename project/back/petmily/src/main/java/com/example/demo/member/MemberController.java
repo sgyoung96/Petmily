@@ -263,6 +263,10 @@ public class MemberController {
 		old.setEmail(dto.getEmail());
 		old.setPwd(dto.getPwd());
 		old.setPhone(dto.getPhone());
+		old.setBirth(dto.getBirth());
+		old.setName(dto.getName());
+		old.setGender(dto.getGender());
+		old.setAddress(dto.getAddress());
 		
 		
 		MemberDto d = service.save(old);
