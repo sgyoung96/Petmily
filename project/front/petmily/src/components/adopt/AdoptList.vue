@@ -1,5 +1,16 @@
 <template>
-  <img class="t-img" src="../../assets/images/강고.png">
+   <div style="position: relative">
+    <img
+      src="../../assets/images/고양.png"
+      alt="컨택트 이미지"
+      style="width: 100%; padding-bottom: 10px; position: relative"
+    />
+    <div class="wrapper1">ADOPTPETS
+</div>
+    <div class="wrapper2" sytle="font-size:50px;display:block">
+      about petmily
+    </div>
+  </div>
 <div class="d-title">
   <h4 style="text-align: center;"><strong><span style="color:rgb(156, 156, 39)">PETMILY</span>
       &nbsp;<span style="color:rgb(244, 191, 79);">ADOPT</span></strong></h4>
@@ -203,6 +214,36 @@ components: {
 }
 </script>
 <style scoped>
+img {
+  z-index: -1;
+}
+.wrapper1 {
+  display: block;
+  font-family: "IBMPlexSansKR-Bold";
+  color: rgba(255, 255, 255, 0.374);
+  position: absolute;
+  font-size: 120px;
+  width: 100%;
+  top: 40px;
+  text-align: left;
+  left: 50px;
+
+  z-index: 0;
+}
+
+.wrapper2 {
+  display: block;
+  font-family: "IBMPlexSansKR-Bold";
+  color: rgba(255, 255, 255, 0.374);
+  position: absolute;
+  font-size: 60px;
+  width: 100%;
+  top: 160px;
+  text-align: left;
+  left: 50px;
+
+  z-index: 0;
+}
 .banner{
   border: solid #e5e7eb;
   border-radius: 20px;
@@ -313,6 +354,7 @@ margin-bottom: 10px;
 .d-all {
 padding-left: 150px;
 padding-right: 150px;
+font-family: 'IBMPlexSansKR-Bold';
 }
 
 .cnt-list{
