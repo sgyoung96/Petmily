@@ -1,27 +1,32 @@
 <template>
-  <div style="background-color:#5e584a; height:500px;" id="carouselExampleAutoplaying" class="carousel slide">
+  <div id="carouselExampleAutoplaying" class="carousel slide">
     <div class="carousel-inner">
       <h3 style="margin-bottom: 30px; margin-top:30px; color:white; font-weight:400; font-size: 36px;">모집중인 자원봉사</h3>
-      <div v-for="(vboardGroup, index) in groupedItems" :key="index" class="carousel-item" :class="{ 'active': index === 0 }">
-        <div class="d-flex">
-          <div v-for="(vboard, innerIndex) in vboardGroup" :key="innerIndex" class="mx-auto" :class="{ 'd-none': innerIndex >= 3 }">
-            <div style="background-color:white; text-align:left; font-weight: 500; width:240px; height:245px; border-radius: 10px;">
-              <div style="width:240px; height:20px; background-color:#789e20; border-top-left-radius:10px; border-top-right-radius:10px;">
+      <div class="container-box">
+        <div v-for="(vboardGroup, index) in groupedItems" :key="index" class="carousel-item" :class="{ 'active': index === 0 }">
+          <div class="d-flex">
+            <div v-for="(vboard, innerIndex) in vboardGroup" :key="innerIndex" class="mx-auto" :class="{ 'd-none': innerIndex >= 3 }">
+              <div style="background-color:white; text-align:left; font-weight: 500; width:240px; height:275px; border-radius: 10px;">
+                <div style="width:240px; height:20px; background-color:#789e20; border-top-left-radius:10px; border-top-right-radius:10px;">
+                </div>
+                <div class="box-white" style=" padding-left: 10px; padding-right: 10px; ">
+                  <div class="txt-align">
+                    <em style="color:#789e20; font-weight:900; font-size:30px;">유기견봉사</em><span style="margin-top: 20px;">({{ slice2(vboard.address) }})</span><br/>
+                  </div>
+                  <div style="margin-top: 10px; margin-left: 9px;"><a style="font-size:17px; font-weight:600;">{{ vboard.title }}</a></div>
+                  <dl style="margin-top: 20px;">
+                    <dt>모집인원: {{ vboard.vol_number }} </dt>
+                  </dl>
+                  <dl>
+                    <dt>모집마감일:</dt>
+                    <dd>{{ formatDate(vboard.deadline) }}</dd>
+                  </dl>
+                  <dl style="padding-bottom: 5px;">
+                    <dt>봉사일자:</dt>
+                    <dd>{{ formatDate(vboard.vol_date) }}</dd>
+                  </dl>
+                </div>
               </div>
-              <em style="color:#789e20; font-weight:900; font-size:30px;">유기견봉사</em><span style="text-align: right;">({{ slice2(vboard.address) }})</span><br/>
-              <a style="padding-left:20px; font-size:17px; font-weight:600;">{{ vboard.title }}</a>
-              <dl>
-                <dt>모집인원:</dt>
-                <dd>{{ vboard.vol_number }}</dd>
-              </dl>
-              <dl>
-                <dt>모집마감일:</dt>
-                <dd>{{ formatDate(vboard.deadline) }}</dd>
-              </dl>
-              <dl style="padding-bottom: 5px;">
-                <dt>봉사일자:</dt>
-                <dd>{{ formatDate(vboard.vol_date) }}</dd>
-              </dl>
             </div>
           </div>
         </div>
@@ -35,6 +40,9 @@
       <span class="carousel-control-next-icon" aria-hidden="true"></span>
       <span class="visually-hidden">다음</span>
     </button>
+    <div class="more" @click="moreVol()">
+      <label>더보기 ></label>
+    </div>
   </div>
 </template>
 
@@ -57,6 +65,9 @@ export default {
     }
   },
   methods: {
+    moreVol() {
+      this.$router.push('/volboardhome');
+    },
     checkListLength() {
       if (this.list.length === 0) {
         const self = this;
@@ -101,8 +112,59 @@ export default {
 </script>
 
 <style scoped>
+
+#carouselExampleAutoplaying {
+  display: block;
+  position: relative;
+  width: 100%;
+  background:#5e584a;
+  padding-bottom: 130px;
+  font-family: 'IBMPlexSansKR-Medium';
+}
+
 dl{
   font-size:14px;
   padding-left:8px;
+}
+
+h3 {
+  font-family: 'IBMPlexSansKR-Bold';
+  font-size: 25px;
+  color: white;
+  padding-top: 30px;
+}
+
+.container-box {
+  margin-top: 80px;
+  padding-left: 150px;
+  padding-right: 150px;
+}
+
+.txt-align {
+  display: flex;
+  justify-content: space-between;
+}
+
+.more {
+  font-family: 'IBMPlexSansKR-Regular';
+  font-size: 12px;
+  color: white;
+  padding-top: 30px;
+  display: block;
+  width: 100%;
+  position: relative;
+  text-align: right;
+  justify-content: right;
+  padding-right: 100px;
+}
+
+.more > label {
+  font-family: 'IBMPlexSansKR-Regular';
+  font-size: 12px;
+  color: white;
+  position: relative;
+  width: 100px;
+  cursor: pointer;
+  z-index: 2;
 }
 </style>
