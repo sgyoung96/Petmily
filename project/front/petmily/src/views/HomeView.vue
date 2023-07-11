@@ -49,220 +49,79 @@
       <img class="bg-cat-dog" src="../assets/images/댕냥.png" />
     </div>
 
-    <div class="container-dash-board">
-      <div>
-        <p>새 반려을 찾고 있어요</p>
-        <div  class="box-dbboard" v-for="dboard in arr" :key="dboard.num">
-          <div class="img-box" v-on:click="$event => detail(dboard.num)">
-            <a><img class="b-img" :src="'http://localhost:8082/dboard/imgs/' + dboard.num + '/1'"></a>
-            <div class="b-txt">
-              <div class="b-title">
-                {{ dboard.title }}
-              </div>
-              <div class="b-id">
-                <span>
-                  작성자: {{ dboard.id.id }}
-                </span>
-                <span>
-                  <img class="l-img" src="../assets/images/heart.png" style="width: 15px; height: 15px;">{{ dboard.likecnt
-                  }}
-                </span>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div>
-        <p>우리 아가 잘 지내고 있어요</p>
-        <div class="box-atboard" v-for="dboard in arr2" :key="dboard.num">
-          <div class="img-box" v-on:click="$event => detail2(dboard.num)">
-            <a><img class="b-img" :src="'http://localhost:8082/adopt/imgs/' + dboard.num + '/1'"></a>
-            <div class="b-txt">
-              <div class="b-title">
-                {{ dboard.title }}
-              </div>
-              <div class="b-id">
-                <span>
-                  작성자: {{ dboard.id.id }}
-                </span>
-                <span>
-                  <img class="l-img" src="../assets/images/heart.png" style="width: 15px; height: 15px;">{{ dboard.likecnt
-                  }}
-                </span>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-    
-  <div class="container text-center box-walking">
 
-    <div class="row">
-      <div class="col-7">
-        <table class="table" v-if="witems.length">
-          <thead>
-            <tr>
-              <th scope="col">#{{ this.date }}일자 산책</th>
-              <th scope="col" v-if="witems.length">{{ witems[0].fcstTime }}시</th>
-              <th scope="col" v-if="witems.length">{{ witems[12].fcstTime }}시</th>
-              <th scope="col" v-if="witems.length">{{ witems[24].fcstTime }}시</th>
-              <th scope="col" v-if="witems.length">{{ witems[36].fcstTime }}시</th>
-              <th scope="col" v-if="witems.length">{{ witems[48].fcstTime }}시</th>
-            </tr>
-          </thead>
-          <tbody v-if="witems.length">
-            <tr>
-              <th scope="row">기온</th>
-              <td>{{ witems[0].fcstValue }}℃</td>
-              <td>{{ witems[12].fcstValue }}℃</td>
-              <td>{{ witems[24].fcstValue }}℃</td>
-              <td>{{ witems[36].fcstValue }}℃</td>
-              <td>{{ witems[48].fcstValue }}℃</td>
-            </tr>
-            <tr>
-              <th scope="row">날씨</th>
-              <td v-if="witems.length">
-                <span v-if="witems[9].fcstValue != '강수없음'">☔</span>
-                <span v-else>
-                  <span v-if="witems[5].fcstValue === '1'">🌞</span>
-                  <span v-else-if="witems[5].fcstValue === '3'">⛅</span>
-                  <span v-else-if="witems[5].fcstValue === '4'">☁</span>
-                </span>
-              </td>
-              <td v-if="witems.length">
-                <span v-if="witems[21].fcstValue != '강수없음'">☔</span>
-                <span v-else>
-                  <span v-if="witems[17].fcstValue === '1'">🌞</span>
-                  <span v-else-if="witems[17].fcstValue === '3'">⛅</span>
-                  <span v-else-if="witems[17].fcstValue === '4'">☁</span>
-                </span>
-              </td>
-              <td v-if="witems.length">
-                <span v-if="witems[33].fcstValue != '강수없음'">☔</span>
-                <span v-else>
-                  <span v-if="witems[29].fcstValue === '1'">🌞</span>
-                  <span v-else-if="witems[29].fcstValue === '3'">⛅</span>
-                  <span v-else-if="witems[29].fcstValue === '4'">☁</span>
-                </span>
-              </td>
-              <td v-if="witems.length">
-                <span v-if="witems[45].fcstValue != '강수없음'">☔</span>
-                <span v-else>
-                  <span v-if="witems[41].fcstValue === '1'">🌞</span>
-                  <span v-else-if="witems[41].fcstValue === '3'">⛅</span>
-                  <span v-else-if="witems[41].fcstValue === '4'">☁</span>
-                </span>
-              </td>
-              <td v-if="witems.length">
-                <span v-if="witems[45].fcstValue != '강수없음'">☔</span>
-                <span v-else>
-                  <span v-if="witems[41].fcstValue === '1'">🌞</span>
-                  <span v-else-if="witems[41].fcstValue === '3'">⛅</span>
-                  <span v-else-if="witems[41].fcstValue === '4'">☁</span>
-                </span>
-              </td>
-            </tr>
-            <tr>
-              <th scope="row">강수량</th>
-              <td v-if="witems.length">{{ witems[9].fcstValue }}</td>
-              <td v-if="witems.length">{{ witems[21].fcstValue }}</td>
-              <td v-if="witems.length">{{ witems[33].fcstValue }}</td>
-              <td v-if="witems.length">{{ witems[45].fcstValue }}</td>
-              <td v-if="witems.length">{{ witems[45].fcstValue }}</td>
-            </tr>
-            <tr>
-              <th scope="row">갱얼쥐 산책</th>
-              <td>
-                <span v-if="witems[0].fcstValue < '18'">양호🐾</span>
-                <span v-else-if="witems[0].fcstValue >= '18' && witems[0].fcstValue < '26'">약간주의💦</span>
-                <span v-else-if="witems[0].fcstValue >= '26' && witems[0].fcstValue < '29'">주의🚨</span>
-                <span v-else-if="witems[0].fcstValue >= '29' && witems[0].fcstValue < '32'">위험🔥</span>
-                <span v-else-if="witems[0].fcstValue >= '32'">매우위험🚷</span>
-              </td>
-              <td>
-                <span v-if="witems[12].fcstValue < '18'">양호🐾</span>
-                <span v-else-if="witems[12].fcstValue >= '18' && witems[12].fcstValue < '26'">약간주의💦</span>
-                <span v-else-if="witems[12].fcstValue >= '26' && witems[12].fcstValue < '29'">주의🚨</span>
-                <span v-else-if="witems[12].fcstValue >= '29' && witems[12].fcstValue < '32'">위험🔥</span>
-                <span v-else-if="witems[12].fcstValue >= '32'">매우위험🚷</span>
-              </td>
-              <td>
-                <span v-if="witems[24].fcstValue < '18'">양호🐾</span>
-                <span v-else-if="witems[24].fcstValue >= '18' && witems[48].fcstValue < '26'">약간주의💦</span>
-                <span v-else-if="witems[24].fcstValue >= '26' && witems[24].fcstValue < '29'">주의🚨</span>
-                <span v-else-if="witems[24].fcstValue >= '29' && witems[24].fcstValue < '32'">위험🔥</span>
-                <span v-else-if="witems[24].fcstValue >= '32'">매우위험🚷</span>
-              </td>
-              <td>
-                <span v-if="witems[36].fcstValue < '18'">양호🐾</span>
-                <span v-else-if="witems[36].fcstValue >= '18' && witems[36].fcstValue < '26'">약간주의💦</span>
-                <span v-else-if="witems[36].fcstValue >= '26' && witems[36].fcstValue < '29'">주의🚨</span>
-                <span v-else-if="witems[36].fcstValue >= '29' && witems[36].fcstValue < '32'">위험🔥</span>
-                <span v-else-if="witems[36].fcstValue >= '32'">매우위험🚷</span>
-              </td>
-              <td>
-                <span v-if="witems[48].fcstValue < '18'">양호🐾</span>
-                <span v-else-if="witems[48].fcstValue >= '18' && witems[48].fcstValue < '26'">약간주의💦</span>
-                <span v-else-if="witems[48].fcstValue >= '26' && witems[48].fcstValue < '29'">주의🚨</span>
-                <span v-else-if="witems[48].fcstValue >= '29' && witems[48].fcstValue < '32'">위험🔥</span>
-                <span v-else-if="witems[48].fcstValue >= '32'">매우위험🚷</span>
-              </td>
-            </tr>
-          </tbody>
-          <tbody v-else>
-            <tr>
-              <td colspan="6">데이터가 없습니다.</td>
-            </tr>
-          </tbody>
-        </table>
+
+
+
+    <div class="container-dash-board">
+      <div class="container-box01">
+        <label class="lbl-title">새 반려인을 찾고 있어요</label>
+        <div class="box-atboard">
+          <div v-for="dboard in arr" :key="dboard.num">
+            <div class="img-box" v-on:click="$event => detail(dboard.num)">
+              <a><img class="b-img" :src="'http://localhost:8082/dboard/imgs/' + dboard.num + '/1'"></a>
+              <div class="b-txt">
+                <div class="b-title">
+                  {{ dboard.title }}
+                </div>
+                <div class="b-id">
+                  <span class="span-name">
+                    작성자: {{dboard.id.name}} ({{ dboard.id.id }})
+                  </span>
+                  <span>
+                    <img class="l-img" src="../assets/images/heart.png" style="width: 15px; height: 15px;">{{ dboard.likecnt
+                    }}
+                  </span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
-      <div class="col-5">
-        <table class="table">
-          <thead>
-            <tr>
-              <th scope="row">#</th>
-              <th scope="col">여름철산책정도</th>
-              <th scope="col">기온</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr class="table-info">
-              <th scope="row">1</th>
-              <th>양호🐾</th>
-              <th>18℃미만</th>
-            </tr>
-            <tr class="table-primary">
-              <th scope="row">2</th>
-              <th>약간주의💦</th>
-              <th>18℃이상 26℃미만</th>
-            </tr>
-            <tr class="table-warning">
-              <th scope="row">3</th>
-              <th>주의🚨</th>
-              <th>26℃이상 29℃미만</th>
-            </tr>
-            <tr class="table-danger">
-              <th scope="row">4</th>
-              <th>위험🔥</th>
-              <th>29℃이상 32℃미만</th>
-            </tr>
-            <tr class="table-secondary">
-              <th scope="row">5</th>
-              <th>매우위험🚷</th>
-              <th>32℃이상</th>
-            </tr>
-          </tbody>
-        </table>
+
+      <div class="container-box01">
+        <label class="lbl-title">우리 아가 잘 지내고 있어요</label>
+
+          <div class="box-dbboard">
+          <div v-for="dboard in arr2" :key="dboard.num">
+            <div class="img-box" v-on:click="$event => detail2(dboard.num)">
+              <a><img class="b-img" :src="'http://localhost:8082/adopt/imgs/' + dboard.num + '/1'"></a>
+              <div class="b-txt">
+                <div class="b-title">
+                  {{ dboard.title }}
+                </div>
+                <div class="b-id">
+                  <span class="span-name">
+                    작성자: {{ dboard.id.name }} ({{dboard.id.id}})
+                  </span>
+                  <span>
+                    <img class="l-img" src="../assets/images/heart.png" style="width: 15px; height: 15px;">{{ dboard.likecnt
+                    }}
+                  </span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   </div>
+
+
+  <div class="vol-dash-board">
+
+    <p>따뜻한 손길이 필요해요</p>
+
+    <AddressConvert />
+  </div>
+  
+    
 </template>
 
 <script>
 import Chart from 'chart.js/auto';
 import axios from 'axios';
+import AddressConvert from '../components/kaka/AddressConvert.vue' ;
 export default {
   name: 'HomeView',
   data() {
@@ -291,10 +150,6 @@ export default {
       videoUrl: 'https://www.youtube.com/watch?v=3AV35NdBZOI',
       arr: [],
       arr2: [],
-      witems: [],
-      datetime: new Date(),
-      date: this.formatDate(new Date()),
-      time: '',
     };
   },
   computed: {
@@ -332,16 +187,6 @@ export default {
           alert('에러코드' + res.status)
         }
       });
-
-    if (8 <= this.datetime.getHours() && this.datetime.getHours() <= 14) {
-      this.time = '0800';
-    } else if (14 <= this.datetime.getHours() && this.datetime.getHours() < 20) {
-      this.time = '1400';
-    } else {
-      this.time = '2000';
-    }
-
-    this.fetchData2();
 
     self.$axios.get('http://localhost:8082/adopt/ol').then(function (res) {
       if (res.status == 200) {
@@ -407,22 +252,6 @@ export default {
     },
     all_cats() { // 고양이
       this.$router.push('/apicat');
-    },
-    fetchData2() {
-
-
-      console.log(this.time);
-      console.log(this.date);
-      const self = this;
-      self.$axios.get(`https://apis.data.go.kr/1360000/VilageFcstInfoService_2.0/getVilageFcst?dataType=json&serviceKey=hqbUzbZx%2BbQR6OgVCNvZDXGGWIVTWAIawDhN2Y9fbW6Pndu%2BrU9e1NaR9UpW7%2BPotKdwoD9cXlkHbSS7tzFRJQ%3D%3D&numOfRows=50&pageNo=1&base_date=${self.date}&base_time=${self.time}&nx=62&ny=122`)
-        .then(function (res) {
-          if (res.status == 200) {
-            const data = res.data.response.body
-            self.witems = data.items.item;
-          } else {
-            alert(res.status)
-          }
-        })
     },
     detail(num) {
       // alert(num)
@@ -581,11 +410,15 @@ export default {
         
       });
     }
+  },
+  components: {
+    AddressConvert
   }
 }
 </script>
 
 <style scoped>
+@import url('https://fonts.googleapis.com/css2?family=Single+Day&display=swap');
 .bg_fadeout {
   position: absolute;
   width: 100%;
@@ -618,7 +451,7 @@ export default {
 }
 
 .home {
-  background: linear-gradient(to bottom, #000000 0%, #000000 30%, rgb(244, 191, 79) 40%, #c9d4d2 60%, white 100%);
+  background: linear-gradient(to bottom, #000000 0%, #000000 10%, rgb(244, 191, 79) 40%, #c9d4d2 60%, white 100%);
   position: relative;
   display: block;
   width: 100%;
@@ -672,16 +505,28 @@ export default {
   justify-content: center;
 }
 
+.container-box01 {
+  display: block;
+  position: relative;
+  width: 50%;
+  height: 50%;
+  justify-content: center;
+}
+
 .img-box {
+  width: 300px;
   border: 1px solid silver;
+  border-radius: 10px;
   cursor: pointer;
-  width: 293px;
-  height: 260px;
+  position: relative;
+  justify-content: space-evenly;
 }
 
 .b-img {
-  width: 293px;
+  width: 300px;
   height: 200px;
+  border-radius: 10px;
+  object-fit: cover;
 }
 
 .b-txt {
@@ -691,6 +536,7 @@ export default {
 }
 
 .b-title {
+  font-family: 'Single Day', cursive;
   font-size: large;
 }
 
@@ -791,23 +637,34 @@ export default {
   display: flex;
   position: relative;
   width: 100%;
-  justify-content: space-between;
-}
-
-.container-dash-board p {
-  font-family: 'IBMPlexSansKR-Medium';
-  font-size: 13px;
-  color: black;
-  margin-bottom: 10px;
-}
-
-.box-dbboard, .box-atboard {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  margin-top: 400px;
-  position: relative;
   justify-content: center;
-  width: 50%;
+  margin-top: 600px;
+  padding-left: 60px;
+}
+
+.lbl-title {
+  font-family: 'IBMPlexSansKR-Bold';
+  font-size: 20px;
+  color: black;
+  margin-bottom: 50px;
+}
+
+.box-dbboard {
+  grid-template-columns: repeat(2, 1fr);
+  grid-template-rows: repeat(2, 1fr);
+  position: relative;
+  width: 90%;
+  display: grid;
+  justify-content: center;
+}
+
+.box-atboard {
+  grid-template-columns: repeat(2, 1fr);
+  grid-template-rows: repeat(2, 1fr);
+  position: relative;
+  width: 90%;
+  display: grid;
+  justify-content: center;
 }
 
 .box-bg-cat-dog {
@@ -824,5 +681,24 @@ export default {
   width: 100%;
   height: 100%;
   object-fit: cover;
+}
+
+.span-name {
+  font-family: 'IBMPlexSansKR-Medium';
+  font-size: 12px;
+  color: black;
+}
+
+.vol-dash-board {
+  display: block;
+  margin-top: 400px;
+}
+
+.vol-dash-board p {
+  display: block;
+  margin-bottom: 300px;
+  font-family: 'IBMPlexSansKR-Bold';
+  font-size: 25px;
+  color: black;
 }
 </style>

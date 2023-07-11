@@ -6,16 +6,16 @@
 </div>
 <div class="d-all">
   <div class="cnt-list">
-  <div v-for="(adopt, index) in list" :key="adopt.num">
+    <div v-for="(adopt, index) in list2" :key="adopt.num">
     <div v-if="index < 16" class="list-all" v-on:click="$event => detail(adopt.num)" @mouseover="zoomIn" @mouseleave="zoomOut">
       <a><img class="list-img" :src="'http://localhost:8082/adopt/imgs/' + adopt.num + '/1'"></a>
       <div class="b-txt">
         <div class="b-title">
-          {{ adopt.title }}
+          {{ adopt.category }}
         </div>
         <div class="b-id">
           <span>
-            작성자: {{ adopt.id.id }}
+            분양지역: {{adopt.address}}
           </span>
           <span>
             <img class="l-img" src="../../assets/images/heart.png" style="width: 15px; height: 15px;">{{ adopt.likecnt }}
@@ -66,7 +66,7 @@
       <button @click="goToFullList">전체목록</button>
     </span>
     <span>
-      <button @click="$router.push('/adopt/addform')">글쓰기</button>
+      <button @click="$router.push('/adopt/addform')" v-if="loginId != null">글쓰기</button>
     </span>
   </div>
   <div>
@@ -103,11 +103,11 @@ data () {
   return {
     loginId: sessionStorage.getItem('loginId'),
     list:[],
+    list2:[],
     itemsPerRow: 4,
     searchKeyword: '',
     currentPage: 1,
     pageSize: 15
-    
   }
   
 },
@@ -131,6 +131,13 @@ created: function () {
       alert('에러');
     }
   });
+  self.$axios.get('http://localhost:8082/adopt/ol').then(function (res) {
+      if (res.status == 200) {
+        self.list2 = res.data.list;
+      } else {
+        alert('에러');
+      }
+    });
 },
 methods: {
   searchByAddress() {
@@ -384,7 +391,8 @@ font-size: large;
 }
 
 .b-id {
-font-size: medium;
+font-size: small;
+color:grey;
 display: flex;
 justify-content: space-between;
 }

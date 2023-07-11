@@ -35,7 +35,7 @@
         <button @click="goToFullList">전체목록</button>
       </span>
       <span>
-        <button @click="$router.push('/diaryboardadd')">글쓰기</button>
+        <button @click="$router.push('/diaryboardadd')" v-if="loginId != null">글쓰기</button>
       </span>
     </div>
     <div>
@@ -161,6 +161,7 @@ button:hover {
 .d-all {
   padding-left: 150px;
   padding-right: 150px;
+  font-family: 'IBMPlexSansKR-Bold';
 }
 
 .img-box {

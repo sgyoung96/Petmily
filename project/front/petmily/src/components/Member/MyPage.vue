@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div style="margin-top: 20px;">
     <div class="base-info-container">
         <p><label class="lbl-name"><span id="login_name" class="span-name">이름</span></label>님의 마이페이지</p>
 
@@ -73,6 +73,7 @@ import CollectedList from '../mypage/SavedList.vue'
 import AppliedList from '../mypage/AppliedList.vue'
 import MessageBox from '../mypage/MessageBox.vue'
 import ExitService from '../mypage/ExitService.vue'
+import img from "@/assets/images/icon-no-profile.png";
 
 
 export default {
@@ -268,6 +269,9 @@ export default {
           self.msgcnt = res.data.dto
         }
       })
+    },
+    replaceImg(e) {
+      e.target.src = img;
     },
 
   },

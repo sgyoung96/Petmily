@@ -8,7 +8,7 @@
     <div class="d-all">
       <div class="box-title" v-if="dto.id">
         <span style="font-size: x-large; font-family:'Single Day', cursive;">{{ dto.title }}</span>
-        <span style="font-size: small; color:silver; padding-top:10px">{{ dto.id.id }} | {{ formatDate(dto.w_date) }}</span>
+        <span style="font-size: small; color:silver; padding-top:10px">{{ dto.id.name }}({{ dto.id.id }}) | {{ formatDate(dto.w_date) }}</span>
       </div>
       <img class="box-img" :src="'http://localhost:8082/dboard/imgs/' + dto.num + '/1'">
       <img class="box-img" :src="'http://localhost:8082/dboard/imgs/' + dto.num + '/2'">
@@ -71,7 +71,7 @@
             v-on:click="modal(comment.id.id)">
             </div>
             <div style="width:900px">
-              <span>{{ comment.id.id }}</span>&nbsp;<span style="font-size: small; color:grey">{{
+              <span>{{ comment.id.name }}({{ comment.id.id }})</span>&nbsp;<span style="font-size: small; color:grey">{{
                 formatDate(comment.w_date) }}</span><br />
               <div v-if="!comment.editMode"><div v-if="dto.content" v-html="convertNewlines(comment.content)"></div></div>
               <div v-if="comment.editMode" class="c-editForm">
@@ -175,6 +175,7 @@ button:hover {
 .d-all {
   padding-left: 150px;
   padding-right: 150px;
+  font-family: 'IBMPlexSansKR-Bold';
 }
 
 .box-title {
@@ -343,49 +344,63 @@ export default {
       return new Date(date).toLocaleString('ko-KR', options);
     },
     likebtn(num) {
-  if (this.id == null) {
-    alert('로그인 후 이용 가능합니다.');
-  } else {
-    this.$axios.get('http://localhost:8082/liketable/' + this.id + '/' + num)
-      .then(response => {
-        if (response.status == 200) {
-          if (response.data.flag) {
-            let formData = new FormData();
-            formData.append('id', this.id);
-            formData.append('num', num);
-            this.$axios.post('http://localhost:8082/liketable', formData)
-              .then(response => {
-                if (response.status == 200) {
-                  this.dto.likecnt++;
-                  alert('좋아요 수 1 추가');
-                } else {
-                  alert('에러 페이지');
-                }
-              });
-          } else {
-            let formData = new FormData();
-            formData.append('id', this.id);
-            formData.append('num', num);
-            this.$axios.delete('http://localhost:8082/liketable', {
-              data: formData
-            })
-              .then(response => {
-                if (response.status === 200) {
-                  this.dto.likecnt--;
-                  alert('좋아요 수 1 감소');
-                } else {
-                  alert('삭제 요청 중에 오류가 발생했습니다.');
-                }
-              })
-              .catch(error => {
-                console.error(error);
-                alert('좋아요 수 감소 중에 오류가 발생했습니다.');
-              });
-          }
-        }
-      });
-  }
-},
+      alert(this.id)
+      if (this.id == null) {
+        alert('로그인 후 이용가능합니다.')
+      } else {
+        this.$axios.get('http://localhost:8082/liketable/' + this.id + '/' + num)
+          .then(response => {
+            if (response.status == 200) {
+              if (response.data.flag) {
+                let formData = new FormData();
+                formData.append('id', this.id)
+                formData.append('num', num)
+                this.$axios.post('http://localhost:8082/liketable', formData)
+                  .then(response => {
+                    if (response.status == 200) {
+                      this.$axios.get('http://localhost:8082/dboard/likeup/' + num)
+                        .then(response => {
+                          if (response.status == 200) {
+                            this.dto.likecnt++;
+                            alert('좋아요 수 1 추가')
+                          }
+                        })
+                    } else {
+                      alert('에러페이지')
+                    }
+                  })
+              } else {
+                let formData = new FormData();
+                formData.append('id', this.id)
+                formData.append('num', num)
+                this.$axios.delete('http://localhost:8082/liketable', {
+                  data: formData
+                })
+                  .then(response => {
+                    if (response.status === 200) {
+                      this.$axios.get('http://localhost:8082/dboard/likedown/' + num)
+                        .then(response => {
+                          if (response.status === 200) {
+                            alert('좋아요 수 1 감소');
+                            this.dto.likecnt--;
+                          }
+                        })
+                        .catch(error => {
+                          console.error(error);
+                          alert('좋아요 수 감소 중에 오류가 발생했습니다.');
+                        });
+                    }
+                  })
+                  .catch(error => {
+                    console.error(error);
+                    alert('삭제 요청 중에 오류가 발생했습니다.');
+                  });
+
+              }
+            }
+          })
+      }
+    },
 
     boarddetail() {
       this.$axios
