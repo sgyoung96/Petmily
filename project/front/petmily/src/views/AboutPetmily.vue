@@ -76,7 +76,7 @@
    <p>저희 PETMILY에서도 고객분들과 반려동물을 위해 최선을 다할 것입니다</p>
    <p>변함없이 노력하는 펫밀리가 될 것을 약속 드립니다</p>
 
-   <div class="dog" style="margin-left:1000px; margin-top: -90px;">
+   <div class="dog" @click="game()" style="margin-left:1000px; margin-top: -90px;">
  <div class="dog-body">
    <div class="dog-tail">
      <div class="dog-tail">
@@ -151,6 +151,9 @@ export default {
     window.scrollTo({ top: 0, behavior: 'auto' });
   },
 methods: {
+  game(){
+      this.$router.push({ name: 'ImgSl'})
+  },
   gotoanimal() {
     window.location.href = 'https://www.data.go.kr/data/15098931/openapi.do#tab_layer_prcuse_exam';
   },

@@ -77,7 +77,7 @@
     <footer class="footer">
       <div id="footer" class="footer_wrap clearfix">
         <div class="wrapper clearfix">
-          <div class="foot_wrap" >
+          <div class="foot_wrap">
             <div class="foot_logo">
               <img src="@/assets/logo_petmily.png" alt="펫밀리 로그" style="width:120px; height:80px; margin-left:70px; " >
             </div>
