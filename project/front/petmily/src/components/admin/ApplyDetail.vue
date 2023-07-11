@@ -66,8 +66,8 @@
             </tr>
         </table>
     </div>
-    <button @click="apply_form(num)" style="background-color:#FFD65B; border-radius:10px;">승인</button>
-    <button @click="refuse_form(num)" style="background-color:#FFD65B; border-radius:10px;">거부</button>
+    <button @click="apply_form(num)" class="txt-form">승인</button>
+    <button @click="refuse_form(num)" class="txt-form">거부</button>
 </template>
 
 <script>
@@ -185,5 +185,17 @@ a {
 
 #block {
     border: #42b983;
+}
+
+.txt-form {
+  width: 50px;
+  height: 30px;
+  font-family: 'IBMPlexSansKR-Bold';
+  font-size: 18px;
+  background-color: rgb(244, 191, 79);
+  border-radius: 30px;
+  color: white;
+  cursor: pointer;
+  border-color: white;
 }
 </style>
