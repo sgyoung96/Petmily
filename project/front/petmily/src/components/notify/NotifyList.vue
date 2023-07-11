@@ -46,7 +46,7 @@ export default {
     console.log('clicked : ' + this.isclicked);
   },
   mounted: function() {
-    
+    window.scrollTo({ top: 0, behavior: 'auto' });
   },
   methods:{
     getNewNotification() {
