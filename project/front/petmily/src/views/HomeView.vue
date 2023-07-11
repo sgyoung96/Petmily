@@ -49,46 +49,56 @@
       <img class="bg-cat-dog" src="../assets/images/댕냥.png" />
     </div>
 
+
+
+
+
     <div class="container-dash-board">
-      <div>
-        <p>새 반려을 찾고 있어요</p>
-        <div  class="box-dbboard" v-for="dboard in arr" :key="dboard.num">
-          <div class="img-box" v-on:click="$event => detail(dboard.num)">
-            <a><img class="b-img" :src="'http://localhost:8082/dboard/imgs/' + dboard.num + '/1'"></a>
-            <div class="b-txt">
-              <div class="b-title">
-                {{ dboard.title }}
-              </div>
-              <div class="b-id">
-                <span>
-                  작성자: {{ dboard.id.id }}
-                </span>
-                <span>
-                  <img class="l-img" src="../assets/images/heart.png" style="width: 15px; height: 15px;">{{ dboard.likecnt
-                  }}
-                </span>
+      <div class="container-box01">
+        <label class="lbl-title">새 반려인을 찾고 있어요</label>
+        <div class="box-atboard">
+          <div v-for="dboard in arr" :key="dboard.num">
+            <div class="img-box" v-on:click="$event => detail(dboard.num)">
+              <a><img class="b-img" :src="'http://localhost:8082/dboard/imgs/' + dboard.num + '/1'"></a>
+              <div class="b-txt">
+                <div class="b-title">
+                  {{ dboard.title }}
+                </div>
+                <div class="b-id">
+                  <span>
+                    작성자: {{ dboard.id.id }}
+                  </span>
+                  <span>
+                    <img class="l-img" src="../assets/images/heart.png" style="width: 15px; height: 15px;">{{ dboard.likecnt
+                    }}
+                  </span>
+                </div>
               </div>
             </div>
           </div>
         </div>
       </div>
-      <div>
-        <p>우리 아가 잘 지내고 있어요</p>
-        <div class="box-atboard" v-for="dboard in arr2" :key="dboard.num">
-          <div class="img-box" v-on:click="$event => detail2(dboard.num)">
-            <a><img class="b-img" :src="'http://localhost:8082/adopt/imgs/' + dboard.num + '/1'"></a>
-            <div class="b-txt">
-              <div class="b-title">
-                {{ dboard.title }}
-              </div>
-              <div class="b-id">
-                <span>
-                  작성자: {{ dboard.id.id }}
-                </span>
-                <span>
-                  <img class="l-img" src="../assets/images/heart.png" style="width: 15px; height: 15px;">{{ dboard.likecnt
-                  }}
-                </span>
+
+      <div class="container-box01">
+        <label class="lbl-title">우리 아가 잘 지내고 있어요</label>
+
+          <div class="box-dbboard">
+          <div v-for="dboard in arr2" :key="dboard.num">
+            <div class="img-box" v-on:click="$event => detail2(dboard.num)">
+              <a><img class="b-img" :src="'http://localhost:8082/adopt/imgs/' + dboard.num + '/1'"></a>
+              <div class="b-txt">
+                <div class="b-title">
+                  {{ dboard.title }}
+                </div>
+                <div class="b-id">
+                  <span>
+                    작성자: {{ dboard.id.id }}
+                  </span>
+                  <span>
+                    <img class="l-img" src="../assets/images/heart.png" style="width: 15px; height: 15px;">{{ dboard.likecnt
+                    }}
+                  </span>
+                </div>
               </div>
             </div>
           </div>
@@ -586,6 +596,7 @@ export default {
 </script>
 
 <style scoped>
+@import url('https://fonts.googleapis.com/css2?family=Single+Day&display=swap');
 .bg_fadeout {
   position: absolute;
   width: 100%;
@@ -618,7 +629,7 @@ export default {
 }
 
 .home {
-  background: linear-gradient(to bottom, #000000 0%, #000000 30%, rgb(244, 191, 79) 40%, #c9d4d2 60%, white 100%);
+  background: linear-gradient(to bottom, #000000 0%, #000000 10%, rgb(244, 191, 79) 40%, #c9d4d2 60%, white 100%);
   position: relative;
   display: block;
   width: 100%;
@@ -672,16 +683,28 @@ export default {
   justify-content: center;
 }
 
+.container-box01 {
+  display: block;
+  position: relative;
+  width: 50%;
+  height: 50%;
+  justify-content: center;
+}
+
 .img-box {
+  width: 300px;
   border: 1px solid silver;
+  border-radius: 10px;
   cursor: pointer;
-  width: 293px;
-  height: 260px;
+  position: relative;
+  justify-content: space-evenly;
 }
 
 .b-img {
-  width: 293px;
+  width: 300px;
   height: 200px;
+  border-radius: 10px;
+  object-fit: cover;
 }
 
 .b-txt {
@@ -691,6 +714,7 @@ export default {
 }
 
 .b-title {
+  font-family: 'Single Day', cursive;
   font-size: large;
 }
 
@@ -791,23 +815,34 @@ export default {
   display: flex;
   position: relative;
   width: 100%;
-  justify-content: space-between;
-}
-
-.container-dash-board p {
-  font-family: 'IBMPlexSansKR-Medium';
-  font-size: 13px;
-  color: black;
-  margin-bottom: 10px;
-}
-
-.box-dbboard, .box-atboard {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  margin-top: 400px;
-  position: relative;
   justify-content: center;
-  width: 50%;
+  margin-top: 600px;
+  padding-left: 60px;
+}
+
+.lbl-title {
+  font-family: 'IBMPlexSansKR-Bold';
+  font-size: 20px;
+  color: black;
+  margin-bottom: 50px;
+}
+
+.box-dbboard {
+  grid-template-columns: repeat(2, 1fr);
+  grid-template-rows: repeat(2, 1fr);
+  position: relative;
+  width: 90%;
+  display: grid;
+  justify-content: center;
+}
+
+.box-atboard {
+  grid-template-columns: repeat(2, 1fr);
+  grid-template-rows: repeat(2, 1fr);
+  position: relative;
+  width: 90%;
+  display: grid;
+  justify-content: center;
 }
 
 .box-bg-cat-dog {
