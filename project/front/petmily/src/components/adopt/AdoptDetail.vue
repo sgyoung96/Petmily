@@ -7,49 +7,49 @@
     </div>
     <div class="d-all">
       <table class="table table-bordered" style="margin-bottom:0px">
-      <tbody div class="tbody"  v-if="dto.id">
-        <tr>
-          <th>제목</th>
-          <td colspan="3">{{ dto.title }}</td>
-        </tr>
-        <tr>
-          <th>등록인</th>
-          <td colspan="3">{{ dto.id.id }}</td>
-        </tr>
-        <tr>
-          <th>분양동물</th>
-          <td colspan="3">{{ dto.category }}</td>
-        </tr>
-        <tr>
-          <th>분양지역</th>
-          <td>{{ dto.address }}</td>
-          <th>암수구분</th>
-          <td>{{ dto.gender }}</td>
-        </tr>
-        <tr>
-          <th>연락처</th>
-          <td>{{ dto.id.phone }}</td>
-          <th>E-mail</th>
-          <td>{{ dto.id.email }}</td>
-        </tr>
-      </tbody>
-    </table>
-    <img class="a-img" src="../../assets/images/jinjin.png">
+        <tbody div class="tbody" v-if="dto.id">
+          <tr>
+            <th>제목</th>
+            <td colspan="3">{{ dto.title }}</td>
+          </tr>
+          <tr>
+            <th>등록인</th>
+            <td colspan="3">{{ dto.id.name }}({{ dto.id.id }})</td>
+          </tr>
+          <tr>
+            <th>분양동물</th>
+            <td colspan="3">{{ dto.category }}</td>
+          </tr>
+          <tr>
+            <th>분양지역</th>
+            <td>{{ dto.address }}</td>
+            <th>암수구분</th>
+            <td>{{ dto.gender }}</td>
+          </tr>
+          <tr>
+            <th>연락처</th>
+            <td>{{ dto.id.phone }}</td>
+            <th>E-mail</th>
+            <td>{{ dto.id.email }}</td>
+          </tr>
+        </tbody>
+      </table>
+      <img class="a-img" src="../../assets/images/jinjin.png">
       <img class="box-img" :src="'http://localhost:8082/adopt/imgs/' + dto.num + '/1'">
       <img class="box-img" :src="'http://localhost:8082/adopt/imgs/' + dto.num + '/2'">
       <div class="box-content">
         <span>{{ dto.content }}</span>
         <span class="box-warning">
-        ★사랑하는 반려동물이 좋은 주인을 만나 안전하게 살 수 있도록 아래의 사항을 꼭 지켜 주세요!!<br/><Br/>
-        1. 무료분양 계약서를 꼭 주고받으시기 바랍니다.<br/>
-        2. 반려동물 분양시, 분양자와 분양하시는분의 신분을 필히 확인하여 기억해두거나 신분증 사본을 받도록 하세요.<br/>
-        3. 본 무료분양글의 내용 및 사진은 저작권이 있으므로 재배포 및 무단전재를 금지합니다.<br/>
-        ※ 분양받을 목적 이외의 사항으로 분양글 등록 회원에게 연락,문자 등을 보내실 경우 법적 조치를 받으실 수 있습니다.<br/>
-      </span>
+          ★사랑하는 반려동물이 좋은 주인을 만나 안전하게 살 수 있도록 아래의 사항을 꼭 지켜 주세요!!<br /><Br />
+          1. 무료분양 계약서를 꼭 주고받으시기 바랍니다.<br />
+          2. 반려동물 분양시, 분양자와 분양하시는분의 신분을 필히 확인하여 기억해두거나 신분증 사본을 받도록 하세요.<br />
+          3. 본 무료분양글의 내용 및 사진은 저작권이 있으므로 재배포 및 무단전재를 금지합니다.<br />
+          ※ 분양받을 목적 이외의 사항으로 분양글 등록 회원에게 연락,문자 등을 보내실 경우 법적 조치를 받으실 수 있습니다.<br />
+        </span>
       </div>
       <div class="likebnt" @click="likebtn(dto.num)">
-      <img class="likeimg" src="../../assets/images/찬하트.png">
-      {{dto.likecnt}}
+        <img class="likeimg" src="../../assets/images/찬하트.png">
+        {{ dto.likecnt }}
       </div>
       <div>
       </div>
@@ -66,7 +66,8 @@
             </tr>
             <tr>
               <th>내용</th>
-              <td colspan="5"><textarea v-model="dto.content" id="editContent" style="width:100%; height:400px; resize:none"></textarea></td>
+              <td colspan="5"><textarea v-model="dto.content" id="editContent"
+                  style="width:100%; height:400px; resize:none"></textarea></td>
             </tr>
           </table>
           <div class="edit-buttons">
@@ -81,11 +82,11 @@
         </div>
         <div v-if="dto.id">
           <span v-if="isAuthor">
-          <button @click="adoptbtn(dto.num)" v-if="dto.ischeck==1">분양완료</button>
-          <button @click="adoptbtn(dto.num)" v-else>분양중</button>
-          <button @click="edit()" style="font-size: 17px;">수정하기</button>
-          <button v-on:click="boarddelete">삭제하기</button>
-        </span>
+            <button @click="adoptbtn(dto.num)" v-if="dto.ischeck == 1">분양완료</button>
+            <button @click="adoptbtn(dto.num)" v-else>분양중</button>
+            <button @click="edit()" style="font-size: 17px;">수정하기</button>
+            <button v-on:click="boarddelete">삭제하기</button>
+          </span>
         </div>
       </div><br />
       <div class="cbox-add">
@@ -95,14 +96,13 @@
         <textarea style="width:900px; resize:none;" v-model="content" id="content"></textarea>
         <button v-on:click="commentadd">등록하기</button>
       </div>
-      <MessageModal :resender=resender v-if="displayDetail" @close="displayDetail=false"/>
+      <MessageModal :resender=resender v-if="displayDetail" @close="displayDetail = false" />
       <div v-for="comment in comment" :key="comment.id">
         <div class="comment-list">
           <div class="list-content">
             <div class="comment-profile">
-              <img class="profile" style="cursor:pointer"
-            @error="replaceImg" :src="'http://localhost:8082/members/imgs/' + comment.id.id"
-            v-on:click="modal(comment.id.id)">
+              <img class="profile" style="cursor:pointer" @error="replaceImg"
+                :src="'http://localhost:8082/members/imgs/' + comment.id.id" v-on:click="modal(comment.id.id)">
             </div>
             <div style="width:900px">
               <span>{{ comment.id.id }}</span>&nbsp;
@@ -116,10 +116,10 @@
               </div>
             </div>
           </div>
-            <div style="float:right;" v-if="comment.id.id === id">
-  <button @click="showEditForm(comment)">수정하기</button>
-  <button @click="commentdelete(db_num)">삭제하기</button>
-</div>
+          <div style="float:right;" v-if="comment.id.id === id">
+            <button @click="showEditForm(comment)">수정하기</button>
+            <button @click="commentdelete(db_num)">삭제하기</button>
+          </div>
 
         </div>
       </div>
@@ -127,18 +127,19 @@
   </div>
 </template>
 <style scoped>
-button{
+button {
   width: 100px;
-    color: white;
-    height: 30px;
-    border: 1px solid rgb(244, 191, 79);
-    border-radius: 20px;
-    background-color: rgb(244, 191, 79);
-    font-family: 'IBMPlexSansKR-Bold';
-    font-size: 15px;
-    padding-top: 2px;
-    margin-right: 5px;
+  color: white;
+  height: 30px;
+  border: 1px solid rgb(244, 191, 79);
+  border-radius: 20px;
+  background-color: rgb(244, 191, 79);
+  font-family: 'IBMPlexSansKR-Bold';
+  font-size: 15px;
+  padding-top: 2px;
+  margin-right: 5px;
 }
+
 button:hover {
   background-color: rgb(235, 156, 39);
   cursor: pointer;
@@ -203,11 +204,12 @@ button:hover {
 .table th {
   background-color: #f8f9fa;
 }
+
 .a-img {
- text-align: left;
+  text-align: left;
   margin-top: 10px;
   margin-bottom: 10px;
-  width:1000px;
+  width: 1000px;
 }
 
 .d-all {
@@ -233,30 +235,32 @@ button:hover {
 .box-content {
   padding: 50px;
   text-align: left;
-  display:flex;
+  display: flex;
   flex-direction: column;
 }
 
-.box-warning{
+.box-warning {
   border: solid #e5e7eb;
   border-radius: 20px;
   margin-top: 50px;
-  float:center;
-  background-color:white;
-  padding:24px 63px;
-  display:flex;
+  float: center;
+  background-color: white;
+  padding: 24px 63px;
+  display: flex;
   justify-content: left;
 }
 
-.likeimg{
-  width:30px;
-  height:30px;
+.likeimg {
+  width: 30px;
+  height: 30px;
 }
-.likebnt{
-  padding-bottom:50px;
+
+.likebnt {
+  padding-bottom: 50px;
   border-bottom: solid 2px lightgrey;
-  cursor:pointer;
+  cursor: pointer;
 }
+
 .d-btn {
   margin-top: 10px;
   margin-bottom: 10px;
@@ -304,9 +308,9 @@ import img from "@/assets/imgs/mypage_sample.jpg";
 import MessageModal from "@/components/Message/MessageModal";
 export default {
   name: 'AdoptDetail',
-  components:{
-  MessageModal
-},
+  components: {
+    MessageModal
+  },
   data() {
     return {
       num: this.$route.query.num,
@@ -319,42 +323,42 @@ export default {
       loginId: null,
       list: [],
       modalOpen: false,
-      isModalViewed:false,
-      MessageModal:false,
-      displayDetail:false,
-      resender:'',
-      value:'',
-      select:'title',
-      find:'',
+      isModalViewed: false,
+      MessageModal: false,
+      displayDetail: false,
+      resender: '',
+      value: '',
+      select: 'title',
+      find: '',
     };
   },
   computed: {
-  showHeader() {
-    console.log('showHeader:', false); // 콘솔에서 계산된 속성 값 확인
-    return false;
-  },
-  isAuthor() {
+    showHeader() {
+      console.log('showHeader:', false); // 콘솔에서 계산된 속성 값 확인
+      return false;
+    },
+    isAuthor() {
       // 현재 로그인한 사용자와 글 작성자를 비교하여 일치하는지 확인합니다.
       // 예를 들어, 현재 로그인한 사용자의 ID와 글 작성자의 ID를 비교할 수 있습니다.
       // 글 작성자의 ID는 dto.id.id로 가정합니다.
       const loginId = sessionStorage.getItem('loginId');
       return loginId === this.dto.id.id;
     },
-},
+  },
   created() {
     this.boarddetail();
     this.commentlist();
   },
   methods: {
     convertNewlines(text) {
-    return text.replace(/\n/g, '<br>');
-  },
-    adoptbtn(num){
+      return text.replace(/\n/g, '<br>');
+    },
+    adoptbtn(num) {
       const self = this
-      self.$axios.get('http://localhost:8082/adopt/ischeck/'+ num)
-        .then(function (res){
-          if(res.status == 200){
-            alert(res.data.flag) 
+      self.$axios.get('http://localhost:8082/adopt/ischeck/' + num)
+        .then(function (res) {
+          if (res.status == 200) {
+            alert(res.data.flag)
           }
         })
     },
@@ -369,60 +373,60 @@ export default {
     },
     likebtn(num) {
       alert(this.id)
-      if(this.id == null){
+      if (this.id == null) {
         alert('로그인 후 이용가능합니다.')
-      }else{
-      this.$axios.get('http://localhost:8082/adoptliketable/' + this.id + '/' + num)
-        .then(response => {
-          if (response.status == 200) {
-            if (response.data.flag) {
-              let formData = new FormData();
-              formData.append('id', this.id)
-              formData.append('num', num)
-              this.$axios.post('http://localhost:8082/adoptliketable', formData)
-                .then(response => {
-                  if (response.status == 200) {
-                    this.$axios.get('http://localhost:8082/adopt/likeup/' + num)
-                      .then(response => {
-                        if (response.status == 200) {
-                          this.dto.likecnt++;
-                          alert('좋아요 수 1 추가')
-                        }
-                      })
-                  } else {
-                    alert('에러페이지')
-                  }
+      } else {
+        this.$axios.get('http://localhost:8082/adoptliketable/' + this.id + '/' + num)
+          .then(response => {
+            if (response.status == 200) {
+              if (response.data.flag) {
+                let formData = new FormData();
+                formData.append('id', this.id)
+                formData.append('num', num)
+                this.$axios.post('http://localhost:8082/adoptliketable', formData)
+                  .then(response => {
+                    if (response.status == 200) {
+                      this.$axios.get('http://localhost:8082/adopt/likeup/' + num)
+                        .then(response => {
+                          if (response.status == 200) {
+                            this.dto.likecnt++;
+                            alert('좋아요 수 1 추가')
+                          }
+                        })
+                    } else {
+                      alert('에러페이지')
+                    }
+                  })
+              } else {
+                let formData = new FormData();
+                formData.append('id', this.id)
+                formData.append('num', num)
+                this.$axios.delete('http://localhost:8082/adoptliketable', {
+                  data: formData
                 })
-            } else {
-              let formData = new FormData();
-              formData.append('id', this.id)
-              formData.append('num', num)
-              this.$axios.delete('http://localhost:8082/adoptliketable', {
-                data: formData
-              })
-                .then(response => {
-                  if (response.status === 200) {
-                    this.$axios.get('http://localhost:8082/adopt/likedown/' + num)
-                      .then(response => {
-                        if (response.status === 200) {
-                          alert('좋아요 수 1 감소');
-                          this.dto.likecnt--;
-                        }
-                      })
-                      .catch(error => {
-                        console.error(error);
-                        alert('좋아요 수 감소 중에 오류가 발생했습니다.');
-                      });
-                  }
-                })
-                .catch(error => {
-                  console.error(error);
-                  alert('삭제 요청 중에 오류가 발생했습니다.');
-                });
+                  .then(response => {
+                    if (response.status === 200) {
+                      this.$axios.get('http://localhost:8082/adopt/likedown/' + num)
+                        .then(response => {
+                          if (response.status === 200) {
+                            alert('좋아요 수 1 감소');
+                            this.dto.likecnt--;
+                          }
+                        })
+                        .catch(error => {
+                          console.error(error);
+                          alert('좋아요 수 감소 중에 오류가 발생했습니다.');
+                        });
+                    }
+                  })
+                  .catch(error => {
+                    console.error(error);
+                    alert('삭제 요청 중에 오류가 발생했습니다.');
+                  });
 
+              }
             }
-          }
-        })
+          })
       }
     },
     editfunc(num) {
@@ -527,7 +531,7 @@ export default {
     },
     saveComment(comment) {
       const formData = new FormData();
-      formData.append('db_num', comment.db_num);
+      formData.append('ab_num', comment.ab_num);
       formData.append('content', comment.editContent);
       formData.append('w_date', new Date());
 
@@ -562,11 +566,11 @@ export default {
           alert('삭제오류.');
         });
     },
-    modal(sender){
+    modal(sender) {
       const self = this;
       this.resender = sender
-      
-      self.displayDetail=true
+
+      self.displayDetail = true
 
     }
   }

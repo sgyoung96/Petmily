@@ -38,13 +38,13 @@ export default {
     },
     loadImages() {
       this.backgroundImage = new Image();
-      this.backgroundImage.src = require('../../assets/images/우주배경.gif');
+      this.backgroundImage.src = require('../../assets/images/게임배경.avif');
 
       this.spaceshipImage = new Image();
-      this.spaceshipImage.src = require('../../assets/images/우주선.png');
+      this.spaceshipImage.src = require('../../assets/images/g강아지.png');
 
       this.bulletImage = new Image();
-      this.bulletImage.src = require('../../assets/images/총알.png');
+      this.bulletImage.src = require('../../assets/images/뼈총알.png');
 
       this.enemyImage = new Image();
       this.enemyImage.src = require('../../assets/images/적군1.png');
@@ -80,6 +80,9 @@ export default {
       const ctx = canvas.getContext('2d');
       ctx.drawImage(this.backgroundImage, 0, 0, canvas.width, canvas.height);
       ctx.drawImage(this.spaceshipImage, this.spaceshipX, this.spaceshipY);
+      ctx.fillText(`score:${this.score}`, 20, 20);
+      ctx.fillStyle = "white"
+      ctx.font = "20px Arial"
 
       for (let i = 0; i < this.bulletList.length; i++) {
         if (this.bulletList[i].alive) {
