@@ -5,7 +5,7 @@
           &nbsp;<span style="color:rgb(244, 191, 79);">DIARY</span></strong></h4>
     </div>
     <div class="d-box" style="text-align: center;">
-      <img src="https://media2.giphy.com/media/3ov9jQGg5J9LGVbBKg/giphy.gif?cid=ecf05e47nipfu9pzm7cfepksrg0i23fgcot04lqgxx8fkdg6&ep=v1_gifs_related&rid=giphy.gif&ct=g" style="width:500px; height: 280px; margin-bottom: 20px; border-radius:20px">
+      <img src="https://media.tenor.com/Snwy2oOEQGUAAAAM/dog-day-happy-dog-day.gif" style="width:500px; height: 280px; margin-bottom: 20px; border-radius:20px">
       <div style="border-bottom: solid black 2px; margin-bottom:15px; width: 80%; text-align: left; font-weight: 900; font-size:36px; font-family: 'Jua', sans-serif;">입양일지 글쓰기</div>
       <div class="box-title">
         <input type="text" id="id" v-model="id" readonly style="margin-bottom:5px"><br/>

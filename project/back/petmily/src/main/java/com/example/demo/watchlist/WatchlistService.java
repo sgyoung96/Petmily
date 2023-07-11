@@ -1,8 +1,13 @@
 package com.example.demo.watchlist;
 
+import java.util.ArrayList;
+
 import org.springframework.beans.factory.annotation.Autowired;
 
 import org.springframework.stereotype.Service;
+
+import com.example.demo.diaryboard.Diaryboard;
+import com.example.demo.diaryboard.DiaryboardDto;
 import com.example.demo.member.Member;
 import com.example.demo.volboard.Volboard;
 
@@ -20,6 +25,17 @@ public class WatchlistService {
 		}else {
 			return new WatchlistDto(dto.getDb_num(), dto.getId(), dto.getNum());
 		}
+	}
+	
+	ArrayList<WatchlistDto> getById(String id){
+		Member m = new Member(id,"","","","",null,"","","",null);
+		ArrayList<Watchlist> list = dao.findById(m);
+		ArrayList<WatchlistDto> list2 = new ArrayList<>();
+		for (Watchlist d : list) {
+			list2.add(new WatchlistDto(d.getDb_num(), d.getId(), d.getNum()));
+		}
+		return list2;
+		
 	}
 	
 	

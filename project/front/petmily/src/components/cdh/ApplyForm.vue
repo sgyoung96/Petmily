@@ -161,7 +161,7 @@
     위 개인정보취급방침에 동의합니다. <input name="age" type="radio" v-model="agreement" value="0">미동의 /
     <input name="ag" type="radio" v-model="agreement" value="1">동의<br />
 
-    <button v-on:click="apply()" style="background-color:#FFD65B; border-radius:10px;">신청</button>
+    <button v-on:click="apply()" class="txt-form ">신청</button>
   </div>
 </template>
   
@@ -231,11 +231,11 @@ export default {
     chkKakaoValidatoion() {
       if (sessionStorage.getItem('loginFlag') == 'kakao') {
         const self = this;
-        self.$axios.get('http://localhost:8082/members/' + self.id).then (function(rs) {
+        self.$axios.get('http://localhost:8082/members/' + self.id).then(function (rs) {
           console.log(rs.data.dto);
-        
+
           if (rs.data.dto == null) {
-            self.$router.push({name:'KakaoAdditionalForm', query:{kakaoId: sessionStorage.getItem('loginId'), kakaoName: sessionStorage.getItem('kakaoName')}});
+            self.$router.push({ name: 'KakaoAdditionalForm', query: { kakaoId: sessionStorage.getItem('loginId'), kakaoName: sessionStorage.getItem('kakaoName') } });
           } else {
             this.nowTimes();
             const self = this;
@@ -251,9 +251,17 @@ export default {
     apply() {
 
       const self = this;
+      self.$axios
+        .get('http://localhost:8082/Applyform')
+        .then(function (res) {
+          if (res.status == 200) {
+            const data = res.data;
+            const dbId = data.id.id;
+            const dbPopfile = data.popfile;
+
+      
 
       let formdata = new FormData();
-
       const moment = require('moment');
       const today = moment(Date.now()).format('L');
       console.log(today);
@@ -277,42 +285,51 @@ export default {
         alert("로그인을 해야합니다")
         this.$router.push('/member');
       } else {
-        if (self.agreement == 0) {
-          alert("개인정보 동의서에 동의를 해야합니다")
-          return;
-        }
-        else {
-          if (self.another == '') {
-            alert("반려동물여부가 비었습니다")
+        if (self.id == dbId && self.popfile == dbPopfile) {
+          if (self.agreement == 0) {
+            alert("개인정보 동의서에 동의를 해야합니다")
             return;
-          } else {
-          if (self.reason == '') {
-            alert("입양신청 계기가 비었습니다")
-            return;
-          }  else {
-          if (self.feeding == '') {
-            alert("앞으로의 다짐이 비었습니다")
-            return;
-          } else {
-            self.$axios.post('http://localhost:8082/Applyform', formdata)//비동기 요청
-              .then(function (res) {//요청 결과 받아옴. 파람 res에 결과저장됨. res.data가 백단에서 전송한 데이터
-                if (res.status == 200) {
-                  if (res.data.dto != null) {
-                    self.msg = '입양 신청이 완료되었습니다.';
-                    alert(self.msg);
-                    self.$router.go(-1);
-                  } else {
-                    self.msg = '신청 양식을 보낸 상태입니다';
-                    alert(self.msg);
-                  }
-
-                } else {
-                  alert('에러코드:' + res.status)
-                }
-              });
           }
+          else {
+            if (self.another == '') {
+              alert("반려동물여부가 비었습니다")
+              return;
+            } else {
+              if (self.reason == '') {
+                alert("입양신청 계기가 비었습니다")
+                return;
+              } else {
+                if (self.feeding == '') {
+                  alert("앞으로의 다짐이 비었습니다")
+                  return;
+                } else {
+                  self.$axios.post('http://localhost:8082/Applyform', formdata)//비동기 요청
+                    .then(function (res) {//요청 결과 받아옴. 파람 res에 결과저장됨. res.data가 백단에서 전송한 데이터
+                      if (res.status == 200) {
+                        if (res.data.dto != null) {
+                          self.msg = '입양 신청이 완료되었습니다.';
+                          alert(self.msg);
+                          self.$router.go(-1);
+                        } else {
+                          self.msg = '신청 양식을 보낸 상태입니다';
+                          alert(self.msg);
+                        }
+
+                      } else {
+                        alert('에러코드:' + res.status)
+                      }
+                    });
+                }
+              }
+            }
+          }
+        } else{
+          self.msg = '이미 신청된 ID입니다';
+          alert(self.msg);
         }
-      }}}
+      }
+    }
+        });
     },
 
     setDate() {
@@ -443,6 +460,18 @@ a {
 
 #block {
   border: #42b983;
+}
+
+.txt-form {
+  width: 50px;
+  height: 30px;
+  font-family: 'IBMPlexSansKR-Bold';
+  font-size: 18px;
+  background-color: rgb(244, 191, 79);
+  border-radius: 30px;
+  color: white;
+  cursor: pointer;
+  border-color: white;
 }
 </style>
   

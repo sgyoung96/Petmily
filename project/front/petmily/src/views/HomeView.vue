@@ -106,14 +106,22 @@
       </div>
     </div>
   </div>
-    
-  <div class="container text-center box-walking">
+
+
+  <div class="vol-dash-board">
+
+    <p>따뜻한 손길이 필요해요</p>
+
+    <AddressConvert />
   </div>
+  
+    
 </template>
 
 <script>
 import Chart from 'chart.js/auto';
 import axios from 'axios';
+import AddressConvert from '../components/kaka/AddressConvert.vue' ;
 export default {
   name: 'HomeView',
   data() {
@@ -402,6 +410,9 @@ export default {
         
       });
     }
+  },
+  components: {
+    AddressConvert
   }
 }
 </script>
@@ -675,6 +686,19 @@ export default {
 .span-name {
   font-family: 'IBMPlexSansKR-Medium';
   font-size: 12px;
+  color: black;
+}
+
+.vol-dash-board {
+  display: block;
+  margin-top: 400px;
+}
+
+.vol-dash-board p {
+  display: block;
+  margin-bottom: 300px;
+  font-family: 'IBMPlexSansKR-Bold';
+  font-size: 25px;
   color: black;
 }
 </style>
