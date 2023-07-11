@@ -7,6 +7,8 @@ import org.springframework.stereotype.Service;
 
 import com.example.demo.member.Member;
 import com.example.demo.volboard.Volboard;
+import com.example.demo.watchlist.Watchlist;
+import com.example.demo.watchlist.WatchlistDto;
 
 @Service
 public class ParticipantsService {
@@ -17,6 +19,17 @@ public class ParticipantsService {
 	public Member save(ParticipantsDto dto) {
 		Participants p = dao.save(new Participants(dto.getNum(),dto.getBoardnum(),dto.getId()));
 		return p.getId();
+	}
+	
+	ArrayList<ParticipantsDto> getById(String id){
+		Member m = new Member(id,"","","","",null,"","","",null);
+		ArrayList<Participants> list = dao.findById(m);
+		ArrayList<ParticipantsDto> list2 = new ArrayList<>();
+		for (Participants d : list) {
+			list2.add(new ParticipantsDto(d.getNum(), d.getBoardnum(), d.getId()));
+		}
+		return list2;
+		
 	}
 	
 	//봉사가 끝나거나 취소하면 데이터 삭제
