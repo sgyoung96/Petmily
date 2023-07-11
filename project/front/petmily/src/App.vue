@@ -560,6 +560,7 @@ li:hover {
   transform: translateX(-50%) translateY(-25%);
   border: 1px solid rgb(244, 191, 79);
   border-radius: 30px;
+  z-index:5000;
 }
 
 .bell-notify {
@@ -604,4 +605,5 @@ li:hover {
 .foot_txt .copy {
     margin-top: 5px;
 }
+
 </style>
