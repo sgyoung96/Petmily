@@ -41,18 +41,15 @@
       <div class="box-content">
         <textarea id="content" rows="25" cols="130" v-model="content" style="resize: none;" placeholder="내용을 입력해 주세요."></textarea>
       </div>
-      <tr>
-        <th>이미지1</th>
-        <td><input id="f1" type="file" ></td>
-      </tr>
-      <tr>
-        <th>이미지2</th>
-        <td><input id="f2" type="file" ></td>
-      </tr>
-      <tr>
-        <th>등록</th>
-        <td><button v-on:click="addform">등록</button></td>
-      </tr>
+      <div style="display:flex; justify-content: space-between;">
+  <div style="display:flex; flex-direction: column;">
+<input type="file" id="pic1">
+<input type="file" id="pic2">
+</div>
+<div>
+<button v-on:click="add">등록</button>
+</div>
+</div>
     </div>
   </div>
 </template>
@@ -133,6 +130,22 @@ export default {
 </script>
   <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
+button{
+  width: 100px;
+    color: white;
+    height: 30px;
+    border: 1px solid rgb(244, 191, 79);
+    border-radius: 20px;
+    background-color: rgb(244, 191, 79);
+    font-family: 'IBMPlexSansKR-Bold';
+    font-size: 15px;
+    padding-top: 2px;
+    margin-right: 5px;
+}
+button:hover {
+  background-color: rgb(235, 156, 39);
+  cursor: pointer;
+}
     div {
         text-align: left;
     }
