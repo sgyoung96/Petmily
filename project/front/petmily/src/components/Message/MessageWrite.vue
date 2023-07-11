@@ -1,6 +1,6 @@
 <template>
   <div id="messagewrite">
-    <div class="wrapper">
+    <div class="wrapper2">
         <div class="message_area">
 
           
@@ -34,7 +34,7 @@
           </div>
 
           <div class="input_box">
-          <textarea class="input_txtarea" v-model="content" cols="50" rows="5"  placeholder="MESSAGE"></textarea>
+          <textarea class="input_txtarea" v-model="content" cols="50" rows="5"  @keyup.enter="send" placeholder="MESSAGE"></textarea>
           </div>
 
           <button class="message_botton" style="background-color:rgb(255, 214, 91);" @click="send">쪽지보내기</button><br />
@@ -139,7 +139,6 @@ export default {
         for (let selectedIndex = 0; selectedIndex < self.result.length; selectedIndex++ ) {
           if (obj.innerText == self.result[selectedIndex]) {
             console.log('same');
-            //self.result.pop(res);
             self.result = [];
             console.log(self.result);
             self.reciever=res
@@ -199,7 +198,7 @@ export default {
 </script>
 
 <style scoped>
-.wrapper {
+.wrapper2 {
   background-color: rgba(0, 0, 0, 0.5);
   position: fixed;
   width: 100%;
@@ -221,12 +220,7 @@ export default {
 
  
 }
-/* .mtitle{
-  display: block;
-  float:left;
-  margin-bottom:10px;
 
-} */
 
 .input_txt{
   width: 100%;
@@ -279,7 +273,7 @@ ul, li{
     overflow: hidden;
     background-color: white;
     width: 380px;
-    /* display: none; */
+   
 
     
 }

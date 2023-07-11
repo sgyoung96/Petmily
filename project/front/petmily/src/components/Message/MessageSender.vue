@@ -8,13 +8,10 @@
     <div class="message-list">
       
 
-      <!-- <button @click="read">읽은 메일</button>
-      <button @click="unread">읽지 않은 메일</button>
-      <button @click="all">전체</button><br/> -->
+      
       <div class="menu">
-          <!-- <button @click="read"></button> -->
+          
           <span class="material-symbols-outlined" @click="read" :class="{ active: activeMenu ==='read' }" >drafts<span class="messagemenu">읽은쪽지</span></span>
-          <!-- <button @click="unread">읽지 않은 메일</button> -->
           <span class="material-symbols-outlined" @click="unread" :class="{ active: activeMenu ==='unread' }">mail<span class="messagemenu">안읽은쪽지</span></span>
           <span class="material-symbols-outlined" @click="all" :class="{ active: activeMenu ==='all' }"><span class="messagemenu">전체</span></span>
       
@@ -29,7 +26,7 @@
         </select>
 
         
-        <input type="text" v-model="find"><button @click="findbtn">검색</button>
+        <input type="text" v-model="find"  @keyup.enter="findbtn"><button @click="findbtn">검색</button>
       </div>
     </div> 
 
@@ -154,7 +151,8 @@ export default {
       blockArray :[],
       blocknum:0,
       activeMenu:'',
-      nomessage:''
+      nomessage:'',
+      
     };
   },
 
@@ -218,14 +216,14 @@ computed: {
   },
   methods: {
     del(num) {
-      alert("삭제버튼 클릭");
+      
       const self = this;
-      alert(num);
+      
       self.$axios
         .delete("http://localhost:8082/message/sender/" + num)
         .then(function (res) {
           if (res.status == 200) {
-            alert("삭제완료");
+           
             self.$axios
               .get("http://localhost:8082/message/sender/" + self.loginId)
               .then(function (res) {
@@ -293,7 +291,7 @@ computed: {
 
     findbtn(){
       const self = this;
-      alert(self.loginId)
+      
       if(self.find==''){
         alert('검색어를 입력하세요')
       }else{
@@ -302,6 +300,12 @@ computed: {
       .get("http://localhost:8082/message/s_title/" + self.find + "/" + self.loginId)
       .then(function (res) {
         if (res.status == 200) {
+          if(res.data.list.length === 0){
+            self.nomessage= '메세지가 없습니다'
+           
+          }else{
+            self.nomessage= ''
+          }
           self.list = res.data.list;
         } else {
           alert("에러코드 :" + res.status);
@@ -376,11 +380,6 @@ computed: {
 
 
 <style scoped>
-/* .message-bg {
-  background-color: white;
-  align-items: center;
-  margin: 20px;
-} */
 
 .material-symbols-outlined{
   cursor: pointer;
@@ -460,6 +459,7 @@ computed: {
   text-align: left;
   font-weight: bold;
   font-size:22px;
+  font-family: "IBMPlexSansKR-Medium";
 }
 .modal-box-content{
 
@@ -467,6 +467,7 @@ computed: {
  margin-top: 10px;
  width:100%;
  text-align: left;
+font-family: "IBMPlexSansKR-Medium";
    
 }
 .modal-box-reciever{
@@ -474,6 +475,7 @@ computed: {
  margin-top: 10px;
  width:100%;
  text-align: right; 
+font-family: "IBMPlexSansKR-Medium";
 }
 .modal-box-bottom{
   display:flex;
@@ -496,6 +498,7 @@ border-radius: 10px;
 }
 .modal-box-date{
   margin-left: auto;
+  font-family: "IBMPlexSansKR-Medium";
  
 }
 
@@ -554,7 +557,7 @@ border-radius: 10px;
   transform: scale( 1.01 )
 }
 .message-header{
-  /* position:relative; */
+  
   display: flex;
   width: 100%;
   background-color: #F0F0F0;
@@ -576,6 +579,7 @@ border-radius: 10px;
   margin-left:10px;
   align-items : center;
   font-size: 1.3em;
+  font-family: "IBMPlexSansKR-Medium";
 
 
 }
@@ -602,11 +606,13 @@ border-radius: 10px;
   font-size: 1.2em;
   cursor: pointer;
   margin-left:10px;
+  font-family: "IBMPlexSansKR-Medium";
 }
 .message-date{
  
   float:right;
   display:flex;
+  font-family: "IBMPlexSansKR-Medium";
   /* text-align:right; */
   /* justify-content: right; */
 }
@@ -644,8 +650,10 @@ border-radius: 10px;
 }
 
 .page-item.active a {
+  position:relative;
   background-color: rgb(244, 191, 79);
   color: white;
+  z-index: 0;
 }
 
 .search{

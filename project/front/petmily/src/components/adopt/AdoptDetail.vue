@@ -77,15 +77,12 @@
       </div>
       <div class="d-btn">
         <div>
-          <button style="font-size: 17px;" @click="$router.push('/diaryboardhome')">목록으로</button>
+          <button style="font-size: 17px;" @click="$router.push('/adopt')">목록으로</button>
         </div>
         <div v-if="dto.id">
           <span v-if="isAuthor">
           <button @click="adoptbtn(dto.num)" v-if="dto.ischeck==1">분양완료</button>
           <button @click="adoptbtn(dto.num)" v-else>분양중</button>
-        </span>
-          <button @click="likebtn(dto.num)">좋아요</button>
-          <span v-if="isAuthor">
           <button @click="edit()" style="font-size: 17px;">수정하기</button>
           <button v-on:click="boarddelete">삭제하기</button>
         </span>
@@ -98,15 +95,18 @@
         <textarea style="width:900px; resize:none;" v-model="content" id="content"></textarea>
         <button v-on:click="commentadd">등록하기</button>
       </div>
+      <MessageModal :resender=resender v-if="displayDetail" @close="displayDetail=false"/>
       <div v-for="comment in comment" :key="comment.id">
         <div class="comment-list">
           <div class="list-content">
             <div class="comment-profile">
-              <img class="profile" @error="replaceImg" :src="'http://localhost:8082/members/imgs/' + comment.id.id">
+              <img class="profile" style="cursor:pointer"
+            @error="replaceImg" :src="'http://localhost:8082/members/imgs/' + comment.id.id"
+            v-on:click="modal(comment.id.id)">
             </div>
             <div style="width:900px">
-              <span>{{ comment.id.id }}</span>&nbsp;<span style="font-size: small; color:grey">{{
-                formatDate(comment.w_date) }}</span><br />
+              <span>{{ comment.id.id }}</span>&nbsp;
+              <span style="font-size: small; color:grey">{{ formatDate(comment.w_date) }}</span><br />
               <div v-if="!comment.editMode">{{ comment.content }}</div>
               <div v-if="comment.editMode" class="c-editForm">
                 <textarea style="width:900px;  resize:none;" v-model="comment.editContent"
@@ -116,10 +116,11 @@
               </div>
             </div>
           </div>
-          <div style="float:right;">
-            <button @click="showEditForm(comment)">수정하기</button>
-            <button @click="commentdelete(comment.db_num)">삭제하기</button>
-          </div>
+            <div style="float:right;" v-if="comment.id.id === id">
+  <button @click="showEditForm(comment)">수정하기</button>
+  <button @click="commentdelete(db_num)">삭제하기</button>
+</div>
+
         </div>
       </div>
     </div>
@@ -300,8 +301,12 @@ button:hover {
 </style>
 <script>
 import img from "@/assets/imgs/mypage_sample.jpg";
+import MessageModal from "@/components/Message/MessageModal";
 export default {
   name: 'AdoptDetail',
+  components:{
+  MessageModal
+},
   data() {
     return {
       num: this.$route.query.num,
@@ -311,6 +316,16 @@ export default {
       id: sessionStorage.getItem('loginId'),
       editContent: '',
       showModal: false,
+      loginId: null,
+      list: [],
+      modalOpen: false,
+      isModalViewed:false,
+      MessageModal:false,
+      displayDetail:false,
+      resender:'',
+      value:'',
+      select:'title',
+      find:'',
     };
   },
   computed: {
@@ -353,49 +368,63 @@ export default {
       e.target.src = img;
     },
     likebtn(num) {
-  if (this.id == null) {
-    alert('로그인 후 이용 가능합니다.');
-  } else {
-    this.$axios.get('http://localhost:8082/liketable/' + this.id + '/' + num)
-      .then(response => {
-        if (response.status == 200) {
-          if (response.data.flag) {
-            let formData = new FormData();
-            formData.append('id', this.id);
-            formData.append('num', num);
-            this.$axios.post('http://localhost:8082/liketable', formData)
-              .then(response => {
-                if (response.status == 200) {
-                  this.dto.likecnt++;
-                  alert('좋아요 수 1 추가');
-                } else {
-                  alert('에러 페이지');
-                }
-              });
-          } else {
-            let formData = new FormData();
-            formData.append('id', this.id);
-            formData.append('num', num);
-            this.$axios.delete('http://localhost:8082/liketable', {
-              data: formData
-            })
-              .then(response => {
-                if (response.status === 200) {
-                  this.dto.likecnt--;
-                  alert('좋아요 수 1 감소');
-                } else {
-                  alert('삭제 요청 중에 오류가 발생했습니다.');
-                }
+      alert(this.id)
+      if(this.id == null){
+        alert('로그인 후 이용가능합니다.')
+      }else{
+      this.$axios.get('http://localhost:8082/adoptliketable/' + this.id + '/' + num)
+        .then(response => {
+          if (response.status == 200) {
+            if (response.data.flag) {
+              let formData = new FormData();
+              formData.append('id', this.id)
+              formData.append('num', num)
+              this.$axios.post('http://localhost:8082/adoptliketable', formData)
+                .then(response => {
+                  if (response.status == 200) {
+                    this.$axios.get('http://localhost:8082/adopt/likeup/' + num)
+                      .then(response => {
+                        if (response.status == 200) {
+                          this.dto.likecnt++;
+                          alert('좋아요 수 1 추가')
+                        }
+                      })
+                  } else {
+                    alert('에러페이지')
+                  }
+                })
+            } else {
+              let formData = new FormData();
+              formData.append('id', this.id)
+              formData.append('num', num)
+              this.$axios.delete('http://localhost:8082/adoptliketable', {
+                data: formData
               })
-              .catch(error => {
-                console.error(error);
-                alert('좋아요 수 감소 중에 오류가 발생했습니다.');
-              });
+                .then(response => {
+                  if (response.status === 200) {
+                    this.$axios.get('http://localhost:8082/adopt/likedown/' + num)
+                      .then(response => {
+                        if (response.status === 200) {
+                          alert('좋아요 수 1 감소');
+                          this.dto.likecnt--;
+                        }
+                      })
+                      .catch(error => {
+                        console.error(error);
+                        alert('좋아요 수 감소 중에 오류가 발생했습니다.');
+                      });
+                  }
+                })
+                .catch(error => {
+                  console.error(error);
+                  alert('삭제 요청 중에 오류가 발생했습니다.');
+                });
+
+            }
           }
-        }
-      });
-  }
-},
+        })
+      }
+    },
     editfunc(num) {
       let formData = new FormData();
       const self = this
@@ -532,6 +561,13 @@ export default {
           console.error(error);
           alert('삭제오류.');
         });
+    },
+    modal(sender){
+      const self = this;
+      this.resender = sender
+      
+      self.displayDetail=true
+
     }
   }
 };

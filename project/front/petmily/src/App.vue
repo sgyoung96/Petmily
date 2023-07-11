@@ -446,11 +446,10 @@ export default {
   position: sticky;
   top:0;
   background-color: white;
-  z-index:1000;
+  z-index:3000;
   width: 100%;
   height: 150px;
   border-bottom: 3px solid rgb(244, 191, 79);
-  z-index: 1;
 }
 
 .pet-box-up {
