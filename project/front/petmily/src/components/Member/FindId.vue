@@ -1,6 +1,6 @@
 <template>
   <div class="findid_area">
-    <h2 class="findid_title">아이디 찾기</h2>
+    <div class="findid_title" style="font-family: IBMPlexSansKR-medium; font-size:40px">아이디 찾기</div>
 
     <div v-show="info" style="margin-bottom: 30px">
       <p>본인 인증절차가 완료되었습니다.</p>

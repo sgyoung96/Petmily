@@ -1,6 +1,6 @@
 <template>
   <div class="findpwd_area">
-    <h2 class="findpwd_title">비밀번호 찾기</h2>
+    <h2 class="findpwd_title" style="font-family: IBMPlexSansKR-medium; font-size:40px">비밀번호 찾기</h2>
 
     <div v-show="showidemail">
       <!-- 아이디 -->
