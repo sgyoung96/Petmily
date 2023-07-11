@@ -35,18 +35,18 @@
                     <label><span>모집기간</span></label>
                   </th>
                 </tr>
-                <tr v-for="vboard in list" :key="vboard.num" @click="detail(vboard.num, vboard.address)">
+                <tr style="z-index:1" v-for="vboard in list" :key="vboard.num">
                   <td colspan="1"><label><span class="badge text-bg-danger" style="font-size: 17px;"
                         v-if="calculateDateDifference(vboard.deadline).difference < 0">모집마감</span>
                       <span class="badge text-bg-primary" style="font-size: 17px;" v-else>마감 D-{{
                         calculateDateDifference(vboard.deadline).days }}</span>&nbsp;</label></td>
-                  <td colspan="1"><label><span style=" cursor: pointer;">{{ vboard.place }}</span></label></td>
-                  <td colspan="1"><label><span style=" cursor: pointer;">({{ vboard.count }} / {{ vboard.vol_number }})</span></label></td>
-                  <td colspan="2"><label><span style=" cursor: pointer;">{{ vboard.title }}</span></label></td>
-                  <td colspan="3"><label><span style=" cursor: pointer;">{{ vboard.address }}</span></label></td>
-                  <td colspan="2"><label><span style=" cursor: pointer;">{{ formatDate(vboard.vol_date) }}</span></label></td>
-                  <td colspan="1"><label><span style=" cursor: pointer;">{{ formatDate(vboard.deadline) }}까지</span></label></td>
-                  <button v-if="this.loginId==='admin'" @click="del(dto.num)" style="font-size: 17px;">삭제</button>
+                  <td colspan="1"><label><span>{{ vboard.place }}</span></label></td>
+                  <td colspan="1"><label><span>({{ vboard.count }} / {{ vboard.vol_number }})</span></label></td>
+                  <td @click="detail(vboard.num, vboard.address)" colspan="2"><label><span style=" cursor: pointer;">{{ vboard.title }}</span></label></td>
+                  <td colspan="3"><label><span>{{ vboard.address }}</span></label></td>
+                  <td colspan="2"><label><span>{{ formatDate(vboard.vol_date) }}</span></label></td>
+                  <td colspan="1"><label><span>{{ formatDate(vboard.deadline) }}까지</span></label></td>
+                  <button  @click="del(vboard.num)" style="font-size: 17px; z-index:2;">삭제</button>
                 </tr>
               </table>
             </div>

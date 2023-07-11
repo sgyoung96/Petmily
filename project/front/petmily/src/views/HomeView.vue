@@ -55,7 +55,7 @@
 
     <div class="container-dash-board">
       <div class="container-box01">
-        <label class="lbl-title">새 반려인을 찾고 있어요</label>
+        <label class="lbl-title">우리 아가 잘 지내고 있어요</label>
         <div class="box-atboard">
           <div v-for="dboard in arr" :key="dboard.num">
             <div class="img-box" v-on:click="$event => detail(dboard.num)">
@@ -80,7 +80,7 @@
       </div>
 
       <div class="container-box01">
-        <label class="lbl-title">우리 아가 잘 지내고 있어요</label>
+        <label class="lbl-title">새 반려인을 찾고 있어요</label>
 
           <div class="box-dbboard">
           <div v-for="dboard in arr2" :key="dboard.num">
