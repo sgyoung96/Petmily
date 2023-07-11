@@ -66,7 +66,7 @@
       <button @click="goToFullList">전체목록</button>
     </span>
     <span>
-      <button @click="$router.push('/adopt/addform')">글쓰기</button>
+      <button @click="$router.push('/adopt/addform')" v-if="loginId != null">글쓰기</button>
     </span>
   </div>
   <div>

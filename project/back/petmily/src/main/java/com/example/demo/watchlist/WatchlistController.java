@@ -1,5 +1,6 @@
 package com.example.demo.watchlist;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -70,6 +71,14 @@ public class WatchlistController {
 		Map map = new HashMap<>();
 		int dto = service.printPerson(id);
 		map.put("dto", dto);
+		return map;
+	}
+	
+	@GetMapping("/id2/{id}")
+	public Map getWatchList(@PathVariable("id") String id) {
+		Map map = new HashMap<>();
+		ArrayList<WatchlistDto> list = service.getById(id);
+		map.put("list", list);
 		return map;
 	}
 	
