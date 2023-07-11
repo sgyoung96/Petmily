@@ -112,16 +112,21 @@ export default {
       }
     },
     add() {
+      const file1 = document.getElementById('pic1').files;
+      const file2 = document.getElementById('pic2').files;
+      if (file1.length === 0 || file2.length === 0) {
+        alert('사진을 2개 추가하여야 합니다.');
+        return;
+      }
       let formData = new FormData();
       formData.append('title', this.title);
       formData.append('content', this.content);
       formData.append('id', this.id);
       formData.append('w_date', new Date());
       formData.append('likent', 0);
-      const file1 = document.getElementById('pic1');
-      const file2 = document.getElementById('pic2');
-      formData.append('f[0]', file1.files[0]);
-      formData.append('f[1]', file2.files[0]);
+      
+      formData.append('f[0]', file1[0]);
+      formData.append('f[1]', file2[0]);
       const self = this;
       self.$axios
         .post('http://localhost:8082/dboard', formData, {
