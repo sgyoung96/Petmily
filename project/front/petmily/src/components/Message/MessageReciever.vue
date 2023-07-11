@@ -45,7 +45,7 @@
                   v-on:click="modal(message.sender.id)">
                 </div>
                
-                <div class="message-id">{{ message.sender.id }}</div>
+                <div class="message-id">{{message.sender.name}}({{ message.sender.id }})</div>
               </div>  
 
                 <div class="readcheck" v-if="message.check == 0">
@@ -65,7 +65,8 @@
                               message.sender.id,
                               message.send_dt,
                               message.title,
-                              message.content
+                              message.content,
+                              message.sender.name
                       )">{{ message.title }}</a>
                 </div> 
                 <div class="message-date">         
@@ -120,7 +121,7 @@
             <div class="modal-box">
               <div class="modal-box-title">{{ title }}</div>
               <div class="modal-box-content"> {{ content }}</div>
-              <div class="modal-box-sender">From. {{ sender }}</div>
+              <div class="modal-box-sender">From. {{name}}({{ sender }})</div>
              
             </div>
             <div class="modal-box-bottom">
@@ -161,6 +162,7 @@ export default {
       sender: "",
       senddt: "",
       content: "",
+      name:'',
       isModalViewed:false,
       MessageModal:false,
       displayDetail:false,
@@ -265,12 +267,13 @@ export default {
           }
         });
     },
-    detail(num, sender, senddt, title, content) {
+    detail(num, sender, senddt, title, content,name) {
       this.num = num;
       this.sender = sender;
       this.title = title;
       this.senddt = senddt;
       this.content = content;
+      this.name = name;
       this.modalOpen = true;
     },
     readcheck(num) {

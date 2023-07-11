@@ -100,6 +100,7 @@
                                 <td>
                                     <div>
                                         <label class="raw-email">{{this.email}}</label>
+                                        <input type="hidden" v-model="email">
                                     </div>
                                 </td>
                             </tr>
@@ -110,7 +111,7 @@
                                 </th>
                                 <td>
                                     <div>
-                                        <input id="new_email" type="text" placeholder="변경할 이메일" /><label @click="emailcheck" class="btn-email">인증</label>
+                                        <input id="new_email" type="text" v-model="new_email" placeholder="변경할 이메일" /><label @click="emailcheck" class="btn-email">인증</label>
                                         <br>
                                         <input id="email-auth" type="text" placeholder="인증번호" /><label @click="emailCodeCheck" class="btn-email">확인</label>
                                     </div>
@@ -161,7 +162,11 @@ export default {
         id : sessionStorage.getItem('loginId'),
         img_upload_img: '',
         name: '',
+
         email: '',
+        new_email:'',
+        isEmailCheck:false,
+
         birth: '',
         gender: '',
         phone: '',
@@ -169,7 +174,7 @@ export default {
 
         pw: '',
         rawpw: '',
-        new_pw: '',
+        new_pw: null,
 
         postcode: '',
         roadAddress: '',
@@ -181,6 +186,8 @@ export default {
         isPwdCheckEqual: true,
 
         isReadonly: false,
+
+
     }
   },
   watch:{
@@ -305,8 +312,11 @@ export default {
     isCheckNewPwd() {
         if (this.pw == this.new_pw) {
             document.getElementById('warn_pw_chk').style = 'display: none;';
+            this.isPwdCheckEqual=false;
         } else {
             document.getElementById('warn_pw_chk').style = 'display: block;';
+            this.isPwdCheckEqual=true;
+            
         }
     },
     
@@ -348,8 +358,11 @@ export default {
       
         if (self.confirm === self.emailCode){
             alert('인증완료')
+            self.isEmailCheck=true;
         } else{
             alert('인증을 다시 시도해주세요');
+            self.isEmailCheck=false;
+            
         }
     },
     editName () {
@@ -447,14 +460,30 @@ export default {
 
       //alert(self.rawpw);
 
-      if (self.new_pw != null) {
+
+    //비밀번호 변경 확인  
+      if (self.new_pw === null ) {
           formdata.append('pwd',self.rawpw);
-      } else {
-          formdata.append('pwd',self.new_pw);
+          
+      }else if(self.new_pw != null && self.isPwdCheckEqual === false){
+         formdata.append('pwd',self.pw);
+      }else if(self.new_pw != null && self.isPwdCheckEqual === true){
+        alert('새 비밀번호 확인 해주세요')
+        return
+      }
+
+      //이메일 변경 확인
+      if(self.new_email === ''){
+        formdata.append('email',self.email)
+      }else if(self.new_email != '' && self.isEmailCheck === true){
+        formdata.append('email',self.new_email)
+      }else{
+        alert('이메일 인증이 필요합니다')
+        return
       }
 
       formdata.append('name',self.name)
-      formdata.append('email',self.email)
+      
       formdata.append('gender',self.gender)
       formdata.append('birth',mybirth)
       formdata.append('phone',self.phone)
