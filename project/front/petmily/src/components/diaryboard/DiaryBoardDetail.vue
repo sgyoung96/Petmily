@@ -8,7 +8,7 @@
     <div class="d-all">
       <div class="box-title" v-if="dto.id">
         <span style="font-size: x-large; font-family:'Single Day', cursive;">{{ dto.title }}</span>
-        <span style="font-size: small; color:silver; padding-top:10px">{{ dto.id.id }} | {{ formatDate(dto.w_date) }}</span>
+        <span style="font-size: small; color:silver; padding-top:10px">{{ dto.id.name }}({{ dto.id.id }}) | {{ formatDate(dto.w_date) }}</span>
       </div>
       <img class="box-img" :src="'http://localhost:8082/dboard/imgs/' + dto.num + '/1'">
       <img class="box-img" :src="'http://localhost:8082/dboard/imgs/' + dto.num + '/2'">
