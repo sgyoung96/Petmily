@@ -99,7 +99,7 @@ public class ApplyformController {
 	    }
 
 	
-	//id로 검색
+	//맴버id로 검색
 	@GetMapping("/getbyid/{id}")
 	public Map getbyid(@PathVariable("id")String id) {
 		ArrayList<ApplyformDto> list = service.findByMemberId(id);
@@ -108,7 +108,15 @@ public class ApplyformController {
 		return map;
 	}
 	
-	//check로 검색
+	 
+	 
+	@GetMapping("/search/{id}/{check}")
+	public ArrayList<ApplyformDto> searchByMemberIdAndCheck(@PathVariable("id") String id, @PathVariable("check") int check) {
+	    ArrayList<ApplyformDto> resultList = service.searchByMemberIdAndCheck(id, check);
+	    return resultList;
+	}
+	
+		//check로 검색
 		@GetMapping("/getbycheck/{check}")
 		public Map getbycheck(@PathVariable("check") int check) {
 			ArrayList<ApplyformDto> list = service.findByCheck(check);
