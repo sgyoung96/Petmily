@@ -201,7 +201,8 @@ export default {
           careTel: '보호소 전화번호',
           officetel: '담당자 전화번호'
         }
-      }
+      },
+      list: [], 
     }
   },
   created: function () {
@@ -219,7 +220,6 @@ export default {
   },
 
   mounted() {
-    window.scrollTo({ top: 0, behavior: 'auto' });
     const mapElement = document.getElementById("map");
     if (window.kakao && window.kakao.maps && mapElement) {
       this.loadMap();
@@ -231,11 +231,11 @@ export default {
     chkKakaoValidatoion() {
       if (sessionStorage.getItem('loginFlag') == 'kakao') {
         const self = this;
-        self.$axios.get('http://localhost:8082/members/' + self.id).then (function(rs) {
+        self.$axios.get('http://localhost:8082/members/' + self.id).then(function (rs) {
           console.log(rs.data.dto);
-        
+
           if (rs.data.dto == null) {
-            self.$router.push({name:'KakaoAdditionalForm', query:{kakaoId: sessionStorage.getItem('loginId'), kakaoName: sessionStorage.getItem('kakaoName')}});
+            self.$router.push({ name: 'KakaoAdditionalForm', query: { kakaoId: sessionStorage.getItem('loginId'), kakaoName: sessionStorage.getItem('kakaoName') } });
           } else {
             this.nowTimes();
             const self = this;
@@ -251,7 +251,6 @@ export default {
     apply() {
 
       const self = this;
-      
       let formdata = new FormData();
       const moment = require('moment');
       const today = moment(Date.now()).format('L');
@@ -272,47 +271,65 @@ export default {
       formdata.append('careNm', self.info.careNm);
       formdata.append('careAddr', self.info.careAddr);
       formdata.append('popfile', self.info.popfile);
-      if (self.id == null) {
-        alert("로그인을 해야합니다")
-        this.$router.push('/member');
-      } 
-        else {
-        if (self.agreement == 0) {
-          alert("개인정보 동의서에 동의를 해야합니다")
-          return;
-        }
-        else {
-          if (self.another == '') {
-            alert("반려동물여부가 비었습니다")
-            return;
-          } else {
-          if (self.reason == '') {
-            alert("입양신청 계기가 비었습니다")
-            return;
-          }  else {
-          if (self.feeding == '') {
-            alert("앞으로의 다짐이 비었습니다")
-            return;
-          } else {
-            self.$axios.post('http://localhost:8082/Applyform', formdata)//비동기 요청
-              .then(function (res) {//요청 결과 받아옴. 파람 res에 결과저장됨. res.data가 백단에서 전송한 데이터
-                if (res.status == 200) {
-                  if (res.data.dto != null) {
-                    self.msg = '입양 신청이 완료되었습니다.';
-                    alert(self.msg);
-                    self.$router.go(-1);
-                  } else {
-                    self.msg = '신청 양식을 보낸 상태입니다';
-                    alert(self.msg);
-                  }
-
-                } else {
-                  alert('에러코드:' + res.status)
+      
+      self.$axios.get('http://localhost:8082/Applyform/search/' + self.id +  '/' + '0')//비동기 요청
+        .then(function (res) {//요청 결과 받아옴. 파람 res에 결과저장됨. res.data가 백단에서 전송한 데이터
+          if (res.status == 200) {
+            if (res.data.list.length > 0) {
+        self.msg = '입양신청중인 아이디입니다';
+              alert(self.msg);
+              return;
+            } else {
+              if (self.id == null) {
+                alert("로그인을 해야합니다")
+                this.$router.push('/member');
+              }
+              else {
+                if (self.agreement == 0) {
+                  alert("개인정보 동의서에 동의를 해야합니다")
+                  return;
                 }
-              });
+                else {
+                  if (self.another == '') {
+                    alert("반려동물여부가 비었습니다")
+                    return;
+                  } else {
+                    if (self.reason == '') {
+                      alert("입양신청 계기가 비었습니다")
+                      return;
+                    } else {
+                      if (self.feeding == '') {
+                        alert("앞으로의 다짐이 비었습니다")
+                        return;
+                      } else {
+                        self.$axios.post('http://localhost:8082/Applyform', formdata)//비동기 요청
+                          .then(function (res) {//요청 결과 받아옴. 파람 res에 결과저장됨. res.data가 백단에서 전송한 데이터
+                            if (res.status == 200) {
+                              if (res.data.dto != null) {
+                                self.msg = '입양 신청이 완료되었습니다.';
+                                alert(self.msg);
+                                self.$router.go(-1);
+                              } else {
+                                self.msg = '신청 양식을 보낸 상태입니다';
+                                alert(self.msg);
+                              }
+
+                            } else {
+                              alert('에러코드:' + res.status)
+                            }
+                          });
+                      }
+                    }
+                  }
+                }
+              }
+            }
+
+          } else {
+            alert('에러코드:' + res.status)
           }
-        }
-      }}}
+        });
+
     },
 
     setDate() {

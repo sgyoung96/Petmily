@@ -354,8 +354,8 @@ h5{
 }
 
 .txt-form {
-  width: 500px;
-  height: 50px;
+  width: 50px;
+  height:30px;
   font-family: 'IBMPlexSansKR-Bold';
   font-size: 18px;
   background-color: rgb(244, 191, 79);

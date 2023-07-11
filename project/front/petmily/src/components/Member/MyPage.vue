@@ -38,7 +38,10 @@
             <div class="tab04"><a href="#tab4" class="btn"><span class="tab-a">MESSAGE BOX</span></a></div>
           </li>
           <li @click="initTabs()" class="li-tab05 tab-li">
-            <div class="tab05"><a href="#tab5" class="btn"><span class="tab-a">EXIT</span></a></div>
+            <div class="tab05"><a href="#tab5" class="btn"><span class="tab-a">MY VOLUNTEER</span></a></div>
+          </li>
+          <li @click="initTabs()" class="li-tab06 tab-li">
+            <div class="tab06"><a href="#tab6" class="btn"><span class="tab-a">EXIT</span></a></div>
           </li>
         </ul>
         
@@ -57,12 +60,13 @@
             <div class="tab2-content content"><MessageBox /></div>
           </div>
           <div id="tab5" class="cont cont5">
+            <div class="tab2-content content"><MyVolList /></div>
+          </div>
+          <div id="tab6" class="cont cont6">
             <div class="tab2-content content"><ExitService /></div>
           </div>
         </div>
-      </div>
-
-     
+      </div>     
     </div>
   </div>
 </template>
@@ -73,6 +77,7 @@ import CollectedList from '../mypage/SavedList.vue'
 import AppliedList from '../mypage/AppliedList.vue'
 import MessageBox from '../mypage/MessageBox.vue'
 import ExitService from '../mypage/ExitService.vue'
+import MyVolList from '../mypage/MyVolList.vue'
 import img from "@/assets/images/icon-no-profile.png";
 
 
@@ -281,7 +286,8 @@ export default {
       CollectedList,
       AppliedList,
       MessageBox,
-      ExitService
+      ExitService,
+      MyVolList
   }
 }
 </script>
@@ -381,7 +387,7 @@ p {
   list-style-type: none;
 }
 
-.tab01, .tab02, .tab03, .tab04, .tab05 {
+.tab01, .tab02, .tab03, .tab04, .tab05, .tab06 {
   border: 2px solid #eee;
   border-radius: 15px;
   border-bottom-color: #fff;
@@ -426,6 +432,9 @@ a{text-decoration:none; color:#333;}
   display: none;
 }
 .tab_menu .cont_area .cont5{
+  display: none;
+}
+.tab_menu .cont_area .cont6{
   display: none;
 }
 
