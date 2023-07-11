@@ -8,7 +8,7 @@
             <div style="background-color:white; text-align:left; font-weight: 500; width:240px; height:245px; border-radius: 10px;">
               <div style="width:240px; height:20px; background-color:#789e20; border-top-left-radius:10px; border-top-right-radius:10px;">
               </div>
-              <em style="color:#789e20; font-weight:900; font-size:30px;">유기견봉사</em><span style="text-align: right;">({{ slice2(vboard.address) }})</span><br/>
+              <em style="color:#789e20; font-weight:900; font-size:30px;">유기견봉사</em><span style="text-align: r">({{ slice2(vboard.address) }})</span><br/>
               <a style="padding-left:20px; font-size:17px; font-weight:600;">{{ vboard.title }}</a>
               <dl>
                 <dt>모집인원:</dt>
