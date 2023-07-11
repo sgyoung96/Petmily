@@ -56,7 +56,7 @@ public class ApplyformService {
 				a.getColorCd(), a.getNeuterYn(), a.getCareNm(), a.getCareAddr(), a.getPopfile());
 	}
 
-	// Id로 검색
+	// 맴버Id로 검색
 	public ArrayList<ApplyformDto> findByMemberId(String id) {
 		Member m = new Member(id, "", "", "", "", null, "", "", "", null);
 		ArrayList<Applyform> list = (ArrayList<Applyform>) dao.findAllById(m);
@@ -68,7 +68,21 @@ public class ApplyformService {
 		}
 		return list2;
 	}
+	
+	// 맴버 ID와 check로 검색
+	public ArrayList<ApplyformDto> searchByMemberIdAndCheck(String id, int check) {
+	    ArrayList<ApplyformDto> list1 = findByMemberId(id);
+	    ArrayList<ApplyformDto> list2 = findByCheck(check);
+	    ArrayList<ApplyformDto> resultList = new ArrayList<>();
 
+	    for (ApplyformDto dto : list1) {
+	        if (list2.contains(dto)) {
+	            resultList.add(dto);
+	        }
+	    }
+
+	    return resultList;
+	}
 	// check로 검색
 	public ArrayList<ApplyformDto> findByCheck(int check) {
 		ArrayList<Applyform> list = (ArrayList<Applyform>) dao.findByIscheck(check);
