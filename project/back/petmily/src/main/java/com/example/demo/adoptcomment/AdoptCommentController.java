@@ -81,8 +81,8 @@ public class AdoptCommentController {
 	 * 
 	 * @param ab_num
 	 */
-	@DeleteMapping("/{num}")
-	public Map remove(@PathVariable("num") int ab_num) {
+	@DeleteMapping("{ab_num}")
+	public Map remove(@PathVariable("ab_num") int ab_num) {
 		Map map = new HashMap();
 		AdoptCommentDto dto2 = null;
 		boolean flag = true;

@@ -466,7 +466,6 @@ export default {
           if (response.status === 200) {
 
             const dto = response.data.dto;
-            alert(dto.id + ' 댓글 작성 완료');
             this.comment.push(dto);
             this.content = ''; // 댓글 작성 완료 후 입력 필드 초기화
           } else {
@@ -489,7 +488,7 @@ export default {
         .put('http://localhost:8082/dcomment', formData)
         .then(response => {
           if (response.status === 200) {
-            alert(response.data.dto.content);
+            alert('댓글 수정 완료');
             this.commentlist();
           } else {
             alert('에러코드:' + response.status);
