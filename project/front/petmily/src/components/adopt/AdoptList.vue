@@ -125,7 +125,7 @@ data () {
     itemsPerRow: 4,
     searchKeyword: '',
     currentPage: 1,
-    pageSize: 15
+    pageSize: 8
   }
   
 },
