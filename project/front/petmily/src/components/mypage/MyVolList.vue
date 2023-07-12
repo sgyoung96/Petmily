@@ -1,13 +1,13 @@
 <template>
   <div class="container">
-    
+    <VolList />
   </div>
 </template>
 
  <script>
-
+import VolList from '../kaka/MyVolList.vue'
 export default {
-  name: 'MyVolList',
+  name: 'MypageVolList',
   data () {
     return {
       
@@ -28,7 +28,7 @@ export default {
   },
 
   components: {
-
+    VolList
   }
 }
 </script>
