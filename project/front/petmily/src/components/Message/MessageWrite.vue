@@ -181,12 +181,19 @@ export default {
       const self = this;
       const form = new FormData();
       this.loginId = sessionStorage.getItem("loginId");
-      const reciever = self.reciever.match(/\((.*?)\)/)[1];
+      
+      if(this.reciever !='admin'){
+        const reciever = self.reciever.match(/\((.*?)\)/)[1];
+        form.append("reciever", reciever);
+      }else{
+        form.append("reciever",'admin')
+      }
+      
       form.append("sender", self.sender);
-      form.append("reciever", reciever);
+      
       form.append("title", self.title);
       form.append("content", self.content);
-      if (this.loginId === reciever) {
+      if (this.loginId === self.reciever) {
         alert("수신자를 확인해 주세요");
         self.reciever = "";
         return;
