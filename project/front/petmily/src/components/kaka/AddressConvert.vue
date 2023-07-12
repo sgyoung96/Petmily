@@ -6,7 +6,7 @@
         <div v-for="(vboardGroup, index) in groupedItems" :key="index" class="carousel-item" :class="{ 'active': index === 0 }">
           <div class="d-flex">
             <div v-for="(vboard, innerIndex) in vboardGroup" :key="innerIndex" class="mx-auto" :class="{ 'd-none': innerIndex >= 3 }">
-              <div @click="goDetail(vboard.num, vboard.address)" style="cursor: pointer; background-color:white; text-align:left; font-weight: 500; width:240px; height:275px; border-radius: 10px;">
+              <div v-if="calculateDateDifference(vboard.deadline).difference >= 0" @click="goDetail(vboard.num, vboard.address)" style="cursor: pointer; background-color:white; text-align:left; font-weight: 500; width:240px; height:275px; border-radius: 10px;">
                 <div style="width:240px; height:20px; background-color:#789e20; border-top-left-radius:10px; border-top-right-radius:10px;">
                 </div>
                 <div class="box-white" style=" padding-left: 10px; padding-right: 10px; ">
@@ -51,6 +51,7 @@ export default {
   data() {
     return {
       list: [],
+      sysdate: new Date(),
       currentIndex: 0
     };
   },
@@ -65,6 +66,12 @@ export default {
     }
   },
   methods: {
+    calculateDateDifference(deadline) {
+      const deadlineDate = new Date(deadline)
+      const difference = deadlineDate.getTime() - this.sysdate.getTime()
+      const days = Math.ceil(difference / (1000 * 60 * 60 * 24))
+      return { difference, days }
+    },
     moreVol() {
       this.$router.push('/volboardhome');
     },
