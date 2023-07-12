@@ -30,7 +30,7 @@
       <div v-if="list.length === 0">
     검색된 게시글이 없습니다.
   </div>
-      <div v-else class="vbody" v-for="vboard in list" :key="vboard.num" @click="detail(vboard.num, vboard.address)">
+      <div v-else class="vbody" v-for="vboard in paginatedList" :key="vboard.num" @click="detail(vboard.num, vboard.address)">
         <div style="text-align: left;">
           <span class="badge text-bg-danger" style="font-size: 17px;"
             v-if="calculateDateDifference(vboard.deadline).difference < 0">모집마감</span>
