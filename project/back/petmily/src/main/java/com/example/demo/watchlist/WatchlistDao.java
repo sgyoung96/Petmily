@@ -20,4 +20,7 @@ public interface WatchlistDao extends JpaRepository<Watchlist, Integer> {
     @Transactional
     @Query(value = "SELECT COUNT(*) FROM Watchlist WHERE id = :id")
     int countById(@Param("id") Member id);
+    
+    @Transactional
+    void deleteByIdAndNum(Member id, Volboard num);
 }
