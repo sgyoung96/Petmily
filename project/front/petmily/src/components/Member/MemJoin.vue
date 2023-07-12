@@ -140,6 +140,7 @@ export default {
       emailCodeHasError:false,
       phoneHasError:false,
       previewImage: require('@/assets/imgs/mypage_sample.jpg')
+      
    
     }
 
