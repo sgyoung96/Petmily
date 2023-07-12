@@ -37,7 +37,7 @@
       <img class="box-img" :src="'http://localhost:8082/adopt/imgs/' + dto.num + '/1'">
       <img class="box-img" :src="'http://localhost:8082/adopt/imgs/' + dto.num + '/2'">
       <div class="box-content">
-        <span>{{ dto.content }}</span>
+        <span v-if="dto.content" v-html="convertNewlines(dto.content)"></span>
         <span class="box-warning">
           ★사랑하는 반려동물이 좋은 주인을 만나 안전하게 살 수 있도록 아래의 사항을 꼭 지켜 주세요!!<br /><Br />
           1. 무료분양 계약서를 꼭 주고받으시기 바랍니다.<br />
@@ -106,7 +106,7 @@
             <div style="width:900px">
               <span>{{comment.id.name}}({{ comment.id.id }})</span>&nbsp;
               <span style="font-size: small; color:grey">{{ formatDate(comment.w_date) }}</span><br />
-              <div v-if="!comment.editMode">{{ comment.content }}</div>
+              <div v-if="!comment.editMode"><span v-if="dto.content" v-html="convertNewlines(comment.content)"></span></div>
               <div v-if="comment.editMode" class="c-editForm">
                 <textarea style="width:900px;  resize:none;" v-model="comment.editContent"
                   :cols="comment.editContent.length"></textarea>
@@ -361,7 +361,8 @@ export default {
       self.$axios.get('http://localhost:8082/adopt/ischeck/' + num)
         .then(function (res) {
           if (res.status == 200) {
-            alert(res.data.flag)
+            alert('처리되었습니다')
+            self.boarddetail(num);
           }
         })
     },
@@ -375,7 +376,6 @@ export default {
       e.target.src = img;
     },
     likebtn(num) {
-      alert(this.id)
       if (this.id == null) {
         alert('로그인 후 이용가능합니다.')
       } else {
@@ -393,7 +393,7 @@ export default {
                         .then(response => {
                           if (response.status == 200) {
                             this.dto.likecnt++;
-                            alert('좋아요 수 1 추가')
+                            alert('추천되었습니다')
                           }
                         })
                     } else {
@@ -412,7 +412,7 @@ export default {
                       this.$axios.get('http://localhost:8082/adopt/likedown/' + num)
                         .then(response => {
                           if (response.status === 200) {
-                            alert('좋아요 수 1 감소');
+                            alert('추천취소되었습니다');
                             this.dto.likecnt--;
                           }
                         })
@@ -546,7 +546,7 @@ export default {
         .put('http://localhost:8082/adoptcomment', formData)
         .then(response => {
           if (response.status === 200) {
-            alert(response.data.dto.content);
+            alert('댓글이수정되었습니다');
             this.commentlist();
           } else {
             alert('에러코드:' + response.status);
