@@ -117,7 +117,7 @@
           </div>
           <div style="float:right;" v-if="comment.id.id === id">
             <button @click="showEditForm(comment)">수정하기</button>
-            <button @click="commentdelete(db_num)">삭제하기</button>
+            <button @click="commentdelete(comment.ab_num)">삭제하기</button>
           </div>
 
         </div>
@@ -523,7 +523,6 @@ export default {
           if (response.status === 200) {
 
             const dto = response.data.dto;
-            alert(dto.id + ' 댓글 작성 완료');
             this.comment.push(dto);
             this.content = ''; // 댓글 작성 완료 후 입력 필드 초기화
           } else {
@@ -570,7 +569,7 @@ export default {
         })
         .catch(error => {
           console.error(error);
-          alert('삭제오류.');
+          alert('삭제오류222.');
         });
     },
     modal(sender) {

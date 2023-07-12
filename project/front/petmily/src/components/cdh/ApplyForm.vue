@@ -214,8 +214,6 @@ export default {
       self.info = JSON.parse(this.$route.query.info);
       console.log(self.info);
       this.$data.careAddr = this.$route.query.careAddr;
-
-      alert(this.$data.careAddr);
     }
   },
 

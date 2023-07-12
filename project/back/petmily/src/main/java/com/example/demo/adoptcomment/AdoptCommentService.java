@@ -47,8 +47,8 @@ public class AdoptCommentService {
 	 * 댓글 삭제
 	 * @param num
 	 */
-	public void remove(int num) {
-		dao.deleteById(num);
+	public void remove(int ab_num) {
+		dao.deleteById(ab_num);
 	}
 	
 	//작성한 댓글수 출력
