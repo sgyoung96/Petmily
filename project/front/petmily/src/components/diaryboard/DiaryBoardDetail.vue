@@ -343,7 +343,6 @@ export default {
       return new Date(date).toLocaleString('ko-KR', options);
     },
     likebtn(num) {
-      alert(this.id)
       if (this.id == null) {
         alert('로그인 후 이용가능합니다.')
       } else {
@@ -361,7 +360,7 @@ export default {
                         .then(response => {
                           if (response.status == 200) {
                             this.dto.likecnt++;
-                            alert('좋아요 수 1 추가')
+                            alert('추천완료')
                           }
                         })
                     } else {
@@ -380,7 +379,7 @@ export default {
                       this.$axios.get('http://localhost:8082/dboard/likedown/' + num)
                         .then(response => {
                           if (response.status === 200) {
-                            alert('좋아요 수 1 감소');
+                            alert('추천취소');
                             this.dto.likecnt--;
                           }
                         })
