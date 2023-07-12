@@ -37,17 +37,10 @@ public class WatchlistController {
 	}
 	
 	@DeleteMapping("")
-	public Map delWatch(WatchlistDto dto) {
-		Map map = new HashMap<>();
+	public Map delPerson2(String id, int num) {
 		boolean flag = true;
-		try {
-			WatchlistDto dto2 = service.getDuplicate(dto.getId().getId(), dto.getNum().getNum());
-			dto.setDb_num(dto2.getDb_num());
-			service.delete(dto);
-		} catch(Exception e) {
-			e.printStackTrace();
-			flag = false;
-		}
+		service.delPerson(id, num);
+		Map map = new HashMap();
 		map.put("flag", flag);
 		return map;
 	}

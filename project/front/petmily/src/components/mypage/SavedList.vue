@@ -107,63 +107,6 @@
         </div>
       </div>
     </div>
-    <div>
-      <div class="form-container">
-        <div class="list-container">
-          <span style="font-weight:600; font-size:24px; margin-bottom: 10px;">봉사모집게시판 관심목록</span>
-          <!-- <p><label class="section01" >SECTION 1</label></p>
-            <p><label class="section01-title"><u><span>간편 승인/반려 영역</span></u></label></p> -->
-          <div class="section01-content">
-            <div class="data-header">
-              <table>
-                <tr aria-colspan="11">
-                  <th colspan="1">
-                    <label><span>모집상태</span></label>
-                  </th>
-                  <th colspan="1">
-                    <label><span>모집기관</span></label>
-                  </th>
-                  <th colspan="1">
-                    <label><span>신청인원</span></label>
-                  </th>
-                  <th colspan="2">
-                    <label><span>봉사제목</span></label>
-                  </th>
-                  <th colspan="3">
-                    <label><span>봉사장소</span></label>
-                  </th>
-                  <th colspan="2">
-                    <label><span>봉사날짜</span></label>
-                  </th>
-                  <th colspan="1">
-                    <label><span>모집기간</span></label>
-                  </th>
-                </tr>
-                <template v-if="wlist.length">
-                  <tr v-for="vboard in wlist" :key="vboard.num" @click="detail(vboard.num.num, vboard.num.address)">
-                  <td colspan="1"><label><span class="badge text-bg-danger" style="font-size: 17px;"
-                        v-if="calculateDateDifference(vboard.num.deadline).difference < 0">모집마감</span>
-                      <span class="badge text-bg-primary" style="font-size: 17px;" v-else>마감 D-{{
-                        calculateDateDifference(vboard.num.deadline).days }}</span>&nbsp;</label></td>
-                  <td colspan="1"><label><span style=" cursor: pointer;">{{ vboard.num.place }}</span></label></td>
-                  <td colspan="1"><label><span style=" cursor: pointer;">({{ vboard.num.count }} / {{ vboard.num.vol_number }})</span></label></td>
-                  <td colspan="2"><label><span style=" cursor: pointer;">{{ vboard.num.title }}</span></label></td>
-                  <td colspan="3"><label><span style=" cursor: pointer;">{{ vboard.num.address }}</span></label></td>
-                  <td colspan="2"><label><span style=" cursor: pointer;">{{ formatDate(vboard.num.vol_date) }}</span></label></td>
-                  <td colspan="1"><label><span style=" cursor: pointer;">{{ formatDate(vboard.num.deadline) }}까지</span></label></td>
-                </tr>
-                </template>
-                <template v-else>
-                  <tr>
-                    <td colspan="8"><label><span>작성한 글이 없습니다...</span></label></td>
-                  </tr>
-                </template>
-              </table>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
   </div>
 </template>
 

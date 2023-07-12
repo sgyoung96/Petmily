@@ -42,7 +42,7 @@ import AdminAppliedList from '@/components/admin/ApplyList.vue'
 import ApplyDetail from '@/components/admin/ApplyDetail.vue'
 import VolList from '@/components/admin/VolList.vue'
 import AddressMap from '@/components/kaka/AddressMap.vue'
-import Weather from '@/components/kaka/Weather.vue'
+import MyVolList from '@/components/kaka/MyVolList.vue'
 
 import AnimalHospital from '@/components/kaka/AnimalHospital.vue'
 import MyPageMain from '@/components/Member/MyPage.vue'
@@ -57,7 +57,7 @@ import ExitService from '@/components/mypage/ExitService.vue'
 import MyInfoIntro from '@/components/mypage/MyInfoIntro'
 import MyInfoEdit from '@/components/mypage/MyInfoEdit.vue'
 import AlertBox from '@/components/mypage/AlertBox.vue'
-import MyVolList from '@/components/mypage/MyVolList.vue'
+import MypageVolList from '@/components/mypage/MyVolList.vue'
 
 
 const routes = [
@@ -127,9 +127,9 @@ const routes = [
     component: Kaka
   },
   {
-    path: '/weather',
-    name: 'Weather',
-    component: Weather
+    path: '/myvollist',
+    name: 'MyVolList',
+    component: MyVolList
   },
   {
     path: '/addressmap',
@@ -337,8 +337,8 @@ const routes = [
   },
   {
     path: '/mypage/vollist',
-    name: 'MyVolList',
-    component: MyVolList
+    name: 'MypageVolList',
+    component: MypageVolList
   }
 
 ]

@@ -43,8 +43,10 @@ public class WatchlistService {
 		dao.save(new Watchlist(dto.getDb_num(), dto.getId(), dto.getNum()));
 	}
 	
-	public void delete(WatchlistDto dto) {
-		dao.delete(new Watchlist(dto.getDb_num(), dto.getId(), dto.getNum()));
+	public void delPerson(String id, int boardnum) {
+		Member m = new Member(id,"","","","",null,"","","",null);
+		Volboard b = new Volboard(boardnum,null,"","",null,0,null,"",null,"","","",0,0);
+		dao.deleteByIdAndNum(m, b);
 	}
 	
 	//관심수 출력

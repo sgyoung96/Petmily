@@ -126,7 +126,6 @@ public class ApplyformController {
 			map.put("list", list);
 			return map;
 		}
-	
 	//승인
 	@PatchMapping("/apply/{num}")
 	public Map apply(@PathVariable("num") int num) {

@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.example.demo.member.Member;
 import com.example.demo.volboard.VolboardService;
+import com.example.demo.watchlist.WatchlistDto;
 
 @RestController
 @CrossOrigin(origins = "*")
@@ -77,5 +78,12 @@ public class ParticipantsController {
 		return map;
 	}
 	
+	@GetMapping("/id2/{id}")
+	public Map getParticipantsList(@PathVariable("id") String id) {
+		Map map = new HashMap<>();
+		ArrayList<ParticipantsDto> list = service.getById(id);
+		map.put("list", list);
+		return map;
+	}
 	
 }
